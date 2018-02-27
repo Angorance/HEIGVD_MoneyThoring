@@ -1,0 +1,23 @@
+PRO : Feedback du seigneur RRH
+==============================
+
+projet peut-être un peu court, un peu simple ; pas de réel prise de risque
+
+fonctionnalité pas assez claire, "c'est trop le fouillis" ; pas assez structuré ; A ÉLABORER
+	- simulation ==> de quoi ? pertinance de la fonctionnalité ?
+	- impression papier ? PDF ? des statistiques ?
+
+interface graphique
+	- swing ? 
+	- JavaFX* (successeur de swing, organisation graphique dans un fichier séparé des fonctionnalités) /!\ Temps d'apprentissage /!\
+
+Stockage, Base de donnée ? 
+	- MySQL avec un serveur en local et "tout le tintouin" ?
+	- SQL Lite* ?
+	- simple stockage dans des fichiers ? 
+
+/!\ DÉFINIR LES LIMITES DU PROJET /!\
+
+
+------------------------------------------
+* "personnellement j'aime l'idée" - Bryan Curchod
