@@ -1,0 +1,47 @@
+.pane{
+    -fx-background-color: white;
+}
+
+.grid-pane{
+    -fx-background-color: white;
+}
+
+.label{
+    -fx-text-fill: #25b41e;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, white ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, white ;
+}
+
+.button {
+    -fx-background-color: #25b41e;
+    -fx-border-color: #25b41e;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1em; /* 12 */
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, grey, 10, 0, 0, 5);
+}
+.button:pressed {
+    -fx-background-color: #1f991a;
+    -fx-text-fill: white;
+}
+
+.anchor-pane{
+    -fx-background-color: red;
+}
+
+
+
+
+
+
+
+.
