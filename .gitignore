@@ -31,3 +31,4 @@ hs_err_pid*
 ~$*.*
 *.gdoc
 *.gsheet
+/GZAtests/PGSQLite/PGSQLite/nbproject/private/
