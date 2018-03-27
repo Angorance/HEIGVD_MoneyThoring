@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sqlite.VoitureEntity" table="Voiture" schema="">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
+        </id>
+        <property name="username">
+            <column name="username" sql-type="varchar(50)"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar(100)"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(50)"/>
+        </property>
+        <property name="isActivated">
+            <column name="isActivated" sql-type="boolean"/>
+        </property>
+        <property name="activationKey">
+            <column name="activationKey" sql-type="varchar(50)" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="salt" sql-type="varchar(50)"/>
+        </property>
+    </class>
+</hibernate-mapping>
