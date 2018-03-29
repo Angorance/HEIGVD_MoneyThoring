@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -20,7 +21,10 @@
                   </Label>
                </children>
             </AnchorPane>
-            <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" layoutY="2.0" prefHeight="453.0" prefWidth="238.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" prefHeight="453.0" prefWidth="238.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+               </children></JFXDrawer>
          </children>
       </AnchorPane>
    </center>

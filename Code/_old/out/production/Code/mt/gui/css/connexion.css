@@ -10,14 +10,14 @@
     -fx-text-fill: #25b41e;
 }
 
-.text-field {
+/*.text-field {
     -fx-background-color: -fx-text-box-border, white ;
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-background-radius: 0 ;
-}
-.text-field:focused {
+}*/
+/*.text-field:focused {
     -fx-background-color: -fx-focus-color, white ;
-}
+}*/
 
 .button {
     -fx-background-color: #25b41e;
