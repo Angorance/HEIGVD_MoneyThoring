@@ -1,10 +1,6 @@
 -- -----------------------------------------------------
 -- Schema moneythoring
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema moneythoring
--- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `moneythoring`;
 CREATE SCHEMA `moneythoring` DEFAULT CHARACTER SET utf8 ;
 USE `moneythoring` ;
