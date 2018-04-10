@@ -7,7 +7,7 @@ CREATE SCHEMA moneythoring;
 -- -----------------------------------------------------
 -- Table moneythoring.Client
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.Client (
+CREATE TABLE IF NOT EXISTS moneythoring.client (
   id SERIAL NOT NULL,
   username VARCHAR(50) UNIQUE NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
@@ -21,19 +21,19 @@ CREATE TABLE IF NOT EXISTS moneythoring.Client (
 -- -----------------------------------------------------
 -- Table moneythoring.Category
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.Category (
+CREATE TABLE IF NOT EXISTS moneythoring.category (
   id SERIAL NOT NULL,
   name VARCHAR(50) NOT NULL,
   colour VARCHAR(50) NOT NULL,
   isDefault BOOL NOT NULL DEFAULT FALSE,
-  Client_id INT NOT NULL REFERENCES moneythoring.Client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.Budget
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.Budget (
+CREATE TABLE IF NOT EXISTS moneythoring.budget (
   id SERIAL NOT NULL,
   name VARCHAR(50) NOT NULL,
   amount FLOAT8 NOT NULL,
@@ -42,14 +42,14 @@ CREATE TABLE IF NOT EXISTS moneythoring.Budget (
   startingDate DATE NOT NULL,
   endingDate DATE NOT NULL,
   gap INT NULL,
-  Client_id INT NOT NULL REFERENCES moneythoring.Client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.BankAccount
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.BankAccount (
+CREATE TABLE IF NOT EXISTS moneythoring.bankAccount (
   id SERIAL NOT NULL,
   name VARCHAR(50) NOT NULL,
   nameBank VARCHAR(50) NULL,
@@ -57,67 +57,67 @@ CREATE TABLE IF NOT EXISTS moneythoring.BankAccount (
   amount FLOAT8 NOT NULL,
   isDefault BOOL NOT NULL,
   isVisible BOOL NOT NULL,
-  Client_id INT NOT NULL REFERENCES moneythoring.Client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.IOTransaction
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.IOTransaction (
+CREATE TABLE IF NOT EXISTS moneythoring.iOTransaction (
   id SERIAL NOT NULL,
   name VARCHAR(50) NOT NULL,
   description VARCHAR(255) NULL,
-  date DATE NOT NULL,
+  dateTransaction DATE NOT NULL,
   amount FLOAT8 NOT NULL,
   currency VARCHAR(50) NOT NULL,
   isIncome BOOL NOT NULL,
-  Category_id INT NOT NULL REFERENCES moneythoring.Category (id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  BankAccount_id INT NOT NULL REFERENCES moneythoring.BankAccount (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  Budget_id INT NULL REFERENCES moneythoring.Budget (id) ON DELETE SET NULL ON UPDATE CASCADE,
+  category_id INT NOT NULL REFERENCES moneythoring.category (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  bankAccount_id INT NOT NULL REFERENCES moneythoring.bankAccount (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  budget_id INT NULL REFERENCES moneythoring.budget (id) ON DELETE SET NULL ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.Recurrence
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.Recurrence (
+CREATE TABLE IF NOT EXISTS moneythoring.recurrence (
   id SERIAL NOT NULL,
   gap INT NOT NULL,
   nextDate DATE NOT NULL,
-  IOTransaction_id INT NOT NULL REFERENCES moneythoring.IOTransaction (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  iOTransaction_id INT NOT NULL REFERENCES moneythoring.iOTransaction (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.Debt
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.Debt (
+CREATE TABLE IF NOT EXISTS moneythoring.debt (
   id SERIAL NOT NULL,
   name VARCHAR(50) NOT NULL,
   description VARCHAR(255) NULL,
   amount FLOAT8 NOT NULL,
   isIncome BOOL NOT NULL,
   expirationDate DATE NOT NULL,
-  Client_id INT NOT NULL REFERENCES moneythoring.Client (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  Client_id1 INT NULL REFERENCES moneythoring.Client (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id1 INT NULL REFERENCES moneythoring.client (id) ON DELETE NO ACTION ON UPDATE CASCADE,
   PRIMARY KEY (id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.SharedBudget
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.SharedBudget (
-  Client_id INT NOT NULL REFERENCES moneythoring.Client (id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  Budget_id INT NOT NULL REFERENCES moneythoring.Budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY (Client_id, Budget_id)
+CREATE TABLE IF NOT EXISTS moneythoring.sharedBudget (
+  client_id INT NOT NULL REFERENCES moneythoring.client (id),
+  budget_id INT NOT NULL REFERENCES moneythoring.budget (id),
+  PRIMARY KEY (client_id, budget_id)
 );
 
 -- -----------------------------------------------------
 -- Table moneythoring.CategoriesBudget
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS moneythoring.CategoriesBudget (
-  Category_id INT NOT NULL REFERENCES moneythoring.Category (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  Budget_id INT NOT NULL REFERENCES moneythoring.Budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE IF NOT EXISTS moneythoring.categoriesBudget (
+  category_id INT NOT NULL REFERENCES moneythoring.category (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  budget_id INT NOT NULL REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (Category_id, Budget_id)
  );

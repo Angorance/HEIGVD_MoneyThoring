@@ -4,13 +4,32 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:derby:C:/Users/ZEED/Documents/derbydb.db;create=false</property>
-    <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
-    <mapping resource="hibernate.derby.mapping.xml"/>
+    <property name="connection.url">jdbc:postgresql://192.168.1.110:5432/moneythoring</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+      <mapping resource="hibernate.derby.mapping.xml"/>
     <mapping class="mt.entities.derby.ClientEntity"/>
+      <mapping resource="entitites.test.xml"/>
+      <mapping class="entities.test1.BankaccountEntity"/>
+      <mapping class="entities.test1.BudgetEntity"/>
+      <mapping class="entities.test1.CategoriesbudgetEntity"/>
+      <mapping class="entities.test1.CategoryEntity"/>
+      <mapping class="entities.test1.ClientEntity"/>
+      <mapping class="entities.test1.DebtEntity"/>
+      <mapping class="entities.test1.IotransactionEntity"/>
+      <mapping class="entities.test1.RecurrenceEntity"/>
+      <mapping class="entities.test1.SharedbudgetEntity"/>
+      <mapping class="entites.test2.BankaccountEntity"/>
+      <mapping class="entites.test2.BudgetEntity"/>
+      <mapping class="entites.test2.CategoriesbudgetEntity"/>
+      <mapping class="entites.test2.CategoryEntity"/>
+      <mapping class="entites.test2.ClientEntity"/>
+      <mapping class="entites.test2.DebtEntity"/>
+      <mapping class="entites.test2.IotransactionEntity"/>
+      <mapping class="entites.test2.RecurrenceEntity"/>
+      <mapping class="entites.test2.SharedbudgetEntity"/>
 
 
-    <!-- DB schema will be updated if needed -->
+      <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>
