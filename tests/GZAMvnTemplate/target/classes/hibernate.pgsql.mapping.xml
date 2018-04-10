@@ -3,8 +3,7 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-
-    <class name="mt.dal.entities.VoitureEntity" table="voiture" schema="public" catalog="moneythoring">
+    <class name="mt.entitites.postgres.ClientEntity" table="client" schema="moneythoring" catalog="moneythoring">
         <id name="id">
             <column name="id" sql-type="serial(10)"/>
         </id>

@@ -1,10 +1,10 @@
-package mt.dal.entities;
+package mt.entities.derby;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "voiture", schema = "public", catalog = "moneythoring")
-public class VoitureEntity {
+@Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")
+public class ClientEntity {
     private int id;
     private String username;
     private String email;
@@ -14,7 +14,7 @@ public class VoitureEntity {
     private String salt;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -24,7 +24,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "USERNAME", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -34,7 +34,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "EMAIL", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -44,7 +44,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "PASSWORD", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }
@@ -54,7 +54,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "isactivated", nullable = false)
+    @Column(name = "ISACTIVATED", nullable = false)
     public boolean isIsactivated() {
         return isactivated;
     }
@@ -64,7 +64,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "activationkey", nullable = true, length = 50)
+    @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
@@ -74,7 +74,7 @@ public class VoitureEntity {
     }
 
     @Basic
-    @Column(name = "salt", nullable = false, length = 50)
+    @Column(name = "SALT", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }
@@ -88,7 +88,7 @@ public class VoitureEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        VoitureEntity that = (VoitureEntity) o;
+        ClientEntity that = (ClientEntity) o;
 
         if (id != that.id) return false;
         if (isactivated != that.isactivated) return false;

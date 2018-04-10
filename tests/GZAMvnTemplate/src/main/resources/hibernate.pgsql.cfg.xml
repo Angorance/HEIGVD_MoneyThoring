@@ -4,15 +4,15 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:postgresql://192.168.43.41:5432/moneythoring</property>
+    <property name="connection.url">jdbc:postgresql://192.168.1.110:5432/moneythoring</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">Google2018$</property>
-      <mapping class="mt.dal.entities.VoitureEntity"/>
       <mapping resource="hibernate.pgsql.mapping.xml"/>
+      <mapping class="mt.entitites.postgres.ClientEntity"/>
 
 
-    <!-- DB schema will be updated if needed -->
+      <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

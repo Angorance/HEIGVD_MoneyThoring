@@ -1,0 +1,19 @@
+-- -----------------------------------------------------
+-- Schema moneythoring
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS moneythoring CASCADE;
+CREATE SCHEMA moneythoring;
+
+-- -----------------------------------------------------
+-- Table moneythoring.Client
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS moneythoring.Client (
+  id INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  isActivated BOOLEAN NOT NULL,
+  activationKey VARCHAR(50) NULL,
+  salt VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+);

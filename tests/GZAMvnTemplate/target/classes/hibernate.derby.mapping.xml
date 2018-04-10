@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="mt.entities.derby.ClientEntity" table="CLIENT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="username">
+            <column name="USERNAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="password">
+            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isactivated">
+            <column name="ISACTIVATED" sql-type="boolean(1)"/>
+        </property>
+        <property name="activationkey">
+            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="SALT" sql-type="varchar(50)" length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>
