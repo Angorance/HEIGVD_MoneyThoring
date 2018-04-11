@@ -13,7 +13,7 @@
       <mapping class="dal.entities.pgsql.BudgetPGEntity"/>
       <mapping class="dal.entities.pgsql.CategoriesbudgetPGEntity"/>
       <mapping class="dal.entities.pgsql.CategoryPGEntity"/>
-      <mapping class="dal.entities.pgsql.ClientPGEntity"/>
+      <mapping class="dal.entities.pgsql.ClientEntityPGEntity"/>
       <mapping class="dal.entities.pgsql.DebtPGEntity"/>
       <mapping class="dal.entities.pgsql.IotransactionPGEntity"/>
       <mapping class="dal.entities.pgsql.RecurrencePGEntity"/>

@@ -1,11 +1,11 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "debt", schema = "moneythoring", catalog = "moneythoring")
-public class DebtPGEntity {
+@Table(name = "DEBT", schema = "MONEYTHORING", catalog = "")
+public class DebtDeEntity {
     private int id;
     private String name;
     private String description;
@@ -14,11 +14,11 @@ public class DebtPGEntity {
     private Date expirationdate;
     private int clientId;
     private Integer clientId1;
-    private ClientEntityPGEntity clientByClientId;
-    private ClientEntityPGEntity clientByClientId1;
+    private ClientEntityDeEntity clientByClientId;
+    private ClientEntityDeEntity clientByClientId1;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -28,7 +28,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -38,7 +38,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = 255)
+    @Column(name = "DESCRIPTION", nullable = true, length = 255)
     public String getDescription() {
         return description;
     }
@@ -48,7 +48,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "amount", nullable = false, precision = 0)
+    @Column(name = "AMOUNT", nullable = false, precision = 0)
     public double getAmount() {
         return amount;
     }
@@ -58,7 +58,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "isincome", nullable = false)
+    @Column(name = "ISINCOME", nullable = false)
     public boolean isIsincome() {
         return isincome;
     }
@@ -68,7 +68,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "expirationdate", nullable = false)
+    @Column(name = "EXPIRATIONDATE", nullable = false)
     public Date getExpirationdate() {
         return expirationdate;
     }
@@ -78,7 +78,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "client_id", nullable = false)
+    @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
@@ -88,7 +88,7 @@ public class DebtPGEntity {
     }
 
     @Basic
-    @Column(name = "client_id1", nullable = true)
+    @Column(name = "CLIENT_ID1", nullable = true)
     public Integer getClientId1() {
         return clientId1;
     }
@@ -102,7 +102,7 @@ public class DebtPGEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DebtPGEntity that = (DebtPGEntity) o;
+        DebtDeEntity that = (DebtDeEntity) o;
 
         if (id != that.id) return false;
         if (Double.compare(that.amount, amount) != 0) return false;
@@ -134,22 +134,22 @@ public class DebtPGEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
+    public ClientEntityDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id1", referencedColumnName = "id")
-    public ClientEntityPGEntity getClientByClientId1() {
+    @JoinColumn(name = "CLIENT_ID1", referencedColumnName = "ID")
+    public ClientEntityDeEntity getClientByClientId1() {
         return clientByClientId1;
     }
 
-    public void setClientByClientId1(ClientEntityPGEntity clientByClientId1) {
+    public void setClientByClientId1(ClientEntityDeEntity clientByClientId1) {
         this.clientByClientId1 = clientByClientId1;
     }
 }

@@ -1,22 +1,22 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "category", schema = "moneythoring", catalog = "moneythoring")
-public class CategoryPGEntity {
+@Table(name = "CATEGORY", schema = "MONEYTHORING", catalog = "")
+public class CategoryDeEntity {
     private int id;
     private String name;
     private String colour;
     private boolean isdefault;
     private int clientId;
-    private Collection<CategoriesbudgetPGEntity> categoriesbudgetsById;
-    private ClientEntityPGEntity clientByClientId;
-    private Collection<IotransactionPGEntity> iotransactionsById;
+    private Collection<CategoriesbudgetDeEntity> categoriesbudgetsById;
+    private ClientEntityDeEntity clientByClientId;
+    private Collection<IotransactionDeEntity> iotransactionsById;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class CategoryPGEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -36,7 +36,7 @@ public class CategoryPGEntity {
     }
 
     @Basic
-    @Column(name = "colour", nullable = false, length = 50)
+    @Column(name = "COLOUR", nullable = false, length = 50)
     public String getColour() {
         return colour;
     }
@@ -46,7 +46,7 @@ public class CategoryPGEntity {
     }
 
     @Basic
-    @Column(name = "isdefault", nullable = false)
+    @Column(name = "ISDEFAULT", nullable = false)
     public boolean isIsdefault() {
         return isdefault;
     }
@@ -56,7 +56,7 @@ public class CategoryPGEntity {
     }
 
     @Basic
-    @Column(name = "client_id", nullable = false)
+    @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
@@ -70,7 +70,7 @@ public class CategoryPGEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CategoryPGEntity that = (CategoryPGEntity) o;
+        CategoryDeEntity that = (CategoryDeEntity) o;
 
         if (id != that.id) return false;
         if (isdefault != that.isdefault) return false;
@@ -92,30 +92,30 @@ public class CategoryPGEntity {
     }
 
     @OneToMany(mappedBy = "categoryByCategoryId")
-    public Collection<CategoriesbudgetPGEntity> getCategoriesbudgetsById() {
+    public Collection<CategoriesbudgetDeEntity> getCategoriesbudgetsById() {
         return categoriesbudgetsById;
     }
 
-    public void setCategoriesbudgetsById(Collection<CategoriesbudgetPGEntity> categoriesbudgetsById) {
+    public void setCategoriesbudgetsById(Collection<CategoriesbudgetDeEntity> categoriesbudgetsById) {
         this.categoriesbudgetsById = categoriesbudgetsById;
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
+    public ClientEntityDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @OneToMany(mappedBy = "categoryByCategoryId")
-    public Collection<IotransactionPGEntity> getIotransactionsById() {
+    public Collection<IotransactionDeEntity> getIotransactionsById() {
         return iotransactionsById;
     }
 
-    public void setIotransactionsById(Collection<IotransactionPGEntity> iotransactionsById) {
+    public void setIotransactionsById(Collection<IotransactionDeEntity> iotransactionsById) {
         this.iotransactionsById = iotransactionsById;
     }
 }

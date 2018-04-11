@@ -1,11 +1,11 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "bankaccount", schema = "moneythoring", catalog = "moneythoring")
-public class BankaccountPGEntity {
+@Table(name = "BANKACCOUNT", schema = "MONEYTHORING", catalog = "")
+public class BankaccountDeEntity {
     private int id;
     private String name;
     private String namebank;
@@ -14,11 +14,11 @@ public class BankaccountPGEntity {
     private boolean isdefault;
     private boolean isvisible;
     private int clientId;
-    private ClientEntityPGEntity clientByClientId;
-    private Collection<IotransactionPGEntity> iotransactionsById;
+    private ClientEntityDeEntity clientByClientId;
+    private Collection<IotransactionDeEntity> iotransactionsById;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -28,7 +28,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -38,7 +38,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "namebank", nullable = true, length = 50)
+    @Column(name = "NAMEBANK", nullable = true, length = 50)
     public String getNamebank() {
         return namebank;
     }
@@ -48,7 +48,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "typeaccount", nullable = false, length = 100)
+    @Column(name = "TYPEACCOUNT", nullable = false, length = 100)
     public String getTypeaccount() {
         return typeaccount;
     }
@@ -58,7 +58,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "amount", nullable = false, precision = 0)
+    @Column(name = "AMOUNT", nullable = false, precision = 0)
     public double getAmount() {
         return amount;
     }
@@ -68,7 +68,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "isdefault", nullable = false)
+    @Column(name = "ISDEFAULT", nullable = false)
     public boolean isIsdefault() {
         return isdefault;
     }
@@ -78,7 +78,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "isvisible", nullable = false)
+    @Column(name = "ISVISIBLE", nullable = false)
     public boolean isIsvisible() {
         return isvisible;
     }
@@ -88,7 +88,7 @@ public class BankaccountPGEntity {
     }
 
     @Basic
-    @Column(name = "client_id", nullable = false)
+    @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
@@ -102,7 +102,7 @@ public class BankaccountPGEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BankaccountPGEntity that = (BankaccountPGEntity) o;
+        BankaccountDeEntity that = (BankaccountDeEntity) o;
 
         if (id != that.id) return false;
         if (Double.compare(that.amount, amount) != 0) return false;
@@ -133,21 +133,21 @@ public class BankaccountPGEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
+    public ClientEntityDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @OneToMany(mappedBy = "bankaccountByBankaccountId")
-    public Collection<IotransactionPGEntity> getIotransactionsById() {
+    public Collection<IotransactionDeEntity> getIotransactionsById() {
         return iotransactionsById;
     }
 
-    public void setIotransactionsById(Collection<IotransactionPGEntity> iotransactionsById) {
+    public void setIotransactionsById(Collection<IotransactionDeEntity> iotransactionsById) {
         this.iotransactionsById = iotransactionsById;
     }
 }

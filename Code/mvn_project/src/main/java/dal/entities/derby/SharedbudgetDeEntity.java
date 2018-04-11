@@ -1,18 +1,18 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sharedbudget", schema = "moneythoring", catalog = "moneythoring")
-@IdClass(SharedbudgetPGEntityPK.class)
-public class SharedbudgetPGEntity {
+@Table(name = "SHAREDBUDGET", schema = "MONEYTHORING", catalog = "")
+@IdClass(SharedbudgetDeEntityPK.class)
+public class SharedbudgetDeEntity {
     private int clientId;
     private int budgetId;
-    private ClientEntityPGEntity clientByClientId;
-    private BudgetPGEntity budgetByBudgetId;
+    private ClientEntityDeEntity clientByClientId;
+    private BudgetDeEntity budgetByBudgetId;
 
     @Id
-    @Column(name = "client_id", nullable = false)
+    @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
@@ -22,7 +22,7 @@ public class SharedbudgetPGEntity {
     }
 
     @Id
-    @Column(name = "budget_id", nullable = false)
+    @Column(name = "BUDGET_ID", nullable = false)
     public int getBudgetId() {
         return budgetId;
     }
@@ -36,7 +36,7 @@ public class SharedbudgetPGEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SharedbudgetPGEntity that = (SharedbudgetPGEntity) o;
+        SharedbudgetDeEntity that = (SharedbudgetDeEntity) o;
 
         if (clientId != that.clientId) return false;
         if (budgetId != that.budgetId) return false;
@@ -52,22 +52,22 @@ public class SharedbudgetPGEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
+    public ClientEntityDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "budget_id", referencedColumnName = "id", nullable = false)
-    public BudgetPGEntity getBudgetByBudgetId() {
+    @JoinColumn(name = "BUDGET_ID", referencedColumnName = "ID", nullable = false)
+    public BudgetDeEntity getBudgetByBudgetId() {
         return budgetByBudgetId;
     }
 
-    public void setBudgetByBudgetId(BudgetPGEntity budgetByBudgetId) {
+    public void setBudgetByBudgetId(BudgetDeEntity budgetByBudgetId) {
         this.budgetByBudgetId = budgetByBudgetId;
     }
 }

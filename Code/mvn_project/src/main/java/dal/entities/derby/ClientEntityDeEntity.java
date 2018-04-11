@@ -1,11 +1,13 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
+
+import dal.ientites.IDALClientEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
-public class ClientPGEntity implements dal.ientites.IDALClient {
+@Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")
+public class ClientEntityDeEntity implements IDALClientEntity {
     private int id;
     private String username;
     private String email;
@@ -13,15 +15,15 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     private boolean isactivated;
     private String activationkey;
     private String salt;
-    private Collection<BankaccountPGEntity> bankaccountsById;
-    private Collection<BudgetPGEntity> budgetsById;
-    private Collection<CategoryPGEntity> categoriesById;
-    private Collection<DebtPGEntity> debtsById;
-    private Collection<DebtPGEntity> debtsById_0;
-    private Collection<SharedbudgetPGEntity> sharedbudgetsById;
+    private Collection<BankaccountDeEntity> bankaccountsById;
+    private Collection<BudgetDeEntity> budgetsById;
+    private Collection<CategoryDeEntity> categoriesById;
+    private Collection<DebtDeEntity> debtsById;
+    private Collection<DebtDeEntity> debtsById_0;
+    private Collection<SharedbudgetDeEntity> sharedbudgetsById;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -31,7 +33,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "USERNAME", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -41,7 +43,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "EMAIL", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -51,7 +53,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "PASSWORD", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }
@@ -61,7 +63,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "isactivated", nullable = false)
+    @Column(name = "ISACTIVATED", nullable = false)
     public boolean isIsactivated() {
         return isactivated;
     }
@@ -71,7 +73,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "activationkey", nullable = true, length = 50)
+    @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
@@ -81,7 +83,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @Basic
-    @Column(name = "salt", nullable = false, length = 50)
+    @Column(name = "SALT", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }
@@ -90,11 +92,12 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
         this.salt = salt;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClientPGEntity that = (ClientPGEntity) o;
+        ClientEntityDeEntity that = (ClientEntityDeEntity) o;
 
         if (id != that.id) return false;
         if (isactivated != that.isactivated) return false;
@@ -108,6 +111,7 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (username != null ? username.hashCode() : 0);
@@ -120,56 +124,56 @@ public class ClientPGEntity implements dal.ientites.IDALClient {
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<BankaccountPGEntity> getBankaccountsById() {
+    public Collection<BankaccountDeEntity> getBankaccountsById() {
         return bankaccountsById;
     }
 
-    public void setBankaccountsById(Collection<BankaccountPGEntity> bankaccountsById) {
+    public void setBankaccountsById(Collection<BankaccountDeEntity> bankaccountsById) {
         this.bankaccountsById = bankaccountsById;
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<BudgetPGEntity> getBudgetsById() {
+    public Collection<BudgetDeEntity> getBudgetsById() {
         return budgetsById;
     }
 
-    public void setBudgetsById(Collection<BudgetPGEntity> budgetsById) {
+    public void setBudgetsById(Collection<BudgetDeEntity> budgetsById) {
         this.budgetsById = budgetsById;
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<CategoryPGEntity> getCategoriesById() {
+    public Collection<CategoryDeEntity> getCategoriesById() {
         return categoriesById;
     }
 
-    public void setCategoriesById(Collection<CategoryPGEntity> categoriesById) {
+    public void setCategoriesById(Collection<CategoryDeEntity> categoriesById) {
         this.categoriesById = categoriesById;
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<DebtPGEntity> getDebtsById() {
+    public Collection<DebtDeEntity> getDebtsById() {
         return debtsById;
     }
 
-    public void setDebtsById(Collection<DebtPGEntity> debtsById) {
+    public void setDebtsById(Collection<DebtDeEntity> debtsById) {
         this.debtsById = debtsById;
     }
 
     @OneToMany(mappedBy = "clientByClientId1")
-    public Collection<DebtPGEntity> getDebtsById_0() {
+    public Collection<DebtDeEntity> getDebtsById_0() {
         return debtsById_0;
     }
 
-    public void setDebtsById_0(Collection<DebtPGEntity> debtsById_0) {
+    public void setDebtsById_0(Collection<DebtDeEntity> debtsById_0) {
         this.debtsById_0 = debtsById_0;
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<SharedbudgetPGEntity> getSharedbudgetsById() {
+    public Collection<SharedbudgetDeEntity> getSharedbudgetsById() {
         return sharedbudgetsById;
     }
 
-    public void setSharedbudgetsById(Collection<SharedbudgetPGEntity> sharedbudgetsById) {
+    public void setSharedbudgetsById(Collection<SharedbudgetDeEntity> sharedbudgetsById) {
         this.sharedbudgetsById = sharedbudgetsById;
     }
 }

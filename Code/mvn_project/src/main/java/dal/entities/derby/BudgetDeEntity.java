@@ -1,12 +1,12 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "budget", schema = "moneythoring", catalog = "moneythoring")
-public class BudgetPGEntity {
+@Table(name = "BUDGET", schema = "MONEYTHORING", catalog = "")
+public class BudgetDeEntity {
     private int id;
     private String name;
     private double amount;
@@ -16,13 +16,13 @@ public class BudgetPGEntity {
     private Date endingdate;
     private Integer gap;
     private int clientId;
-    private ClientEntityPGEntity clientByClientId;
-    private Collection<CategoriesbudgetPGEntity> categoriesbudgetsById;
-    private Collection<IotransactionPGEntity> iotransactionsById;
-    private Collection<SharedbudgetPGEntity> sharedbudgetsById;
+    private ClientEntityDeEntity clientByClientId;
+    private Collection<CategoriesbudgetDeEntity> categoriesbudgetsById;
+    private Collection<IotransactionDeEntity> iotransactionsById;
+    private Collection<SharedbudgetDeEntity> sharedbudgetsById;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -32,7 +32,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -42,7 +42,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "amount", nullable = false, precision = 0)
+    @Column(name = "AMOUNT", nullable = false, precision = 0)
     public double getAmount() {
         return amount;
     }
@@ -52,7 +52,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "isshared", nullable = false)
+    @Column(name = "ISSHARED", nullable = false)
     public boolean isIsshared() {
         return isshared;
     }
@@ -62,7 +62,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "isrecurrent", nullable = false)
+    @Column(name = "ISRECURRENT", nullable = false)
     public boolean isIsrecurrent() {
         return isrecurrent;
     }
@@ -72,7 +72,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "startingdate", nullable = false)
+    @Column(name = "STARTINGDATE", nullable = false)
     public Date getStartingdate() {
         return startingdate;
     }
@@ -82,7 +82,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "endingdate", nullable = false)
+    @Column(name = "ENDINGDATE", nullable = false)
     public Date getEndingdate() {
         return endingdate;
     }
@@ -92,7 +92,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "gap", nullable = true)
+    @Column(name = "GAP", nullable = true)
     public Integer getGap() {
         return gap;
     }
@@ -102,7 +102,7 @@ public class BudgetPGEntity {
     }
 
     @Basic
-    @Column(name = "client_id", nullable = false)
+    @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
@@ -116,7 +116,7 @@ public class BudgetPGEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BudgetPGEntity that = (BudgetPGEntity) o;
+        BudgetDeEntity that = (BudgetDeEntity) o;
 
         if (id != that.id) return false;
         if (Double.compare(that.amount, amount) != 0) return false;
@@ -149,39 +149,39 @@ public class BudgetPGEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
+    public ClientEntityDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @OneToMany(mappedBy = "budgetByBudgetId")
-    public Collection<CategoriesbudgetPGEntity> getCategoriesbudgetsById() {
+    public Collection<CategoriesbudgetDeEntity> getCategoriesbudgetsById() {
         return categoriesbudgetsById;
     }
 
-    public void setCategoriesbudgetsById(Collection<CategoriesbudgetPGEntity> categoriesbudgetsById) {
+    public void setCategoriesbudgetsById(Collection<CategoriesbudgetDeEntity> categoriesbudgetsById) {
         this.categoriesbudgetsById = categoriesbudgetsById;
     }
 
     @OneToMany(mappedBy = "budgetByBudgetId")
-    public Collection<IotransactionPGEntity> getIotransactionsById() {
+    public Collection<IotransactionDeEntity> getIotransactionsById() {
         return iotransactionsById;
     }
 
-    public void setIotransactionsById(Collection<IotransactionPGEntity> iotransactionsById) {
+    public void setIotransactionsById(Collection<IotransactionDeEntity> iotransactionsById) {
         this.iotransactionsById = iotransactionsById;
     }
 
     @OneToMany(mappedBy = "budgetByBudgetId")
-    public Collection<SharedbudgetPGEntity> getSharedbudgetsById() {
+    public Collection<SharedbudgetDeEntity> getSharedbudgetsById() {
         return sharedbudgetsById;
     }
 
-    public void setSharedbudgetsById(Collection<SharedbudgetPGEntity> sharedbudgetsById) {
+    public void setSharedbudgetsById(Collection<SharedbudgetDeEntity> sharedbudgetsById) {
         this.sharedbudgetsById = sharedbudgetsById;
     }
 }

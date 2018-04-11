@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="dal.entities.derby.BankaccountDeEntity" table="BANKACCOUNT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="namebank">
+            <column name="NAMEBANK" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="typeaccount">
+            <column name="TYPEACCOUNT" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="isdefault">
+            <column name="ISDEFAULT" sql-type="boolean(1)"/>
+        </property>
+        <property name="isvisible">
+            <column name="ISVISIBLE" sql-type="boolean(1)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+        <set name="iotransactionsById" inverse="true">
+            <key>
+                <column name="BANKACCOUNT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.IotransactionDeEntity"/>
+        </set>
+    </class>
+    <class name="dal.entities.derby.BudgetDeEntity" table="BUDGET" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="isshared">
+            <column name="ISSHARED" sql-type="boolean(1)"/>
+        </property>
+        <property name="isrecurrent">
+            <column name="ISRECURRENT" sql-type="boolean(1)"/>
+        </property>
+        <property name="startingdate">
+            <column name="STARTINGDATE" sql-type="date(10)"/>
+        </property>
+        <property name="endingdate">
+            <column name="ENDINGDATE" sql-type="date(10)"/>
+        </property>
+        <property name="gap">
+            <column name="GAP" sql-type="integer(10)" not-null="true"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+        <set name="categoriesbudgetsById" inverse="true">
+            <key>
+                <column name="BUDGET_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.CategoriesbudgetDeEntity"/>
+        </set>
+        <set name="iotransactionsById" inverse="true">
+            <key>
+                <column name="BUDGET_ID" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.IotransactionDeEntity"/>
+        </set>
+        <set name="sharedbudgetsById" inverse="true">
+            <key>
+                <column name="BUDGET_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.SharedbudgetDeEntity"/>
+        </set>
+    </class>
+    <class name="dal.entities.derby.CategoriesbudgetDeEntity" table="CATEGORIESBUDGET" schema="MONEYTHORING">
+        <composite-id mapped="true" class="dal.entities.derby.CategoriesbudgetDeEntityPK">
+            <key-property name="categoryId">
+                <column name="CATEGORY_ID" sql-type="integer(10)"/>
+            </key-property>
+            <key-property name="budgetId">
+                <column name="BUDGET_ID" sql-type="integer(10)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="categoryByCategoryId" class="dal.entities.derby.CategoryDeEntity">
+            <column name="CATEGORY_ID"/>
+        </many-to-one>
+        <many-to-one name="budgetByBudgetId" class="dal.entities.derby.BudgetDeEntity">
+            <column name="BUDGET_ID"/>
+        </many-to-one>
+    </class>
+    <class name="dal.entities.derby.CategoryDeEntity" table="CATEGORY" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="colour">
+            <column name="COLOUR" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isdefault">
+            <column name="ISDEFAULT" sql-type="boolean(1)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+        <set name="categoriesbudgetsById" inverse="true">
+            <key>
+                <column name="CATEGORY_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.CategoriesbudgetDeEntity"/>
+        </set>
+        <set name="iotransactionsById" inverse="true">
+            <key>
+                <column name="CATEGORY_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.IotransactionDeEntity"/>
+        </set>
+    </class>
+    <class name="dal.entities.derby.ClientEntityDeEntity" table="CLIENT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="username">
+            <column name="USERNAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="password">
+            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isactivated">
+            <column name="ISACTIVATED" sql-type="boolean(1)"/>
+        </property>
+        <property name="activationkey">
+            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="SALT" sql-type="varchar(50)" length="50"/>
+        </property>
+        <set name="bankaccountsById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.BankaccountDeEntity"/>
+        </set>
+        <set name="budgetsById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.BudgetDeEntity"/>
+        </set>
+        <set name="categoriesById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.CategoryDeEntity"/>
+        </set>
+        <set name="debtsById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.DebtDeEntity"/>
+        </set>
+        <set name="debtsById_0" inverse="true">
+            <key>
+                <column name="CLIENT_ID1" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.DebtDeEntity"/>
+        </set>
+        <set name="sharedbudgetsById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.SharedbudgetDeEntity"/>
+        </set>
+    </class>
+    <class name="dal.entities.derby.DebtDeEntity" table="DEBT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="description">
+            <column name="DESCRIPTION" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="isincome">
+            <column name="ISINCOME" sql-type="boolean(1)"/>
+        </property>
+        <property name="expirationdate">
+            <column name="EXPIRATIONDATE" sql-type="date(10)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="clientId1">
+            <column name="CLIENT_ID1" sql-type="integer(10)" not-null="true"/>
+        </property>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+        <many-to-one name="clientByClientId1" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID1" not-null="true"/>
+        </many-to-one>
+    </class>
+    <class name="dal.entities.derby.IotransactionDeEntity" table="IOTRANSACTION" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="description">
+            <column name="DESCRIPTION" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="datetransaction">
+            <column name="DATETRANSACTION" sql-type="date(10)"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="currency">
+            <column name="CURRENCY" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isincome">
+            <column name="ISINCOME" sql-type="boolean(1)"/>
+        </property>
+        <property name="categoryId">
+            <column name="CATEGORY_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="bankaccountId">
+            <column name="BANKACCOUNT_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="budgetId">
+            <column name="BUDGET_ID" sql-type="integer(10)" not-null="true"/>
+        </property>
+        <many-to-one name="categoryByCategoryId" class="dal.entities.derby.CategoryDeEntity">
+            <column name="CATEGORY_ID"/>
+        </many-to-one>
+        <many-to-one name="bankaccountByBankaccountId" class="dal.entities.derby.BankaccountDeEntity">
+            <column name="BANKACCOUNT_ID"/>
+        </many-to-one>
+        <many-to-one name="budgetByBudgetId" class="dal.entities.derby.BudgetDeEntity">
+            <column name="BUDGET_ID" not-null="true"/>
+        </many-to-one>
+        <set name="recurrencesById" inverse="true">
+            <key>
+                <column name="IOTRANSACTION_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.RecurrenceDeEntity"/>
+        </set>
+    </class>
+    <class name="dal.entities.derby.RecurrenceDeEntity" table="RECURRENCE" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="gap">
+            <column name="GAP" sql-type="integer(10)"/>
+        </property>
+        <property name="nextdate">
+            <column name="NEXTDATE" sql-type="date(10)"/>
+        </property>
+        <property name="iotransactionId">
+            <column name="IOTRANSACTION_ID" sql-type="integer(10)"/>
+        </property>
+        <many-to-one name="iotransactionByIotransactionId" class="dal.entities.derby.IotransactionDeEntity">
+            <column name="IOTRANSACTION_ID"/>
+        </many-to-one>
+    </class>
+    <class name="dal.entities.derby.SharedbudgetDeEntity" table="SHAREDBUDGET" schema="MONEYTHORING">
+        <composite-id mapped="true" class="dal.entities.derby.SharedbudgetDeEntityPK">
+            <key-property name="clientId">
+                <column name="CLIENT_ID" sql-type="integer(10)"/>
+            </key-property>
+            <key-property name="budgetId">
+                <column name="BUDGET_ID" sql-type="integer(10)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+        <many-to-one name="budgetByBudgetId" class="dal.entities.derby.BudgetDeEntity">
+            <column name="BUDGET_ID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

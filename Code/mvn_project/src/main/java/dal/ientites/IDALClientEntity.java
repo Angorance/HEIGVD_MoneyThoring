@@ -4,7 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
-public interface IDALClient {
+public interface IDALClientEntity {
     @Id
     @Column(name = "id", nullable = false)
     int getId();

@@ -30,7 +30,7 @@
         <property name="clientId">
             <column name="client_id" sql-type="integer"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id"/>
         </many-to-one>
         <set name="iotransactionsById" inverse="true">
@@ -68,7 +68,7 @@
         <property name="clientId">
             <column name="client_id" sql-type="integer"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id"/>
         </many-to-one>
         <set name="categoriesbudgetsById" inverse="true">
@@ -123,7 +123,7 @@
         <property name="clientId">
             <column name="client_id" sql-type="integer"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id"/>
         </many-to-one>
         <set name="categoriesbudgetsById" inverse="true">
@@ -139,7 +139,7 @@
             <one-to-many not-found="ignore" class="dal.entities.pgsql.IotransactionPGEntity"/>
         </set>
     </class>
-    <class name="dal.entities.pgsql.ClientPGEntity" table="client" schema="moneythoring" catalog="moneythoring">
+    <class name="dal.entities.pgsql.ClientEntityPGEntity" table="client" schema="moneythoring" catalog="moneythoring">
         <id name="id">
             <column name="id" sql-type="integer"/>
         </id>
@@ -223,10 +223,10 @@
         <property name="clientId1">
             <column name="client_id1" sql-type="integer" not-null="true"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id"/>
         </many-to-one>
-        <many-to-one name="clientByClientId1" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId1" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id1" not-null="true"/>
         </many-to-one>
     </class>
@@ -306,7 +306,7 @@
                 <column name="budget_id" sql-type="integer"/>
             </key-property>
         </composite-id>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPGEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientEntityPGEntity">
             <column name="client_id"/>
         </many-to-one>
         <many-to-one name="budgetByBudgetId" class="dal.entities.pgsql.BudgetPGEntity">
