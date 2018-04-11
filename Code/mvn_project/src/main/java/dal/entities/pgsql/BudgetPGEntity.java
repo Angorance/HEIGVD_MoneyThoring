@@ -16,7 +16,7 @@ public class BudgetPGEntity {
     private Date endingdate;
     private Integer gap;
     private int clientId;
-    private ClientEntityPGEntity clientByClientId;
+    private ClientPGEntity clientByClientId;
     private Collection<CategoriesbudgetPGEntity> categoriesbudgetsById;
     private Collection<IotransactionPGEntity> iotransactionsById;
     private Collection<SharedbudgetPGEntity> sharedbudgetsById;
@@ -150,11 +150,11 @@ public class BudgetPGEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    public ClientPGEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientPGEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 

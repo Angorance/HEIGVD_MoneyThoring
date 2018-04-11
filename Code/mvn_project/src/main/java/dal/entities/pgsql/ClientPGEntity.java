@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
-public class ClientEntityPGEntity implements IDALClientEntity {
+public class ClientPGEntity implements IDALClientEntity {
     private int id;
     private String username;
     private String email;
@@ -96,7 +96,7 @@ public class ClientEntityPGEntity implements IDALClientEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClientEntityPGEntity that = (ClientEntityPGEntity) o;
+        ClientPGEntity that = (ClientPGEntity) o;
 
         if (id != that.id) return false;
         if (isactivated != that.isactivated) return false;

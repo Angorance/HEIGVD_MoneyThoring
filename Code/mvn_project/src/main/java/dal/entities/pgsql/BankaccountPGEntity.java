@@ -14,7 +14,7 @@ public class BankaccountPGEntity {
     private boolean isdefault;
     private boolean isvisible;
     private int clientId;
-    private ClientEntityPGEntity clientByClientId;
+    private ClientPGEntity clientByClientId;
     private Collection<IotransactionPGEntity> iotransactionsById;
 
     @Id
@@ -134,11 +134,11 @@ public class BankaccountPGEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    public ClientPGEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientPGEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 

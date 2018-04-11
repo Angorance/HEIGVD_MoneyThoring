@@ -12,7 +12,7 @@ public class CategoryPGEntity {
     private boolean isdefault;
     private int clientId;
     private Collection<CategoriesbudgetPGEntity> categoriesbudgetsById;
-    private ClientEntityPGEntity clientByClientId;
+    private ClientPGEntity clientByClientId;
     private Collection<IotransactionPGEntity> iotransactionsById;
 
     @Id
@@ -102,11 +102,11 @@ public class CategoryPGEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    public ClientEntityPGEntity getClientByClientId() {
+    public ClientPGEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityPGEntity clientByClientId) {
+    public void setClientByClientId(ClientPGEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
