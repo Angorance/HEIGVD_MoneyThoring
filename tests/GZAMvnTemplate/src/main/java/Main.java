@@ -7,15 +7,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Iterator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] arg) throws Exception {
-        DerbyWithHibernate.displayClientMail();
+        //DerbyWithHibernate.displayClientMail();
         //PostgresEithHibernate.displayClientMail();
        // ClientRepository.exempleUtilisation();
        // mt.repositories.derby.ClientRepository.exempleUtilisation();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "pgsqlPersistenceUnit" );
+
 
     }
 }

@@ -6,10 +6,18 @@
   <session-factory>
     <property name="connection.url">jdbc:postgresql://192.168.1.110:5432/moneythoring</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
-    <property name="connection.username">postgres</property>
-    <property name="connection.password">Google2018$</property>
       <mapping resource="hibernate.pgsql.mapping.xml"/>
       <mapping class="mt.entitites.postgres.ClientEntity"/>
+      <mapping resource="entitites.test.xml"/>
+      <mapping class="entitites.test.BankaccountEntity"/>
+      <mapping class="entitites.test.BudgetEntity"/>
+      <mapping class="entitites.test.CategoriesbudgetEntity"/>
+      <mapping class="entitites.test.CategoryEntity"/>
+      <mapping class="entitites.test.ClientEntity"/>
+      <mapping class="entitites.test.DebtEntity"/>
+      <mapping class="entitites.test.IotransactionEntity"/>
+      <mapping class="entitites.test.RecurrenceEntity"/>
+      <mapping class="entitites.test.SharedbudgetEntity"/>
 
 
       <!-- DB schema will be updated if needed -->
