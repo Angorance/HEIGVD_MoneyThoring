@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
   <diagramElements name="MoneyThoring">
-    <inheritance id="936">
-      <child>930</child>
+    <inheritance id="5060" innerClass="true">
+      <child>949</child>
       <parent>286</parent>
     </inheritance>
     <inheritance id="935">
       <child>924</child>
       <parent>286</parent>
     </inheritance>
-    <inheritance id="5060" innerClass="true">
-      <child>949</child>
+    <inheritance id="936">
+      <child>930</child>
       <parent>286</parent>
     </inheritance>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="1253" name="">
-      <role componentId="1" name="" visibility="PRIVATE">
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="5076" name="">
+      <role componentId="930" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
+          <min>0</min>
           <max>2147483647</max>
         </multiplicity>
       </role>
-      <role componentId="1088" name="" visibility="PRIVATE">
+      <role componentId="1365" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
-          <max>2147483647</max>
-        </multiplicity>
-      </role>
-    </association>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="523" name="">
-      <role componentId="1" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>1</min>
+          <min>0</min>
           <max>1</max>
         </multiplicity>
       </role>
-      <role componentId="311" name="" visibility="PRIVATE">
+    </association>
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="5061" name="">
+      <role componentId="1088" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
+          <min>0</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+      <role componentId="1365" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
           <max>2147483647</max>
         </multiplicity>
       </role>
@@ -55,83 +55,45 @@
         </multiplicity>
       </role>
     </association>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="5061" name="">
-      <role componentId="1088" name="" visibility="PRIVATE">
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="523" name="">
+      <role componentId="1" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>0</min>
-          <max>2147483647</max>
-        </multiplicity>
-      </role>
-      <role componentId="1365" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>0</min>
-          <max>2147483647</max>
-        </multiplicity>
-      </role>
-    </association>
-    <association aggregation="NONE" direction="BIDIRECTIONAL" id="5076" name="">
-      <role componentId="930" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>0</min>
-          <max>2147483647</max>
-        </multiplicity>
-      </role>
-      <role componentId="1365" name="" visibility="PRIVATE">
-        <multiplicity>
-          <min>0</min>
+          <min>1</min>
           <max>1</max>
         </multiplicity>
       </role>
+      <role componentId="311" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
     </association>
-    <entity entityType="CLASS" id="1365" isAbstract="false" name="Budget" visibility="PUBLIC">
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="1253" name="">
+      <role componentId="1" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+      <role componentId="1088" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="1" isAbstract="false" name="User" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="isShared" type="boolean" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="isReccurent" type="boolean" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="startingDate" type="Date" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="endingDate" type="Date" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="gap" type="int" visibility="PRIVATE"/>
-    </entity>
-    <entity entityType="CLASS" id="1364" isAbstract="false" name="Connect" visibility="PUBLIC">
-      <method isAbstract="false" isStatic="false" name="checkUser" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="checkPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="checkLogin" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="generateSalt" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="generateKey" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="checkEmail" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="checkKey" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="getHashedPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-    </entity>
-    <entity entityType="CLASS" id="1088" isAbstract="false" name="Category" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="colour" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="isDefault" type="boolean" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="getName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getColour" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setColour" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-    </entity>
-    <entity entityType="CLASS" id="949" isAbstract="false" name="Recurrence" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="gaps" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="nextDate" type="Date" visibility="PRIVATE"/>
-    </entity>
-    <entity entityType="CLASS" id="930" isAbstract="false" name="Outgo" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="924" isAbstract="false" name="Income" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="311" isAbstract="false" name="BankAccount" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="type" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="bankName" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="amount" type="double" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="isDefault" type="boolean" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="getName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getBankName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getAmount" returnType="double" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setBankName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setAmount" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="email" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="username" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="isActivated" type="boolean" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="User" returnType="" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getEmail" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getUsername" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setUsername" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setEmail" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="supp" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="286" isAbstract="true" name="Transaction" visibility="PUBLIC">
@@ -153,150 +115,98 @@
       <method isAbstract="false" isStatic="false" name="setCurrency" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="update" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="CLASS" id="1" isAbstract="false" name="User" visibility="PUBLIC">
+    <entity entityType="CLASS" id="311" isAbstract="false" name="BankAccount" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="email" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="username" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="isActivated" type="boolean" visibility="PRIVATE"/>
-      <method is-constructor="true" isAbstract="false" isStatic="false" name="User" returnType="" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getEmail" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getUsername" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setUsername" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setEmail" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="setPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="checkValidation" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="type" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="bankName" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="amount" type="double" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="isDefault" type="boolean" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getBankName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getAmount" returnType="double" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setBankName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setAmount" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="supp" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="924" isAbstract="false" name="Income" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="930" isAbstract="false" name="Outgo" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="949" isAbstract="false" name="Recurrence" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="gaps" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="nextDate" type="Date" visibility="PRIVATE"/>
+    </entity>
+    <entity entityType="CLASS" id="1088" isAbstract="false" name="Category" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="colour" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="isDefault" type="boolean" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getName" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getColour" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setName" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setColour" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="1364" isAbstract="false" name="Connect" visibility="PUBLIC">
       <method isAbstract="false" isStatic="true" name="checkUser" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="true" name="checkPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="checkLogin" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="generateSalt" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="generateKey" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="true" name="checkEmail" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="salt" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="key" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="supp" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="checkKey" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="true" name="getHashedPassword" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="1365" isAbstract="false" name="Budget" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="id" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="isShared" type="boolean" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="isReccurent" type="boolean" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="startingDate" type="Date" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="endingDate" type="Date" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="gap" type="int" visibility="PRIVATE"/>
     </entity>
   </diagramElements>
   <umlView grid="10" name="view no name">
-    <relationView color="-12566464" relationId="5076">
+    <relationView color="-12566464" relationId="1253">
       <line>
         <point>
-          <x>771</x>
-          <y>401</y>
+          <x>181</x>
+          <y>261</y>
         </point>
         <point>
-          <x>851</x>
-          <y>401</y>
+          <x>251</x>
+          <y>331</y>
         </point>
       </line>
       <labelAssociation>
-        <x>815</x>
-        <y>405</y>
+        <x>220</x>
+        <y>300</y>
         <w>0</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
-        <x>775</x>
-        <y>405</y>
+        <x>185</x>
+        <y>265</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
-        <x>815</x>
-        <y>405</y>
+        <x>215</x>
+        <y>335</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>775</x>
-        <y>378</y>
-        <w>21</w>
+        <x>183</x>
+        <y>240</y>
+        <w>22</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>827</x>
-        <y>378</y>
-        <w>23</w>
-        <h>17</h>
-      </multipliciteAssociation>
-    </relationView>
-    <relationView color="-12566464" relationId="5061">
-      <line>
-        <point>
-          <x>401</x>
-          <y>471</y>
-        </point>
-        <point>
-          <x>851</x>
-          <y>471</y>
-        </point>
-      </line>
-      <labelAssociation>
-        <x>630</x>
-        <y>475</y>
-        <w>0</w>
-        <h>17</h>
-      </labelAssociation>
-      <roleAssociation>
-        <x>405</x>
-        <y>475</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <roleAssociation>
-        <x>815</x>
-        <y>475</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <multipliciteAssociation>
-        <x>405</x>
-        <y>448</y>
-        <w>21</w>
-        <h>17</h>
-      </multipliciteAssociation>
-      <multipliciteAssociation>
-        <x>825</x>
-        <y>447</y>
-        <w>21</w>
-        <h>17</h>
-      </multipliciteAssociation>
-    </relationView>
-    <relationView color="-12566464" relationId="5008">
-      <line>
-        <point>
-          <x>401</x>
-          <y>61</y>
-        </point>
-        <point>
-          <x>511</x>
-          <y>61</y>
-        </point>
-      </line>
-      <labelAssociation>
-        <x>460</x>
-        <y>65</y>
-        <w>0</w>
-        <h>17</h>
-      </labelAssociation>
-      <roleAssociation>
-        <x>405</x>
-        <y>65</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <roleAssociation>
-        <x>475</x>
-        <y>65</y>
-        <w>0</w>
-        <h>17</h>
-      </roleAssociation>
-      <multipliciteAssociation>
-        <x>405</x>
-        <y>38</y>
-        <w>8</w>
-        <h>17</h>
-      </multipliciteAssociation>
-      <multipliciteAssociation>
-        <x>485</x>
-        <y>39</y>
-        <w>21</w>
+        <x>227</x>
+        <y>310</y>
+        <w>22</w>
         <h>17</h>
       </multipliciteAssociation>
     </relationView>
@@ -338,61 +248,153 @@
       <multipliciteAssociation>
         <x>216</x>
         <y>38</y>
-        <w>21</w>
+        <w>22</w>
         <h>17</h>
       </multipliciteAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="1253">
+    <relationView color="-12566464" relationId="5008">
       <line>
         <point>
-          <x>181</x>
-          <y>331</y>
+          <x>401</x>
+          <y>61</y>
         </point>
         <point>
-          <x>251</x>
-          <y>331</y>
+          <x>511</x>
+          <y>61</y>
         </point>
       </line>
       <labelAssociation>
-        <x>220</x>
-        <y>335</y>
+        <x>460</x>
+        <y>65</y>
         <w>0</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
-        <x>185</x>
-        <y>335</y>
+        <x>405</x>
+        <y>65</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
-        <x>215</x>
-        <y>335</y>
+        <x>475</x>
+        <y>65</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>183</x>
-        <y>310</y>
-        <w>21</w>
+        <x>405</x>
+        <y>38</y>
+        <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>227</x>
-        <y>310</y>
-        <w>21</w>
+        <x>485</x>
+        <y>39</y>
+        <w>22</w>
         <h>17</h>
       </multipliciteAssociation>
     </relationView>
-    <relationView color="-12566464" relationId="5060">
+    <relationView color="-12566464" relationId="5061">
       <line>
         <point>
-          <x>751</x>
-          <y>61</y>
+          <x>401</x>
+          <y>471</y>
         </point>
         <point>
-          <x>681</x>
-          <y>61</y>
+          <x>851</x>
+          <y>471</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>630</x>
+        <y>475</y>
+        <w>0</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>405</x>
+        <y>475</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>815</x>
+        <y>475</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>405</x>
+        <y>448</y>
+        <w>22</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>825</x>
+        <y>447</y>
+        <w>22</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="5076">
+      <line>
+        <point>
+          <x>771</x>
+          <y>401</y>
+        </point>
+        <point>
+          <x>851</x>
+          <y>401</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>815</x>
+        <y>405</y>
+        <w>0</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>775</x>
+        <y>405</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>815</x>
+        <y>405</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>775</x>
+        <y>378</y>
+        <w>22</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>827</x>
+        <y>378</y>
+        <w>23</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="936">
+      <line>
+        <point>
+          <x>701</x>
+          <y>391</y>
+        </point>
+        <point>
+          <x>701</x>
+          <y>381</y>
+        </point>
+        <point>
+          <x>601</x>
+          <y>381</y>
+        </point>
+        <point>
+          <x>601</x>
+          <y>351</y>
         </point>
       </line>
     </relationView>
@@ -416,72 +418,32 @@
         </point>
       </line>
     </relationView>
-    <relationView color="-12566464" relationId="936">
+    <relationView color="-12566464" relationId="5060">
       <line>
         <point>
-          <x>701</x>
-          <y>391</y>
+          <x>751</x>
+          <y>61</y>
         </point>
         <point>
-          <x>701</x>
-          <y>381</y>
-        </point>
-        <point>
-          <x>601</x>
-          <y>381</y>
-        </point>
-        <point>
-          <x>601</x>
-          <y>351</y>
+          <x>681</x>
+          <y>61</y>
         </point>
       </line>
     </relationView>
-    <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
+    <componentView color="-2079" componentID="1365" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>850</x>
+        <y>330</y>
+        <w>150</w>
+        <h>160</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="1364" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>10</x>
-        <y>40</y>
-        <w>170</w>
-        <h>310</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="286" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>510</x>
-        <y>40</y>
-        <w>170</w>
-        <h>310</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="311" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>240</x>
-        <y>40</y>
-        <w>160</w>
-        <h>250</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="924" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>430</x>
-        <y>390</y>
-        <w>150</w>
-        <h>55</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="930" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>620</x>
-        <y>390</y>
-        <w>150</w>
-        <h>55</h>
-      </geometry>
-    </componentView>
-    <componentView color="-2079" componentID="949" displayAttributes="true" displayDefault="true" displayMethods="true">
-      <geometry>
-        <x>750</x>
-        <y>40</y>
-        <w>150</w>
-        <h>100</h>
+        <y>370</y>
+        <w>180</w>
+        <h>175</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="1088" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -492,20 +454,52 @@
         <h>175</h>
       </geometry>
     </componentView>
-    <componentView color="-2079" componentID="1364" displayAttributes="true" displayDefault="true" displayMethods="true">
+    <componentView color="-2079" componentID="949" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1310</x>
-        <y>10</y>
-        <w>180</w>
-        <h>175</h>
+        <x>750</x>
+        <y>40</y>
+        <w>150</w>
+        <h>100</h>
       </geometry>
     </componentView>
-    <componentView color="-2079" componentID="1365" displayAttributes="true" displayDefault="true" displayMethods="true">
+    <componentView color="-2079" componentID="930" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>850</x>
-        <y>330</y>
+        <x>620</x>
+        <y>390</y>
         <w>150</w>
-        <h>160</h>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="924" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>430</x>
+        <y>390</y>
+        <w>150</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="311" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>240</x>
+        <y>40</y>
+        <w>160</w>
+        <h>250</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="286" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>510</x>
+        <y>40</y>
+        <w>170</w>
+        <h>310</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>10</x>
+        <y>40</y>
+        <w>170</w>
+        <h>220</h>
       </geometry>
     </componentView>
   </umlView>
