@@ -96,12 +96,18 @@ class AccountDisplayer extends GridPane {
 
 
 public class Controller_bankAccount implements Initializable {
+
     @FXML private FlowPane frame_bankAccount;
     @FXML private Button create_button;
 
     public void createButton(ActionEvent actionEvent){
-        AccountDisplayer accountDisplayer = new AccountDisplayer(new BankAccount("Compte courant","Mon compte 6","UBS",5678.95));
+
+        AccountDisplayer accountDisplayer = new AccountDisplayer(
+                new BankAccount("Compte courant","Mon compte 6",
+                        "UBS",5678.95));
+
         add(accountDisplayer);
+
         System.out.println("Compte ajouté");
     }
 
