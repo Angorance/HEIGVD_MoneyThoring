@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://193.134.218.116:5432/moneythoring</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+    <property name="connection.username">postgres</property>
+    <property name="connection.password">Google2018$</property>
+      <mapping resource="hibernate.pgsql.mapping.xml"/>
+      <mapping class="dal.entities.pgsql.BankaccountPGEntity"/>
+      <mapping class="dal.entities.pgsql.BudgetPGEntity"/>
+      <mapping class="dal.entities.pgsql.CategoriesbudgetPGEntity"/>
+      <mapping class="dal.entities.pgsql.CategoryPGEntity"/>
+      <mapping class="dal.entities.pgsql.ClientPGEntity"/>
+      <mapping class="dal.entities.pgsql.DebtPGEntity"/>
+      <mapping class="dal.entities.pgsql.IotransactionPGEntity"/>
+      <mapping class="dal.entities.pgsql.RecurrencePGEntity"/>
+      <mapping class="dal.entities.pgsql.SharedbudgetPGEntity"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
