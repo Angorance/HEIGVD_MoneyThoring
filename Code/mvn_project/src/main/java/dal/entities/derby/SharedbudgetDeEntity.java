@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class SharedbudgetDeEntity {
     private int clientId;
     private int budgetId;
-    private ClientEntityDeEntity clientByClientId;
+    private ClientDeEntity clientByClientId;
     private BudgetDeEntity budgetByBudgetId;
 
     @Id
@@ -53,11 +53,11 @@ public class SharedbudgetDeEntity {
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
-    public ClientEntityDeEntity getClientByClientId() {
+    public ClientDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
+    public void setClientByClientId(ClientDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 

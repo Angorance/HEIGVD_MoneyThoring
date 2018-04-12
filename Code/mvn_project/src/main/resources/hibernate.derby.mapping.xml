@@ -29,7 +29,7 @@
         <property name="clientId">
             <column name="CLIENT_ID" sql-type="integer(10)"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID"/>
         </many-to-one>
         <set name="iotransactionsById" inverse="true">
@@ -67,7 +67,7 @@
         <property name="clientId">
             <column name="CLIENT_ID" sql-type="integer(10)"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID"/>
         </many-to-one>
         <set name="categoriesbudgetsById" inverse="true">
@@ -121,7 +121,7 @@
         <property name="clientId">
             <column name="CLIENT_ID" sql-type="integer(10)"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID"/>
         </many-to-one>
         <set name="categoriesbudgetsById" inverse="true">
@@ -137,7 +137,7 @@
             <one-to-many not-found="ignore" class="dal.entities.derby.IotransactionDeEntity"/>
         </set>
     </class>
-    <class name="dal.entities.derby.ClientEntityDeEntity" table="CLIENT" schema="MONEYTHORING">
+    <class name="dal.entities.derby.ClientDeEntity" table="CLIENT" schema="MONEYTHORING">
         <id name="id">
             <column name="ID" sql-type="integer(10)"/>
         </id>
@@ -221,10 +221,10 @@
         <property name="clientId1">
             <column name="CLIENT_ID1" sql-type="integer(10)" not-null="true"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID"/>
         </many-to-one>
-        <many-to-one name="clientByClientId1" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId1" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID1" not-null="true"/>
         </many-to-one>
     </class>
@@ -301,7 +301,7 @@
                 <column name="BUDGET_ID" sql-type="integer(10)"/>
             </key-property>
         </composite-id>
-        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientEntityDeEntity">
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
             <column name="CLIENT_ID"/>
         </many-to-one>
         <many-to-one name="budgetByBudgetId" class="dal.entities.derby.BudgetDeEntity">

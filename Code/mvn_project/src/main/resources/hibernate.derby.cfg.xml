@@ -11,7 +11,7 @@
       <mapping class="dal.entities.derby.BudgetDeEntity"/>
       <mapping class="dal.entities.derby.CategoriesbudgetDeEntity"/>
       <mapping class="dal.entities.derby.CategoryDeEntity"/>
-      <mapping class="dal.entities.derby.ClientEntityDeEntity"/>
+      <mapping class="dal.entities.derby.ClientDeEntity"/>
       <mapping class="dal.entities.derby.DebtDeEntity"/>
       <mapping class="dal.entities.derby.IotransactionDeEntity"/>
       <mapping class="dal.entities.derby.RecurrenceDeEntity"/>

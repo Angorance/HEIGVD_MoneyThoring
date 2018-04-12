@@ -14,8 +14,8 @@ public class DebtDeEntity {
     private Date expirationdate;
     private int clientId;
     private Integer clientId1;
-    private ClientEntityDeEntity clientByClientId;
-    private ClientEntityDeEntity clientByClientId1;
+    private ClientDeEntity clientByClientId;
+    private ClientDeEntity clientByClientId1;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -135,21 +135,21 @@ public class DebtDeEntity {
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
-    public ClientEntityDeEntity getClientByClientId() {
+    public ClientDeEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    public void setClientByClientId(ClientEntityDeEntity clientByClientId) {
+    public void setClientByClientId(ClientDeEntity clientByClientId) {
         this.clientByClientId = clientByClientId;
     }
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID1", referencedColumnName = "ID")
-    public ClientEntityDeEntity getClientByClientId1() {
+    public ClientDeEntity getClientByClientId1() {
         return clientByClientId1;
     }
 
-    public void setClientByClientId1(ClientEntityDeEntity clientByClientId1) {
+    public void setClientByClientId1(ClientDeEntity clientByClientId1) {
         this.clientByClientId1 = clientByClientId1;
     }
 }
