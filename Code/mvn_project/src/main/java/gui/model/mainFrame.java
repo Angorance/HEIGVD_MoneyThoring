@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class mainFrame /*extends Application*/ {
+public class mainFrame {
 
     public mainFrame(){
         Parent root = null;
@@ -22,16 +22,4 @@ public class mainFrame /*extends Application*/ {
             e.printStackTrace();
         }
     }
-    /*@Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainFrame.fxml"));
-        primaryStage.setTitle("Main Frame");
-        primaryStage.setScene(new Scene(root, 750, 500));
-        primaryStage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }*/
 }
