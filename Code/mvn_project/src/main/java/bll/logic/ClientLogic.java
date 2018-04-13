@@ -2,6 +2,8 @@ package bll.logic;
 
 import bll.model.ClientModel;
 
+import java.util.ArrayList;
+
 /**
  * ClientLogic class.
  * Implements the business logic of the ClientModel. The methods allow to
@@ -14,6 +16,7 @@ import bll.model.ClientModel;
  */
 public class ClientLogic extends ClientModel {
 
+    ArrayList<BankAccountLogic> bankAccounts;
 
     // CONSTRUCTORS
 
@@ -38,6 +41,8 @@ public class ClientLogic extends ClientModel {
         setEmail(email);
         setUsername(username);
         setPassword(password);
+
+        bankAccounts = new ArrayList<BankAccountLogic>();
     }
 
     // SETTERS
@@ -94,6 +99,15 @@ public class ClientLogic extends ClientModel {
         // TODO - Hash password
 
         super.setPassword(hashedPassword);
+    }
+
+    /**
+     * Link a bank account to its client.
+     *
+     * @param ba Bank account to add to the list.
+     */
+    public void addBankAccount(BankAccountLogic ba) {
+        bankAccounts.add(ba);
     }
 
 
