@@ -12,11 +12,11 @@ public class ClientModel {
 
     private int id;
     private int salt;
-    private int key;
 
     private String email;
     private String username;
     private String password;
+    private String key;
 
     // Flag to know if the email was verified.
     private boolean isActivated;
@@ -62,6 +62,15 @@ public class ClientModel {
     }
 
     /**
+     * Get the password of the client.
+     *
+     * @return String containing the password.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Get the ID of the client.
      *
      * @return Int containing the ID.
@@ -84,10 +93,19 @@ public class ClientModel {
      *
      * @return Key for email validation.
      */
-    public int getKey() {
+    public String getKey() {
         return key;
     }
 
+    /**
+     * Get the activated account flag. If this flag is true, it means the email
+     * address of the client was verified.
+     *
+     * @return Activated account flag.
+     */
+    public boolean isActivated() {
+        return isActivated;
+    }
 
     // SETTERS
 
@@ -141,7 +159,7 @@ public class ClientModel {
      *
      * @param key Key generated to validate the email.
      */
-    protected void setKey(int key) {
+    protected void setKey(String key) {
         this.key = key;
     }
 }
