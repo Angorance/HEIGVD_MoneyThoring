@@ -36,7 +36,7 @@ public class Controller_mainFrame implements Initializable {
         drawer.setOnDrawerOpening(event -> drawer.setMouseTransparent(false));
         VBox box = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/lateralMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
             gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();
             loader.setController(controller_lateralMenu);
             box = loader.load();
@@ -69,27 +69,27 @@ public class Controller_mainFrame implements Initializable {
                     switch (node.getAccessibleText()){
                     case "Dashboard" :
                         header_mainFrame.setText("Dashboard");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                     case "Budget" :
                         header_mainFrame.setText("Budget");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                     case "Transaction" :
                         header_mainFrame.setText("Transaction");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                     case "Dept" :
                         header_mainFrame.setText("Dettes");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                     case "BankAccount" :
                         header_mainFrame.setText("Compte bancaire");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                     case "Category" :
                         header_mainFrame.setText("Catégorie");
-                        load("../view/bankAccount.fxml");
+                        load("/gui/view/bankAccount.fxml");
                         break;
                 }
                 } catch (IOException e1) {
