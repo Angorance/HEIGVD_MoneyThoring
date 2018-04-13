@@ -12,10 +12,10 @@ public class ClientModel {
 
     private int id;
 
-    private String salt;
     private String email;
     private String username;
     private String password;
+    private String salt;
     private String key;
 
     // Flag to know if the email was verified.
