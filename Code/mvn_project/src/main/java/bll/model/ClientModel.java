@@ -137,6 +137,15 @@ public class ClientModel {
     }
 
     /**
+     * Set the id of the client.
+     *
+     * @param id ID recovered from the database.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * Change the isActivated flag to true.
      */
     protected void setActivated(boolean newFlag) {
