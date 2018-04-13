@@ -4,7 +4,7 @@ import bll.model.BankAccountModel;
 
 /**
  * ClientLogic class.
- * Implements the business logic of the ClientModel. The methods allow to
+ * Implements the business bll.logic of the ClientModel. The methods allow to
  * change the attributes of the client like his email, his username or his
  * password. Before changing these attributes, the methods check their integrity
  * to avoid data problems.

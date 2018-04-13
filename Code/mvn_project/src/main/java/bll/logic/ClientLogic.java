@@ -3,10 +3,13 @@ package bll.logic;
 import bll.model.ClientModel;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 /**
  * ClientLogic class.
- * Implements the business logic of the ClientModel. The methods allow to
+ * Implements the business bll.logic of the ClientModel. The methods allow to
  * change the attributes of the client like his email, his username or his
  * password. Before changing these attributes, the methods check their integrity
  * to avoid data problems.
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 public class ClientLogic extends ClientModel {
 
     ArrayList<BankAccountLogic> bankAccounts;
+
 
     // CONSTRUCTORS
 
@@ -44,6 +48,19 @@ public class ClientLogic extends ClientModel {
 
         bankAccounts = new ArrayList<BankAccountLogic>();
     }
+
+
+    // GETTERS
+
+    /**
+     * Get the list of bank accounts of the client.
+     *
+     * @return ArrayList of bank accounts.
+     */
+    public ArrayList<BankAccountLogic> getBankAccounts() {
+        return bankAccounts;
+    }
+
 
     // SETTERS
 
@@ -118,51 +135,5 @@ public class ClientLogic extends ClientModel {
      */
     public void supp() {
         // TODO - Suppress the account !
-    }
-
-
-    // INNER CLASS
-
-    public static class Connect {
-
-        /**
-         * Check if the passwords inserted by the client are equals.
-         *
-         * @param pass1 Password asked.
-         * @param pass2 Confirmation password.
-         *
-         * @return True if the client typed same passwords, false otherwise.
-         */
-        public static boolean checkPasswords(String pass1, String pass2) {
-            return pass1.equals(pass2);
-        }
-
-        /**
-         * Check the format of the email entered by the client.
-         * Check if the email is not already contained in the database.
-         *
-         * @param email Email entered by the client.
-         *
-         * @return True if it's a new email with valid format, false otherwise.
-         */
-        public static boolean checkEmail(String email) {
-            // TODO - check format
-            // TODO - check if unique in database
-
-            return false;
-        }
-
-        /**
-         * Check if the username is not already used by another client.
-         *
-         * @param username Username entered by the client.
-         *
-         * @return True is username is not used, false otherwise.
-         */
-        public static boolean checkUsername(String username) {
-            // TODO - check if unique in database
-
-            return false;
-        }
     }
 }
