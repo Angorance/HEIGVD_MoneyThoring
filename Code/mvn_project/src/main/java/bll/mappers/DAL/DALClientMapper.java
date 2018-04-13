@@ -7,7 +7,7 @@ import dal.ientites.IDALClientEntity;
 
 public class DALClientMapper {
     public  static IDALClientEntity toDboPG(ClientLogic bo){
-        ClientPGEntity dboPg = new ClientPGEntity()
+        ClientPGEntity dboPg = new ClientPGEntity();
         dboPg.setId(bo.getId());
         dboPg.setUsername(bo.getUsername());
         dboPg.setEmail(bo.getEmail());
@@ -15,7 +15,7 @@ public class DALClientMapper {
         dboPg.setIsactivated(true);
         dboPg.setActivationkey("");
         dboPg.setSalt("");
-
+        return dboPg;
     }
     public  static IDALClientEntity toDboDe(){return null;}
     public  static ClientModel toBo(IDALClientEntity client){
