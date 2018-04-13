@@ -1,11 +1,4 @@
-package gui.controller;/* ***********************************************
-    HEIG-VD
-    Date : 25.03.2018
-    Nom du fichier : 
-    Auteur(s) : Bryan Curchod
-    But:
-    
- ************************************************* */
+package gui.controller;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Implement the behavior of the hambuger menu. In our case, simply change the style of the clicked button.
+ */
 public class Controller_lateralMenu implements Initializable{
     Button selected;
 
