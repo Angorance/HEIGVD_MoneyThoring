@@ -11,10 +11,10 @@ public class DALClientMapper {
         dboPg.setId(bo.getId());
         dboPg.setUsername(bo.getUsername());
         dboPg.setEmail(bo.getEmail());
-        dboPg.setPassword();
-        dboPg.setIsactivated();
-        dboPg.setActivationkey(bo);
-        dboPg.setSalt(bo.getSalt());
+        dboPg.setPassword("");
+        dboPg.setIsactivated(true);
+        dboPg.setActivationkey("");
+        dboPg.setSalt("");
 
     }
     public  static IDALClientEntity toDboDe(){return null;}
