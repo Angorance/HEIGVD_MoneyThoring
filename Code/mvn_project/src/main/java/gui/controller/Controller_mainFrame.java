@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Implements the behavior of the main frame. Basically, it simply changes the view when we select
+ */
 public class Controller_mainFrame implements Initializable {
     @FXML private Label header_mainFrame;
     @FXML private AnchorPane mainContent;

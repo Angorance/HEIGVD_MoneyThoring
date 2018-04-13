@@ -6,7 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import mt.gui.model.mainFrame;
+import gui.model.mainFrame;
 
 import java.io.IOException;
 
