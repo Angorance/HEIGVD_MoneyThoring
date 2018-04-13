@@ -1,4 +1,4 @@
-package mt.gui.controller;
+package gui.controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -34,7 +34,7 @@ public class Controller_mainFrame implements Initializable {
         VBox box = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/lateralMenu.fxml"));
-            mt.gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();
+            gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();
             loader.setController(controller_lateralMenu);
             box = loader.load();
             drawer.setSidePane(box);

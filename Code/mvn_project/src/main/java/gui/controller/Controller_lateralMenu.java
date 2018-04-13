@@ -1,4 +1,4 @@
-package mt.gui.controller;/* ***********************************************
+package gui.controller;/* ***********************************************
     HEIG-VD
     Date : 25.03.2018
     Nom du fichier : 
