@@ -73,33 +73,43 @@ class BankAccount{
     }
 }
 
-
-class AccountDisplayer extends GridPane {
-    /*Default size*/
-    private final int WIDTH = 100;
-    private final int HEIGHT = 50;
-
-    private Label nameAccount;
-    private Label amountAccount;
-
-    public AccountDisplayer(BankAccount bankAccount) {
-        nameAccount = new Label(bankAccount.getName());
-        amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
-
-        this.add(nameAccount,0,0);
-        this.add(amountAccount,0,1);
-
-        this.getStyleClass().add("AccountDisplay");
-        this.setPrefSize(WIDTH,HEIGHT);
-    }
-}
-
-
 public class Controller_bankAccount implements Initializable {
+
+    /**
+     * class to display a bank account with a GridPane
+     */
+    class AccountDisplayer extends GridPane {
+        /*Default size*/
+        private final int WIDTH = 100;
+        private final int HEIGHT = 50;
+
+        private Label nameAccount;
+        private Label amountAccount;
+
+        /**
+         * Constructor of the class
+         * @param bankAccount   bank account we want to display
+         */
+        public AccountDisplayer(BankAccount bankAccount) {
+
+            nameAccount = new Label(bankAccount.getName());
+            amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
+
+            this.add(nameAccount,0,0);
+            this.add(amountAccount,0,1);
+
+            this.getStyleClass().add("AccountDisplay");
+            this.setPrefSize(WIDTH,HEIGHT);
+        }
+    }
 
     @FXML private FlowPane frame_bankAccount;
     @FXML private Button create_button;
 
+    /**
+     *Event on the button that will load the account creation page
+     * @param actionEvent
+     */
     public void createButton(ActionEvent actionEvent){
 
         AccountDisplayer accountDisplayer = new AccountDisplayer(
