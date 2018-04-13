@@ -19,8 +19,13 @@ public class Controller_loginRegister {
     @FXML private PasswordField login_password;
     @FXML private Label login_incorrect;
 
-    @FXML
-    public void clickLoginButton(ActionEvent actionEvent) throws IOException {
+
+    /**
+     * Event on the button Login
+     * @param actionEvent
+     * @throws IOException
+     */
+    @FXML public void clickLoginButton(ActionEvent actionEvent) throws IOException {
 
         /*Retrieving text input*/
         String email = login_email.getText();
@@ -46,6 +51,10 @@ public class Controller_loginRegister {
     @FXML private PasswordField register_password;
     @FXML private PasswordField register_confirmPassword;
 
+    /**
+     * Event on the button register
+     * @param actionEvent
+     */
     @FXML public void clickRegisterButton(ActionEvent actionEvent) {
 
         /*Retrieving text input*/
