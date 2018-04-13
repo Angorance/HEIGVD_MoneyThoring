@@ -11,8 +11,8 @@ package bll.model;
 public class ClientModel {
 
     private int id;
-    private int salt;
 
+    private String salt;
     private String email;
     private String username;
     private String password;
@@ -53,6 +53,15 @@ public class ClientModel {
     }
 
     /**
+     * Change the email by the given parameter.
+     *
+     * @param email New emal to set.
+     */
+    public void setEmail (String email) {
+        this.email = email;
+    }
+
+    /**
      * Get the username of the client.
      *
      * @return String containing the username.
@@ -84,7 +93,7 @@ public class ClientModel {
      *
      * @return Salt used to hash client's password.
      */
-    public int getSalt() {
+    public String getSalt() {
         return salt;
     }
 
@@ -98,24 +107,33 @@ public class ClientModel {
     }
 
     /**
+     * set the validation key generated to validate email.
+     *
+     * @param  key for email validation.
+     */
+    public void settKey(String key) {
+        this.key = key;
+    }
+
+    /**
      * Get the activated account flag. If this flag is true, it means the email
      * address of the client was verified.
      *
      * @return Activated account flag.
      */
-    public boolean isActivated() {
+    public boolean getIsActivated() {
         return isActivated;
     }
 
     // SETTERS
 
     /**
-     * Change the email by the given parameter.
+     * Change the activation by the given parameter.
      *
-     * @param email New email to set.
+     * @param isActivated New activation to set.
      */
-    protected void setEmail(String email) {
-        this.email = email;
+    public void setIsActivated(Boolean isActivated) {
+        this.isActivated = isActivated;
     }
 
     /**
@@ -123,7 +141,7 @@ public class ClientModel {
      *
      * @param username New username to set.
      */
-    protected void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -132,7 +150,7 @@ public class ClientModel {
      *
      * @param password New password to set.
      */
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -148,7 +166,7 @@ public class ClientModel {
     /**
      * Change the isActivated flag to true.
      */
-    protected void setActivated(boolean newFlag) {
+    public void setActivated(boolean newFlag) {
         isActivated = newFlag;
     }
 
@@ -158,7 +176,7 @@ public class ClientModel {
      *
      * @param salt Salt generated to hash the password.
      */
-    protected void setSalt(int salt) {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 
@@ -168,7 +186,7 @@ public class ClientModel {
      *
      * @param key Key generated to validate the email.
      */
-    protected void setKey(String key) {
+    public void setKey(String key) {
         this.key = key;
     }
 }
