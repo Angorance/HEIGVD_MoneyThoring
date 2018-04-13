@@ -7,7 +7,6 @@ public class ClientTest {
 
     @org.junit.After
     public void tearDown() throws Exception {
-        
     }
 
     @org.junit.Test
