@@ -22,7 +22,8 @@ public class ClientModel {
     private boolean isActivated;
 
 
-    // CONSTRUCTORS
+    // -------------------------------------------------------------------------
+    // CONSTRUCTORS ------------------------------------------------------------
 
     public ClientModel() { }
 
@@ -41,7 +42,8 @@ public class ClientModel {
     }
 
 
-    // GETTERS
+    // -------------------------------------------------------------------------
+    // GETTERS -----------------------------------------------------------------
 
     /**
      * Get the email of the client.
@@ -50,15 +52,6 @@ public class ClientModel {
      */
     public String getEmail() {
         return email;
-    }
-
-    /**
-     * Change the email by the given parameter.
-     *
-     * @param email New emal to set.
-     */
-    public void setEmail (String email) {
-        this.email = email;
     }
 
     /**
@@ -107,15 +100,6 @@ public class ClientModel {
     }
 
     /**
-     * set the validation key generated to validate email.
-     *
-     * @param  key for email validation.
-     */
-    public void settKey(String key) {
-        this.key = key;
-    }
-
-    /**
      * Get the activated account flag. If this flag is true, it means the email
      * address of the client was verified.
      *
@@ -125,15 +109,17 @@ public class ClientModel {
         return isActivated;
     }
 
-    // SETTERS
+
+    // -------------------------------------------------------------------------
+    // SETTERS -----------------------------------------------------------------
 
     /**
-     * Change the activation by the given parameter.
+     * Change the email by the given parameter.
      *
-     * @param isActivated New activation to set.
+     * @param email New email to set.
      */
-    public void setIsActivated(Boolean isActivated) {
-        this.isActivated = isActivated;
+    public void setEmail (String email) {
+        this.email = email;
     }
 
     /**
