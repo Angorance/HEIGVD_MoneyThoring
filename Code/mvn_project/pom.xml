@@ -8,8 +8,8 @@
     <artifactId>App-code</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <dependencies>
 
+    <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
         <dependency>
             <groupId>javax.xml.bind</groupId>

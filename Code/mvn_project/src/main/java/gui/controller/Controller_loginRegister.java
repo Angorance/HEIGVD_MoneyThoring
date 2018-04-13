@@ -10,6 +10,9 @@ import gui.model.mainFrame;
 
 import java.io.IOException;
 
+/**
+ * Controller of the view loginRegister
+ */
 public class Controller_loginRegister {
 
     @FXML private TextField login_email;
@@ -43,8 +46,7 @@ public class Controller_loginRegister {
     @FXML private PasswordField register_password;
     @FXML private PasswordField register_confirmPassword;
 
-    @FXML
-    public void clickRegisterButton(ActionEvent actionEvent) {
+    @FXML public void clickRegisterButton(ActionEvent actionEvent) {
 
         /*Retrieving text input*/
         String lastname = register_username.getText();
@@ -72,10 +74,16 @@ public class Controller_loginRegister {
 
     }
 
+    /**
+     * Closing the window
+     */
     public void closeStage(){
         ((Stage)login_email.getScene().getWindow()).close();
     }
 
+    /**
+     * Loading the main window
+     */
     public void loadMainFrame(){
         closeStage();
         mainFrame mf = new mainFrame();

@@ -12,7 +12,7 @@ public class mainFrame /*extends Application*/ {
     public mainFrame(){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../view/mainFrame.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/gui/view/mainFrame.fxml"));
 
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Main Frame");

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="400.0" prefWidth="650.0" styleClass="pane" stylesheets="@../css/connexion.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_loginRegister">
+<Pane prefHeight="400.0" prefWidth="650.0" styleClass="pane" stylesheets="@/gui/css/connexion.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_loginRegister">
    <children>
       <Label alignment="CENTER" prefWidth="650.0" text="Bienvenue sur MoneyThoring">
          <font>
