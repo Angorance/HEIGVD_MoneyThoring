@@ -1,4 +1,4 @@
-package mt.gui.controller;
+package gui.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

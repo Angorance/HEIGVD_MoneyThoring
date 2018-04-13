@@ -1,4 +1,4 @@
-package mt.gui.model;
+package gui.model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
