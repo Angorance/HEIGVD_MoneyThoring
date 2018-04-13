@@ -13,7 +13,7 @@ public interface IClientRepository {
 
     public Collection<IDALClientEntity> getClients(int page, String sort);
 
-    public void update(IDALClientEntity client);
+    public void update(IDALClientEntity client) throws DALException;
 
     public void addClient(IDALClientEntity client) throws DALException;
 

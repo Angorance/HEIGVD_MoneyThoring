@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
     private static final SessionFactory pgSessionFactory = buildPGSessionFactory();
+    //private static final SessionFactory derbySessionFactory = buildDeSessionFactory();
 
     private static SessionFactory buildPGSessionFactory() {
         try {
@@ -14,7 +15,17 @@ public class HibernateUtil {
         }
     }
 
+    /*private static SessionFactory buildDeSessionFactory() {
+        try {
+            return new Configuration().configure("hibernate.derby.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }*/
+
     public static SessionFactory getPGSessionFactory() {
         return pgSessionFactory;
     }
+
+   // public static  SessionFactory getDerbySessionFactory(){return derbySessionFactory;}
 }

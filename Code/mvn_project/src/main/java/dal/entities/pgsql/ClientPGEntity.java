@@ -3,11 +3,11 @@ package dal.entities.pgsql;
 import dal.ientites.IDALClientEntity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
-public class ClientPGEntity implements IDALClientEntity {
+public class ClientPgEntity implements IDALClientEntity {
     private int id;
     private String username;
     private String email;
@@ -15,12 +15,6 @@ public class ClientPGEntity implements IDALClientEntity {
     private boolean isactivated;
     private String activationkey;
     private String salt;
-    private Collection<BankaccountPGEntity> bankaccountsById;
-    private Collection<BudgetPGEntity> budgetsById;
-    private Collection<CategoryPGEntity> categoriesById;
-    private Collection<DebtPGEntity> debtsById;
-    private Collection<DebtPGEntity> debtsById_0;
-    private Collection<SharedbudgetPGEntity> sharedbudgetsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -92,86 +86,23 @@ public class ClientPGEntity implements IDALClientEntity {
         this.salt = salt;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ClientPGEntity that = (ClientPGEntity) o;
-
-        if (id != that.id) return false;
-        if (isactivated != that.isactivated) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (activationkey != null ? !activationkey.equals(that.activationkey) : that.activationkey != null)
-            return false;
-        if (salt != null ? !salt.equals(that.salt) : that.salt != null) return false;
-
-        return true;
+        ClientPgEntity that = (ClientPgEntity) o;
+        return id == that.id &&
+                isactivated == that.isactivated &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(activationkey, that.activationkey) &&
+                Objects.equals(salt, that.salt);
     }
 
+    @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (isactivated ? 1 : 0);
-        result = 31 * result + (activationkey != null ? activationkey.hashCode() : 0);
-        result = 31 * result + (salt != null ? salt.hashCode() : 0);
-        return result;
-    }
 
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<BankaccountPGEntity> getBankaccountsById() {
-        return bankaccountsById;
-    }
-
-    public void setBankaccountsById(Collection<BankaccountPGEntity> bankaccountsById) {
-        this.bankaccountsById = bankaccountsById;
-    }
-
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<BudgetPGEntity> getBudgetsById() {
-        return budgetsById;
-    }
-
-    public void setBudgetsById(Collection<BudgetPGEntity> budgetsById) {
-        this.budgetsById = budgetsById;
-    }
-
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<CategoryPGEntity> getCategoriesById() {
-        return categoriesById;
-    }
-
-    public void setCategoriesById(Collection<CategoryPGEntity> categoriesById) {
-        this.categoriesById = categoriesById;
-    }
-
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<DebtPGEntity> getDebtsById() {
-        return debtsById;
-    }
-
-    public void setDebtsById(Collection<DebtPGEntity> debtsById) {
-        this.debtsById = debtsById;
-    }
-
-    @OneToMany(mappedBy = "clientByClientId1")
-    public Collection<DebtPGEntity> getDebtsById_0() {
-        return debtsById_0;
-    }
-
-    public void setDebtsById_0(Collection<DebtPGEntity> debtsById_0) {
-        this.debtsById_0 = debtsById_0;
-    }
-
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<SharedbudgetPGEntity> getSharedbudgetsById() {
-        return sharedbudgetsById;
-    }
-
-    public void setSharedbudgetsById(Collection<SharedbudgetPGEntity> sharedbudgetsById) {
-        this.sharedbudgetsById = sharedbudgetsById;
+        return Objects.hash(id, username, email, password, isactivated, activationkey, salt);
     }
 }

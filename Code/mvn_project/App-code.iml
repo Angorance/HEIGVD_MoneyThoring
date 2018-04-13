@@ -5,8 +5,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="hibernate.derby.cfg.xml" />
-          <unit-entry name="hibernate.pgsql.cfg.xml" />
+          <unit-entry name="hibernate.pgsql.cfg.xml" value="55788574-b041-45c4-ae74-fb1554647b98" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.derby.cfg.xml" />
