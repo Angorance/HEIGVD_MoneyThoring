@@ -6,6 +6,9 @@ import dal.ientites.IDALClientEntity;
 
 public class DALClientMapper {
     public static IDALClientEntity toDboPG(ClientModel bo) {
+        if(bo == null){
+            return null;
+        }
         ClientPgEntity dboPg = new ClientPgEntity();
         dboPg.setId(bo.getId());
         dboPg.setUsername(bo.getUsername());
@@ -30,7 +33,9 @@ public class DALClientMapper {
 //    }
 
     public static ClientModel toBo(IDALClientEntity dbo) {
-        // ClientModel bo = new ClientModel();
+        if(dbo == null){
+            return null;
+        }
         ClientModel bo = new ClientModel();
         bo.setId(dbo.getId());
         bo.setUsername(dbo.getUsername());
