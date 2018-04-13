@@ -100,6 +100,15 @@ public class BankAccountModel {
     // SETTERS
 
     /**
+     * Change the id of the bank account by the given one.
+     *
+     * @param id New id to set.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * Change the name of the bank account by the given one.
      *
      * @param name New name to set.

@@ -1,5 +1,6 @@
 package gui.controller;
 
+import gui.model.createBankAccount;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -107,36 +108,48 @@ public class Controller_bankAccount implements Initializable {
     @FXML private Button create_button;
 
     /**
-     *Event on the button that will load the account creation page
+     *Event button that will load the account creation page
      * @param actionEvent
      */
     public void createButton(ActionEvent actionEvent){
 
-        AccountDisplayer accountDisplayer = new AccountDisplayer(
+        //Loading page bank account creation
+        createBankAccount cbk = new createBankAccount();
+        /*AccountDisplayer accountDisplayer = new AccountDisplayer(
                 new BankAccount("Compte courant","Mon compte 6",
                         "UBS",5678.95));
-
-        add(accountDisplayer);
-
-        System.out.println("Compte ajouté");
+          add(accountDisplayer);*/
     }
 
-    public void add(AccountDisplayer accountDisplayer){
+    public void add(String type, String name, String bankName,double amount){
+        BankAccount bankAccount = new BankAccount(type,name,bankName,amount);
+        AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+        addToFrame(accountDisplayer);
+    }
+
+    private void addToFrame(AccountDisplayer accountDisplayer){
         frame_bankAccount.getChildren().add(accountDisplayer);
         FlowPane.setMargin(accountDisplayer,new Insets(5,5,5,5));
     }
 
+
+    /**
+     * Called to initialize a controller after its root element has been completely processed.
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         //Remove all children from FlowPane container (frame_bankAccount)
         frame_bankAccount.getChildren().removeAll();
 
+        //Go through the list of bank accounts and add it to our frame
         for(BankAccount bankAccount : BankAccount.getBankAccounts()){
             AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
-            add(accountDisplayer);
+            addToFrame(accountDisplayer);
         }
 
+        /*Add event at our button*/
         create_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

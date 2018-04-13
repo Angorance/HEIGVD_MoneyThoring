@@ -7,16 +7,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class mainFrame {
+public class createBankAccount {
 
-    public mainFrame(){
+    public createBankAccount(){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/gui/view/mainFrame.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/gui/view/createBankAccount.fxml"));
 
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Main Frame");
-            primaryStage.setScene(new Scene(root, 750, 500));
+            primaryStage.setScene(new Scene(root, 500, 215));
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

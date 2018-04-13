@@ -13,3 +13,15 @@
 .AccountDisplay{
     -fx-background-color: #dedede;
 }
+
+.anchor-pane{
+    -fx-background-color: white;
+}
+
+.return{
+    -fx-background-color: RED
+}
+
+.accept{
+    -fx-background-color: RED
+}
