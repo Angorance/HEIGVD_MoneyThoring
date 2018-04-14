@@ -41,7 +41,7 @@ public class DALClientMapper {
         bo.setUsername(dbo.getUsername());
         bo.setEmail(dbo.getEmail());
         bo.setPassword(dbo.getPassword());
-        bo.setActivated(dbo.isIsactivated());
+        bo.setActivated(dbo.getIsactivated());
         bo.setKey(dbo.getActivationkey());
         bo.setSalt(dbo.getSalt());
         return bo;

@@ -9,7 +9,7 @@ public interface IClientRepository {
 
     public IDALClientEntity getClient(int id) throws DALException;
 
-    public Collection<IDALClientEntity> getClients();
+    public Collection<IDALClientEntity> getClients() throws DALException;
 
     public Collection<IDALClientEntity> getClients(int page, String sort);
 
@@ -17,6 +17,6 @@ public interface IClientRepository {
 
     public void addClient(IDALClientEntity client) throws DALException;
 
-    public void delete(int id);
+    public void delete(int id) throws DALException;
 
 }

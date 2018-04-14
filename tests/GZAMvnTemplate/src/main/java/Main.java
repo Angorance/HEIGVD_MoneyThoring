@@ -17,8 +17,9 @@ public class Main {
         //DerbyWithHibernate.displayClientMail();
         //PostgresEithHibernate.displayClientMail();
        // ClientRepository.exempleUtilisation();
-       // mt.repositories.derby.ClientRepository.exempleUtilisation();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "pgsqlPersistenceUnit" );
+        //
+        mt.repositories.derby.ClientRepository.exempleUtilisation();
+      //  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "pgsqlPersistenceUnit" );
 
 
     }

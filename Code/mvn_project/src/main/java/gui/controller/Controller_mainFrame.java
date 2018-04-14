@@ -32,8 +32,6 @@ public class Controller_mainFrame implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         drawer.setMouseTransparent(true);
-        drawer.setOnDrawerClosing(event -> drawer.setMouseTransparent(true));
-        drawer.setOnDrawerOpening(event -> drawer.setMouseTransparent(false));
         VBox box = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
@@ -46,6 +44,8 @@ public class Controller_mainFrame implements Initializable {
 
             HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
             transition.setRate(-1);
+            drawer.setOnDrawerClosing(event -> {drawer.setMouseTransparent(true);});
+            drawer.setOnDrawerOpening(event -> drawer.setMouseTransparent(false));
             burgerBtn.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
                 transition.setRate(transition.getRate()*-1);
                 transition.play();
@@ -77,7 +77,7 @@ public class Controller_mainFrame implements Initializable {
                         break;
                     case "Transaction" :
                         header_mainFrame.setText("Transaction");
-                        load("/gui/view/bankAccount.fxml");
+                        load("/gui/view/transactionList.fxml");
                         break;
                     case "Dept" :
                         header_mainFrame.setText("Dettes");
@@ -89,7 +89,7 @@ public class Controller_mainFrame implements Initializable {
                         break;
                     case "Category" :
                         header_mainFrame.setText("Catégorie");
-                        load("/gui/view/bankAccount.fxml");
+                        load("/gui/view/categoryList.fxml");
                         break;
                 }
                 } catch (IOException e1) {
@@ -102,7 +102,7 @@ public class Controller_mainFrame implements Initializable {
     private void load(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Controller_bankAccount controller_bankAccount = new Controller_bankAccount();
-        loader.setController(controller_bankAccount);
+        //loader.setController(controller_bankAccount);
         AnchorPane pane = loader.load();
         pane.prefWidthProperty().bind(mainContent.widthProperty());
         pane.prefHeightProperty().bind(mainContent.heightProperty());

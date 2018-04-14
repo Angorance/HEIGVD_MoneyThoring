@@ -1,0 +1,6 @@
+.categoryBackground{
+    -fx-font-size: 15pt;
+    -fx-border-width : 5px ;
+    -fx-border-color: red;
+    -FX-border-radius: 10px;
+}

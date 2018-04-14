@@ -1,16 +1,13 @@
-package dal.entities.pgsql;
+package dal.entities.derby;
 
 import dal.ientites.IDALClientEntity;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
-public class ClientPgEntity implements IDALClientEntity {
-
-
+@Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")
+public class ClientDeEntity implements IDALClientEntity {
     private int id;
     private String username;
     private String email;
@@ -19,8 +16,11 @@ public class ClientPgEntity implements IDALClientEntity {
     private String activationkey;
     private String salt;
 
+    /*@Id
+    @Column(name = "ID", nullable = true)*/
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name="ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -30,7 +30,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "USERNAME", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -40,7 +40,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "EMAIL", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -50,7 +50,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "PASSWORD", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }
@@ -60,7 +60,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "isactivated", nullable = false)
+    @Column(name = "ISACTIVATED", nullable = false)
     public boolean getIsactivated() {
         return isactivated;
     }
@@ -70,7 +70,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "activationkey", nullable = true, length = 50)
+    @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
@@ -80,7 +80,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "salt", nullable = false, length = 50)
+    @Column(name = "SALT", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }
@@ -93,12 +93,12 @@ public class ClientPgEntity implements IDALClientEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientPgEntity that = (ClientPgEntity) o;
-        return id == that.id &&
-                isactivated == that.isactivated &&
+        ClientDeEntity that = (ClientDeEntity) o;
+        return Objects.equals(id, that.id) &&
                 Objects.equals(username, that.username) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(password, that.password) &&
+                Objects.equals(isactivated, that.isactivated) &&
                 Objects.equals(activationkey, that.activationkey) &&
                 Objects.equals(salt, that.salt);
     }

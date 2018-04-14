@@ -10,7 +10,6 @@ public class startFrame extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        System.out.println("test");
         Parent root = FXMLLoader.load(getClass().getResource("/gui/view/loginRegister.fxml"));
         primaryStage.setTitle("MoneyThoring");
         primaryStage.setScene(new Scene(root, 650, 400));

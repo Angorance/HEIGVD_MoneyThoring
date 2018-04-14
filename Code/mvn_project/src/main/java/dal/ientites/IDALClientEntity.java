@@ -31,7 +31,7 @@ public interface IDALClientEntity {
 
     @Basic
     @Column(name = "isactivated", nullable = false)
-    boolean isIsactivated();
+    boolean getIsactivated();
 
     void setIsactivated(boolean isactivated);
 
