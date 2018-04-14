@@ -163,6 +163,29 @@
             <column name="salt" sql-type="varchar(50)" length="50"/>
         </property>
     </class>
+    <class name="dal.entities.derby.ClientDeEntity" table="CLIENT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="username">
+            <column name="USERNAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="password">
+            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isactivated">
+            <column name="ISACTIVATED" sql-type="boolean(1)"/>
+        </property>
+        <property name="activationkey">
+            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="SALT" sql-type="varchar(50)" length="50"/>
+        </property>
+    </class>
     <!--<class name="dal.entities.pgsql.DebtPGEntity" table="debt" schema="moneythoring" catalog="moneythoring">-->
         <!--<id name="id">-->
             <!--<column name="id" sql-type="integer"/>-->

@@ -11,7 +11,7 @@ import org.postgresql.sspi.ISSPIClient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientTest {
+public class ClientPgTest {
 
     public IClientRepository clientRepository;
 
@@ -73,7 +73,7 @@ public class ClientTest {
     }
 
     @org.junit.Test
-    public void getClients() {
+    public void getClients() throws DALException {
         clientRepository = new ClientPgRepository();
         int size = clientRepository.getClients().size();
         int i = 1;
@@ -104,7 +104,7 @@ public class ClientTest {
     }
 
     @org.junit.Test
-    public void delete() {
+    public void delete() throws DALException {
         clientRepository = new ClientPgRepository();
         clientRepository.delete(0);
     }

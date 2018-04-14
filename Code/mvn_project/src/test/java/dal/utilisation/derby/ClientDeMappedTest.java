@@ -1,30 +1,25 @@
-package dal.utilisation.pg;
+package dal.utilisation.derby;
 import bll.mappers.DAL.DALClientMapper;
 import bll.model.ClientModel;
 import dal.dalexception.DALException;
-import dal.entities.pgsql.ClientPgEntity;
-import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-public class ClientMappedTest {
+public class ClientDeMappedTest {
 
     public IClientRepository clientRepository;
 
     public List<ClientModel> listClients =  new ArrayList();
 
 
-    @org.junit.Before
+    @Before
     public void setUp() throws Exception {
         ClientModel clientOne = new ClientModel();
         ClientModel clientTwo = new ClientModel();
@@ -67,11 +62,11 @@ public class ClientMappedTest {
         listClients.add(clientFour);
     }
 
-    @org.junit.After
+    @After
     public void tearDown() throws Exception {
     }
 
-    @org.junit.Test
+    @Test
     public void getClient() throws DALException {
         clientRepository = new ClientPgRepository();
         ClientModel client = DALClientMapper.toBo(clientRepository.getClient(1));
@@ -79,7 +74,7 @@ public class ClientMappedTest {
         Assert.assertNull(client);
     }
 
-    @org.junit.Test
+    @Test
     public void addClient() throws DALException {
         clientRepository = new ClientPgRepository();
         clientRepository.addClient(DALClientMapper.toDboPG(listClients.get(1)));
@@ -87,15 +82,15 @@ public class ClientMappedTest {
         Assert.assertNotNull(client);
     }
 
-    @org.junit.Test
+    @Test
     public void getClients() {
     }
 
-    @org.junit.Test
+    @Test
     public void getClients1() {
     }
 
-    @org.junit.Test
+    @Test
     public void update() throws DALException {
         clientRepository = new ClientPgRepository();
         ClientModel client = DALClientMapper.toBo(clientRepository.getClient(0));
@@ -106,8 +101,8 @@ public class ClientMappedTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void delete() {
-        
+
     }
 }

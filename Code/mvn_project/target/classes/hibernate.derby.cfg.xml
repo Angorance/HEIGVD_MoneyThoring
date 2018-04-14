@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:derby:C:/moneythoring/derbydb</property>
+    <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.DerbyTenSixDialect</property>
+    <!--<property name="hbm2ddl.auto">update</property>-->
+      <mapping class="dal.entities.derby.ClientDeEntity"/>
+      <mapping resource="hibernate.derby.mapping.xml"/>
+
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+
+  </session-factory>
+</hibernate-configuration>

@@ -74,7 +74,7 @@ CREATE TABLE moneythoring.bankAccount (
 -- Table moneythoring.IOTransaction
 -- -----------------------------------------------------
 CREATE TABLE moneythoring.iOTransaction (
-  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 0, INCREMENT BY 1),
+  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   name VARCHAR(50) NOT NULL,
   description VARCHAR(255),
   dateTransaction DATE NOT NULL,
