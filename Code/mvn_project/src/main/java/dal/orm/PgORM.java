@@ -1,6 +1,8 @@
 package dal.orm;
 
+import dal.irepositories.IBankaccountRepository;
 import dal.irepositories.IClientRepository;
+import dal.repositories.pgsql.BankaccountPgRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,6 +14,8 @@ public class PgORM implements IORM {
 
     private IClientRepository clientRepository;
 
+    private IBankaccountRepository bankaccountRepository ;
+
     @Override
     public IClientRepository getClientRepository() {
         if(clientRepository == null)
@@ -19,6 +23,15 @@ public class PgORM implements IORM {
             clientRepository = new ClientPgRepository();
         }
         return clientRepository;
+    }
+
+    @Override
+    public IBankaccountRepository getBankaccountRepository() {
+        if(bankaccountRepository == null)
+        {
+            bankaccountRepository = new BankaccountPgRepository();
+        }
+        return bankaccountRepository;
     }
 
 

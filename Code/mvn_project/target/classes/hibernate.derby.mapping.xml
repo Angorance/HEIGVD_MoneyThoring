@@ -5,11 +5,14 @@
 <hibernate-mapping>
 
     <class name="dal.entities.derby.ClientDeEntity" table="CLIENT" schema="MONEYTHORING">
-        <id name="id">
-            <column name="ID" sql-type="integer(10)"/>
-            <generator class="native" >
-            </generator>
+        <id name="id" column="id" type="int">
+            <generator class="identity"/>
+            <!--<column name="id" sql-type="integer"/>-->
         </id>
+        <!--<id name="id">-->
+            <!--<column name="ID" sql-type="integer(10)"/>-->
+            <!--<generator class="native"/>-->
+        <!--</id>-->
         <property name="username">
             <column name="USERNAME" sql-type="varchar(50)" length="50"/>
         </property>

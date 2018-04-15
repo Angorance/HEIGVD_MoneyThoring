@@ -79,7 +79,7 @@ public class ClientDeRepository implements IClientRepository {
         }
     }
 
-    public Collection<IDALClientEntity> getClients() throws DALException {
+    public List<IDALClientEntity> getClients() throws DALException {
         Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
         List<IDALClientEntity> clients = null;
@@ -106,7 +106,7 @@ public class ClientDeRepository implements IClientRepository {
         return clients;
     }
 
-    public Collection<IDALClientEntity> getClients(int page, String sort) {
+    public List<IDALClientEntity> getClients(int page, String sort) {
         return null;
     }
 

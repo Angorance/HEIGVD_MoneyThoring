@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
+@Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")
 public class ClientPgEntity implements IDALClientEntity {
 
 
@@ -19,8 +19,9 @@ public class ClientPgEntity implements IDALClientEntity {
     private String activationkey;
     private String salt;
 
+
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
@@ -30,7 +31,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "USERNAME", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -40,7 +41,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "EMAIL", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -50,7 +51,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "PASSWORD", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }
@@ -70,7 +71,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "activationkey", nullable = true, length = 50)
+    @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
@@ -80,7 +81,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "salt", nullable = false, length = 50)
+    @Column(name = "SALT", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }

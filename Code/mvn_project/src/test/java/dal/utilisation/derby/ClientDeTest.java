@@ -63,6 +63,11 @@ public class ClientDeTest {
         listClients.add(clientTwo);
         listClients.add(clientTree);
         listClients.add(clientFour);
+
+        clientRepository = new ClientDeRepository();
+        clientRepository.addClient(clientOne);
+        clientRepository.addClient(clientTwo);
+        clientRepository.addClient(clientTree);
     }
 
     @org.junit.After
@@ -72,9 +77,9 @@ public class ClientDeTest {
 
     @org.junit.Test
     public void getClient() throws DALException {
-        clientRepository = new ClientDeRepository();
-        IDALClientEntity client = clientRepository.getClient(1);
-        Assert.assertNull(client);
+//        clientRepository = new ClientDeRepository();
+//        IDALClientEntity client = clientRepository.getClient(1);
+//        Assert.assertNull(client);
 
     }
 

@@ -4,14 +4,15 @@ import dal.dalexception.DALException;
 import dal.ientites.IDALClientEntity;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IClientRepository {
 
     public IDALClientEntity getClient(int id) throws DALException;
 
-    public Collection<IDALClientEntity> getClients() throws DALException;
+    public List<IDALClientEntity> getClients() throws DALException;
 
-    public Collection<IDALClientEntity> getClients(int page, String sort);
+    public List<IDALClientEntity> getClients(int page, String sort);
 
     public void update(IDALClientEntity client) throws DALException;
 

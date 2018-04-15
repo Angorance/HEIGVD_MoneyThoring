@@ -1,11 +1,10 @@
 package dal.repositories.pgsql;
 
 import dal.dalexception.DALException;
-import dal.entities.pgsql.ClientPgEntity;
-import dal.ientites.IDALClientEntity;
-import dal.irepositories.IClientRepository;
+import dal.entities.pgsql.BankaccountPgEntity;
+import dal.ientites.IDALBankaccountEntity;
+import dal.irepositories.IBankaccountRepository;
 import dal.util.HibernateUtil;
-import jdk.jshell.spi.ExecutionControl;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,17 +13,19 @@ import org.hibernate.criterion.Restrictions;
 import java.util.Collection;
 import java.util.List;
 
-public class ClientPgRepository implements IClientRepository {
+public class BankaccountPgRepository implements IBankaccountRepository {
 
-    public IDALClientEntity getClient(int id) throws DALException {
+
+    @Override
+    public IDALBankaccountEntity getBankaccount(int id) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        ClientPgEntity client = null;
+        BankaccountPgEntity bankaccont = null;
         try {
 
             tr = session.beginTransaction();
 
-            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+            bankaccont = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
@@ -44,48 +45,18 @@ public class ClientPgRepository implements IClientRepository {
                 System.out.println(he.toString());
             }
         }
-        return client;
+        return bankaccont;
     }
 
-    public void addClient(IDALClientEntity client) throws DALException {
-
+    @Override
+    public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-
-        //vérifier avec les is instance et
-        ClientPgEntity newClient = null;
-        if (client.getClass() == ClientPgEntity.class)
-            newClient = (ClientPgEntity) client;
-        else
-            throw new DALException();
-
-        try {
-            tr = session.beginTransaction();
-            session.save(client);
-            tr.commit();
-        } catch (RuntimeException e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
-        }
-    }
-
-    public List<IDALClientEntity> getClients() {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        List<IDALClientEntity> clients = null;
+        List<IDALBankaccountEntity> bankaccounts = null;
         try {
             tr = session.beginTransaction();
 
-            clients = session.createQuery("from ClientPgEntity").list();
+            bankaccounts = session.createQuery("from BankaccountPgEntity").list();
 
             tr.commit();
         } catch (Exception e) {
@@ -102,20 +73,22 @@ public class ClientPgRepository implements IClientRepository {
                 System.out.println(he.toString());
             }
         }
-        return clients;
+        return bankaccounts;
     }
 
-    public List<IDALClientEntity> getClients(int page, String sort) {
-       return null;
+    @Override
+    public List<IDALBankaccountEntity> getBankaccounts(int page, String sort) {
+        return null;
     }
 
+    @Override
+    public void update(IDALBankaccountEntity bankaccount) throws DALException {
 
-    public void update(IDALClientEntity client) throws DALException{
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        ClientPgEntity clientPg = null;
-        if (client.getClass() == ClientPgEntity.class)
-            clientPg = (ClientPgEntity) client;
+        BankaccountPgEntity bankaccountPG = null;
+        if (bankaccount.getClass() == BankaccountPgEntity.class)
+            bankaccountPG = (BankaccountPgEntity) bankaccount;
         else
             throw new DALException();
 
@@ -123,10 +96,41 @@ public class ClientPgRepository implements IClientRepository {
 
             tr = session.beginTransaction();
 
-            session.update(clientPg);
+            session.update(bankaccountPG);
 
             tr.commit();
         } catch (Exception e) {
+            try {
+                tr.rollback();
+            } catch (HibernateException he) {
+                throw he;
+            }
+        } finally {
+            try {
+                //session.flush();
+                session.close();
+            } catch (HibernateException he) {
+                System.out.println(he.toString());
+            }
+        }
+    }
+
+    @Override
+    public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
+        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Transaction tr = null;
+
+        IDALBankaccountEntity newbankaccount = null;
+        if (bankaccount.getClass() == BankaccountPgEntity.class)
+            newbankaccount = (BankaccountPgEntity) bankaccount;
+        else
+            throw new DALException();
+
+        try {
+            tr = session.beginTransaction();
+            session.save(newbankaccount);
+            tr.commit();
+        } catch (RuntimeException e) {
             try {
                 tr.rollback();
             } catch (HibernateException he) {
@@ -146,20 +150,19 @@ public class ClientPgRepository implements IClientRepository {
     public void delete(int id) {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        IDALClientEntity client = null;
+        IDALBankaccountEntity bankaccount = null;
         try {
 
             tr = session.beginTransaction();
 
-            client = (ClientPgEntity)session.createCriteria(ClientPgEntity.class)
+            bankaccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(client);
+            session.delete(bankaccount);
 
             tr.commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             try {
                 tr.rollback();
             } catch (HibernateException he) {

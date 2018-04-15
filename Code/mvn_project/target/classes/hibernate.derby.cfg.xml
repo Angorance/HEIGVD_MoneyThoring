@@ -10,8 +10,10 @@
     <!--<property name="hbm2ddl.auto">update</property>-->
       <mapping class="dal.entities.derby.ClientDeEntity"/>
       <mapping resource="hibernate.derby.mapping.xml"/>
+    <mapping resource="hibernate.pgsql.mapping.xml"/>
+    <mapping class="dal.entities.pgsql.ClientPgEntity"/>
 
-      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->

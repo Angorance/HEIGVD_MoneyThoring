@@ -10,6 +10,7 @@
     <property name="connection.password">Google2018$</property>
     <mapping resource="hibernate.pgsql.mapping.xml"/>
     <mapping class="dal.entities.pgsql.ClientPgEntity"/>
+    <mapping class="dal.entities.pgsql.BankaccountPgEntity"/>
 
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
