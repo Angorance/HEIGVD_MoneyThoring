@@ -51,12 +51,12 @@ public class BankaccountDeTest {
         clientTree.setActivationkey("Tree");
         clientTree.setSalt("Tree");
 
-        clientFour.setUsername("One");
-        clientFour.setEmail("One");
-        clientFour.setPassword("One");
+        clientFour.setUsername("Four");
+        clientFour.setEmail("Four");
+        clientFour.setPassword("Four");
         clientFour.setIsactivated(true);
-        clientFour.setActivationkey("One");
-        clientFour.setSalt("One");
+        clientFour.setActivationkey("Four");
+        clientFour.setSalt("Four");
 
         listClients.add(clientOne);
         listClients.add(clientTwo);
@@ -78,17 +78,17 @@ public class BankaccountDeTest {
 
         bankaccountEntityOne.setClientId(((IDALClientEntity) clientRepository.getClients().get(0)).getId());
         bankaccountEntityOne.setAmount(100);
-        bankaccountEntityOne.setName("compte clientOne");
-        bankaccountEntityOne.setNamebank("bank yverdon");
-        bankaccountEntityOne.setTypeaccount("cmpte commun");
+        bankaccountEntityOne.setName("compte clientOnsde");
+        bankaccountEntityOne.setNamebank("bank yvsdfaerdon");
+        bankaccountEntityOne.setTypeaccount("cmptasdfe commun");
         bankaccountEntityOne.setIsdefault(true);
         bankaccountEntityOne.setIsvisible(true);
 
         bankaccountEntityTwo.setClientId(((IDALClientEntity) clientRepository.getClients().get(1)).getId());
         bankaccountEntityTwo.setAmount(200);
-        bankaccountEntityTwo.setName("compte clientTwo");
-        bankaccountEntityTwo.setNamebank("bank yverdon");
-        bankaccountEntityTwo.setTypeaccount("cmpte commun");
+        bankaccountEntityTwo.setName("compte clieqwfntTwo");
+        bankaccountEntityTwo.setNamebank("bank reqryverdon");
+        bankaccountEntityTwo.setTypeaccount("cmwergpte commun");
         bankaccountEntityTwo.setIsdefault(true);
         bankaccountEntityTwo.setIsvisible(true);
 
@@ -144,6 +144,11 @@ public class BankaccountDeTest {
 
     @org.junit.Test
     public void getClients() throws DALException {
+        bankaccountRepository = new BankaccountDeRepository();
+        BankaccountDeEntity bae = (BankaccountDeEntity) bankaccountRepository.getBankaccounts().get(2);
+        ClientDeEntity clie = (ClientDeEntity) bae.getClientByClientId();
+        System.out.println(clie.getEmail());
+
     }
 
     @org.junit.Test

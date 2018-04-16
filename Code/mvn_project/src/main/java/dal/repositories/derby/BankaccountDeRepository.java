@@ -17,7 +17,7 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
         BankaccountDeEntity bankaccont = null;
         try {
@@ -49,13 +49,13 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
     @Override
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
         List<IDALBankaccountEntity> bankaccounts = null;
         try {
             tr = session.beginTransaction();
 
-            bankaccounts = session.createQuery("from BankaccountPgEntity").list();
+            bankaccounts = session.createQuery("from BankaccountDeEntity Entity").list();
 
             tr.commit();
         } catch (Exception e) {
@@ -83,11 +83,11 @@ public class BankaccountDeRepository implements IBankaccountRepository {
     @Override
     public void update(IDALBankaccountEntity bankaccount) throws DALException {
 
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
-        BankaccountDeEntity bankaccountPG = null;
+        BankaccountDeEntity bankaccountDe = null;
         if (bankaccount.getClass() == BankaccountDeEntity.class)
-            bankaccountPG = (BankaccountDeEntity) bankaccount;
+            bankaccountDe = (BankaccountDeEntity) bankaccount;
         else
             throw new DALException();
 
@@ -95,7 +95,7 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
             tr = session.beginTransaction();
 
-            session.update(bankaccountPG);
+            session.update(bankaccountDe);
 
             tr.commit();
         } catch (Exception e) {
@@ -116,7 +116,7 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
     @Override
     public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
 
         IDALBankaccountEntity newbankaccount = null;
@@ -147,7 +147,7 @@ public class BankaccountDeRepository implements IBankaccountRepository {
     }
 
     public void delete(int id) {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;
         IDALBankaccountEntity bankaccount = null;
         try {
