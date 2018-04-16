@@ -15,6 +15,15 @@ import java.util.Collection;
 import java.util.List;
 
 public class ClientDeRepository implements IClientRepository {
+
+    private Session session;
+    private Transaction transaction;
+
+    public  ClientDeRepository(Session session, Transaction transaction){
+        this.session = session;
+        this.transaction = transaction;
+    }
+
     public IDALClientEntity getClient(int id) throws DALException {
         Session session = HibernateUtil.getDeSessionFactory().openSession();
         Transaction tr = null;

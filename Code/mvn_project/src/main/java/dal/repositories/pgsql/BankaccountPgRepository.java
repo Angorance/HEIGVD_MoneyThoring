@@ -14,6 +14,17 @@ import java.util.Collection;
 import java.util.List;
 
 public class BankaccountPgRepository implements IBankaccountRepository {
+
+    private Session session;
+    private Transaction transaction;
+
+    public  BankaccountPgRepository(Session session, Transaction transaction){
+        this.session = session;
+        this.transaction = transaction;
+    }
+
+
+
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();

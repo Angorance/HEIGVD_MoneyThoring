@@ -15,6 +15,13 @@ import java.util.Collection;
 import java.util.List;
 
 public class ClientPgRepository implements IClientRepository {
+    private Session session;
+    private Transaction transaction;
+
+    public  ClientPgRepository(Session session, Transaction transaction){
+        this.session = session;
+        this.transaction = transaction;
+    }
 
     public IDALClientEntity getClient(int id) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
