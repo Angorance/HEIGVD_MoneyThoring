@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" stylesheets="@/gui/css/category.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -24,10 +25,10 @@
                </effect>
             </Pane>
          </children></TilePane>
-      <JFXButton fx:id="btnAdd" layoutX="534.0" layoutY="361.0" style="-fx-background-color: green;" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
-         <effect>
-            <DropShadow color="#000000c0" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
-         </effect>
+      <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="534.0" layoutY="361.0" prefHeight="40.0" prefWidth="40.0" ripplerFill="WHITE" style="-fx-background-radius: 50; -fx-background-color: green;" text="+" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
       </JFXButton>
    </children>
 </AnchorPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="653.0" prefWidth="729.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BarChart fx:id="barChart" layoutX="14.0" layoutY="114.0" prefHeight="400.0" prefWidth="696.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <AnchorPane layoutX="29.0" layoutY="90.0" prefHeight="137.0" prefWidth="677.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Label alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="39.0" prefWidth="679.0" text="Un compte bancaire" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="25.0" layoutY="25.0" text="&lt;-" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+   </children>
+</AnchorPane>

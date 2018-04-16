@@ -32,4 +32,62 @@
             <column name="SALT" sql-type="varchar(50)" length="50"/>
         </property>
     </class>
+    <class name="dal.entities.derby.BankaccountDeEntity" table="BANKACCOUNT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="namebank">
+            <column name="NAMEBANK" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="typeaccount">
+            <column name="TYPEACCOUNT" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="isdefault">
+            <column name="ISDEFAULT" sql-type="boolean(1)"/>
+        </property>
+        <property name="isvisible">
+            <column name="ISVISIBLE" sql-type="boolean(1)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <many-to-one name="clientByClientId" class="dal.entities.derby.ClientDeEntity">
+            <column name="CLIENT_ID"/>
+        </many-to-one>
+    </class>
+    <class name="dal.entities.derby.ClientDeEntity" table="CLIENT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+        </id>
+        <property name="username">
+            <column name="USERNAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="password">
+            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isactivated">
+            <column name="ISACTIVATED" sql-type="boolean(1)"/>
+        </property>
+        <property name="activationkey">
+            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="SALT" sql-type="varchar(50)" length="50"/>
+        </property>
+        <set name="bankaccountsById" inverse="true">
+            <key>
+                <column name="CLIENT_ID"/>
+            </key>
+            <one-to-many not-found="ignore" class="dal.entities.derby.BankaccountDeEntity"/>
+        </set>
+    </class>
 </hibernate-mapping>

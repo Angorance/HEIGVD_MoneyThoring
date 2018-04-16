@@ -1,7 +1,7 @@
-package dal.repositories.pgsql;
+package dal.repositories.derby;
 
 import dal.dalexception.DALException;
-import dal.entities.pgsql.BankaccountPgEntity;
+import dal.entities.derby.BankaccountDeEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.irepositories.IBankaccountRepository;
 import dal.util.HibernateUtil;
@@ -10,20 +10,21 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.Collection;
 import java.util.List;
 
-public class BankaccountPgRepository implements IBankaccountRepository {
+public class BankaccountDeRepository implements IBankaccountRepository {
+
+
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        BankaccountPgEntity bankaccont = null;
+        BankaccountDeEntity bankaccont = null;
         try {
 
             tr = session.beginTransaction();
 
-            bankaccont = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            bankaccont = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
@@ -84,9 +85,9 @@ public class BankaccountPgRepository implements IBankaccountRepository {
 
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        BankaccountPgEntity bankaccountPG = null;
-        if (bankaccount.getClass() == BankaccountPgEntity.class)
-            bankaccountPG = (BankaccountPgEntity) bankaccount;
+        BankaccountDeEntity bankaccountPG = null;
+        if (bankaccount.getClass() == BankaccountDeEntity.class)
+            bankaccountPG = (BankaccountDeEntity) bankaccount;
         else
             throw new DALException();
 
@@ -119,8 +120,8 @@ public class BankaccountPgRepository implements IBankaccountRepository {
         Transaction tr = null;
 
         IDALBankaccountEntity newbankaccount = null;
-        if (bankaccount.getClass() == BankaccountPgEntity.class)
-            newbankaccount = (BankaccountPgEntity) bankaccount;
+        if (bankaccount.getClass() == BankaccountDeEntity.class)
+            newbankaccount = (BankaccountDeEntity) bankaccount;
         else
             throw new DALException();
 
@@ -153,7 +154,7 @@ public class BankaccountPgRepository implements IBankaccountRepository {
 
             tr = session.beginTransaction();
 
-            bankaccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            bankaccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 

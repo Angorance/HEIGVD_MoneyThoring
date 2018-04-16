@@ -7,13 +7,14 @@
     <property name="connection.url">jdbc:derby:C:/moneythoring/derbydb</property>
     <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
     <property name="hibernate.dialect">org.hibernate.dialect.DerbyTenSixDialect</property>
-    <!--<property name="hbm2ddl.auto">update</property>-->
+      <!--<property name="hbm2ddl.auto">update</property>-->
       <mapping class="dal.entities.derby.ClientDeEntity"/>
       <mapping resource="hibernate.derby.mapping.xml"/>
     <mapping resource="hibernate.pgsql.mapping.xml"/>
     <mapping class="dal.entities.pgsql.ClientPgEntity"/>
+      <mapping class="dal.entities.derby.BankaccountDeEntity"/>
 
-    <!-- <property name="connection.username"/> -->
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->

@@ -1,23 +1,19 @@
-package dal.utilisation.pg;
+package dal.utilisation.derby;
 
-import bll.model.ClientModel;
 import dal.dalexception.DALException;
-import dal.entities.pgsql.BankaccountPgEntity;
-import dal.entities.pgsql.ClientPgEntity;
+import dal.entities.derby.BankaccountDeEntity;
+import dal.entities.derby.ClientDeEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IBankaccountRepository;
 import dal.irepositories.IClientRepository;
-import dal.repositories.pgsql.BankaccountPgRepository;
-import dal.repositories.pgsql.ClientPgRepository;
-import org.junit.Assert;
+import dal.repositories.derby.BankaccountDeRepository;
+import dal.repositories.derby.ClientDeRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-public class BankaccountPgTest {
+public class BankaccountDeTest {
 
     // public IBankaccountRepository bankaccountRepository;
 
@@ -29,10 +25,10 @@ public class BankaccountPgTest {
     @org.junit.Before
     public void setUp() throws Exception {
 
-        IDALClientEntity clientOne = new ClientPgEntity();
-        IDALClientEntity clientTwo = new ClientPgEntity();
-        IDALClientEntity clientTree = new ClientPgEntity();
-        IDALClientEntity clientFour = new ClientPgEntity();
+        IDALClientEntity clientOne = new ClientDeEntity();
+        IDALClientEntity clientTwo = new ClientDeEntity();
+        IDALClientEntity clientTree = new ClientDeEntity();
+        IDALClientEntity clientFour = new ClientDeEntity();
 
         clientOne.setUsername("One");
         clientOne.setEmail("One");
@@ -68,17 +64,17 @@ public class BankaccountPgTest {
         listClients.add(clientFour);
 
 
-        clientRepository = new ClientPgRepository();
+        clientRepository = new ClientDeRepository();
         for (IDALClientEntity cli : listClients) {
             System.out.println(cli.toString());
             clientRepository.addClient(cli);
         }
 
 
-        IDALBankaccountEntity bankaccountEntityOne = new BankaccountPgEntity();
-        IDALBankaccountEntity bankaccountEntityTwo = new BankaccountPgEntity();
-        IDALBankaccountEntity bankaccountEntityTree = new BankaccountPgEntity();
-        IDALBankaccountEntity bankaccountEntityFour = new BankaccountPgEntity();
+        IDALBankaccountEntity bankaccountEntityOne = new BankaccountDeEntity();
+        IDALBankaccountEntity bankaccountEntityTwo = new BankaccountDeEntity();
+        IDALBankaccountEntity bankaccountEntityTree = new BankaccountDeEntity();
+        IDALBankaccountEntity bankaccountEntityFour = new BankaccountDeEntity();
 
         bankaccountEntityOne.setClientId(((IDALClientEntity) clientRepository.getClients().get(0)).getId());
         bankaccountEntityOne.setAmount(100);
@@ -118,7 +114,7 @@ public class BankaccountPgTest {
         listBankAccounts.add(bankaccountEntityFour);
 
 
-        bankaccountRepository = new BankaccountPgRepository();
+        bankaccountRepository = new BankaccountDeRepository();
         for (IDALBankaccountEntity cli : listBankAccounts) {
             bankaccountRepository.addBankaccount(cli);
         }
@@ -129,12 +125,12 @@ public class BankaccountPgTest {
     @org.junit.After
     public void tearDown() throws Exception {
 
-        bankaccountRepository = new BankaccountPgRepository();
+        bankaccountRepository = new BankaccountDeRepository();
         for (IDALBankaccountEntity cli : bankaccountRepository.getBankaccounts()) {
             bankaccountRepository.delete(cli.getId());
         }
 
-        clientRepository = new ClientPgRepository();
+        clientRepository = new ClientDeRepository();
         for (IDALClientEntity cli : clientRepository.getClients()) {
             bankaccountRepository.delete(cli.getId());
         }
