@@ -12,8 +12,6 @@ public interface IClientRepository {
 
     public List<IDALClientEntity> getClients() throws DALException;
 
-    public List<IDALClientEntity> getClients(int page, String sort);
-
     public void update(IDALClientEntity client) throws DALException;
 
     public void addClient(IDALClientEntity client) throws DALException;

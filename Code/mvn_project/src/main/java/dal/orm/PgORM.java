@@ -22,9 +22,9 @@ public class PgORM implements IORM {
 
     @Override
     public IClientRepository getClientRepository() {
-        if (clientRepository == null) {
+        //if (clientRepository == null) {
             clientRepository = new ClientPgRepository(session, transaction);
-        }
+       // }
         return clientRepository;
     }
 
@@ -37,13 +37,13 @@ public class PgORM implements IORM {
     }
 
     private void openSession() throws DALException {
-        if(sessionFactory == null) {
+        //if(sessionFactory == null) {
             try {
                 sessionFactory = new Configuration().configure("hibernate.pgsql.cfg.xml").buildSessionFactory();
             } catch (Throwable ex) {
                 throw new DALException(ex);
             }
-        }
+        //}
         try{
             session = sessionFactory.openSession();
         }catch (Exception e){
