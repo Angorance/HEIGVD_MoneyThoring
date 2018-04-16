@@ -1,5 +1,6 @@
 package dal.entities.derby;
 
+import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
 
 import javax.persistence.*;
@@ -16,13 +17,8 @@ public class ClientDeEntity implements IDALClientEntity {
     private boolean isactivated;
     private String activationkey;
     private String salt;
-    private Collection<BankaccountDeEntity> bankaccountsById;
+    private Collection<IDALBankaccountEntity> bankaccountsById;
 
-    @Basic
-    @Column(name = "ISACTIVATED", nullable = false)
-    public boolean isIsactivated() {
-        return isactivated;
-    }
 
     /*@Id
     @Column(name = "ID", nullable = true)*/
@@ -118,11 +114,11 @@ public class ClientDeEntity implements IDALClientEntity {
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public Collection<BankaccountDeEntity> getBankaccountsById() {
+    public Collection<IDALBankaccountEntity> getBankaccountsById() {
         return bankaccountsById;
     }
 
-    public void setBankaccountsById(Collection<BankaccountDeEntity> bankaccountsById) {
+    public void setBankaccountsById(Collection<IDALBankaccountEntity> bankaccountsById) {
         this.bankaccountsById = bankaccountsById;
     }
 }

@@ -2,12 +2,14 @@ package dal.orm;
 
 import dal.irepositories.IBankaccountRepository;
 import dal.irepositories.IClientRepository;
+import dal.repositories.derby.BankaccountDeRepository;
 import dal.repositories.derby.ClientDeRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 
 public class DerbyORM implements IORM {
 
     private IClientRepository clientRepository;
+    private IBankaccountRepository bankaccountRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -19,6 +21,9 @@ public class DerbyORM implements IORM {
 
     @Override
     public IBankaccountRepository getBankaccountRepository() {
-        return null;
+        if(bankaccountRepository == null){
+            bankaccountRepository = new BankaccountDeRepository();
+        }
+        return bankaccountRepository;
     }
 }

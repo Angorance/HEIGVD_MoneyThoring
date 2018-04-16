@@ -1,9 +1,11 @@
 package dal.entities.pgsql;
 
+import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -88,6 +90,11 @@ public class ClientPgEntity implements IDALClientEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Override
+    public Collection<IDALBankaccountEntity> getBankaccountsById() {
+        return null;
     }
 
     @Override
