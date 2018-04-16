@@ -1,5 +1,7 @@
 package dal.utilisation.derby;
 
+import bll.mappers.DAL.DALClientMapper;
+import bll.model.ClientModel;
 import dal.dalexception.DALException;
 import dal.entities.derby.BankaccountDeEntity;
 import dal.entities.derby.ClientDeEntity;
@@ -9,6 +11,10 @@ import dal.irepositories.IBankaccountRepository;
 import dal.irepositories.IClientRepository;
 import dal.repositories.derby.BankaccountDeRepository;
 import dal.repositories.derby.ClientDeRepository;
+import dal.util.HibernateUtil;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,10 +150,35 @@ public class BankaccountDeTest {
 
     @org.junit.Test
     public void getClients() throws DALException {
-        bankaccountRepository = new BankaccountDeRepository();
-        BankaccountDeEntity bae = (BankaccountDeEntity) bankaccountRepository.getBankaccounts().get(2);
-        ClientDeEntity clie = (ClientDeEntity) bae.getClientByClientId();
-        System.out.println(clie.getEmail());
+        Session session = HibernateUtil.getDeSessionFactory().openSession();
+        Transaction tr = null;
+        List<IDALClientEntity> clients = null;
+        try {
+            tr = session.beginTransaction();
+
+            clients = session.createQuery("from ClientDeEntity").list();
+            IDALClientEntity cli = clients.get(1);
+
+
+
+            int i =  ((ClientDeEntity)cli).getBankaccountsById().size();
+
+
+            tr.commit();
+        } catch (Exception e) {
+            try {
+                tr.rollback();
+            } catch (HibernateException he) {
+                throw he;
+            }
+        } finally {
+            try {
+                //session.flush();
+                session.close();
+            } catch (HibernateException he) {
+                throw new DALException(he);
+            }
+        }
 
     }
 

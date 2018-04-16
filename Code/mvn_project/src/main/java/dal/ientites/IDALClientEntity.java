@@ -1,8 +1,13 @@
 package dal.ientites;
 
+import dal.entities.derby.BankaccountDeEntity;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Collection;
+import java.util.List;
 
 public interface IDALClientEntity {
     @Id
@@ -46,6 +51,10 @@ public interface IDALClientEntity {
     String getSalt();
 
     void setSalt(String salt);
+
+    @OneToMany(mappedBy = "clientByClientId")
+    public Collection<IDALBankaccountEntity> getBankaccountsById();
+
 
     @Override
     boolean equals(Object o);

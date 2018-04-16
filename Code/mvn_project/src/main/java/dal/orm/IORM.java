@@ -6,4 +6,6 @@ import dal.irepositories.IClientRepository;
 public interface IORM {
     IClientRepository getClientRepository();
     IBankaccountRepository getBankaccountRepository();
+
+
 }
