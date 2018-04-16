@@ -18,48 +18,27 @@ public class ClientPgRepository implements IClientRepository {
     private Session session;
     private Transaction transaction;
 
-    public  ClientPgRepository(Session session, Transaction transaction){
+    public ClientPgRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
     }
 
     public IDALClientEntity getClient(int id) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
+
         ClientPgEntity client = null;
+
         try {
-
-            tr = session.beginTransaction();
-
             client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            tr.commit();
         } catch (Exception e) {
-
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
+
         return client;
     }
 
     public void addClient(IDALClientEntity client) throws DALException {
-
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-
-        //vérifier avec les is instance et
         ClientPgEntity newClient = null;
         if (client.getClass() == ClientPgEntity.class)
             newClient = (ClientPgEntity) client;
@@ -67,59 +46,29 @@ public class ClientPgRepository implements IClientRepository {
             throw new DALException();
 
         try {
-            tr = session.beginTransaction();
-            session.save(client);
-            tr.commit();
-        } catch (RuntimeException e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+            session.save(newClient);
+        } catch (Exception e) {
+            throw new DALException(e);
         }
     }
 
-    public List<IDALClientEntity> getClients() {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
+    public List<IDALClientEntity> getClients() throws DALException {
+
         List<IDALClientEntity> clients = null;
         try {
-            tr = session.beginTransaction();
+
 
             clients = session.createQuery("from ClientPgEntity").list();
 
-            tr.commit();
+
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
         return clients;
     }
 
-    public List<IDALClientEntity> getClients(int page, String sort) {
-       return null;
-    }
+    public void update(IDALClientEntity client) throws DALException {
 
-
-    public void update(IDALClientEntity client) throws DALException{
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
         ClientPgEntity clientPg = null;
         if (client.getClass() == ClientPgEntity.class)
             clientPg = (ClientPgEntity) client;
@@ -128,58 +77,29 @@ public class ClientPgRepository implements IClientRepository {
 
         try {
 
-            tr = session.beginTransaction();
 
             session.update(clientPg);
 
-            tr.commit();
+
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
 
     }
 
-    public void delete(int id) {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
+    public void delete(int id) throws DALException {
+
         IDALClientEntity client = null;
         try {
-
-            tr = session.beginTransaction();
-
-            client = (ClientPgEntity)session.createCriteria(ClientPgEntity.class)
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
             session.delete(client);
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
 
-            tr.commit();
-        }
-        catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
-        }
 
     }
 }
