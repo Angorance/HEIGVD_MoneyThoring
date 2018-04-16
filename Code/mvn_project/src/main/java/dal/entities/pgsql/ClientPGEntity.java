@@ -92,7 +92,6 @@ public class ClientPgEntity implements IDALClientEntity {
         this.salt = salt;
     }
 
-    @Override
     public Collection<IDALBankaccountEntity> getBankaccountsById() {
         return null;
     }

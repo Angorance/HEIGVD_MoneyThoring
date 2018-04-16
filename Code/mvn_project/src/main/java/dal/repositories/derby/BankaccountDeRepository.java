@@ -14,6 +14,15 @@ import java.util.List;
 
 public class BankaccountDeRepository implements IBankaccountRepository {
 
+    private Session session;
+    private Transaction transaction;
+
+    public  BankaccountDeRepository(Session session, Transaction transaction){
+        this.session = session;
+        this.transaction = transaction;
+    }
+
+
 
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {

@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class DALBankaccountMapper {
+
     public static IDALBankaccountEntity toDboPG(BankAccountModel bo) {
         if (bo == null) {
             return null;

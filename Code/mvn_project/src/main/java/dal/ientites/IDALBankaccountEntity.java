@@ -53,9 +53,4 @@ public interface IDALBankaccountEntity {
 
     void setClientId(int clientId);
 
-    @ManyToOne
-    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
-    IDALClientEntity getClientByClientId();
-
-    void setClientByClientId(IDALClientEntity clientByClientId);
 }

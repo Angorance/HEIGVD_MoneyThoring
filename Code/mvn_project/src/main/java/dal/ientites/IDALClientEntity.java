@@ -52,9 +52,6 @@ public interface IDALClientEntity {
 
     void setSalt(String salt);
 
-    @OneToMany(mappedBy = "clientByClientId")
-    public Collection<IDALBankaccountEntity> getBankaccountsById();
-
 
     @Override
     boolean equals(Object o);

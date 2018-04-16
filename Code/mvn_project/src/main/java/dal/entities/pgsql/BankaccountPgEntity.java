@@ -136,14 +136,12 @@ public class BankaccountPgEntity implements IDALBankaccountEntity {
         return Objects.hash(id, name, namebank, typeaccount, amount, isdefault, isvisible, clientId);
     }
 
-    @Override
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID", nullable = false)
     public IDALClientEntity getClientByClientId() {
         return clientByClientId;
     }
 
-    @Override
     public void setClientByClientId(IDALClientEntity clientByClientId) {
         this.clientByClientId = (ClientPgEntity) clientByClientId;
     }
