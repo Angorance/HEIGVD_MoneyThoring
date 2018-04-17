@@ -1,78 +1,23 @@
 package gui.controller;
 
 import gui.model.createBankAccount;
+import bll.model.BankAccountModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-
-
-class BankAccount{
-    private static LinkedList<BankAccount> bankAccounts = new LinkedList<BankAccount>();
-    public static int no = 1;
-    private int id;
-    private String type;
-    private String name;
-    private String bankName;
-    private double amount;
-
-    public BankAccount(String type, String name, String bankName,double amount){
-        id = no++;
-        this.type = type;
-        this.name = name;
-        this.bankName = bankName;
-        this.amount = amount;
-        bankAccounts.add(this);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public static LinkedList<BankAccount> getBankAccounts() {
-        return bankAccounts;
-    }
-}
 
 public class Controller_bankAccount implements Initializable {
 
@@ -91,7 +36,7 @@ public class Controller_bankAccount implements Initializable {
          * Constructor of the class
          * @param bankAccount   bank account we want to display
          */
-        public AccountDisplayer(BankAccount bankAccount) {
+        public AccountDisplayer(BankAccountModel bankAccount) {
 
             nameAccount = new Label(bankAccount.getName());
             amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
@@ -106,25 +51,38 @@ public class Controller_bankAccount implements Initializable {
 
     @FXML private FlowPane frame_bankAccount;
     @FXML private Button create_button;
+    @FXML private AnchorPane paneform;
 
     /**
-     *Event button that will load the account creation page
+     * Event on the create button that will load the account creation page
      * @param actionEvent
      */
     public void createButton(ActionEvent actionEvent){
 
-        //Loading page bank account creation
-        createBankAccount cbk = new createBankAccount();
-        /*AccountDisplayer accountDisplayer = new AccountDisplayer(
-                new BankAccount("Compte courant","Mon compte 6",
-                        "UBS",5678.95));
-          add(accountDisplayer);*/
+        // we load the form fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
+        Controller_createBankAccount cba = new Controller_createBankAccount(this);
+        loader.setController(cba);
+
+        paneform.setVisible(true);
+        paneform.setMouseTransparent(false);
+        try {
+            AnchorPane pane = loader.load();
+            // todo faire en sorte que le pane prenne les dimmensions du parent (paneform)
+            paneform.getChildren().add(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void add(String type, String name, String bankName,double amount){
-        BankAccount bankAccount = new BankAccount(type,name,bankName,amount);
-        AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
-        addToFrame(accountDisplayer);
+    public void add(BankAccountModel bc){
+        paneform.getChildren().clear();
+        paneform.setMouseTransparent(true);
+        paneform.setVisible(false);
+        if(bc != null) {
+            AccountDisplayer accountDisplayer = new AccountDisplayer(bc);
+            addToFrame(accountDisplayer);
+        }
     }
 
     private void addToFrame(AccountDisplayer accountDisplayer){
@@ -142,12 +100,14 @@ public class Controller_bankAccount implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //Remove all children from FlowPane container (frame_bankAccount)
         frame_bankAccount.getChildren().removeAll();
+        paneform.setVisible(false);
+        paneform.setMouseTransparent(true);
 
         //Go through the list of bank accounts and add it to our frame
-        for(BankAccount bankAccount : BankAccount.getBankAccounts()){
+        /*for(BankAccountModel bankAccount : BankAccount.getBankAccounts()){
             AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
             addToFrame(accountDisplayer);
-        }
+        }*/
 
         /*Add event at our button*/
         create_button.setOnAction(new EventHandler<ActionEvent>() {
