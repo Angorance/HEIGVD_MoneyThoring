@@ -4,7 +4,7 @@ import bll.model.BankAccountModel;
 
 /**
  * ClientLogic class.
- * Implements the business bll.logic of the ClientModel. The methods allow to
+ * Implements the business logic of the ClientModel. The methods allow to
  * change the attributes of the client like his email, his username or his
  * password. Before changing these attributes, the methods check their integrity
  * to avoid data problems.
@@ -14,7 +14,13 @@ import bll.model.BankAccountModel;
  */
 public class BankAccountLogic extends BankAccountModel {
 
-    public BankAccountLogic() {}
+    public BankAccountLogic(String name, String bankName, String type,
+                            double amount, boolean isDefault) {
+
+        super(name, bankName, type, amount, isDefault);
+
+        ClientLogic.getInstance().addBankAccount(this);
+    }
 
     /**
      * Increment the bank account by the value of the parameter.

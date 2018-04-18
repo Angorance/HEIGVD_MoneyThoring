@@ -27,7 +27,17 @@ public class BankAccountModel {
 
     // CONSTRUCTORS
 
-    public BankAccountModel() {}
+    public BankAccountModel(String name, String bankName, String type,
+                            double amount, boolean isDefault) {
+
+        this.name = name;
+        this.bankName = bankName;
+        this.type = type;
+        this.amount = amount;
+        this.isVisible = true;
+
+        setDefault(isDefault);
+    }
 
     //protected BankAccountModel(String name)
 
@@ -150,6 +160,7 @@ public class BankAccountModel {
      * @param aDefault New flag to set.
      */
     public void setDefault(boolean aDefault) {
+        // TODO - Unset the previous default.
         isDefault = aDefault;
     }
 
