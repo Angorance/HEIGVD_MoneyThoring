@@ -9,10 +9,11 @@ import java.io.IOException;
 
 public class createBankAccount {
 
+
     public createBankAccount(){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/gui/view/createBankAccount.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/gui/view/formBankAccount.fxml"));
 
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Main Frame");

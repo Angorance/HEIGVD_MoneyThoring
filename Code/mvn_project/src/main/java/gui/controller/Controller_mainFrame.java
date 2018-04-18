@@ -102,7 +102,7 @@ public class Controller_mainFrame implements Initializable {
     private void load(String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Controller_bankAccount controller_bankAccount = new Controller_bankAccount();
-        //loader.setController(controller_bankAccount);
+        loader.setController(controller_bankAccount);
         AnchorPane pane = loader.load();
         pane.prefWidthProperty().bind(mainContent.widthProperty());
         pane.prefHeightProperty().bind(mainContent.heightProperty());
