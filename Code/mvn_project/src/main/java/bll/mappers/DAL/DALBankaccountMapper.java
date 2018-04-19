@@ -2,12 +2,9 @@ package bll.mappers.DAL;
 
 import bll.model.BankAccountModel;
 import bll.model.ClientModel;
-import dal.entities.derby.ClientDeEntity;
 import dal.entities.pgsql.BankaccountPgEntity;
-import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
 import java.util.Collection;

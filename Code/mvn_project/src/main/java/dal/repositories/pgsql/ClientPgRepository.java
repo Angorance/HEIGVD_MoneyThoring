@@ -4,14 +4,10 @@ import dal.dalexception.DALException;
 import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
-import dal.util.HibernateUtil;
-import jdk.jshell.spi.ExecutionControl;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.Transaction;
 
-import java.util.Collection;
 import java.util.List;
 
 public class ClientPgRepository implements IClientRepository {
@@ -53,11 +49,8 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public List<IDALClientEntity> getClients() throws DALException {
-
         List<IDALClientEntity> clients = null;
         try {
-
-
             clients = session.createQuery("from ClientPgEntity").list();
 
 

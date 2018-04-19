@@ -1,18 +1,14 @@
 package dal.entities.pgsql;
 
-import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
+
 @Entity
-@Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")
+@Table(name = "client", schema = "moneythoring", catalog = "moneythoring")
 public class ClientPgEntity implements IDALClientEntity {
-
-
     private int id;
     private String username;
     private String email;
@@ -21,9 +17,8 @@ public class ClientPgEntity implements IDALClientEntity {
     private String activationkey;
     private String salt;
 
-
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -33,7 +28,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "USERNAME", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -43,7 +38,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "EMAIL", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -53,7 +48,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "PASSWORD", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }
@@ -61,6 +56,7 @@ public class ClientPgEntity implements IDALClientEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Basic
     @Column(name = "isactivated", nullable = false)
@@ -73,7 +69,7 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
+    @Column(name = "activationkey", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
@@ -83,17 +79,13 @@ public class ClientPgEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "SALT", nullable = false, length = 50)
+    @Column(name = "salt", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }
 
     public void setSalt(String salt) {
         this.salt = salt;
-    }
-
-    public Collection<IDALBankaccountEntity> getBankaccountsById() {
-        return null;
     }
 
     @Override

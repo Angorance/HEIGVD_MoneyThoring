@@ -1,7 +1,5 @@
 package dal.ientites;
 
-import dal.entities.pgsql.ClientPgEntity;
-
 import javax.persistence.*;
 
 public interface IDALBankaccountEntity {
