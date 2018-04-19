@@ -87,7 +87,7 @@ public class Controller_mainFrame implements Initializable {
                         header_mainFrame.setText("Compte bancaire");
                         load("/gui/view/bankAccount.fxml");
                         break;
-                    case "Category" :
+                    case "CategoryModel" :
                         header_mainFrame.setText("Catégorie");
                         load("/gui/view/categoryList.fxml");
                         break;
