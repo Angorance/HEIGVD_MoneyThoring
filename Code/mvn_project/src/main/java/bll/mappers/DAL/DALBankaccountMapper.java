@@ -33,30 +33,15 @@ public class DALBankaccountMapper {
     }
 
     public static BankAccountModel toBo(IDALBankaccountEntity dbo) {
-        if (dbo == null) {
-            return null;
-        }
-        BankAccountModel bo = new BankAccountModel();
-        bo.setId(dbo.getId());
-        return null;
+      return null;
     }
 
     public static Collection<BankAccountModel> toBos(Collection<IDALBankaccountEntity> dbos) {
-        Collection<BankAccountModel> bos = new ArrayList<BankAccountModel>();
-        Iterator<IDALBankaccountEntity> it = dbos.iterator();
-        while (it.hasNext()) {
-            dbos.add((IDALBankaccountEntity) toBo(it.next()));
-        }
-        return bos;
+       return null;
     }
 
     public static Collection<IDALBankaccountEntity> toDbosPG(Collection<BankAccountModel> bos) {
-        Collection<IDALBankaccountEntity> dbos = new ArrayList<IDALBankaccountEntity>();
-        Iterator<BankAccountModel> it = bos.iterator();
-        while (it.hasNext()) {
-            dbos.add((BankaccountPgEntity) toDboPG(it.next()));
-        }
-        return dbos;
+       return null;
 
     }
 

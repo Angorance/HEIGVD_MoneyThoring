@@ -85,7 +85,7 @@ public class DerbyORM implements IORM {
     @Override
     public void commit() throws DALException {
         try {
-            transaction.rollback();
+            transaction.commit();
         } catch (Exception e) {
             throw new DALException(e);
         }
