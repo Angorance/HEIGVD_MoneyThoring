@@ -22,32 +22,32 @@ public class DerbyORM implements IORM {
 
     @Override
     public IClientRepository getClientRepository() {
-        if (clientRepository == null) {
-            clientRepository = new ClientDeRepository(session, transaction);
-        }
+        //if (clientRepository == null) {
+        clientRepository = new ClientDeRepository(session, transaction);
+        //}
         return clientRepository;
     }
 
     @Override
     public IBankaccountRepository getBankaccountRepository() {
-        if(bankaccountRepository == null){
-            bankaccountRepository = new BankaccountDeRepository(session, transaction);
-        }
+        // if(bankaccountRepository == null){
+        bankaccountRepository = new BankaccountDeRepository(session, transaction);
+        // }
         return bankaccountRepository;
     }
 
 
     private void openSession() throws DALException {
-        if(sessionFactory == null) {
-            try {
-                sessionFactory = new Configuration().configure("hibernate.derby.cfg.xml").buildSessionFactory();
-            } catch (Throwable ex) {
-                throw new DALException(ex);
-            }
+        //if(sessionFactory == null) {
+        try {
+            sessionFactory = new Configuration().configure("hibernate.derby.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new DALException(ex);
         }
-        try{
+        //}
+        try {
             session = sessionFactory.openSession();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new DALException(e);
         }
 
@@ -68,7 +68,7 @@ public class DerbyORM implements IORM {
         try {
             openSession();
             transaction = session.beginTransaction();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new DALException(e);
         }
     }
@@ -77,7 +77,7 @@ public class DerbyORM implements IORM {
     public void rollback() throws DALException {
         try {
             transaction.rollback();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new DALException(e);
         }
     }
@@ -85,8 +85,8 @@ public class DerbyORM implements IORM {
     @Override
     public void commit() throws DALException {
         try {
-            transaction.rollback();
-        }catch (Exception e){
+            transaction.commit();
+        } catch (Exception e) {
             throw new DALException(e);
         }
     }

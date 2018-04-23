@@ -8,12 +8,7 @@ import java.util.List;
 
 public interface IBankaccountRepository {
 
-    /**
-     *
-     * @param id
-     * @return
-     * @throws DALException
-     */
+
     public IDALBankaccountEntity getBankaccount(int id) throws DALException;
 
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException;

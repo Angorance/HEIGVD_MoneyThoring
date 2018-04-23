@@ -40,11 +40,11 @@ public class Controller_createBankAccount implements Initializable {
      * @param event
      */
     @FXML void formValidation(ActionEvent event) {
-        BankAccountModel ba = new BankAccountModel();
+       /* BankAccountModel ba = new BankAccountModel();
         ba.setName(nameAccount.getText());
         ba.setAmount(Double.parseDouble(amount.getText()));
 
-        cba.add(ba);
+        cba.add(ba);*/
     }
 
     @Override

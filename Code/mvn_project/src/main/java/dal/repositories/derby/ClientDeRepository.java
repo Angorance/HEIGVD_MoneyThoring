@@ -25,42 +25,21 @@ public class ClientDeRepository implements IClientRepository {
     }
 
     public IDALClientEntity getClient(int id) throws DALException {
-        Session session = HibernateUtil.getDeSessionFactory().openSession();
-        Transaction tr = null;
         ClientDeEntity client = null;
+
         try {
-
-            tr = session.beginTransaction();
-
             client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            tr.commit();
         } catch (Exception e) {
-
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+            throw new DALException(e);
         }
+
         return client;
     }
 
     public void addClient(IDALClientEntity client) throws DALException {
 
-        Session session = HibernateUtil.getDeSessionFactory().openSession();
-        Transaction tr = null;
-
-        //vérifier avec les is instance et
         ClientDeEntity newClient = null;
         if (client.getClass() == ClientDeEntity.class)
             newClient = (ClientDeEntity) client;
@@ -68,121 +47,85 @@ public class ClientDeRepository implements IClientRepository {
             throw new DALException();
 
         try {
-            tr = session.beginTransaction();
-            session.save(client);
-            tr.commit();
-        } catch (RuntimeException e) {
-            try {
-                tr.rollback();
-                throw new DALException(e);
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+            session.save(newClient);
+        } catch (Exception e) {
+            throw new DALException(e);
         }
     }
 
     public List<IDALClientEntity> getClients() throws DALException {
-        Session session = HibernateUtil.getDeSessionFactory().openSession();
-        Transaction tr = null;
         List<IDALClientEntity> clients = null;
         try {
-            tr = session.beginTransaction();
-
             clients = session.createQuery("from ClientDeEntity").list();
 
-            tr.commit();
+
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+            throw new DALException(e);
         }
         return clients;
     }
 
-    public List<IDALClientEntity> getClients(int page, String sort) {
-        return null;
-    }
-
 
     public void update(IDALClientEntity client) throws DALException{
-        Session session = HibernateUtil.getDeSessionFactory().openSession();
-        Transaction tr = null;
-        ClientDeEntity clientDe = null;
+
+        ClientDeEntity clientPg = null;
         if (client.getClass() == ClientDeEntity.class)
-            clientDe = (ClientDeEntity) client;
+            clientPg = (ClientDeEntity) client;
         else
             throw new DALException();
 
         try {
 
-            tr = session.beginTransaction();
 
-            session.update(clientDe);
+            session.update(clientPg);
 
-            tr.commit();
+
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+            throw new DALException(e);
         }
-
     }
 
     public void delete(int id) throws DALException {
-        Session session = HibernateUtil.getDeSessionFactory().openSession();
-        Transaction tr = null;
         IDALClientEntity client = null;
         try {
-
-            tr = session.beginTransaction();
-
-            client = (ClientDeEntity)session.createCriteria(ClientDeEntity.class)
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
             session.delete(client);
-
-            tr.commit();
-        }
-        catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                throw new DALException(he);
-            }
+        } catch (Exception e) {
+            throw new DALException(e);
         }
 
+    }
+
+    @Override
+    public boolean pseudoExist(String username) throws DALException {
+        ClientDeEntity client = null;
+
+        try {
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
+                    .add(Restrictions.eq("username", username))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
+    }
+
+    @Override
+    public boolean mailExsit(String email) throws DALException {
+        ClientDeEntity client = null;
+
+        try {
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
+                    .add(Restrictions.eq("email", email))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
     }
 }
