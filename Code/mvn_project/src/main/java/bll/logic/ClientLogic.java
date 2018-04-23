@@ -3,8 +3,6 @@ package bll.logic;
 import bll.model.ClientModel;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 
 /**
