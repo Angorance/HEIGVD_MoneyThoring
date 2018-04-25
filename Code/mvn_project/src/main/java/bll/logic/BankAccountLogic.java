@@ -2,6 +2,8 @@ package bll.logic;
 
 import bll.model.BankAccountModel;
 
+import java.util.ArrayList;
+
 /**
  * ClientLogic class.
  * Implements the business logic of the ClientModel. The methods allow to
@@ -10,34 +12,57 @@ import bll.model.BankAccountModel;
  * to avoid data problems.
  *
  * @authors Daniel Gonzalez Lopez
- * @version 1.0
+ * @version 1.1
  */
 public class BankAccountLogic extends BankAccountModel {
 
+    private ArrayList<IOTransactionLogic> transactions;
+
+
+    /**
+     * TODO
+     * @param name
+     * @param bankName
+     * @param type
+     * @param amount
+     * @param isDefault
+     */
     public BankAccountLogic(String name, String bankName, String type,
                             double amount, boolean isDefault) {
 
         super(name, bankName, type, amount, isDefault);
 
         ClientLogic.getInstance().addBankAccount(this);
+        transactions = new ArrayList<>();
     }
 
     /**
      * Increment the bank account by the value of the parameter.
      *
-     * @param income Income to add to the amount.
+     * @param io Income to add to the amount.
      */
-    public void increment(double income) {
-        setAmount(getAmount() + income);
+    private void updateAmount(double io) {
+        setAmount(getAmount() + io);
     }
 
     /**
-     * Decrement the bank account by the value of the parameter.
+     * Add the transaction to the transaction list of the bank account.
      *
-     * @param outgo Outgo to sub to the amount.
+     * @param transaction New transaction to add to the list.
      */
-    public void decrement(double outgo) {
-        setAmount(getAmount() - outgo);
+    public void addTransaction(IOTransactionLogic transaction) {
+        transactions.add(transaction);
+
+        updateAmount(transaction.getAmount());
+    }
+
+    /**
+     * Get the list of transactions for this bank account.
+     *
+     * @return List of transactions.
+     */
+    public ArrayList<IOTransactionLogic> getTransactions() {
+        return transactions;
     }
 
     /**
