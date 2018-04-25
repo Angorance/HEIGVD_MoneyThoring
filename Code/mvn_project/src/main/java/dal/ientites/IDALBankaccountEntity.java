@@ -2,15 +2,21 @@ package dal.ientites;
 
 import javax.persistence.*;
 
+/**
+ * IDALBankaccountEntity interface.
+ * The interface present the methods allow to
+ * change the attributes of the client into database, this interface
+ * gives the CRUD methode and more.
+ *
+ * @version 1.0
+ * @authors Guillaume Zaretti
+ */
 public interface IDALBankaccountEntity {
-    @Id
-    @Column(name = "ID", nullable = false)
+
     int getId();
 
     void setId(int id);
 
-    @Basic
-    @Column(name = "NAME", nullable = false, length = 50)
     String getName();
 
     void setName(String name);

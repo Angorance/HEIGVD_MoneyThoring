@@ -13,7 +13,6 @@ import java.util.List;
 public class ClientPgRepository implements IClientRepository {
     private Session session;
     private Transaction transaction;
-
     public ClientPgRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
@@ -34,6 +33,7 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public void addClient(IDALClientEntity client) throws DALException {
+        System.out.println("session du repo " + session);
         ClientPgEntity newClient = null;
         if (client.getClass() == ClientPgEntity.class)
             newClient = (ClientPgEntity) client;

@@ -5,6 +5,15 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.sql.Date;
 
+/**
+ * IDALBudgetEntity interface.
+ * The interface present the methods allow to
+ * change the attributes of the budget into database, this interface
+ * gives the CRUD methode and more.
+ *
+ * @version 1.0
+ * @authors Guillaume Zaretti
+ */
 public interface IDALBudgetEntity {
     @Id
     @Column(name = "id", nullable = false)

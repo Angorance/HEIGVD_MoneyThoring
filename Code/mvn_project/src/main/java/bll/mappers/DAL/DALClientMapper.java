@@ -8,6 +8,7 @@ import dal.ientites.IDALClientEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class DALClientMapper {
     public static IDALClientEntity toDboPG(ClientModel bo) {
@@ -64,12 +65,15 @@ public class DALClientMapper {
         return bos;
     }
 
-    public static Collection<IDALClientEntity> toDbosPG(Collection<ClientModel> bos) {
-
+    public static Collection<IDALClientEntity> toDbosPG(List<ClientModel> bos) {
+        List<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
+        for(ClientModel dbo : bos){
+            dbos.add(toDboPG(dbo));
+        }
         return null;
     }
 
-    public static Collection<IDALClientEntity> toDbosDe(Collection<ClientModel> bos) {
+    public static Collection<IDALClientEntity> toDbosDe(List<ClientModel> bos) {
         return null;
     }
 

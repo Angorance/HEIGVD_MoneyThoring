@@ -21,14 +21,7 @@ class PgORMTest {
     void tearDown() {
     }
 
-    @Test
-    void getClientRepository() {
 
-    }
-
-    @Test
-    void getBankaccountRepository() {
-    }
 
     @Test
     void testRefactoringWithPg() throws DALException {
@@ -42,6 +35,7 @@ class PgORMTest {
 //
         IDALClientEntity clientOne = new ClientPgEntity();
         IDALClientEntity clientTwo = new ClientPgEntity();
+        IDALClientEntity clientTree = new ClientPgEntity();
         clientOne.setUsername("One");
         clientOne.setEmail("One");
         clientOne.setPassword("One");
@@ -56,24 +50,50 @@ class PgORMTest {
         clientTwo.setActivationkey("Two");
         clientTwo.setSalt("Two");
 
+        clientTree.setUsername("Tree");
+        clientTree.setEmail("Tree");
+        clientTree.setPassword("Tree");
+        clientTree.setIsactivated(true);
+        clientTree.setActivationkey("Tree");
+        clientTree.setSalt("Tree");
 
+
+
+        //-----------
         PgORM orm = new PgORM();
         orm.beginTransaction();
         orm.getClientRepository().addClient(clientOne);
         orm.getClientRepository().addClient(clientTwo);
-        orm.rollback();
-        orm.beginTransaction();
-        orm.getClientRepository().addClient(clientTwo);
-        orm.commit();
-        orm.beginTransaction();
-        orm.getClientRepository().addClient(clientOne);
 
         orm.commit();
-        orm.beginTransaction();
 
-        for(IDALClientEntity c : orm.getClientRepository().getClients())
-            orm.getClientRepository().delete(c.getId());
+        orm.beginTransaction();
+        orm.getClientRepository().addClient(clientTree);
         orm.commit();
+        //-----------
+
+
+
+
+//        PgORM orm = new PgORM();
+//        orm.beginTransaction();
+//        orm.getClientRepository().addClient(clientOne);
+//        orm.getClientRepository().addClient(clientTwo);
+
+
+//        orm.rollback();
+//        orm.beginTransaction();
+//        orm.getClientRepository().addClient(clientTwo);
+//        orm.commit();
+//        orm.beginTransaction();
+//        orm.getClientRepository().addClient(clientOne);
+
+        //orm.commit();
+       // orm.beginTransaction();
+
+//        for(IDALClientEntity c : orm.getClientRepository().getClients())
+//            orm.getClientRepository().delete(c.getId());
+//        orm.commit();
 
 //        orm.beginTransaction();
 //        orm.getClientRepository().addClient(clientOne);
@@ -102,17 +122,6 @@ class PgORMTest {
     }
 
 
-    @Test
-    void beginTransaction() {
-    }
-
-    @Test
-    void rollback() {
-    }
-
-    @Test
-    void commit() {
-    }
 
     @Test
     void testRefactoringWithDe() throws DALException {

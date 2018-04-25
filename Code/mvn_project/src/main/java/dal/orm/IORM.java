@@ -35,10 +35,5 @@ public interface IORM {
      */
     void commit() throws DALException;
 
-    /**
-     * close session
-     * @throws DALException
-     */
-    public void sessionClose() throws DALException;
 
 }

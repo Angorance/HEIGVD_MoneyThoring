@@ -53,8 +53,7 @@ public class DerbyORM implements IORM {
 
     }
 
-    @Override
-    public void sessionClose() throws DALException {
+    private void sessionClose() throws DALException {
         try {
             //session.flush();
             session.close();
