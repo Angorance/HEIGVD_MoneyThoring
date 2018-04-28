@@ -4,6 +4,8 @@ import dal.dalexception.DALException;
 import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
+import dal.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.Transaction;

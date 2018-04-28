@@ -4,9 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -80,5 +78,8 @@ public class Controller_lateralMenu implements Initializable{
         }
         selected = btn;
         selected.getStyleClass().add("Selected");
+    }
+
+    public static class Controller_categoryList {
     }
 }
