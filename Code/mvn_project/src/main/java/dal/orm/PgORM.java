@@ -7,9 +7,10 @@ import dal.repositories.pgsql.BankaccountPgRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.junit.Assert;
 
 public class PgORM implements IORM {
 
@@ -24,41 +25,35 @@ public class PgORM implements IORM {
     public IClientRepository getClientRepository() {
         //if (clientRepository == null) {
             clientRepository = new ClientPgRepository(session, transaction);
-       // }
+        // }
         return clientRepository;
     }
 
+
     @Override
     public IBankaccountRepository getBankaccountRepository() {
-        if (bankaccountRepository == null) {
+        //if (bankaccountRepository == null) {
             bankaccountRepository = new BankaccountPgRepository(session, transaction);
-        }
+       // }
         return bankaccountRepository;
     }
 
     private void openSession() throws DALException {
-        //if(sessionFactory == null) {
-            try {
-                sessionFactory = new Configuration().configure("hibernate.pgsql.cfg.xml").buildSessionFactory();
-            } catch (Throwable ex) {
-                throw new DALException(ex);
-            }
-        //}
-        try{
-            session = sessionFactory.openSession();
-        }catch (Exception e){
+        try {
+            sessionFactory = new Configuration().configure("hibernate.pgsql.cfg.xml").buildSessionFactory();
+        } catch (Exception e) {
             throw new DALException(e);
         }
+        session = sessionFactory.openSession();
 
     }
 
-    @Override
-    public void sessionClose() throws DALException {
+    private void sessionClose() throws DALException {
         try {
-            //session.flush();
             session.close();
+            sessionFactory.close();
         } catch (HibernateException e) {
-           throw new DALException(e);
+            throw new DALException(e);
         }
     }
 
@@ -67,7 +62,9 @@ public class PgORM implements IORM {
         try {
             openSession();
             transaction = session.beginTransaction();
-        }catch (Exception e){
+            System.out.println("Session du begin transaction " + session);
+
+        } catch (Exception e) {
             throw new DALException(e);
         }
     }
@@ -76,7 +73,7 @@ public class PgORM implements IORM {
     public void rollback() throws DALException {
         try {
             transaction.rollback();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new DALException(e);
         }
     }
@@ -85,8 +82,10 @@ public class PgORM implements IORM {
     public void commit() throws DALException {
         try {
             transaction.commit();
+            sessionClose();
         } catch (Exception e) {
             throw new DALException(e);
         }
+
     }
 }

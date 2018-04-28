@@ -5,26 +5,22 @@ import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.util.HibernateUtil;
-import jdk.jshell.spi.ExecutionControl;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.Transaction;
 
-import java.util.Collection;
 import java.util.List;
 
 public class ClientPgRepository implements IClientRepository {
     private Session session;
     private Transaction transaction;
-
     public ClientPgRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
     }
 
     public IDALClientEntity getClient(int id) throws DALException {
-
         ClientPgEntity client = null;
 
         try {
@@ -39,6 +35,7 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public void addClient(IDALClientEntity client) throws DALException {
+        System.out.println("session du repo " + session);
         ClientPgEntity newClient = null;
         if (client.getClass() == ClientPgEntity.class)
             newClient = (ClientPgEntity) client;
@@ -53,11 +50,8 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public List<IDALClientEntity> getClients() throws DALException {
-
         List<IDALClientEntity> clients = null;
         try {
-
-
             clients = session.createQuery("from ClientPgEntity").list();
 
 
@@ -88,7 +82,6 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public void delete(int id) throws DALException {
-
         IDALClientEntity client = null;
         try {
             client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
@@ -99,7 +92,35 @@ public class ClientPgRepository implements IClientRepository {
         } catch (Exception e) {
             throw new DALException(e);
         }
+    }
 
+    @Override
+    public boolean pseudoExist(String username) throws DALException {
+        ClientPgEntity client = null;
 
+        try {
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+                    .add(Restrictions.eq("username", username))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
+    }
+
+    @Override
+    public boolean mailExsit(String email) throws DALException {
+        ClientPgEntity client = null;
+
+        try {
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+                    .add(Restrictions.eq("email", email))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
     }
 }

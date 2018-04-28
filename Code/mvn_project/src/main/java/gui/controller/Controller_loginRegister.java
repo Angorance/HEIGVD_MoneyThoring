@@ -1,5 +1,6 @@
 package gui.controller;
 
+import bll.logic.ClientLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -9,6 +10,10 @@ import javafx.stage.Stage;
 import gui.model.mainFrame;
 
 import java.io.IOException;
+
+import static bll.logic.Authentication.checkEmail;
+import static bll.logic.Authentication.checkEmailFormat;
+import static bll.logic.Authentication.checkPasswords;
 
 /**
  * Controller of the view loginRegister
@@ -44,6 +49,7 @@ public class Controller_loginRegister {
             /*Load dashboard
             loadMainFrame();
         }*/
+        loadMainFrame();
     }
 
     @FXML private TextField register_username;
@@ -58,28 +64,38 @@ public class Controller_loginRegister {
     @FXML public void clickRegisterButton(ActionEvent actionEvent) {
 
         /*Retrieving text input*/
-        String lastname = register_username.getText();
+        String username = register_username.getText();
         String email = register_email.getText();
         String password = register_password.getText();
-        String confirmPasswordText = register_confirmPassword.getText();
+        String confirmPassword = register_confirmPassword.getText();
 
-        /*Verify password and confirmation
-        if(!password.equals(confirmPasswordText)) {
+        //Check if passord, email and username is correct
+        boolean check = true;
+
+        /*Verify if username is already used*/
+        /*if(!checkUsername(register_username)){
+            check = false;
+            register_email.setStyle("    -fx-text-box-border: red ;");
+        }*/
+
+        /*Verify if password is not equale to confirm password*/
+        if(!checkPasswords(password,confirmPassword)){
+            check = false;
             register_password.setStyle("    -fx-text-box-border: red ;");
             register_confirmPassword.setStyle("    -fx-text-box-border: red ;");
-        }else{
-            bool status = register(lastname,firstname,email,password)
-            if the status is false, it means that the email is already in the database
-            if(!status){
-                /*Error message
-                register_email.setStyle("    -fx-text-box-border: red ;");
-             //otherwise we load the main frame
-            }else{
-                /*Load dashboard
-                loadMainFrame();
-            }
-        }*/
-        loadMainFrame();
+        }
+
+        /*Verify if email is already used*/
+        if(!checkEmail(email)){
+            check = false;
+            register_email.setStyle("    -fx-text-box-border: red ;");
+        }
+
+        /*If all is correcte we create a new client and load the main frame*/
+        if(check){
+            //ClientLogic.getInstance().setClient();
+            loadMainFrame();
+        }
 
     }
 

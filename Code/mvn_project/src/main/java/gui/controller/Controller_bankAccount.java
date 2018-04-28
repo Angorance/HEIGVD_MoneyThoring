@@ -1,5 +1,7 @@
 package gui.controller;
 
+import bll.logic.BankAccountLogic;
+import bll.logic.ClientLogic;
 import gui.model.createBankAccount;
 import bll.model.BankAccountModel;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -36,7 +39,7 @@ public class Controller_bankAccount implements Initializable {
          * Constructor of the class
          * @param bankAccount   bank account we want to display
          */
-        public AccountDisplayer(BankAccountModel bankAccount) {
+        public AccountDisplayer(BankAccountLogic bankAccount) {
 
             nameAccount = new Label(bankAccount.getName());
             amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
@@ -46,8 +49,21 @@ public class Controller_bankAccount implements Initializable {
 
             this.getStyleClass().add("AccountDisplay");
             this.setPrefSize(WIDTH,HEIGHT);
+
+            /**
+             * Click event who load the detail bank account frame
+             */
+            this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    detailBankAccount(bankAccount);
+                }
+            });
         }
+
+
     }
+
 
     @FXML private FlowPane frame_bankAccount;
     @FXML private Button create_button;
@@ -59,13 +75,17 @@ public class Controller_bankAccount implements Initializable {
      */
     public void createButton(ActionEvent actionEvent){
 
-        // we load the form fxml
+        /* we load the form fxml*/
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
-        Controller_createBankAccount cba = new Controller_createBankAccount(this);
-        loader.setController(cba);
 
+        /*Create a instance of the controller of bank account form*/
+        Controller_createBankAccount cba = new Controller_createBankAccount(this);
+
+        /*Sets the controller associated with the root object*/
+        loader.setController(cba);
         paneform.setVisible(true);
         paneform.setMouseTransparent(false);
+
         try {
             AnchorPane pane = loader.load();
             // todo faire en sorte que le pane prenne les dimmensions du parent (paneform)
@@ -75,19 +95,47 @@ public class Controller_bankAccount implements Initializable {
         }
     }
 
-    public void add(BankAccountModel bc){
+    /*Methode who create a AccountDisplayer and add to the frame*/
+    public void add(BankAccountLogic bal){
         paneform.getChildren().clear();
         paneform.setMouseTransparent(true);
         paneform.setVisible(false);
-        if(bc != null) {
-            AccountDisplayer accountDisplayer = new AccountDisplayer(bc);
+        if(bal != null) {
+            AccountDisplayer accountDisplayer = new AccountDisplayer(bal);
             addToFrame(accountDisplayer);
         }
     }
 
+    /*Add an AccountDisplayer to the frame*/
     private void addToFrame(AccountDisplayer accountDisplayer){
         frame_bankAccount.getChildren().add(accountDisplayer);
         FlowPane.setMargin(accountDisplayer,new Insets(5,5,5,5));
+    }
+
+
+    /**
+     * TODO
+     * @param bal TODO
+     */
+    private void detailBankAccount(BankAccountLogic bal){
+        /* we load the detailBankAccount fxml*/
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/detailBankAccount.fxml"));
+
+        /*Create a instance of the controller detailBankAccount*/
+        Controller_detailBankAccount cdba = new Controller_detailBankAccount(this);
+
+        /*Sets the controller associated with the root object*/
+        loader.setController(cdba);
+        paneform.setVisible(true);
+        paneform.setMouseTransparent(false);
+
+        try {
+            AnchorPane pane = loader.load();
+            paneform.getChildren().add(pane);
+            //todo récupération des info d'un compte bancaire pour les ajouter a notre frame
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -104,10 +152,10 @@ public class Controller_bankAccount implements Initializable {
         paneform.setMouseTransparent(true);
 
         //Go through the list of bank accounts and add it to our frame
-        /*for(BankAccountModel bankAccount : BankAccount.getBankAccounts()){
+        for(BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()){
             AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
             addToFrame(accountDisplayer);
-        }*/
+        }
 
         /*Add event at our button*/
         create_button.setOnAction(new EventHandler<ActionEvent>() {

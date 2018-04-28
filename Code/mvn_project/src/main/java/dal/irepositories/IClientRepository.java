@@ -18,4 +18,8 @@ public interface IClientRepository {
 
     public void delete(int id) throws DALException;
 
+    public boolean pseudoExist(String username) throws DALException;
+
+    public boolean mailExsit(String email) throws DALException;
+
 }

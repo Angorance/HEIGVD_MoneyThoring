@@ -5,11 +5,10 @@
 <hibernate-mapping>
 
 
-
     <class name="dal.entities.pgsql.ClientPgEntity" table="client" schema="moneythoring" catalog="moneythoring">
-        <id name="id" column="id" type="int">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
             <generator class="identity"/>
-            <!--<column name="id" sql-type="integer"/>-->
         </id>
         <property name="username">
             <column name="username" sql-type="varchar(50)" length="50"/>
@@ -30,35 +29,33 @@
             <column name="salt" sql-type="varchar(50)" length="50"/>
         </property>
     </class>
-    <class name="dal.entities.pgsql.BankaccountPgEntity" table="bankaccount" schema="moneythoring" catalog="moneythoring">
-        <id name="id" column="id" type="int">
+    <class name="dal.entities.pgsql.BankaccountPgEntity" table="bankaccount" schema="moneythoring"
+           catalog="moneythoring">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
             <generator class="identity"/>
-            <!--<column name="id" sql-type="integer"/>-->
         </id>
         <property name="name">
-            <column name="NAME" sql-type="varchar(50)" length="50"/>
+            <column name="name" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="namebank">
-            <column name="NAMEBANK" sql-type="varchar(50)" length="50" not-null="true"/>
+            <column name="namebank" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>
         <property name="typeaccount">
-            <column name="TYPEACCOUNT" sql-type="varchar(100)" length="100"/>
+            <column name="typeaccount" sql-type="varchar(100)" length="100"/>
         </property>
         <property name="amount">
-            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+            <column name="amount" sql-type="double precision" precision="-1"/>
         </property>
         <property name="isdefault">
-            <column name="ISDEFAULT" sql-type="boolean(1)"/>
+            <column name="isdefault" sql-type="boolean"/>
         </property>
         <property name="isvisible">
-            <column name="ISVISIBLE" sql-type="boolean(1)"/>
+            <column name="isvisible" sql-type="boolean"/>
         </property>
         <property name="clientId">
-            <column name="CLIENT_ID" sql-type="integer(10)"/>
+            <column name="client_id" sql-type="integer"/>
         </property>
-        <many-to-one name="clientByClientId" class="dal.entities.pgsql.ClientPgEntity" update="false" insert="false">
-            <column name="CLIENT_ID"/>
-        </many-to-one>
     </class>
 
 </hibernate-mapping>

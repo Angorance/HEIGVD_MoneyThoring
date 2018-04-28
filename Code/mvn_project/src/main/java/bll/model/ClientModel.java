@@ -23,26 +23,6 @@ public class ClientModel {
 
 
     // -------------------------------------------------------------------------
-    // CONSTRUCTORS ------------------------------------------------------------
-
-    public ClientModel() { }
-
-    /**
-     * Create a ClientModel instance with the given parameters.
-     *
-     * @param email Email of the client.
-     * @param username Username of the client.
-     * @param password Password of the client.
-     */
-    @Deprecated
-    public ClientModel(String email, String username, String password) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
-
-
-    // -------------------------------------------------------------------------
     // GETTERS -----------------------------------------------------------------
 
     /**

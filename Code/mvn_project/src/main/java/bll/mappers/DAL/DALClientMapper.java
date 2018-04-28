@@ -65,23 +65,16 @@ public class DALClientMapper {
         return bos;
     }
 
-    public static Collection<IDALClientEntity> toDbosPG(Collection<ClientModel> bos) {
-        Collection<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
-        Iterator<ClientModel> it = bos.iterator();
-        while (it.hasNext()) {
-            dbos.add((ClientPgEntity) toDboPG(it.next()));
+    public static Collection<IDALClientEntity> toDbosPG(List<ClientModel> bos) {
+        List<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
+        for(ClientModel dbo : bos){
+            dbos.add(toDboPG(dbo));
         }
-        return dbos;
-
+        return null;
     }
 
-    public static Collection<IDALClientEntity> toDbosDe(Collection<ClientModel> bos) {
-        Collection<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
-        Iterator<ClientModel> it = bos.iterator();
-        while (it.hasNext()) {
-            dbos.add((ClientPgEntity) toDboDe(it.next()));
-        }
-        return dbos;
+    public static Collection<IDALClientEntity> toDbosDe(List<ClientModel> bos) {
+        return null;
     }
 
 

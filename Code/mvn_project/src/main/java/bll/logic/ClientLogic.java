@@ -3,13 +3,11 @@ package bll.logic;
 import bll.model.ClientModel;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 
 /**
  * ClientLogic class.
- * Implements the business bll.logic of the ClientModel. The methods allow to
+ * Implements the business logic of the ClientModel. The methods allow to
  * change the attributes of the client like his email, his username or his
  * password. Before changing these attributes, the methods check their integrity
  * to avoid data problems.
@@ -19,34 +17,43 @@ import java.util.regex.Matcher;
  */
 public class ClientLogic extends ClientModel {
 
-    ArrayList<BankAccountLogic> bankAccounts;
+    private ArrayList<BankAccountLogic> bankAccounts;
+    private ArrayList<CategoryLogic> categories;
 
 
-    // CONSTRUCTORS
+    private ClientLogic() {}
 
-    public ClientLogic() { }
 
     /**
-     * Construct ClientLogic instance.
-     * Uses the setters of the class to set the given parameters, this way we
-     * assure their integrity.
-     *
-     * @see ClientModel#setEmail(String)
-     * @see ClientModel#setUsername(String)
-     * @see ClientModel#setPassword(String)
-     *
-     * @param email Email of the client.
-     * @param username Username of the client.
-     * @param password Password of the client.
+     * TODO
      */
-    public ClientLogic(String email, String username, String password) {
-        super();
+    public static class Instance {
+        static ClientLogic instance = new ClientLogic();
+    }
+
+    /**
+     * TODO
+     * @return
+     */
+    public static ClientLogic getInstance() {
+        return Instance.instance;
+    }
+
+
+    /**
+     * TODO
+     * @param email
+     * @param username
+     * @param password
+     */
+    public void setClient(String email, String username, String password) {
 
         setEmail(email);
         setUsername(username);
         setPassword(password);
 
-        bankAccounts = new ArrayList<BankAccountLogic>();
+        bankAccounts = new ArrayList<>();
+        categories = new ArrayList<>();
     }
 
 
@@ -125,6 +132,15 @@ public class ClientLogic extends ClientModel {
      */
     public void addBankAccount(BankAccountLogic ba) {
         bankAccounts.add(ba);
+    }
+
+    /**
+     * TODO
+     *
+     * @param ca
+     */
+    public void addCategory(CategoryLogic ca) {
+        categories.add(ca);
     }
 
 
