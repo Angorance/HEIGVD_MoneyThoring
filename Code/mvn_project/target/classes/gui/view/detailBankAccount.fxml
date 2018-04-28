@@ -1,30 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="653.0" prefWidth="729.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BarChart fx:id="barChart" layoutX="14.0" layoutY="114.0" prefHeight="400.0" prefWidth="696.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <AnchorPane layoutX="29.0" layoutY="90.0" prefHeight="137.0" prefWidth="677.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <Label alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="39.0" prefWidth="679.0" text="Un compte bancaire" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0">
+      <AnchorPane layoutX="25.0" layoutY="90.0" prefHeight="140.0" prefWidth="680.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <children>
+            <Label layoutX="405.0" layoutY="14.0" text="Solde Actuel">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="amountBankAccount" layoutX="372.0" layoutY="53.0" text="Solde Actuel">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="30.0" layoutY="25.0" prefHeight="90.0" prefWidth="242.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Banque :" />
+                  <Label fx:id="nameBankAccount" text="UBS" GridPane.columnIndex="1" />
+                  <Label text="Type :" GridPane.rowIndex="1" />
+                  <Label text="Dernier transaction : " GridPane.rowIndex="2" />
+                  <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children></AnchorPane>
+      <Label fx:id="name" alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="40.0" prefWidth="630.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <JFXButton layoutX="25.0" layoutY="25.0" text="&lt;-" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <JFXButton fx:id="returnButton" layoutX="25.0" layoutY="15.0" prefHeight="40.0" prefWidth="40.0" text="&lt;-" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="15.0" />
+      <LineChart fx:id="lineChart" layoutX="25.0" layoutY="239.0" prefHeight="400.0" prefWidth="680.0" title="Evolution du solde">
+        <xAxis>
+          <CategoryAxis fx:id="axeX" label="jour" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="axeY" label="montant [CHF]" side="LEFT" />
+        </yAxis>
+      </LineChart>
    </children>
 </AnchorPane>
