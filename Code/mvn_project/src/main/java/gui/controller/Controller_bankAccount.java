@@ -122,7 +122,7 @@ public class Controller_bankAccount implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/detailBankAccount.fxml"));
 
         /*Create a instance of the controller detailBankAccount*/
-        Controller_detailBankAccount cdba = new Controller_detailBankAccount(this);
+        Controller_detailBankAccount cdba = new Controller_detailBankAccount(this,bal);
 
         /*Sets the controller associated with the root object*/
         loader.setController(cdba);
