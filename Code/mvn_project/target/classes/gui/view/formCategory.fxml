@@ -4,15 +4,12 @@
 <?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
-
 
 <AnchorPane prefHeight="132.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <JFXTextField fx:id="txtLabel" layoutX="300.0" layoutY="54.0" promptText="Nom de la catégorie" />
       <JFXButton fx:id="btnCancel" layoutX="28.0" layoutY="54.0" style="-fx-background-color: #dedede;" text="back" AnchorPane.leftAnchor="20.0" />
       <JFXButton fx:id="btnConfirm" layoutX="520.0" layoutY="54.0" style="-fx-background-color: lightgreen;" text="Confirm" AnchorPane.rightAnchor="20.0" />
-      <JFXColorPicker fx:id="colorPicker" editable="true" layoutX="144.0" layoutY="93.0" />
-      <Circle fx:id="cicleColor" fill="DODGERBLUE" layoutX="205.0" layoutY="67.0" radius="11.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <JFXColorPicker fx:id="colorPicker" layoutX="201.0" layoutY="54.0" prefHeight="25.0" prefWidth="59.0" />
    </children>
 </AnchorPane>

@@ -93,7 +93,7 @@ public class Controller_loginRegister {
 
         /*If all is correcte we create a new client and load the main frame*/
         if(check){
-            ClientLogic clientLogic = new ClientLogic(email, username, password);
+            //ClientLogic.getInstance().setClient();
             loadMainFrame();
         }
 
