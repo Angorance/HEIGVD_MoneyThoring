@@ -72,6 +72,10 @@ public class Controller_lateralMenu implements Initializable{
         });
     }
 
+    /**
+     * TODO
+     * @param btn
+     */
     public void setSelected(Button btn){
         if(selected != null) {
             selected.getStyleClass().remove("Selected");
