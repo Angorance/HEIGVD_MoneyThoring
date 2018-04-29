@@ -1,6 +1,7 @@
 package bll.logic;
 
 import bll.model.ClientModel;
+import dal.orm.PgORM;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,8 @@ public class ClientLogic extends ClientModel {
 
         bankAccounts = new ArrayList<>();
         categories = new ArrayList<>();
+        
+        updateDatabse(new PgORM());
     }
 
 
