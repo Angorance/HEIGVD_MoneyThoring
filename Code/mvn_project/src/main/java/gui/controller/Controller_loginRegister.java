@@ -11,9 +11,7 @@ import gui.model.mainFrame;
 
 import java.io.IOException;
 
-import static bll.logic.Authentication.checkEmail;
-import static bll.logic.Authentication.checkEmailFormat;
-import static bll.logic.Authentication.checkPasswords;
+import static bll.logic.Authentication.*;
 
 /**
  * Controller of the view loginRegister
@@ -73,10 +71,10 @@ public class Controller_loginRegister {
         boolean check = true;
 
         /*Verify if username is already used*/
-        /*if(!checkUsername(register_username)){
+        if(!checkUsernameAvailable(username)){
             check = false;
             register_email.setStyle("    -fx-text-box-border: red ;");
-        }*/
+        }
 
         /*Verify if password is not equale to confirm password*/
         if(!checkPasswords(password,confirmPassword)){
@@ -93,7 +91,7 @@ public class Controller_loginRegister {
 
         /*If all is correcte we create a new client and load the main frame*/
         if(check){
-            //ClientLogic.getInstance().setClient();
+            ClientLogic.getInstance().setClient(email,username,password);
             loadMainFrame();
         }
 
