@@ -74,9 +74,10 @@ public class Controller_detailBankAccount implements Initializable {
         /*TODO mettre les données dans le graphique*/
         /*TODO max min des valeur de l'axe Y*/
         XYChart.Series series = new XYChart.Series();
+        series.setName("Evolution du solde");
         Random random = new Random();
         for(int i = 0; i < 31; ++i){
-            int value = 2500 + random.nextInt(20000);
+            int value = 15000 + random.nextInt(5000);
             series.getData().add(new XYChart.Data(String.valueOf(i+1),value));
         }
 

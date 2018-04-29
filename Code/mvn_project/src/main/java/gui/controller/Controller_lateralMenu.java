@@ -83,7 +83,4 @@ public class Controller_lateralMenu implements Initializable{
         selected = btn;
         selected.getStyleClass().add("Selected");
     }
-
-    public static class Controller_categoryList {
-    }
 }
