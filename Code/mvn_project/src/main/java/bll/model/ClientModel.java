@@ -1,5 +1,8 @@
 package bll.model;
 
+import dal.irepositories.IClientRepository;
+import dal.orm.IORM;
+
 /**
  * ClientModel class.
  * Allows the mapping between the DAL entities and the Business Logic.
@@ -154,5 +157,16 @@ public class ClientModel {
      */
     public void setKey(String key) {
         this.key = key;
+    }
+    
+    protected void updateDatabse(IORM orm) {
+        try {
+            orm.beginTransaction();
+	        IClientRepository client = orm.getClientRepository();
+	        
+        client. // TODO - QUOI FAIRE?
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package bll.logic;
 
+import dal.orm.IORM;
+import dal.orm.PgORM;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,9 +67,19 @@ public class Authentication {
      * @return True if the email is not in the database, false otherwise.
      */
     public static boolean checkEmailAvailable(String email) {
-        // TODO - check if unique in database - waiting for DAL
-
-        return false;
+    	// TODO - Manage if connected to internet or not!
+	    
+        IORM orm = new PgORM();
+        boolean result = false;
+        
+        try {
+	        orm.beginTransaction();
+	        result = orm.getClientRepository().mailExist(email);
+	    } catch (Exception e) {
+	        System.out.println(e);
+        }
+        
+        return result;
     }
 
     /**
@@ -77,8 +90,18 @@ public class Authentication {
      * @return True is username is not used, false otherwise.
      */
     public static boolean checkUsernameAvailable(String username) {
-        // TODO - check if unique in database - waiting for DAL
+        // TODO - Manage if connected to internet or not!
+	    
+	    IORM orm = new PgORM();
+	    boolean result = false;
+	    
+	    try {
+	    	orm.beginTransaction();
+	    	result = orm.getClientRepository().pseudoExist(username);
+	    } catch (Exception e) {
+		    System.out.println(e);
+	    }
 
-        return false;
+        return result;
     }
 }
