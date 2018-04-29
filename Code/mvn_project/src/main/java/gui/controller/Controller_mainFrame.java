@@ -21,14 +21,13 @@ import java.util.ResourceBundle;
 public class Controller_mainFrame implements Initializable {
     @FXML private Label header_mainFrame;
     @FXML private AnchorPane mainContent;
-
     @FXML private JFXHamburger burgerBtn;
-
     @FXML private JFXDrawer drawer;
 
     private static final String[] tabViewName = {"Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire", "Catégories"};
     private static final String[] tabViewFile = {"/gui/view/Dashboard.fxml", "/gui/view/budgetList.fxml", "/gui/view/transactionList.fxml",
             "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml", "/gui/view/categoryList.fxml"};
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,6 +65,10 @@ public class Controller_mainFrame implements Initializable {
     }
 
 
+    /**
+     * TODO
+     * @param box TODO
+     */
     public void initLateralButton(VBox box){
         for(Node node : box.getChildren()){
             node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
@@ -78,6 +81,11 @@ public class Controller_mainFrame implements Initializable {
         }
     }
 
+    /**
+     * TODO
+     * @param id TODO
+     * @throws IOException
+     */
     private void loadContent(int id) throws IOException {
 
         header_mainFrame.setText(tabViewName[id]);
