@@ -8,9 +8,9 @@ import java.util.List;
 public interface ICategoryRepository {
     public IDALCategoryEntity getCategory(int id) throws DALException;
 
-    public List<IDALCategoryEntity> getCategorys() throws DALException;
+    public List<IDALCategoryEntity> getCategories() throws DALException;
 
-    public List<IDALCategoryEntity> getCategorys(int page, String sort);
+    public List<IDALCategoryEntity> getCategories(int page, String sort);
 
     public void update(IDALCategoryEntity Category) throws DALException;
 
