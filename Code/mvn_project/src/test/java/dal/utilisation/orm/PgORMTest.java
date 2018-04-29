@@ -5,6 +5,7 @@ import dal.entities.derby.ClientDeEntity;
 import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.orm.DerbyORM;
+import dal.orm.IORM;
 import dal.orm.PgORM;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -150,7 +151,7 @@ class PgORMTest {
         clientTwo.setSalt("Two");
 
 
-        DerbyORM orm = new DerbyORM();
+        IORM orm = new DerbyORM();
         orm.beginTransaction();
         orm.getClientRepository().addClient(clientOne);
         orm.getClientRepository().addClient(clientTwo);

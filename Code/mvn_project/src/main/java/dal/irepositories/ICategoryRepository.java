@@ -10,8 +10,6 @@ public interface ICategoryRepository {
 
     public List<IDALCategoryEntity> getCategories() throws DALException;
 
-    public List<IDALCategoryEntity> getCategories(int page, String sort);
-
     public void update(IDALCategoryEntity Category) throws DALException;
 
     public void addCategory(IDALCategoryEntity Category) throws DALException;
