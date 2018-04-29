@@ -15,7 +15,7 @@
                <children>
                   <HBox alignment="CENTER" layoutX="151.0" layoutY="54.0" prefHeight="25.0" prefWidth="299.0" spacing="25.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="150.0">
                      <children>
-                        <JFXColorPicker fx:id="colorPicker" prefHeight="25.0" prefWidth="59.0" />
+                        <JFXColorPicker fx:id="colorPicker" prefHeight="25.0" prefWidth="63.0" />
                         <JFXTextField fx:id="txtLabel" promptText="Nom de la catégorie" />
                      </children>
                   </HBox>

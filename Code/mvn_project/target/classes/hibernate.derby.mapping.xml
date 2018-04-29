@@ -65,4 +65,22 @@
             <one-to-many not-found="ignore" class="dal.entities.derby.BankaccountDeEntity" />
         </set>
     </class>
+    <class name="dal.entities.derby.CategoryDeEntity" table="CATEGORY" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="colour">
+            <column name="COLOUR" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isdefault">
+            <column name="ISDEFAULT" sql-type="boolean(1)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+    </class>
 </hibernate-mapping>
