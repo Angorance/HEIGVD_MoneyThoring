@@ -110,7 +110,7 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     @Override
-    public boolean mailExsit(String email) throws DALException {
+    public boolean mailExist(String email) throws DALException {
         ClientPgEntity client = null;
 
         try {

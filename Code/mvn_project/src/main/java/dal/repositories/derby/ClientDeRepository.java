@@ -115,7 +115,7 @@ public class ClientDeRepository implements IClientRepository {
     }
 
     @Override
-    public boolean mailExsit(String email) throws DALException {
+    public boolean mailExist(String email) throws DALException {
         ClientDeEntity client = null;
 
         try {
