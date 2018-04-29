@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="104.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <FlowPane fx:id="frame_bankAccount" styleClass="anchor-pane" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <JFXButton fx:id="create_button" layoutX="534.0" layoutY="361.0" styleClass="create_button" stylesheets="@../css/general.css" text="ADD" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="10.0" />
-      <AnchorPane fx:id="paneform" prefHeight="450.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <JFXButton fx:id="create_button" styleClass="create_button" stylesheets="@../css/general.css" text="ADD" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="10.0" />
+      <AnchorPane fx:id="paneform" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

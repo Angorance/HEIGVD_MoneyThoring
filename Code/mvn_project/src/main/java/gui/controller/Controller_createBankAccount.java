@@ -46,12 +46,19 @@ public class Controller_createBankAccount implements Initializable,IForm {
     @FXML
     @Override
     public void formValidation(ActionEvent event) {
-        String name = nameAccount.getText();
-        String bankName = nameBankAccount.getText();
-        String type = (String)typeAccount.getValue();
-        Double amountDouble = Double.parseDouble(amount.getText());
-        BankAccountLogic ba = new BankAccountLogic(name,bankName,type,amountDouble,false);
-        cba.add(ba);
+        if(checkValidInput()) {
+            String name = nameAccount.getText();
+            String bankName = nameBankAccount.getText();
+            String type = (String) typeAccount.getValue();
+            Double amountDouble = Double.parseDouble(amount.getText());
+            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, false);
+            cba.add(ba);
+        }
+    }
+
+    private boolean checkValidInput() {
+        // on vérifie tous les champs, s'ils sont erronés on les mets en rouge
+        return true;
     }
 
     /**

@@ -3,11 +3,9 @@ package gui.controller;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -28,6 +26,9 @@ public class Controller_mainFrame implements Initializable {
 
     @FXML private JFXDrawer drawer;
 
+    private static final String[] tabViewName = {"Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire", "Catégories"};
+    private static final String[] tabViewFile = {"/gui/view/Dashboard.fxml", "/gui/view/budgetList.fxml", "/gui/view/transactionList.fxml",
+            "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml", "/gui/view/categoryList.fxml"};
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,7 +41,7 @@ public class Controller_mainFrame implements Initializable {
             box = loader.load();
             drawer.setSidePane(box);
 
-            loadFrame(box);
+            initLateralButton(box);
 
             HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
             transition.setRate(-1);
@@ -57,44 +58,19 @@ public class Controller_mainFrame implements Initializable {
                     drawer.open();
                 }
             });
+
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(-1);
         }
     }
 
-    public void loadFrame(VBox box){
+
+    public void initLateralButton(VBox box){
         for(Node node : box.getChildren()){
             node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
                 try {
-                    switch (node.getAccessibleText()){
-                    case "Dashboard" :
-                        /*TODO*/
-                        header_mainFrame.setText("Dashboard");
-                        load("/gui/view/bankAccount.fxml");
-                        break;
-                    case "Budget" :
-                        /*TODO*/
-                        header_mainFrame.setText("Budget");
-                        load("/gui/view/bankAccount.fxml");
-                        break;
-                    case "Transaction" :
-                        header_mainFrame.setText("Transaction");
-                        load("/gui/view/transactionList.fxml");
-                        break;
-                    case "Dept" :
-                        /*TODO*/
-                        header_mainFrame.setText("Dettes");
-                        load("/gui/view/bankAccount.fxml");
-                        break;
-                    case "BankAccount" :
-                        header_mainFrame.setText("Compte bancaire");
-                        load("/gui/view/bankAccount.fxml");
-                        break;
-                    case "CategoryModel" :
-                        header_mainFrame.setText("Catégorie");
-                        load("/gui/view/categoryList.fxml");
-                        break;
-                }
+                    loadContent(Integer.valueOf(node.getAccessibleText()));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -102,14 +78,33 @@ public class Controller_mainFrame implements Initializable {
         }
     }
 
-    private void load(String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Controller_bankAccount controller_bankAccount = new Controller_bankAccount();
-        loader.setController(controller_bankAccount);
+    private void loadContent(int id) throws IOException {
+
+        header_mainFrame.setText(tabViewName[id]);
+        mainContent.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(tabViewFile[id]));
+        switch(id) {
+            case 0 : // Dashboard
+                break;
+            case 1 : // Budget
+                break;
+            case 2 : // Transactions
+                loader.setController(new Controller_transactionList());
+                break;
+            case 3 : // Dettes
+                break;
+            case 4 : // compte bancaire
+                loader.setController(new Controller_bankAccount());
+                break;
+            case 5 : // catégories
+                loader.setController(new Controller_categoryList());
+                break;
+        }
         AnchorPane pane = loader.load();
-        pane.prefWidthProperty().bind(mainContent.widthProperty());
-        pane.prefHeightProperty().bind(mainContent.heightProperty());
+        /*pane.prefWidthProperty().bind(mainContent.widthProperty());
+        pane.prefHeightProperty().bind(mainContent.heightProperty());*/
         mainContent.getChildren().add(pane);
+
     }
 
 

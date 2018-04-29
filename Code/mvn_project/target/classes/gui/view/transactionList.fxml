@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="519.0" prefWidth="864.0" style="-fx-background-color: #efefef;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane style="-fx-background-color: #efefef;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
    <children>
       <ComboBox fx:id="accountSelect" layoutX="150.0" layoutY="14.0" prefWidth="150.0" promptText="Sélection du compte : " />
       <ComboBox layoutX="510.0" layoutY="14.0" prefWidth="150.0" promptText="Mensuelle" />

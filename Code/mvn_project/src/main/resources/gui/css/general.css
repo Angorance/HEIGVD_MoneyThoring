@@ -1,5 +1,5 @@
 .create_button{
-    -fx-background-color: red;
+    -fx-background-color: #1ab21d;
 }
 
 .create_button:hover{
@@ -19,11 +19,11 @@
 }
 
 .return{
-    -fx-background-color: RED
+    -fx-background-color: #b4b0b2
 }
 
 .accept{
-    -fx-background-color: RED
+    -fx-background-color: #0a9c25
 }
 
 .transaction-button{

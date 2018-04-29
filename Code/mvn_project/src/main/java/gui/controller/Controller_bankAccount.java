@@ -1,9 +1,6 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
-import bll.logic.ClientLogic;
-import gui.model.createBankAccount;
-import bll.model.BankAccountModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,15 +16,19 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+/**
+ * controller for the bank account list view
+ * @author François Burgener, Bryan Curchod
+ * @version 1.5
+ */
 public class Controller_bankAccount implements Initializable {
 
     /**
      * class to display a bank account with a GridPane
      */
-    class AccountDisplayer extends GridPane {
+    private class AccountDisplayer extends GridPane {
         /*Default size*/
         private final int WIDTH = 100;
         private final int HEIGHT = 50;
@@ -60,8 +61,6 @@ public class Controller_bankAccount implements Initializable {
                 }
             });
         }
-
-
     }
 
 
@@ -73,7 +72,7 @@ public class Controller_bankAccount implements Initializable {
      * Event on the create button that will load the account creation page
      * @param actionEvent
      */
-    public void createButton(ActionEvent actionEvent){
+    public void openForm(ActionEvent actionEvent){
 
         /* we load the form fxml*/
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
@@ -147,21 +146,21 @@ public class Controller_bankAccount implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Remove all children from FlowPane container (frame_bankAccount)
-        frame_bankAccount.getChildren().removeAll();
+        frame_bankAccount.getChildren().clear();
         paneform.setVisible(false);
         paneform.setMouseTransparent(true);
 
         //Go through the list of bank accounts and add it to our frame
-        for(BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()){
+        /*for(BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()){
             AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
             addToFrame(accountDisplayer);
-        }
+        }*/
 
         /*Add event at our button*/
         create_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                createButton(event);
+                openForm(event);
             }
         });
     }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="paneFond" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" styleClass="transaction-button" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneFond" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" styleClass="transaction-button" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="110.0" layoutY="176.0" prefHeight="245.0" prefWidth="607.0" styleClass="anchor-pane" stylesheets="@../css/general.css" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
          <children>
