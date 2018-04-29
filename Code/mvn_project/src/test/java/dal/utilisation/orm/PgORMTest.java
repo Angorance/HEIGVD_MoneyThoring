@@ -164,10 +164,10 @@ class PgORMTest {
 
         orm.commit();
         orm.beginTransaction();
-        Assert.assertTrue(orm.getClientRepository().mailExsit(clientTwo.getEmail()));
+        Assert.assertTrue(orm.getClientRepository().mailExist(clientTwo.getEmail()));
         Assert.assertTrue(orm.getClientRepository().pseudoExist(clientOne.getUsername()));
         Assert.assertFalse(orm.getClientRepository().pseudoExist(clientOne.getUsername()+"blabla"));
-        Assert.assertFalse(orm.getClientRepository().mailExsit(clientOne.getEmail() + "vabd"));
+        Assert.assertFalse(orm.getClientRepository().mailExist(clientOne.getEmail() + "vabd"));
 
         for(IDALClientEntity c : orm.getClientRepository().getClients())
             orm.getClientRepository().delete(c.getId());

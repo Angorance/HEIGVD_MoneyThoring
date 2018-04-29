@@ -1,5 +1,5 @@
 .create_button{
-    -fx-background-color: red;
+    -fx-background-color: #1ab21d;
 }
 
 .create_button:hover{
@@ -19,9 +19,37 @@
 }
 
 .return{
-    -fx-background-color: RED
+    -fx-background-color: #b4b0b2
 }
 
 .accept{
-    -fx-background-color: RED
+    -fx-background-color: #0a9c25
 }
+
+.transaction-button{
+    -fx-background-color: #d9dde2;
+}
+
+.animated-option-button{
+    -fx-pref-width: 50px;
+    -fx-background-color: #44b449;
+    -fx-background-radius: 50px;
+    -fx-pref-height: 50px;
+    -fx-text-fill: white;
+    -fx-border-radius: 50px;
+    -fx-border-width: 4px;
+}
+
+.animated-option-sub-button{
+    -fx-background-color: #43609C;
+}
+
+.animated-option-sub-button2{
+    -fx-background-color: #3a9b4b;
+}
+
+.animated-option-sub-button3{
+    -fx-background-color: RED;
+}
+
+

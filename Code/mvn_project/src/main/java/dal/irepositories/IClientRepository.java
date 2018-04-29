@@ -20,6 +20,6 @@ public interface IClientRepository {
 
     public boolean pseudoExist(String username) throws DALException;
 
-    public boolean mailExsit(String email) throws DALException;
+    public boolean mailExist(String email) throws DALException;
 
 }

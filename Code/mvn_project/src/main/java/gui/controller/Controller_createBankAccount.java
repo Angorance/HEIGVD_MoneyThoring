@@ -1,5 +1,6 @@
 package gui.controller;
 
+import bll.logic.BankAccountLogic;
 import bll.model.BankAccountModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_createBankAccount implements Initializable {
+public class Controller_createBankAccount implements Initializable,IForm {
     @FXML private JFXTextField nameAccount;
     @FXML private JFXTextField nameBankAccount;
     @FXML private JFXTextField amount;
@@ -31,22 +32,40 @@ public class Controller_createBankAccount implements Initializable {
      * Return to the previous window
      * @param event
      */
-    @FXML void formCancel(ActionEvent event) {
+    @FXML
+    @Override
+    public void formCancel(ActionEvent event) {
         cba.add(null);
+
     }
 
     /**
-     *
+     * TODO
      * @param event
      */
-    @FXML void formValidation(ActionEvent event) {
-       /* BankAccountModel ba = new BankAccountModel();
-        ba.setName(nameAccount.getText());
-        ba.setAmount(Double.parseDouble(amount.getText()));
-
-        cba.add(ba);*/
+    @FXML
+    @Override
+    public void formValidation(ActionEvent event) {
+        if(checkValidInput()) {
+            String name = nameAccount.getText();
+            String bankName = nameBankAccount.getText();
+            String type = (String) typeAccount.getValue();
+            Double amountDouble = Double.parseDouble(amount.getText());
+            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, false);
+            cba.add(ba);
+        }
     }
 
+    private boolean checkValidInput() {
+        // on vérifie tous les champs, s'ils sont erronés on les mets en rouge
+        return true;
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been completely processed.
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         accepteButton.setOnAction(new EventHandler<ActionEvent>() {

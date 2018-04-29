@@ -9,9 +9,9 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_mainFrame">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #efefef;" BorderPane.alignment="CENTER">
+      <AnchorPane style="-fx-background-color: #efefef;" BorderPane.alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane id="mainContent" fx:id="mainContent" prefHeight="450.0" prefWidth="750.0" style="-fx-background-color: #d3f7ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane id="mainContent" fx:id="mainContent" style="-fx-background-color: #d3f7ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutY="100.0" prefHeight="39.0" prefWidth="661.0" text="Label assez grand pour qu'il dépasse la taille du drawer">
                      <font>
