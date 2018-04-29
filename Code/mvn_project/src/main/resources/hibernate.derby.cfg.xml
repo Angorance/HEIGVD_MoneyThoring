@@ -10,6 +10,7 @@
       <mapping class="dal.entities.derby.ClientDeEntity"/>
       <mapping resource="hibernate.derby.mapping.xml"/>
       <mapping class="dal.entities.derby.BankaccountDeEntity"/>
+      <mapping class="dal.entities.derby.CategoryDeEntity"/>
 
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
