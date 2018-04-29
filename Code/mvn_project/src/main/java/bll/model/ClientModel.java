@@ -163,30 +163,10 @@ public class ClientModel {
     }
     
     protected void updateDatabse(IORM orm) {
-        //à un moment donnée tu vas créer ou l'interface grphique va créer l'objet suivant à ajouté
-        //en base de donnée et c'est un objet du modèle métier
-        ClientModel leNouveauClient = new ClientModel();
-        leNouveauClient.setUsername("nouveau");
-        leNouveauClient.setKey("nouveau");
-        leNouveauClient.setActivated(false);
-        leNouveauClient.setEmail("balabl");
-        leNouveauClient.setPassword("mdp");
-        leNouveauClient.setSalt("slat");
-
-
-
-        //Ici on veut ajouter le client dans une db donc engros il faut effectuer les test pour
-        //savoir si son mail existe ou son username existe avant de l'ajouter
-
-
         try {
-            orm  = new PgORM();
             orm.beginTransaction();
-            //tester ce truc dans un if ou je sais pas
-            orm.getClientRepository().pseudoExist(leNouveauClient.getUsername());
-            orm.getClientRepository().mailExist(leNouveauClient.getEmail());
             //fin du petit test
-            orm.getClientRepository().addClient(DALClientMapper.toDboPG(leNouveauClient));
+            orm.getClientRepository().addClient(DALClientMapper.toDboPG(this));
 	        orm.commit();
 
         } catch (Exception e) {
