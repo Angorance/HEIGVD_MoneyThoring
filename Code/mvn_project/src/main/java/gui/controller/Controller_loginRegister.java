@@ -73,7 +73,7 @@ public class Controller_loginRegister {
         /*Verify if username is already used*/
         if(!checkUsernameAvailable(username)){
             check = false;
-            register_email.setStyle("    -fx-text-box-border: red ;");
+            register_username.setStyle("    -fx-text-box-border: red ;");
         }
 
         /*Verify if password is not equale to confirm password*/
