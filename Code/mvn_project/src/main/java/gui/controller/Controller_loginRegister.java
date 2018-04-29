@@ -71,7 +71,7 @@ public class Controller_loginRegister {
         boolean check = true;
 
         /*Verify if username is already used*/
-        if(!checkUsernameAvailable(username)){
+        if(usernameExists(username)){
             check = false;
             register_username.setStyle("    -fx-text-box-border: red ;");
         }

@@ -39,7 +39,7 @@ public class Authentication {
      * @return True if email is valid, false otherwise.
      */
     public static boolean checkEmail(String email) {
-        return checkEmailFormat(email) && checkEmailAvailable(email);
+        return checkEmailFormat(email) && !emailExists(email);
     }
 
     /**
@@ -66,7 +66,7 @@ public class Authentication {
      *
      * @return True if the email is not in the database, false otherwise.
      */
-    public static boolean checkEmailAvailable(String email) {
+    public static boolean emailExists(String email) {
     	// TODO - Manage if connected to internet or not!
 	    
         IORM orm = new PgORM();
@@ -89,7 +89,7 @@ public class Authentication {
      *
      * @return True is username is not used, false otherwise.
      */
-    public static boolean checkUsernameAvailable(String username) {
+    public static boolean usernameExists(String username) {
         // TODO - Manage if connected to internet or not!
 	    
 	    IORM orm = new PgORM();
