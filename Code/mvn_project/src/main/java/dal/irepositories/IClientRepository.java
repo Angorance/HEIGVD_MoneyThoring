@@ -22,7 +22,7 @@ public interface IClientRepository {
 
     public boolean mailExist(String email) throws DALException;
 
-    public boolean checkUserAndPassword(String usernameOrEmail, String password) throws DALException;
+    public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException;
 
     public String retriveSaltByUserLogin(String usernameOrEmail) throws DALException;
 
