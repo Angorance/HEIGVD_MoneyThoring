@@ -37,15 +37,29 @@ public class DALBankaccountMapper {
         
         return pgEntity;
     }
-
-    public static IDALBankaccountEntity toDboDe(BankAccountModel bo) {
-//        if (bo == null) {
-//            return null;
-//        }
-//        BankaccountDeEntity dboDe = new BankaccountDeEntity();
-//        dboDe.setId(bo.getId());
-        return null;
-        //return dboDe;
+    
+    /**
+     * BankAccountModel -> Derby entity
+     */
+    public static IDALBankaccountEntity toDboDe(BankAccountModel model) {
+        
+        if (model == null) {
+            return null;
+        }
+    
+        // Create the Derby bank account
+        BankaccountDeEntity derbyEntity = new BankaccountDeEntity();
+    
+        derbyEntity.setId(model.getId());
+        derbyEntity.setName(model.getName());
+        derbyEntity.setNamebank(model.getBankName());
+        derbyEntity.setTypeaccount(model.getType());
+        derbyEntity.setAmount(model.getAmount());
+        derbyEntity.setIsdefault(model.isDefault());
+        derbyEntity.setIsvisible(model.isVisible());
+        derbyEntity.setClientId(model.getClientId());
+    
+        return derbyEntity;
     }
 
     public static BankAccountModel toBo(IDALBankaccountEntity dbo) {
