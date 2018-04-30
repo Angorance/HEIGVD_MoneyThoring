@@ -138,11 +138,7 @@ public class ClientLogic extends ClientModel {
      */
     @Override
     public void setPassword(String password) {
-        String hashedPassword = password + getSalt();
-
-        // TODO - Hash password
-
-        super.setPassword(hashedPassword);
+        super.setPassword(password);
     }
 
     /**

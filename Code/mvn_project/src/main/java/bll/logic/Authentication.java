@@ -139,8 +139,6 @@ public class Authentication {
 	    md.update((password + salt).getBytes("UTF-8"));
 	
 	    String hashed = Base64.encodeBase64URLSafeString(md.digest());
-	
-	    System.out.println(hashed.length());
 	    
 	    return hashed;
     }
