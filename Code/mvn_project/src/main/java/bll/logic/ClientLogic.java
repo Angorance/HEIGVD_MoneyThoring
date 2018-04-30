@@ -51,15 +51,20 @@ public class ClientLogic extends ClientModel {
 
         setEmail(email);
         setUsername(username);
-        setPassword(password);
+        
+        try {
+            setPassword(Authentication.hash(password));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         setKey("SYdjcvkbejbsl");
-        setSalt("1234");
 
         bankAccounts = new ArrayList<>();
         categories = new ArrayList<>();
         
         // TODO - Manage if connected and use Derby if necessary.
-        updateDatabse(new PgORM());
+        createUser(new PgORM());
     }
 
 

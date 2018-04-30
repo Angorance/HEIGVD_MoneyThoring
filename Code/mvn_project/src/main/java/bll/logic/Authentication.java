@@ -3,15 +3,29 @@ package bll.logic;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
  * @authors Daniel Gonzalez Lopez, Héléna Line Reymond
  */
 public class Authentication {
-
+	
+	private static final Random RANDOM = new SecureRandom();
+	private static final int ITERATIONS = 10000;
+	private static final int KEY_LENGTH = 256;
+	
     // Regex to check email format. Found on the internet
     // stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]"
@@ -87,7 +101,7 @@ public class Authentication {
      *
      * @param username Username entered by the client.
      *
-     * @return True is username is not used, false otherwise.
+     * @return True if username already exists, false otherwise.
      */
     public static boolean usernameExists(String username) {
         // TODO - Manage if connected to internet or not!
@@ -104,4 +118,50 @@ public class Authentication {
 
         return result;
     }
+    
+    private static String saltGenerator() {
+	    byte[] salt = new byte[16];
+	    
+	    RANDOM.nextBytes(salt);
+	    
+	    String salty = salt.toString();
+	    ClientLogic.getInstance().setSalt(salty);
+	    
+	    return salty;
+    }
+    
+    public static String hash(String password, String salt)
+		    throws UnsupportedEncodingException, NoSuchAlgorithmException {
+	
+    	
+	    MessageDigest md = MessageDigest.getInstance("SHA-512");
+	    md.update((password + salt).getBytes("UTF-8"));
+	
+	    String hashed = Base64.encodeBase64URLSafeString(md.digest());
+	
+	    System.out.println(hashed.length());
+	    
+	    return hashed;
+    }
+	
+	public static String hash(String password)
+			throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    	
+    	String salt = saltGenerator();
+		
+		return hash(password, salt);
+	}
+	
+	public static boolean connect(String username, String password) {
+    	IORM orm = new PgORM();
+    	
+    	try {
+		    orm.beginTransaction();
+		    orm.getClientRepository();
+	    } catch (Exception e) {
+		    System.out.println(e);
+	    }
+	    
+	    return false;
+	}
 }
