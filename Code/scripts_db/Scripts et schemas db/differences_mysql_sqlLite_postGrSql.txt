@@ -1,3 +1,0 @@
-SQLITE
-------------------------------------------
-- pas de préfixage (ex: moneythoring.user)

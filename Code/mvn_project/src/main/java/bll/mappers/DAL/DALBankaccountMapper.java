@@ -6,10 +6,11 @@ import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
+/**
+ * Class used to map a BankAccountModel to an IDALClientEntity
+ */
 public class DALBankaccountMapper {
 
     public static IDALBankaccountEntity toDboPG(BankAccountModel bo) {
