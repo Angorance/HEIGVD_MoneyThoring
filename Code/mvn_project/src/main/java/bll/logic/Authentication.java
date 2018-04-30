@@ -154,10 +154,15 @@ public class Authentication {
 	
 	public static boolean connect(String username, String password) {
     	IORM orm = new PgORM();
+    	String salt;
     	
     	try {
 		    orm.beginTransaction();
-		    orm.getClientRepository();
+		    salt = orm.getClientRepository().retriveSaltByUserLogin(username);
+		    
+		    String hash = hash(password, salt);
+		    
+		    orm.getClientRepository().checkUserAndPassword(username, hash);
 	    } catch (Exception e) {
 		    System.out.println(e);
 	    }
