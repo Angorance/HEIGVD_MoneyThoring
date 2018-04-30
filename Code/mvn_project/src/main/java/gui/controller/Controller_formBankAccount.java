@@ -48,7 +48,7 @@ public class Controller_formBankAccount implements Initializable,IForm {
             String bankName = nameBankAccount.getText();
             String type = (String) typeAccount.getValue();
             Double amountDouble = Double.parseDouble(amount.getText());
-            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, false);
+            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, 0);
             cba.formReturn(ba);
         }
     }
