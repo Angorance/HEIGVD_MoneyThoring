@@ -131,7 +131,7 @@ public class ClientDeRepository implements IClientRepository {
     }
 
     @Override
-    public boolean checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
+    public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
         ClientDeEntity client = null;
 
         try {
@@ -143,7 +143,7 @@ public class ClientDeRepository implements IClientRepository {
             throw new DALException(e);
         }
 
-        return (client != null);
+        return client;
     }
 
     @Override

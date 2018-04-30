@@ -126,7 +126,7 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     @Override
-    public boolean checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
+    public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
         ClientPgEntity client = null;
 
         try {
@@ -138,7 +138,7 @@ public class ClientPgRepository implements IClientRepository {
             throw new DALException(e);
         }
 
-        return (client != null);
+        return client;
     }
 
     @Override
