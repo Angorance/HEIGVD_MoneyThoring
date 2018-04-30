@@ -47,7 +47,7 @@
             <column name="EMAIL" sql-type="varchar(100)" length="100"/>
         </property>
         <property name="password">
-            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+            <column name="PASSWORD" sql-type="varchar(250)" length="50"/>
         </property>
         <property name="isactivated">
             <column name="ISACTIVATED" sql-type="boolean(1)"/>

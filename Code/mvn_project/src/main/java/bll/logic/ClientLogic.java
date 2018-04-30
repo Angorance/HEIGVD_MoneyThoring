@@ -142,6 +142,7 @@ public class ClientLogic extends ClientModel {
      * @param ba Bank account to add to the list.
      */
     public void addBankAccount(BankAccountLogic ba) {
+        ba.setClientId(getId());
         bankAccounts.add(ba);
     }
 

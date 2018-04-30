@@ -23,18 +23,20 @@ public class BankAccountModel {
     // data for the views, but the user can't access it.
     private boolean isVisible;
     private boolean isDefault;
-
-
+    
+    private int clientID;
+    
     // CONSTRUCTORS
 
     public BankAccountModel(String name, String bankName, String type,
-                            double amount, boolean isDefault) {
+                            double amount, boolean isDefault, int clientID) {
 
         this.name = name;
         this.bankName = bankName;
         this.type = type;
         this.amount = amount;
         this.isVisible = true;
+        this.clientID = clientID;
 
         setDefault(isDefault);
     }
@@ -106,7 +108,16 @@ public class BankAccountModel {
     public boolean isVisible() {
         return isVisible;
     }
-
+    
+    /**
+     * Get the ID of the client owner.
+     *
+     * @return ID of the client owner.
+     */
+    public int getClientId() {
+        return clientID;
+    }
+    
     // SETTERS
 
     /**
@@ -171,5 +182,14 @@ public class BankAccountModel {
      */
     protected void setVisible(boolean visible) {
         isVisible = visible;
+    }
+    
+    /**
+     * Change the id of the client owner by the given one.
+     *
+     * @param clientID New client ID to set.
+     */
+    public void setClientId(int clientID) {
+        this.clientID = clientID;
     }
 }

@@ -28,9 +28,9 @@ public class BankAccountLogic extends BankAccountModel {
      * @param isDefault
      */
     public BankAccountLogic(String name, String bankName, String type,
-                            double amount, boolean isDefault) {
+                            double amount, boolean isDefault, int clientID) {
 
-        super(name, bankName, type, amount, isDefault);
+        super(name, bankName, type, amount, isDefault, clientID);
 
         ClientLogic.getInstance().addBankAccount(this);
         transactions = new ArrayList<>();
