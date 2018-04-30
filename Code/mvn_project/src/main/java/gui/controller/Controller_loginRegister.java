@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import gui.model.mainFrame;
 
@@ -35,19 +36,18 @@ public class Controller_loginRegister {
         String password = login_password.getText();
         
         /*Retrieving the status of the login method*/
-        /*boolean status = login(email,password);
+        boolean status = connect(email,password);
 
-        /*if the status is false, it means that one of the fields is incorrect (email or password)
+        /*if the status is false, it means that one of the fields is incorrect (email or password)*/
         if(!status){
-            /*Error message
+            /*Error message*/
             login_incorrect.setText("Identifiant ou mot de passe incorrect");
             login_incorrect.setTextFill(Color.RED);
-        //otherwise we load the main frame
+        //otherwise we load the main frame*/
         }else{
-            /*Load dashboard
+            /*Load dashboard*/
             loadMainFrame();
-        }*/
-        loadMainFrame();
+        }
     }
     
     @FXML private TextField register_username;
