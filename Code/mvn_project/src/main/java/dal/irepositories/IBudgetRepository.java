@@ -10,8 +10,6 @@ public interface IBudgetRepository {
 
     public List<IDALBudgetEntity> getBudgets() throws DALException;
 
-    public List<IDALBudgetEntity> getBudgets(int page, String sort);
-
     public void update(IDALBudgetEntity Budget) throws DALException;
 
     public void addBudget(IDALBudgetEntity Budget) throws DALException;

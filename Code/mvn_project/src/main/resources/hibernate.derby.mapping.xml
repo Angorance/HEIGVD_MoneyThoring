@@ -47,7 +47,7 @@
             <column name="EMAIL" sql-type="varchar(100)" length="100"/>
         </property>
         <property name="password">
-            <column name="PASSWORD" sql-type="varchar(50)" length="50"/>
+            <column name="PASSWORD" sql-type="varchar(250)" length="50"/>
         </property>
         <property name="isactivated">
             <column name="ISACTIVATED" sql-type="boolean(1)"/>
@@ -81,6 +81,36 @@
         </property>
         <property name="clientId">
             <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+    </class>
+    <class name="dal.entities.derby.BudgetDeEntity" table="budget" schema="moneythoring" catalog="moneythoring">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="amount">
+            <column name="amount" sql-type="double precision" precision="-1"/>
+        </property>
+        <property name="isshared">
+            <column name="isshared" sql-type="boolean"/>
+        </property>
+        <property name="isrecurrent">
+            <column name="isrecurrent" sql-type="boolean"/>
+        </property>
+        <property name="startingdate">
+            <column name="startingdate" sql-type="date"/>
+        </property>
+        <property name="endingdate">
+            <column name="endingdate" sql-type="date"/>
+        </property>
+        <property name="gap">
+            <column name="gap" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="clientId">
+            <column name="client_id" sql-type="integer"/>
         </property>
     </class>
 </hibernate-mapping>
