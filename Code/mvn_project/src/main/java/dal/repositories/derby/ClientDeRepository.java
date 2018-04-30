@@ -3,6 +3,7 @@ package dal.repositories.derby;
 
 import dal.dalexception.DALException;
 import dal.entities.derby.ClientDeEntity;
+import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.util.HibernateUtil;
@@ -122,6 +123,22 @@ public class ClientDeRepository implements IClientRepository {
             client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
                     .add(Restrictions.eq("email", email))
                     .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
+    }
+
+    @Override
+    public boolean checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
+        ClientDeEntity client = null;
+
+        try {
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)),
+                            Restrictions.eq("password", password))).uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
