@@ -3,6 +3,7 @@ package dal.repositories.derby;
 
 import dal.dalexception.DALException;
 import dal.entities.derby.ClientDeEntity;
+import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.util.HibernateUtil;
@@ -127,5 +128,39 @@ public class ClientDeRepository implements IClientRepository {
         }
 
         return (client != null);
+    }
+
+    @Override
+    public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
+        ClientDeEntity client = null;
+
+        try {
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)),
+                            Restrictions.eq("password", password))).uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return client;
+    }
+
+    @Override
+    public String retriveSaltByUserLogin(String usernameOrEmail) throws DALException {
+        ClientDeEntity client = null;
+        String salt = "";
+        try {
+            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)))).uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        if(client != null)
+            salt = client.getSalt();
+
+        return salt;
     }
 }

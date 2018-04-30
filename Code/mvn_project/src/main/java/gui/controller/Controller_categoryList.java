@@ -124,7 +124,7 @@ public class Controller_categoryList implements Initializable, IController {
 
         btnAdd.setOnAction(event -> callform());
 
-        // TODO add the existing categories
+        // TODO formReturn the existing categories
 
         // sample category
         listContainer.getChildren().add(new CategoryDisplayer(new CategoryLogic("une première catégorie", "#20B4E6", false)));

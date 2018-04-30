@@ -2,34 +2,64 @@ package bll.mappers.DAL;
 
 import bll.model.BankAccountModel;
 import bll.model.ClientModel;
+import dal.entities.derby.BankaccountDeEntity;
 import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALClientEntity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
+/**
+ * Class used to map a BankAccountModel to an IDALBankAccountEntity
+ */
 public class DALBankaccountMapper {
-
-    public static IDALBankaccountEntity toDboPG(BankAccountModel bo) {
-        if (bo == null) {
+    
+    /**
+     * BankAccountModel -> PostgreSQL entity
+     */
+    public static IDALBankaccountEntity toDboPG(BankAccountModel model) {
+        
+        if (model == null) {
             return null;
         }
-        BankaccountPgEntity dboPg = new BankaccountPgEntity();
-        dboPg.setId(bo.getId());
-
-        return null;
+    
+        // Create the PostgreSQL bank account
+        BankaccountPgEntity pgEntity = new BankaccountPgEntity();
+    
+        pgEntity.setId(model.getId());
+        pgEntity.setName(model.getName());
+        pgEntity.setNamebank(model.getBankName());
+        pgEntity.setTypeaccount(model.getType());
+        pgEntity.setAmount(model.getAmount());
+        pgEntity.setIsdefault(model.isDefault());
+        pgEntity.setIsvisible(model.isVisible());
+        pgEntity.setClientId(model.getClientId());
+        
+        return pgEntity;
     }
-
-    public static IDALBankaccountEntity toDboDe(BankAccountModel bo) {
-//        if (bo == null) {
-//            return null;
-//        }
-//        BankaccountDeEntity dboDe = new BankaccountDeEntity();
-//        dboDe.setId(bo.getId());
-        return null;
-        //return dboDe;
+    
+    /**
+     * BankAccountModel -> Derby entity
+     */
+    public static IDALBankaccountEntity toDboDe(BankAccountModel model) {
+        
+        if (model == null) {
+            return null;
+        }
+    
+        // Create the Derby bank account
+        BankaccountDeEntity derbyEntity = new BankaccountDeEntity();
+    
+        derbyEntity.setId(model.getId());
+        derbyEntity.setName(model.getName());
+        derbyEntity.setNamebank(model.getBankName());
+        derbyEntity.setTypeaccount(model.getType());
+        derbyEntity.setAmount(model.getAmount());
+        derbyEntity.setIsdefault(model.isDefault());
+        derbyEntity.setIsvisible(model.isVisible());
+        derbyEntity.setClientId(model.getClientId());
+    
+        return derbyEntity;
     }
 
     public static BankAccountModel toBo(IDALBankaccountEntity dbo) {
@@ -50,7 +80,7 @@ public class DALBankaccountMapper {
 //        Collection<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
 //        Iterator<ClientModel> it = bos.iterator();
 //        while (it.hasNext()) {
-//            dbos.add((ClientPgEntity) toDboDe(it.next()));
+//            dbos.formReturn((ClientPgEntity) toDboDe(it.next()));
 //        }
         return null;
     }

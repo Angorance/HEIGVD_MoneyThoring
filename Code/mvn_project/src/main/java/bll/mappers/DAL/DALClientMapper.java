@@ -5,79 +5,124 @@ import dal.entities.derby.ClientDeEntity;
 import dal.entities.pgsql.ClientPgEntity;
 import dal.ientites.IDALClientEntity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
+/**
+ * Class used to map a ClientModel to an IDALClientEntity
+ */
 public class DALClientMapper {
-    public static IDALClientEntity toDboPG(ClientModel bo) {
-        if (bo == null) {
+	
+	/**
+	 * ClientModel -> PostgreSQL entity
+	 */
+    public static IDALClientEntity toDboPG(ClientModel model) {
+    	
+        if (model == null) {
             return null;
         }
-        ClientPgEntity dboPg = new ClientPgEntity();
-        dboPg.setId(bo.getId());
-        dboPg.setUsername(bo.getUsername());
-        dboPg.setEmail(bo.getEmail());
-        dboPg.setPassword(bo.getPassword());
-        dboPg.setIsactivated(bo.getIsActivated());
-        dboPg.setActivationkey(bo.getKey());
-        dboPg.setSalt(bo.getSalt());
-        return dboPg;
+        
+        // Create the PostgreSQL client
+        ClientPgEntity pgEntity = new ClientPgEntity();
+        
+        pgEntity.setId(model.getId());
+        pgEntity.setUsername(model.getUsername());
+        pgEntity.setEmail(model.getEmail());
+        pgEntity.setPassword(model.getPassword());
+        pgEntity.setIsactivated(model.getIsActivated());
+        pgEntity.setActivationkey(model.getKey());
+        pgEntity.setSalt(model.getSalt());
+ 
+        return pgEntity;
     }
-
-    public static IDALClientEntity toDboDe(ClientModel bo) {
-        if (bo == null) {
+	
+	/**
+	 * ClientModel -> Derby entity
+	 */
+    public static IDALClientEntity toDboDe(ClientModel model) {
+     
+    	if (model == null) {
             return null;
         }
-        ClientDeEntity dboDe = new ClientDeEntity();
-        dboDe.setId(bo.getId());
-        dboDe.setUsername(bo.getUsername());
-        dboDe.setEmail(bo.getEmail());
-        dboDe.setPassword(bo.getPassword());
-        dboDe.setIsactivated(bo.getIsActivated());
-        dboDe.setActivationkey(bo.getKey());
-        dboDe.setSalt(bo.getSalt());
-        return dboDe;
+	
+	    // Create the Derby client
+        ClientDeEntity derbyEntity = new ClientDeEntity();
+    	
+        derbyEntity.setId(model.getId());
+        derbyEntity.setUsername(model.getUsername());
+        derbyEntity.setEmail(model.getEmail());
+        derbyEntity.setPassword(model.getPassword());
+        derbyEntity.setIsactivated(model.getIsActivated());
+        derbyEntity.setActivationkey(model.getKey());
+        derbyEntity.setSalt(model.getSalt());
+        
+        return derbyEntity;
     }
-
-    public static ClientModel toBo(IDALClientEntity dbo) {
-        if (dbo == null) {
+	
+	/**
+	 * Entity -> ClientModel
+	 */
+    public static ClientModel toBo(IDALClientEntity entity) {
+    	
+        if (entity == null) {
             return null;
         }
-        ClientModel bo = new ClientModel();
-        bo.setId(dbo.getId());
-        bo.setUsername(dbo.getUsername());
-        bo.setEmail(dbo.getEmail());
-        bo.setPassword(dbo.getPassword());
-        bo.setActivated(dbo.getIsactivated());
-        bo.setKey(dbo.getActivationkey());
-        bo.setSalt(dbo.getSalt());
-        return bo;
+        
+        // Create the client model
+        ClientModel model = new ClientModel();
+        
+        model.setId(entity.getId());
+        model.setUsername(entity.getUsername());
+        model.setEmail(entity.getEmail());
+        model.setPassword(entity.getPassword());
+        model.setActivated(entity.getIsactivated());
+        model.setKey(entity.getActivationkey());
+        model.setSalt(entity.getSalt());
+        
+        return model;
     }
-
-    public static Collection<ClientModel> toBos(Collection<IDALClientEntity> dbos) {
-        Collection<ClientModel> bos = new ArrayList<ClientModel>();
-        Iterator<IDALClientEntity> it = dbos.iterator();
-        while (it.hasNext()) {
-            dbos.add((IDALClientEntity) toBo(it.next()));
-        }
-        return bos;
+	
+	/**
+	 * Entities -> ClientsModel
+	 */
+    public static List<ClientModel> toBos(List<IDALClientEntity> entities) {
+	
+	    // Create the list of clients model
+        List<ClientModel> models = new ArrayList<ClientModel>();
+	
+	    for(IDALClientEntity entity : entities){
+		    models.add(toBo(entity));
+	    }
+        
+        return models;
     }
-
-    public static Collection<IDALClientEntity> toDbosPG(List<ClientModel> bos) {
-        List<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
-        for(ClientModel dbo : bos){
-            dbos.add(toDboPG(dbo));
-        }
-        return null;
+	
+	/**
+	 * ClientsModel -> PostgreSQL Entities
+	 */
+    public static List<IDALClientEntity> toDbosPG(List<ClientModel> models) {
+	
+	    // Create the list of entities
+	    List<IDALClientEntity> entities = new ArrayList<IDALClientEntity>();
+	
+	    for(ClientModel model : models){
+		    entities.add(toDboPG(model));
+	    }
+	
+	    return entities;
     }
-
-    public static Collection<IDALClientEntity> toDbosDe(List<ClientModel> bos) {
-        return null;
+	
+	/**
+	 * ClientsModel -> Derby Entities
+	 */
+    public static List<IDALClientEntity> toDbosDe(List<ClientModel> models) {
+	
+	    // Create the list of entities
+	    List<IDALClientEntity> entities = new ArrayList<IDALClientEntity>();
+	
+	    for(ClientModel model : models){
+		    entities.add(toDboDe(model));
+	    }
+	
+	    return entities;
     }
-
-
 }
-
-

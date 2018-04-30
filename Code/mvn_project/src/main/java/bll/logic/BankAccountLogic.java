@@ -28,18 +28,22 @@ public class BankAccountLogic extends BankAccountModel {
      * @param isDefault
      */
     public BankAccountLogic(String name, String bankName, String type,
-                            double amount, boolean isDefault) {
+                            double amount, boolean isDefault, int clientID) {
 
-        super(name, bankName, type, amount, isDefault);
+        super(name, bankName, type, amount, isDefault, clientID);
 
         ClientLogic.getInstance().addBankAccount(this);
         transactions = new ArrayList<>();
+    }
+    
+    public String toString(){
+        return super.getName();
     }
 
     /**
      * Increment the bank account by the value of the parameter.
      *
-     * @param io Income to add to the amount.
+     * @param io Income to formReturn to the amount.
      */
     private void updateAmount(double io) {
         setAmount(getAmount() + io);
@@ -48,7 +52,7 @@ public class BankAccountLogic extends BankAccountModel {
     /**
      * Add the transaction to the transaction list of the bank account.
      *
-     * @param transaction New transaction to add to the list.
+     * @param transaction New transaction to formReturn to the list.
      */
     public void addTransaction(IOTransactionLogic transaction) {
         transactions.add(transaction);
