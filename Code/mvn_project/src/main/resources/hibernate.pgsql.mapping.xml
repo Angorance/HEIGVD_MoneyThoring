@@ -105,5 +105,32 @@
             <column name="client_id" sql-type="integer"/>
         </property>
     </class>
+    <class name="dal.entities.pgsql.DebtPgEntity" table="debt" schema="moneythoring" catalog="moneythoring">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="amount">
+            <column name="amount" sql-type="double precision" precision="-1"/>
+        </property>
+        <property name="isincome">
+            <column name="isincome" sql-type="boolean"/>
+        </property>
+        <property name="expirationdate">
+            <column name="expirationdate" sql-type="date"/>
+        </property>
+        <property name="clientId">
+            <column name="client_id" sql-type="integer"/>
+        </property>
+        <property name="clientId1">
+            <column name="client_id1" sql-type="integer" not-null="true"/>
+        </property>
+    </class>
 
 </hibernate-mapping>
