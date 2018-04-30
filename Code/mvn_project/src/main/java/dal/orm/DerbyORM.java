@@ -2,9 +2,12 @@ package dal.orm;
 
 import dal.dalexception.DALException;
 import dal.irepositories.IBankaccountRepository;
+import dal.irepositories.ICategoryRepository;
 import dal.irepositories.IClientRepository;
 import dal.repositories.derby.BankaccountDeRepository;
+import dal.repositories.derby.CategoryDeRepository;
 import dal.repositories.derby.ClientDeRepository;
+import dal.repositories.pgsql.CategoryPgRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,6 +22,7 @@ public class DerbyORM implements IORM {
 
     private IClientRepository clientRepository;
     private IBankaccountRepository bankaccountRepository;
+    private ICategoryRepository categoryRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -36,6 +40,10 @@ public class DerbyORM implements IORM {
         return bankaccountRepository;
     }
 
+    @Override
+    public ICategoryRepository getCategoryRepository() {
+        return new CategoryDeRepository(session, transaction);
+    }
 
     private void openSession() throws DALException {
         //if(sessionFactory == null) {
