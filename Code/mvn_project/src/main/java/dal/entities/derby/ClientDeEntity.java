@@ -54,7 +54,7 @@ public class ClientDeEntity implements IDALClientEntity {
     }
 
     @Basic
-    @Column(name = "PASSWORD", nullable = false, length = 50)
+    @Column(name = "PASSWORD", nullable = false, length = 250)
     public String getPassword() {
         return password;
     }

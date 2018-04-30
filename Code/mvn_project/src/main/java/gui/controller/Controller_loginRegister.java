@@ -17,23 +17,23 @@ import static bll.logic.Authentication.*;
  * Controller of the view loginRegister
  */
 public class Controller_loginRegister {
-
+    
     @FXML private TextField login_email;
     @FXML private PasswordField login_password;
     @FXML private Label login_incorrect;
-
-
+    
+    
     /**
      * Event on the button Login
      * @param actionEvent
      * @throws IOException
      */
     @FXML public void clickLoginButton(ActionEvent actionEvent) throws IOException {
-
+        
         /*Retrieving text input*/
         String email = login_email.getText();
         String password = login_password.getText();
-
+        
         /*Retrieving the status of the login method*/
         /*boolean status = login(email,password);
 
@@ -49,61 +49,61 @@ public class Controller_loginRegister {
         }*/
         loadMainFrame();
     }
-
+    
     @FXML private TextField register_username;
     @FXML private TextField register_email;
     @FXML private PasswordField register_password;
     @FXML private PasswordField register_confirmPassword;
-
+    
     /**
      * Event on the button register
      * @param actionEvent
      */
     @FXML public void clickRegisterButton(ActionEvent actionEvent) {
-
+        
         /*Retrieving text input*/
         String username = register_username.getText();
         String email = register_email.getText();
         String password = register_password.getText();
         String confirmPassword = register_confirmPassword.getText();
-
+        
         //Check if passord, email and username is correct
         boolean check = true;
-
+        
         /*Verify if username is already used*/
         if(usernameExists(username)){
             check = false;
-            register_username.setStyle("    -fx-text-box-border: red ;");
+            register_username.setStyle("-fx-text-inner-color: red;");
         }
-
+        
         /*Verify if password is not equale to confirm password*/
         if(!checkPasswords(password,confirmPassword)){
             check = false;
-            register_password.setStyle("    -fx-text-box-border: red ;");
-            register_confirmPassword.setStyle("    -fx-text-box-border: red ;");
+            register_password.setStyle("-fx-text-inner-color: red;");
+            register_confirmPassword.setStyle("-fx-text-inner-color: red;");
         }
-
+        
         /*Verify if email is already used*/
         if(!checkEmail(email)){
             check = false;
-            register_email.setStyle("    -fx-text-box-border: red ;");
+            register_email.setStyle("-fx-text-inner-color: red;");
         }
-
+        
         /*If all is correcte we create a new client and load the main frame*/
         if(check){
             ClientLogic.getInstance().setClient(email,username,password);
             loadMainFrame();
         }
-
+        
     }
-
+    
     /**
      * Closing the window
      */
     public void closeStage(){
         ((Stage)login_email.getScene().getWindow()).close();
     }
-
+    
     /**
      * Loading the main window
      */

@@ -29,7 +29,7 @@ public interface IDALClientEntity {
     void setEmail(String email);
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 250)
     String getPassword();
 
     void setPassword(String password);

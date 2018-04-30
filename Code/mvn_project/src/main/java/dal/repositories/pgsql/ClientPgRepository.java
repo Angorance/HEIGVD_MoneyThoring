@@ -15,6 +15,7 @@ import java.util.List;
 public class ClientPgRepository implements IClientRepository {
     private Session session;
     private Transaction transaction;
+
     public ClientPgRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
@@ -117,6 +118,22 @@ public class ClientPgRepository implements IClientRepository {
             client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
                     .add(Restrictions.eq("email", email))
                     .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return (client != null);
+    }
+
+    @Override
+    public boolean checkUserAndPassword(String usernameOrEmail, String password) throws DALException {
+        ClientPgEntity client = null;
+
+        try {
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)),
+                            Restrictions.eq("password", password))).uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
