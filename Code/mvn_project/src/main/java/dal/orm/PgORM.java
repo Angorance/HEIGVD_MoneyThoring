@@ -1,14 +1,9 @@
 package dal.orm;
 
 import dal.dalexception.DALException;
-import dal.irepositories.IBankaccountRepository;
-import dal.irepositories.IBudgetRepository;
-import dal.irepositories.ICategoryRepository;
-import dal.irepositories.IClientRepository;
-import dal.repositories.pgsql.BankaccountPgRepository;
-import dal.repositories.pgsql.BudgetPgRepository;
-import dal.repositories.pgsql.CategoryPgRepository;
-import dal.repositories.pgsql.ClientPgRepository;
+import dal.irepositories.*;
+import dal.repositories.derby.DebtDeRepository;
+import dal.repositories.pgsql.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,6 +21,7 @@ public class PgORM implements IORM {
     private IBankaccountRepository bankaccountRepository;
     private ICategoryRepository categoryRepository;
     private IBudgetRepository budgetRepository;
+    private IDebtRepository debtRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -64,6 +60,18 @@ public class PgORM implements IORM {
     public IBudgetRepository getBudgetRepository() {
         budgetRepository = new BudgetPgRepository(session, transaction);
         return budgetRepository;
+
+    }
+
+    /**
+     * Construct an single instance of dbbtRepository and return it
+     *
+     * @return an instance of IDebtRepository
+     */
+    @Override
+    public IDebtRepository getDebtRepository() {
+        debtRepository = new DebtPgRepository(session, transaction);
+        return debtRepository;
 
     }
 

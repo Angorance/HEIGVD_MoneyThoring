@@ -10,8 +10,6 @@ public interface IDebtRepository {
 
     public List<IDALDebtEntity> getDebts() throws DALException;
 
-    public List<IDALDebtEntity> getDebts(int page, String sort);
-
     public void update(IDALDebtEntity Debt) throws DALException;
 
     public void addDebt(IDALDebtEntity Debt) throws DALException;

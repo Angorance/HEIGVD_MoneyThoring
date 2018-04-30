@@ -1,10 +1,7 @@
 package dal.orm;
 
 import dal.dalexception.DALException;
-import dal.irepositories.IBankaccountRepository;
-import dal.irepositories.IBudgetRepository;
-import dal.irepositories.ICategoryRepository;
-import dal.irepositories.IClientRepository;
+import dal.irepositories.*;
 
 public interface IORM {
     /**
@@ -30,6 +27,12 @@ public interface IORM {
      * @return an instance of IBudgetRepository
      */
     IBudgetRepository getBudgetRepository();
+
+    /**
+     * Construct an single instance of dbbtRepository and return it
+     * @return an instance of IDebtRepository
+     */
+    IDebtRepository getDebtRepository();
 
     /**
      * begin a transaction shared bitween all repositories
