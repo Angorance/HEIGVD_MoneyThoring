@@ -2,9 +2,11 @@ package dal.orm;
 
 import dal.dalexception.DALException;
 import dal.irepositories.IBankaccountRepository;
+import dal.irepositories.IBudgetRepository;
 import dal.irepositories.ICategoryRepository;
 import dal.irepositories.IClientRepository;
 import dal.repositories.derby.BankaccountDeRepository;
+import dal.repositories.derby.BudgetDeRepository;
 import dal.repositories.derby.CategoryDeRepository;
 import dal.repositories.derby.ClientDeRepository;
 import dal.repositories.pgsql.CategoryPgRepository;
@@ -23,6 +25,7 @@ public class DerbyORM implements IORM {
     private IClientRepository clientRepository;
     private IBankaccountRepository bankaccountRepository;
     private ICategoryRepository categoryRepository;
+    private IBudgetRepository budgetRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -42,7 +45,19 @@ public class DerbyORM implements IORM {
 
     @Override
     public ICategoryRepository getCategoryRepository() {
-        return new CategoryDeRepository(session, transaction);
+        categoryRepository =  new CategoryDeRepository(session, transaction);
+        return categoryRepository;
+    }
+
+    /**
+     * Construct an single instance of budgetrepostiory and return it
+     *
+     * @return an instance of IBudgetRepository
+     */
+    @Override
+    public IBudgetRepository getBudgetRepository() {
+        budgetRepository = new BudgetDeRepository(session, transaction);
+        return budgetRepository;
     }
 
     private void openSession() throws DALException {

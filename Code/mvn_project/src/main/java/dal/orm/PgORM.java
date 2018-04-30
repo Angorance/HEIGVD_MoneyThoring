@@ -2,9 +2,11 @@ package dal.orm;
 
 import dal.dalexception.DALException;
 import dal.irepositories.IBankaccountRepository;
+import dal.irepositories.IBudgetRepository;
 import dal.irepositories.ICategoryRepository;
 import dal.irepositories.IClientRepository;
 import dal.repositories.pgsql.BankaccountPgRepository;
+import dal.repositories.pgsql.BudgetPgRepository;
 import dal.repositories.pgsql.CategoryPgRepository;
 import dal.repositories.pgsql.ClientPgRepository;
 import org.hibernate.HibernateException;
@@ -23,6 +25,7 @@ public class PgORM implements IORM {
     private IClientRepository clientRepository;
     private IBankaccountRepository bankaccountRepository;
     private ICategoryRepository categoryRepository;
+    private IBudgetRepository budgetRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -48,7 +51,20 @@ public class PgORM implements IORM {
      */
     @Override
     public ICategoryRepository getCategoryRepository() {
-        return new CategoryPgRepository(session, transaction);
+        categoryRepository = new CategoryPgRepository(session, transaction);
+        return categoryRepository;
+    }
+
+    /**
+     * Construct an single instance of budgetrepostiory and return it
+     *
+     * @return an instance of IBudgetRepository
+     */
+    @Override
+    public IBudgetRepository getBudgetRepository() {
+        budgetRepository = new BudgetPgRepository(session, transaction);
+        return budgetRepository;
+
     }
 
     private void openSession() throws DALException {
