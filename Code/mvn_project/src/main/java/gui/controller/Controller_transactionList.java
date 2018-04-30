@@ -7,6 +7,8 @@ package gui.controller;/* ***********************************************
     
  ************************************************* */
 
+import bll.logic.BankAccountLogic;
+import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -34,7 +36,7 @@ public class Controller_transactionList implements Initializable {
 
 
     @FXML private AnchorPane parent;
-    @FXML private ComboBox<?> accountSelect;
+    @FXML private ComboBox<BankAccountLogic> accountSelect;
     @FXML private ComboBox<?> periodSelect;
     @FXML private ComboBox<?> monthSelect;
     @FXML private Label lblTotalDepense;
@@ -97,6 +99,15 @@ public class Controller_transactionList implements Initializable {
         nodeList.setSpacing(5d);
         nodeList.setRotate(180);
     }
+
+    private void generateComboBoxItem(){
+        ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
+        for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
+            items.add(bal);
+        }
+        accountSelect.setItems(items);
+    }
+
     /**
      * Called to initialize a controller after its root element has been completely processed.
      * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
@@ -105,8 +116,49 @@ public class Controller_transactionList implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         generateNodeList();
+        generateComboBoxItem();
 
-        JFXTreeTableColumn<User, String> deptName = new JFXTreeTableColumn<>("Department");
+        JFXTreeTableColumn<WrapperTransaction, String> dateTransaction = new JFXTreeTableColumn<>("Date");
+        dateTransaction.setMinWidth(150);
+        dateTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().date;
+            }
+        });
+
+        JFXTreeTableColumn<WrapperTransaction, String> nameTransaction = new JFXTreeTableColumn<>("nom");
+        nameTransaction.setMinWidth(150);
+        nameTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().name;
+            }
+        });
+
+        /*TODO récurrence*/
+        /*JFXTreeTableColumn<WrapperTransaction, String> recTransaction = new JFXTreeTableColumn<>("nom");
+        recTransaction.setMinWidth(150);
+        recTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().name;
+            }
+        });*/
+
+        JFXTreeTableColumn<WrapperTransaction, String> amountTransaction = new JFXTreeTableColumn<>("montant");
+        amountTransaction.setMinWidth(150);
+        amountTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().amount;
+            }
+        });
+
+
+        ObservableList<WrapperTransaction> transactions = FXCollections.observableArrayList();
+
+        /*JFXTreeTableColumn<User, String> deptName = new JFXTreeTableColumn<>("Department");
         deptName.setPrefWidth(150);
         deptName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
             @Override
@@ -134,19 +186,19 @@ public class Controller_transactionList implements Initializable {
         });
 
         ObservableList<User> users = FXCollections.observableArrayList();
-        users.add(new User("Computer Department", "23", "CD 1"));
-        users.add(new User("Sales Department", "22", "Employee 1"));
-        users.add(new User("Sales Department", "22", "Employee 2"));
-        users.add(new User("Sales Department", "25", "Employee 4"));
-        users.add(new User("Sales Department", "25", "Employee 5"));
-        users.add(new User("IT Department", "42", "ID 2"));
-        users.add(new User("HR Department", "22", "HR 1"));
-        users.add(new User("HR Department", "22", "HR 2"));
+        users.formReturn(new User("Computer Department", "23", "CD 1"));
+        users.formReturn(new User("Sales Department", "22", "Employee 1"));
+        users.formReturn(new User("Sales Department", "22", "Employee 2"));
+        users.formReturn(new User("Sales Department", "25", "Employee 4"));
+        users.formReturn(new User("Sales Department", "25", "Employee 5"));
+        users.formReturn(new User("IT Department", "42", "ID 2"));
+        users.formReturn(new User("HR Department", "22", "HR 1"));
+        users.formReturn(new User("HR Department", "22", "HR 2"));
 
         final TreeItem<User> root = new RecursiveTreeItem<User>(users, RecursiveTreeObject::getChildren);
         outGoTreeTableView.getColumns().setAll(deptName, ageCol, nameCol);
         outGoTreeTableView.setRoot(root);
-        outGoTreeTableView.setShowRoot(false);
+        outGoTreeTableView.setShowRoot(false);*/
 
 
         outGoButton.setOnAction(new EventHandler<ActionEvent>() {

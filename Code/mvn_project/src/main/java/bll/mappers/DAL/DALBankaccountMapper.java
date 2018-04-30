@@ -66,7 +66,7 @@ public class DALBankaccountMapper {
 //        Collection<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
 //        Iterator<ClientModel> it = bos.iterator();
 //        while (it.hasNext()) {
-//            dbos.add((ClientPgEntity) toDboDe(it.next()));
+//            dbos.formReturn((ClientPgEntity) toDboDe(it.next()));
 //        }
         return null;
     }

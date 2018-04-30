@@ -140,4 +140,22 @@ public class ClientPgRepository implements IClientRepository {
 
         return (client != null);
     }
+
+    @Override
+    public String retriveSaltByUserLogin(String usernameOrEmail) throws DALException {
+        ClientPgEntity client = null;
+        String salt = "";
+        try {
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)))).uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        if(client != null)
+            salt = client.getSalt();
+
+        return salt;
+    }
 }
