@@ -1,8 +1,12 @@
 package bll.logic;
 
 import bll.model.ClientModel;
+import dal.ientites.IDALBankaccountEntity;
+import dal.ientites.IDALCategoryEntity;
+import dal.orm.IORM;
 import dal.orm.PgORM;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -39,6 +43,14 @@ public class ClientLogic extends ClientModel {
     public static ClientLogic getInstance() {
         return Instance.instance;
     }
+	
+	/**
+	 * TODO
+	 */
+	private void initialise() {
+	    bankAccounts = new ArrayList<>();
+	    categories = new ArrayList<>();
+    }
 
 
     /**
@@ -59,9 +71,8 @@ public class ClientLogic extends ClientModel {
         }
         
         setKey("SYdjcvkbejbsl");
-
-        bankAccounts = new ArrayList<>();
-        categories = new ArrayList<>();
+        
+        initialise();
         
         // TODO - Manage if connected and use Derby if necessary.
         createUser(new PgORM());
@@ -75,9 +86,13 @@ public class ClientLogic extends ClientModel {
 		setUsername(username);
 		setPassword(password);
 		setKey("SYdjcvkbejbsl");
+		
+		initialise();
+		
+		setDataFromDB();
 	}
-
-    // GETTERS
+	
+	// GETTERS
 
     /**
      * Get the list of bank accounts of the client.
@@ -158,6 +173,7 @@ public class ClientLogic extends ClientModel {
      */
     public void addCategory(CategoryLogic ca) {
         categories.add(ca);
+        ca.setClientId(getId());
     }
 
 
@@ -169,4 +185,30 @@ public class ClientLogic extends ClientModel {
     public void supp() {
         // TODO - Suppress the account !
     }
+	
+    
+	private void setDataFromDB() {
+    	// TODO - check if connected
+		
+		try {
+			IORM orm = new PgORM();
+			
+			orm.beginTransaction();
+			
+			/* FIXME - IDALBankaccountEntity[] bankaccounts = orm.getBankaccountRepository().getBankaccounts(getId());
+			
+			for (IDALBankaccountEntity bae : bankaccounts) {
+				new BankAccountLogic(bae);
+			}
+			
+			// FIXME - IDALCategoryEntity[] categories = orm.getCategoryRepository().getCategories(getId());
+			
+			for (IDALCategoryEntity cat : categories) {
+				new CategoryLogic(cat);
+			}*/
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 }

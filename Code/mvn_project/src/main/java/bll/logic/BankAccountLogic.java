@@ -1,6 +1,7 @@
 package bll.logic;
 
 import bll.model.BankAccountModel;
+import dal.ientites.IDALBankaccountEntity;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,21 @@ public class BankAccountLogic extends BankAccountModel {
 
         ClientLogic.getInstance().addBankAccount(this);
         transactions = new ArrayList<>();
+    }
+    
+    public BankAccountLogic(IDALBankaccountEntity bae) {
+        setId(bae.getId());
+        setName(bae.getName());
+        setBankName(bae.getNamebank());
+        setType(bae.getTypeaccount());
+        setAmount(bae.getAmount());
+        setDefault(bae.isIsdefault());
+        setClientId(bae.getClientId());
+	
+	    ClientLogic.getInstance().addBankAccount(this);
+	    transactions = new ArrayList<>();
+	    
+	    
     }
     
     public String toString(){

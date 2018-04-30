@@ -162,6 +162,10 @@ public class ClientModel {
         this.key = key;
     }
     
+    /**
+     * TODO
+     * @param orm
+     */
     protected void createUser(IORM orm) {
         try {
             orm.beginTransaction();
@@ -171,5 +175,16 @@ public class ClientModel {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    protected void updateUser(IORM orm) {
+    	try {
+    		orm.beginTransaction();
+    		orm.getClientRepository().update(DALClientMapper.toDboPG(this));
+    		orm.commit();
+    		
+	    } catch (Exception e) {
+		    System.out.println(e);
+	    }
     }
 }

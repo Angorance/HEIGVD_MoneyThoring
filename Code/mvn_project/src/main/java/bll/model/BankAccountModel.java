@@ -11,6 +11,7 @@ package bll.model;
 public class BankAccountModel {
 
     private int id;
+	private int clientID;
 
     private double amount;
 
@@ -24,9 +25,10 @@ public class BankAccountModel {
     private boolean isVisible;
     private boolean isDefault;
     
-    private int clientID;
     
     // CONSTRUCTORS
+    
+    protected BankAccountModel() {}
 
     public BankAccountModel(String name, String bankName, String type,
                             double amount, boolean isDefault, int clientID) {

@@ -4,22 +4,18 @@ import dal.ientites.IDALClientEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- *
- * @authors Daniel Gonzalez Lopez, Héléna Line Reymond
+ * TODO
+ * @author Daniel Gonzalez Lopez
  */
 public class Authentication {
 	
