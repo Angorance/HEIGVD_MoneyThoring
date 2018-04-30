@@ -52,6 +52,8 @@ public class ClientLogic extends ClientModel {
         setEmail(email);
         setUsername(username);
         setPassword(password);
+        setKey("SYdjcvkbejbsl");
+        setSalt("1234");
 
         bankAccounts = new ArrayList<>();
         categories = new ArrayList<>();
