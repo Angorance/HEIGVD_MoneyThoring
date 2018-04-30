@@ -23,4 +23,15 @@ public class AuthenticationTest {
         assertFalse(checkEmailFormat("guizar.gmail.com"));
         assertFalse(checkEmailFormat("lalaine@gamil"));
     }
+    
+    @Test
+    public void checkIfHashWork() {
+    	try {
+		    
+		    System.out.println(hash("yololife"));
+		    
+	    } catch (Exception e) {
+		    System.out.println(e);
+	    }
+    }
 }

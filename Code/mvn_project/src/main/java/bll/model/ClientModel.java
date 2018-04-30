@@ -162,10 +162,9 @@ public class ClientModel {
         this.key = key;
     }
     
-    protected void updateDatabse(IORM orm) {
+    protected void createUser(IORM orm) {
         try {
             orm.beginTransaction();
-            //fin du petit test
             orm.getClientRepository().addClient(DALClientMapper.toDboPG(this));
 	        orm.commit();
 

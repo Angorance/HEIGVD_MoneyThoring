@@ -64,10 +64,10 @@
 //        clientFour.setActivationkey("Four");
 //        clientFour.setSalt("Four");
 //
-//        listClients.add(clientOne);
-//        listClients.add(clientTwo);
-//        listClients.add(clientTree);
-//        listClients.add(clientFour);
+//        listClients.formReturn(clientOne);
+//        listClients.formReturn(clientTwo);
+//        listClients.formReturn(clientTree);
+//        listClients.formReturn(clientFour);
 //
 //
 //        clientRepository = new ClientDeRepository();
@@ -114,10 +114,10 @@
 //        bankaccountEntityFour.setIsdefault(true);
 //        bankaccountEntityFour.setIsvisible(true);
 //
-//        listBankAccounts.add(bankaccountEntityOne);
-//        listBankAccounts.add(bankaccountEntityTwo);
-//        listBankAccounts.add(bankaccountEntityTree);
-//        listBankAccounts.add(bankaccountEntityFour);
+//        listBankAccounts.formReturn(bankaccountEntityOne);
+//        listBankAccounts.formReturn(bankaccountEntityTwo);
+//        listBankAccounts.formReturn(bankaccountEntityTree);
+//        listBankAccounts.formReturn(bankaccountEntityFour);
 //
 //
 //        bankaccountRepository = new BankaccountDeRepository();

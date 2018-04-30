@@ -51,15 +51,20 @@ public class ClientLogic extends ClientModel {
 
         setEmail(email);
         setUsername(username);
-        setPassword(password);
+        
+        try {
+            setPassword(Authentication.hash(password));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         setKey("SYdjcvkbejbsl");
-        setSalt("1234");
 
         bankAccounts = new ArrayList<>();
         categories = new ArrayList<>();
         
         // TODO - Manage if connected and use Derby if necessary.
-        updateDatabse(new PgORM());
+        createUser(new PgORM());
     }
 
 
@@ -101,7 +106,7 @@ public class ClientLogic extends ClientModel {
      * Before setting the new username, setUsername() verifies it is not already
      * being used by another client.
      *
-     * TODO - Logic works if online. If not, when synchronising, add random number ?
+     * TODO - Logic works if online. If not, when synchronising, formReturn random number ?
      *
      * @see ClientModel#setUsername(String)
      *
@@ -134,7 +139,7 @@ public class ClientLogic extends ClientModel {
     /**
      * Link a bank account to its client.
      *
-     * @param ba Bank account to add to the list.
+     * @param ba Bank account to formReturn to the list.
      */
     public void addBankAccount(BankAccountLogic ba) {
         bankAccounts.add(ba);
