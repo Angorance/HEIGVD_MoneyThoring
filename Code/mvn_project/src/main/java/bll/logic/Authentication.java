@@ -157,7 +157,7 @@ public class Authentication {
     	
     	try {
 		    orm.beginTransaction();
-		    orm.getClientRepository();
+		    orm.getClientRepository().checkUserAndPassword(username, hash);
 	    } catch (Exception e) {
 		    System.out.println(e);
 	    }
