@@ -59,10 +59,10 @@
 //        clientFour.setActivationkey("One");
 //        clientFour.setSalt("One");
 //
-//        listClients.add(clientOne);
-//        listClients.add(clientTwo);
-//        listClients.add(clientTree);
-//        listClients.add(clientFour);
+//        listClients.formReturn(clientOne);
+//        listClients.formReturn(clientTwo);
+//        listClients.formReturn(clientTree);
+//        listClients.formReturn(clientFour);
 //
 //        clientRepository = new ClientDeRepository();
 //        clientRepository.addClient(clientOne);

@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
-import bll.model.BankAccountModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -9,12 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_createBankAccount implements Initializable,IForm {
+public class Controller_formBankAccount implements Initializable,IForm {
     @FXML private JFXTextField nameAccount;
     @FXML private JFXTextField nameBankAccount;
     @FXML private JFXTextField amount;
@@ -22,9 +20,9 @@ public class Controller_createBankAccount implements Initializable,IForm {
     @FXML private JFXButton returnButton;
     @FXML private JFXButton accepteButton;
 
-    Controller_bankAccount cba;
+    IController cba;
 
-    public Controller_createBankAccount(Controller_bankAccount cba) {
+    public Controller_formBankAccount(IController cba) {
         this.cba = cba;
     }
 
@@ -35,8 +33,7 @@ public class Controller_createBankAccount implements Initializable,IForm {
     @FXML
     @Override
     public void formCancel(ActionEvent event) {
-        cba.add(null);
-
+        cba.formReturn(null);
     }
 
     /**
@@ -52,7 +49,7 @@ public class Controller_createBankAccount implements Initializable,IForm {
             String type = (String) typeAccount.getValue();
             Double amountDouble = Double.parseDouble(amount.getText());
             BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, false);
-            cba.add(ba);
+            cba.formReturn(ba);
         }
     }
 
