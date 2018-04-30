@@ -1,5 +1,6 @@
 package bll.logic;
 
+import dal.ientites.IDALClientEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
@@ -138,8 +139,6 @@ public class Authentication {
 	    md.update((password + salt).getBytes("UTF-8"));
 	
 	    String hashed = Base64.encodeBase64URLSafeString(md.digest());
-	
-	    System.out.println(hashed.length());
 	    
 	    return hashed;
     }
@@ -153,6 +152,9 @@ public class Authentication {
 	}
 	
 	public static boolean connect(String username, String password) {
+    	
+    	boolean success = false;
+    	
     	IORM orm = new PgORM();
     	String salt;
     	
@@ -162,11 +164,15 @@ public class Authentication {
 		    
 		    String hash = hash(password, salt);
 		    
-		    orm.getClientRepository().checkUserAndPassword(username, hash);
+		    IDALClientEntity ce = orm.getClientRepository().checkUserAndPassword(username, hash);
+		    
+		    ClientLogic.getInstance().connectedUser(ce.getId(), ce.getEmail(), username, hash);
+		    
+		    success = true;
 	    } catch (Exception e) {
 		    System.out.println(e);
 	    }
 	    
-	    return false;
+	    return success;
 	}
 }

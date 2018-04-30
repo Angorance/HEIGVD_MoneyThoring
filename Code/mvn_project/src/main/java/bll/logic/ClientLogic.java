@@ -66,7 +66,16 @@ public class ClientLogic extends ClientModel {
         // TODO - Manage if connected and use Derby if necessary.
         createUser(new PgORM());
     }
-
+	
+	
+	public void connectedUser(int id, String email, String username, String password) {
+		
+    	setId(id);
+		setEmail(email);
+		setUsername(username);
+		setPassword(password);
+		setKey("SYdjcvkbejbsl");
+	}
 
     // GETTERS
 
@@ -129,11 +138,7 @@ public class ClientLogic extends ClientModel {
      */
     @Override
     public void setPassword(String password) {
-        String hashedPassword = password + getSalt();
-
-        // TODO - Hash password
-
-        super.setPassword(hashedPassword);
+        super.setPassword(password);
     }
 
     /**
