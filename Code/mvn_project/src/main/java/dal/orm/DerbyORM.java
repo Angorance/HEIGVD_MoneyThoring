@@ -22,6 +22,7 @@ public class DerbyORM implements IORM {
     private ICategoryRepository categoryRepository;
     private IBudgetRepository budgetRepository;
     private IDebtRepository debtRepository;
+    private IotransactionDeRepository iotranscationRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -65,6 +66,17 @@ public class DerbyORM implements IORM {
     public IDebtRepository getDebtRepository() {
         debtRepository = new DebtDeRepository(session, transaction);
         return debtRepository;
+    }
+
+    /**
+     * Construct an single instance of IotransactionDeRepository and return it
+     *
+     * @return an instance of IIotransactionRepository
+     */
+    @Override
+    public IIotransactionRepository getIotransactionRepository() {
+        iotranscationRepository = new IotransactionDeRepository(session, transaction);
+        return iotranscationRepository;
     }
 
     private void openSession() throws DALException {
