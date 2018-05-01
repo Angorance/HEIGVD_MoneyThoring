@@ -61,9 +61,29 @@ public class DALBankaccountMapper {
     
         return derbyEntity;
     }
-
-    public static BankAccountModel toBo(IDALBankaccountEntity dbo) {
-      return null;
+    
+    /**
+     * Entity -> BankAccountModel
+     */
+    public static BankAccountModel toBo(IDALBankaccountEntity entity) {
+        
+        if (entity == null) {
+            return null;
+        }
+    
+        // Create the bank account model
+        BankAccountModel model = new BankAccountModel(null, null, null, 0, false, 0);
+    
+        model.setId(entity.getId());
+        model.setName(entity.getName());
+        model.setBankName(entity.getNamebank());
+        model.setType(entity.getTypeaccount());
+        model.setAmount(entity.getAmount());
+        model.setDefault(entity.isIsdefault());
+        model.setVisible(entity.isIsvisible());
+        model.setClientId(entity.getClientId());
+    
+        return model;
     }
 
     public static Collection<BankAccountModel> toBos(Collection<IDALBankaccountEntity> dbos) {
