@@ -109,7 +109,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXPasswordField>
-            <JFXButton onAction="#clickRegisterButton" prefHeight="25.0" prefWidth="250.0" text="C'est partie !" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <JFXButton onAction="#clickRegisterButton" prefHeight="25.0" prefWidth="250.0" text="S'inscrire" GridPane.columnSpan="2" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </GridPane.margin>

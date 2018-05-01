@@ -3,6 +3,7 @@ package dal.orm;
 import dal.dalexception.DALException;
 import dal.irepositories.*;
 import dal.repositories.derby.DebtDeRepository;
+import dal.repositories.derby.RecurrenceDeRepository;
 import dal.repositories.pgsql.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -23,6 +24,7 @@ public class PgORM implements IORM {
     private IBudgetRepository budgetRepository;
     private IDebtRepository debtRepository;
     private IIotransactionRepository iotransactionRepository;
+    private IRecurrenceRepository recurrenceRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -74,6 +76,17 @@ public class PgORM implements IORM {
         debtRepository = new DebtPgRepository(session, transaction);
         return debtRepository;
 
+    }
+
+    /**
+     * Construct an single instance of recurrenceRepository and return it
+     *
+     * @return an instance of IRecurrenceRepository
+     */
+    @Override
+    public IRecurrenceRepository getRecurrenceRepository() {
+        recurrenceRepository = new RecurrencePgRepository(session, transaction);
+        return recurrenceRepository;
     }
 
     /**

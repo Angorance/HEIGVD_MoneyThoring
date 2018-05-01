@@ -37,6 +37,7 @@ public class Controller_mainFrame implements Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		drawer.setMouseTransparent(true);
+		drawer.setVisible(true);
 		VBox box = null;
 		lblInfo.setText(ClientLogic.getInstance().toString());
 		try {

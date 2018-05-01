@@ -23,6 +23,7 @@ public class DerbyORM implements IORM {
     private IBudgetRepository budgetRepository;
     private IDebtRepository debtRepository;
     private IotransactionDeRepository iotranscationRepository;
+    private IRecurrenceRepository recurrenceRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -66,6 +67,17 @@ public class DerbyORM implements IORM {
     public IDebtRepository getDebtRepository() {
         debtRepository = new DebtDeRepository(session, transaction);
         return debtRepository;
+    }
+
+    /**
+     * Construct an single instance of clientrepositoriy and return it
+     *
+     * @return an instance of IClientRepository
+     */
+    @Override
+    public IRecurrenceRepository getRecurrenceRepository() {
+        recurrenceRepository = new RecurrenceDeRepository(session, transaction);
+        return recurrenceRepository;
     }
 
     /**

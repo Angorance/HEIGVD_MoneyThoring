@@ -40,6 +40,13 @@ public interface IORM {
     IDebtRepository getDebtRepository();
 
     /**
+     * Construct an single instance of clientrepositoriy and return it
+     *
+     * @return an instance of IClientRepository
+     */
+    IRecurrenceRepository getRecurrenceRepository();
+
+    /**
      * begin a transaction shared bitween all IIotransactionRepository
      *
      * @throws DALException

@@ -14,6 +14,7 @@
       <mapping class="dal.entities.derby.BudgetDeEntity"/>
       <mapping class="dal.entities.derby.DebtDeEntity"/>
       <mapping class="dal.entities.derby.IotransactionDeEntity"/>
+      <mapping class="dal.entities.derby.RecurrenceDeEntity"/>
 
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
