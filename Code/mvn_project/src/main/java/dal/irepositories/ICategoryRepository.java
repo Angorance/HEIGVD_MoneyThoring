@@ -11,6 +11,7 @@ public interface ICategoryRepository {
 
     public List<IDALCategoryEntity> getCategories() throws DALException;
 
+
     public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException;
 
     public void update(IDALCategoryEntity Category) throws DALException;
