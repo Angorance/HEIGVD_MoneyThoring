@@ -5,7 +5,7 @@ package bll.model;
  * Allows the mapping between the DAL entities and the Business Logic.
  * Only implements the constructors, the getters and the setters.
  *
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class BankAccountModel {
@@ -28,7 +28,7 @@ public class BankAccountModel {
     
     // CONSTRUCTORS
     
-    protected BankAccountModel() {}
+    public BankAccountModel() {}
 
     public BankAccountModel(String name, String bankName, String type,
                             double amount, boolean isDefault, int clientID) {
@@ -182,7 +182,7 @@ public class BankAccountModel {
      *
      * @param visible New flag to set.
      */
-    protected void setVisible(boolean visible) {
+    public void setVisible(boolean visible) {
         isVisible = visible;
     }
     

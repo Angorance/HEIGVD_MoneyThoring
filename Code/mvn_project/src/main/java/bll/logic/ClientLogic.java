@@ -1,12 +1,9 @@
 package bll.logic;
 
 import bll.model.ClientModel;
-import dal.ientites.IDALBankaccountEntity;
-import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -17,7 +14,7 @@ import java.util.ArrayList;
  * password. Before changing these attributes, the methods check their integrity
  * to avoid data problems.
  *
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class ClientLogic extends ClientModel {

@@ -11,7 +11,7 @@ import dal.orm.PgORM;
  * Allows the mapping between the DAL entities and the Business Logic.
  * Only implements the constructors, the getters and the setters.
  *
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class ClientModel {

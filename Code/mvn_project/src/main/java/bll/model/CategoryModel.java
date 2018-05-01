@@ -6,7 +6,7 @@ package bll.model;
  * Only implements the constructors, the getters and the setters.
  *
  * @version 1.0
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  */
 public class CategoryModel {
 	

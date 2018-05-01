@@ -6,7 +6,7 @@ import dal.ientites.IDALCategoryEntity;
 /**
  * TODO
  *
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class CategoryLogic extends CategoryModel {
