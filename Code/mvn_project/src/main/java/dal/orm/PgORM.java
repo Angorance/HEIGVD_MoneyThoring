@@ -22,6 +22,7 @@ public class PgORM implements IORM {
     private ICategoryRepository categoryRepository;
     private IBudgetRepository budgetRepository;
     private IDebtRepository debtRepository;
+    private IIotransactionRepository iotransactionRepository;
 
     @Override
     public IClientRepository getClientRepository() {
@@ -73,6 +74,17 @@ public class PgORM implements IORM {
         debtRepository = new DebtPgRepository(session, transaction);
         return debtRepository;
 
+    }
+
+    /**
+     * begin a transaction shared bitween all IIotransactionRepository
+     *
+     * @throws DALException
+     */
+    @Override
+    public IIotransactionRepository getIotransactionRepository() {
+        iotransactionRepository = new IotransactionPgRepository(session, transaction);
+        return iotransactionRepository;
     }
 
     private void openSession() throws DALException {

@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.sql.Date;
 
-public interface IDALotransactionEntity {
+public interface IDALIotransactionEntity {
     @Id
     @Column(name = "id", nullable = false)
     int getId();

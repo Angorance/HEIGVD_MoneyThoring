@@ -1,9 +1,9 @@
 package dal.repositories.pgsql;
 
 import dal.dalexception.DALException;
-import dal.entities.pgsql.BankaccountPgEntity;
-import dal.ientites.IDALBankaccountEntity;
-import dal.irepositories.IBankaccountRepository;
+import dal.entities.pgsql.IotransactionPgEntity;
+import dal.ientites.IDALIotransactionEntity;
+import dal.irepositories.IIotransactionRepository;
 import dal.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,12 +12,12 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-public class BankaccountPgRepository implements IBankaccountRepository {
+public class IotransactionPgRepository implements IIotransactionRepository {
 
     private Session session;
     private Transaction transaction;
 
-    public  BankaccountPgRepository(Session session, Transaction transaction){
+    public IotransactionPgRepository(Session session, Transaction transaction){
         this.session = session;
         this.transaction = transaction;
     }
@@ -25,15 +25,15 @@ public class BankaccountPgRepository implements IBankaccountRepository {
 
 
     @Override
-    public IDALBankaccountEntity getBankaccount(int id) throws DALException {
+    public IDALIotransactionEntity getIotransaction(int id) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        BankaccountPgEntity bankaccont = null;
+        IotransactionPgEntity bankaccont = null;
         try {
 
             tr = session.beginTransaction();
 
-            bankaccont = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            bankaccont = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
@@ -57,14 +57,14 @@ public class BankaccountPgRepository implements IBankaccountRepository {
     }
 
     @Override
-    public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
+    public List<IDALIotransactionEntity> getIotransactions() throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        List<IDALBankaccountEntity> bankaccounts = null;
+        List<IDALIotransactionEntity> Iotransactions = null;
         try {
             tr = session.beginTransaction();
 
-            bankaccounts = session.createQuery("from BankaccountPgEntity").list();
+            Iotransactions = session.createQuery("from IotransactionPgEntity").list();
 
             tr.commit();
         } catch (Exception e) {
@@ -81,17 +81,17 @@ public class BankaccountPgRepository implements IBankaccountRepository {
                 System.out.println(he.toString());
             }
         }
-        return bankaccounts;
+        return Iotransactions;
     }
 
     @Override
-    public void update(IDALBankaccountEntity bankaccount) throws DALException {
+    public void update(IDALIotransactionEntity Iotransaction) throws DALException {
 
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        BankaccountPgEntity bankaccountPG = null;
-        if (bankaccount.getClass() == BankaccountPgEntity.class)
-            bankaccountPG = (BankaccountPgEntity) bankaccount;
+        IotransactionPgEntity IotransactionPG = null;
+        if (Iotransaction.getClass() == IotransactionPgEntity.class)
+            IotransactionPG = (IotransactionPgEntity) Iotransaction;
         else
             throw new DALException();
 
@@ -99,7 +99,7 @@ public class BankaccountPgRepository implements IBankaccountRepository {
 
             tr = session.beginTransaction();
 
-            session.update(bankaccountPG);
+            session.update(IotransactionPG);
 
             tr.commit();
         } catch (Exception e) {
@@ -119,19 +119,19 @@ public class BankaccountPgRepository implements IBankaccountRepository {
     }
 
     @Override
-    public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
+    public void addIotransaction(IDALIotransactionEntity Iotransaction) throws DALException {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
 
-        IDALBankaccountEntity newbankaccount = null;
-        if (bankaccount.getClass() == BankaccountPgEntity.class)
-            newbankaccount = (BankaccountPgEntity) bankaccount;
+        IDALIotransactionEntity newIotransaction = null;
+        if (Iotransaction.getClass() == IotransactionPgEntity.class)
+            newIotransaction = (IotransactionPgEntity) Iotransaction;
         else
             throw new DALException();
 
         try {
             tr = session.beginTransaction();
-            session.save(newbankaccount);
+            session.save(newIotransaction);
             tr.commit();
         } catch (RuntimeException e) {
             try {
@@ -153,16 +153,16 @@ public class BankaccountPgRepository implements IBankaccountRepository {
     public void delete(int id) {
         Session session = HibernateUtil.getPGSessionFactory().openSession();
         Transaction tr = null;
-        IDALBankaccountEntity bankaccount = null;
+        IDALIotransactionEntity Iotransaction = null;
         try {
 
             tr = session.beginTransaction();
 
-            bankaccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            Iotransaction = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(bankaccount);
+            session.delete(Iotransaction);
 
             tr.commit();
         } catch (Exception e) {

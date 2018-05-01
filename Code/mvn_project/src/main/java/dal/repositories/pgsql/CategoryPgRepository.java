@@ -51,6 +51,20 @@ public class CategoryPgRepository implements ICategoryRepository {
         return Categorys;
     }
 
+    @Override
+    public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException {
+        List<IDALCategoryEntity> Categorys = null;
+        try {
+            Categorys = session.createQuery("from CategoryDeEntity where clientId = :clientid").setParameter("clientid",id).list();
+
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return Categorys;
+    }
+
 
     @Override
     public void update(IDALCategoryEntity Category) throws DALException {

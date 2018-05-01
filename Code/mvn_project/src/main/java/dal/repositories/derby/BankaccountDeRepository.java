@@ -85,11 +85,6 @@ public class BankaccountDeRepository implements IBankaccountRepository {
     }
 
     @Override
-    public List<IDALBankaccountEntity> getBankaccounts(int page, String sort) {
-        return null;
-    }
-
-    @Override
     public void update(IDALBankaccountEntity bankaccount) throws DALException {
 
         Session session = HibernateUtil.getDeSessionFactory().openSession();

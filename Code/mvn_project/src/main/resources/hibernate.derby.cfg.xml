@@ -13,6 +13,7 @@
       <mapping class="dal.entities.derby.CategoryDeEntity"/>
       <mapping class="dal.entities.derby.BudgetDeEntity"/>
       <mapping class="dal.entities.derby.DebtDeEntity"/>
+      <mapping class="dal.entities.derby.IotransactionDeEntity"/>
 
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
