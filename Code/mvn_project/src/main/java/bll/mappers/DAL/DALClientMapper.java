@@ -10,6 +10,9 @@ import java.util.*;
 
 /**
  * Class used to map a ClientModel to an IDALClientEntity
+ *
+ * @author Héléna Line Reymond
+ *  @version 2.0
  */
 public class DALClientMapper {
 	

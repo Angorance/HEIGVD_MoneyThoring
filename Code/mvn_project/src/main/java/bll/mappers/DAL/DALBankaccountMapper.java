@@ -10,6 +10,9 @@ import java.util.*;
 
 /**
  * Class used to map a BankAccountModel to an IDALBankAccountEntity
+ *
+ * @author Héléna Line Reymond
+ * @version 2.0
  */
 public class DALBankaccountMapper {
     
@@ -70,7 +73,7 @@ public class DALBankaccountMapper {
             return null;
         }
     
-        // Create the bank account model
+        // Create the bank account
         BankAccountLogic account = new BankAccountLogic();
     
         account.setId(entity.getId());
