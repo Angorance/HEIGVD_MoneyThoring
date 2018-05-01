@@ -9,18 +9,18 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_mainFrame">
    <center>
-      <AnchorPane style="-fx-background-color: #efefef;" BorderPane.alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane style="-fx-background-color: #efefef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane id="mainContent" fx:id="mainContent" style="-fx-background-color: #d3f7ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutY="100.0" prefHeight="39.0" prefWidth="661.0" text="Label assez grand pour qu'il dépasse la taille du drawer">
+                  <Label fx:id="lblInfo" layoutX="55.0" layoutY="44.0" prefHeight="311.0" prefWidth="661.0" text="adhfbahdfb">
                      <font>
-                        <Font size="27.0" />
+                        <Font size="19.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" prefHeight="453.0" prefWidth="238.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" prefHeight="453.0" prefWidth="238.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
