@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import javax.management.Query;
 import java.util.List;
 
 public class CategoryDeRepository implements ICategoryRepository {
@@ -55,6 +56,20 @@ public class CategoryDeRepository implements ICategoryRepository {
         List<IDALCategoryEntity> Categorys = null;
         try {
             Categorys = session.createQuery("from CategoryDeEntity").list();
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return Categorys;
+    }
+
+    @Override
+    public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException {
+        List<IDALCategoryEntity> Categorys = null;
+        try {
+            Categorys = session.createQuery("from CategoryDeEntity where clientId = :clientid").setParameter("clientid",id).list();
+
 
 
         } catch (Exception e) {

@@ -18,8 +18,6 @@ public interface IBankaccountRepository {
 
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException;
 
-    public List<IDALBankaccountEntity> getBankaccounts(int page, String sort);
-
     public void update(IDALBankaccountEntity bankaccount) throws DALException;
 
     public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException;
