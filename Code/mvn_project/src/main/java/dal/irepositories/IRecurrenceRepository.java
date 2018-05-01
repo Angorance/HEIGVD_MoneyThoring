@@ -10,8 +10,6 @@ public interface IRecurrenceRepository {
 
     public List<IDALRecurrenceEntity> getRecurrences() throws DALException;
 
-    public List<IDALRecurrenceEntity> getRecurrences(int page, String sort);
-
     public void update(IDALRecurrenceEntity Recurrence) throws DALException;
 
     public void addRecurrence(IDALRecurrenceEntity Recurrence) throws DALException;
