@@ -5,7 +5,7 @@ import bll.model.IOTransactionModel;
 /**
  * TODO
  *
- * @authors Daniel Gonzalez Lopez, Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez, Héléna Line Reymond
  * @version 1.0
  */
 public class IOTransactionLogic extends IOTransactionModel {
