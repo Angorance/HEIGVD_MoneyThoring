@@ -28,7 +28,8 @@ public class DALIOTransactionMapper {
 		// Create the PostgreSQL transaction
 		IotransactionPgEntity pgEntity = new IotransactionPgEntity();
 		
-		pgEntity.setId(model.getId());
+		//TODO - fix bugs
+		/*pgEntity.setId(model.getId());
 		pgEntity.setName(model.getName());
 		pgEntity.setDescription(model.getDescription());
 		pgEntity.setDatetransaction(model.getDate());
@@ -37,7 +38,7 @@ public class DALIOTransactionMapper {
 		pgEntity.setIsincome(model.isIncome());
 		pgEntity.setCategoryId(model.getCategoryID());
 		pgEntity.setBankaccountId(model.getBankAccountID());
-		pgEntity.setBudgetId(model.getBudgetID());
+		pgEntity.setBudgetId(model.getBudgetID());*/
 		
 		return pgEntity;
 	}
@@ -54,7 +55,8 @@ public class DALIOTransactionMapper {
 		// Create the Derby transaction
 		IotransactionDeEntity derbyEntity = new IotransactionDeEntity();
 		
-		derbyEntity.setId(model.getId());
+		//TODO - fix bugs
+		/*derbyEntity.setId(model.getId());
 		derbyEntity.setName(model.getName());
 		derbyEntity.setDescription(model.getDescription());
 		derbyEntity.setDatetransaction(model.getDate());
@@ -63,7 +65,7 @@ public class DALIOTransactionMapper {
 		derbyEntity.setIsincome(model.isIncome());
 		derbyEntity.setCategoryId(model.getCategoryID());
 		derbyEntity.setBankaccountId(model.getBankAccountID());
-		derbyEntity.setBudgetId(model.getBudgetID());
+		derbyEntity.setBudgetId(model.getBudgetID());*/
 		
 		return derbyEntity;
 	}
@@ -78,19 +80,65 @@ public class DALIOTransactionMapper {
 		}
 		
 		// Create the transaction
-		IOTransactionLogic account = new IOTransactionLogic();
+		IOTransactionLogic object = new IOTransactionLogic();
 		
-		account.setId(entity.getId());
-		account.setName(entity.getName());
-		account.setDescription(entity.getDescription());
-		account.setDate(entity.getDatetransaction());
-		account.setAmount(entity.getAmount());
-		account.setCurrency(entity.getCurrency());
-		account.setIncome(entity.isIsincome());
-		account.setCategoryID(entity.getCategoryId());
-		account.setBankAccountID(entity.getBankaccountId());
-		account.setBudgetID(entity.getBudgetId());
+		//TODO - fix bugs
+		/*object.setId(entity.getId());
+		object.setName(entity.getName());
+		object.setDescription(entity.getDescription());
+		object.setDate(entity.getDatetransaction());
+		object.setAmount(entity.getAmount());
+		object.setCurrency(entity.getCurrency());
+		object.setIncome(entity.isIsincome());
+		object.setCategoryID(entity.getCategoryId());
+		object.setBankAccountID(entity.getBankaccountId());
+		object.setBudgetID(entity.getBudgetId());*/
 		
-		return account;
+		return object;
+	}
+	
+	/**
+	 * Entities -> IOTransactionsLogic
+	 */
+	public static List<IOTransactionLogic> toBos(List<IDALIotransactionEntity> entities) {
+		
+		// Create the list of transactions
+		List<IOTransactionLogic> objects = new ArrayList<IOTransactionLogic>();
+		
+		for(IDALIotransactionEntity entity : entities){
+			objects.add(toBo(entity));
+		}
+		
+		return objects;
+	}
+	
+	/**
+	 * IOTransactionsModel -> PostgreSQL Entities
+	 */
+	public static List<IDALIotransactionEntity> toDbosPG(List<IOTransactionModel> models) {
+		
+		// Create the list of entities
+		List<IDALIotransactionEntity> entities = new ArrayList<IDALIotransactionEntity>();
+		
+		for(IOTransactionModel model : models){
+			entities.add(toDboPG(model));
+		}
+		
+		return entities;
+	}
+	
+	/**
+	 * IOTransactionsModel -> Derby Entities
+	 */
+	public static List<IDALIotransactionEntity> toDbosDe(List<IOTransactionModel> models) {
+		
+		// Create the list of entities
+		List<IDALIotransactionEntity> entities = new ArrayList<IDALIotransactionEntity>();
+		
+		for(IOTransactionModel model : models){
+			entities.add(toDboDe(model));
+		}
+		
+		return entities;
 	}
 }

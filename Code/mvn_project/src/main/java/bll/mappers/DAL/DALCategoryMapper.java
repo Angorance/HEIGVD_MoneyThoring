@@ -68,15 +68,15 @@ public class DALCategoryMapper {
 		}
 		
 		// Create the category
-		CategoryLogic account = new CategoryLogic();
+		CategoryLogic object = new CategoryLogic();
 		
-		account.setId(entity.getId());
-		account.setName(entity.getName());
-		account.setColor(entity.getColour());
-		account.setDefault(entity.isIsdefault());
-		account.setClientId(entity.getClientId());
+		object.setId(entity.getId());
+		object.setName(entity.getName());
+		object.setColor(entity.getColour());
+		object.setDefault(entity.isIsdefault());
+		object.setClientId(entity.getClientId());
 		
-		return account;
+		return object;
 	}
 	
 	/**
@@ -85,13 +85,13 @@ public class DALCategoryMapper {
 	public static List<CategoryLogic> toBos(List<IDALCategoryEntity> entities) {
 		
 		// Create the list of categories
-		List<CategoryLogic> accounts = new ArrayList<CategoryLogic>();
+		List<CategoryLogic> objects = new ArrayList<CategoryLogic>();
 		
 		for(IDALCategoryEntity entity : entities){
-			accounts.add(toBo(entity));
+			objects.add(toBo(entity));
 		}
 		
-		return accounts;
+		return objects;
 	}
 	
 	/**

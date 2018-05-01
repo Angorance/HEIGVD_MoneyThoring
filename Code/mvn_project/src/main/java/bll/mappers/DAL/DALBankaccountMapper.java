@@ -74,18 +74,18 @@ public class DALBankaccountMapper {
         }
     
         // Create the bank account
-        BankAccountLogic account = new BankAccountLogic();
+        BankAccountLogic object = new BankAccountLogic();
     
-        account.setId(entity.getId());
-        account.setName(entity.getName());
-        account.setBankName(entity.getNamebank());
-        account.setType(entity.getTypeaccount());
-        account.setAmount(entity.getAmount());
-        account.setDefault(entity.isIsdefault());
-        account.setVisible(entity.isIsvisible());
-        account.setClientId(entity.getClientId());
+        object.setId(entity.getId());
+        object.setName(entity.getName());
+        object.setBankName(entity.getNamebank());
+        object.setType(entity.getTypeaccount());
+        object.setAmount(entity.getAmount());
+        object.setDefault(entity.isIsdefault());
+        object.setVisible(entity.isIsvisible());
+        object.setClientId(entity.getClientId());
     
-        return account;
+        return object;
     }
     
     /**
@@ -94,13 +94,13 @@ public class DALBankaccountMapper {
     public static List<BankAccountLogic> toBos(List<IDALBankaccountEntity> entities) {
         
         // Create the list of bank accounts
-        List<BankAccountLogic> accounts = new ArrayList<BankAccountLogic>();
+        List<BankAccountLogic> objects = new ArrayList<BankAccountLogic>();
     
         for(IDALBankaccountEntity entity : entities){
-            accounts.add(toBo(entity));
+            objects.add(toBo(entity));
         }
     
-        return accounts;
+        return objects;
     }
     
     /**

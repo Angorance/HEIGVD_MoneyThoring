@@ -70,15 +70,15 @@ public class DALClientMapper {
 		if (entity != null) {
 			
 			// Create the client
-			ClientLogic client = ClientLogic.getInstance();
+			ClientLogic object = ClientLogic.getInstance();
 			
-			client.setId(entity.getId());
-			client.setUsername(entity.getUsername());
-			client.setEmail(entity.getEmail());
-			client.setPassword(entity.getPassword());
-			client.setActivated(entity.getIsactivated());
-			client.setKey(entity.getActivationkey());
-			client.setSalt(entity.getSalt());
+			object.setId(entity.getId());
+			object.setUsername(entity.getUsername());
+			object.setEmail(entity.getEmail());
+			object.setPassword(entity.getPassword());
+			object.setActivated(entity.getIsactivated());
+			object.setKey(entity.getActivationkey());
+			object.setSalt(entity.getSalt());
 		}
 	}
 	
