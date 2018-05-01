@@ -55,7 +55,7 @@ public class CategoryPgRepository implements ICategoryRepository {
     public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException {
         List<IDALCategoryEntity> Categorys = null;
         try {
-            Categorys = session.createQuery("from CategoryDeEntity where clientId = :clientid").setParameter("clientid",id).list();
+            Categorys = session.createQuery("from CategoryPgEntity where clientId = :clientid").setParameter("clientid",id).list();
 
 
 
