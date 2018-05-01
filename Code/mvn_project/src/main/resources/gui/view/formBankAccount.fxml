@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
@@ -29,6 +30,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label prefHeight="17.0" prefWidth="150.0" text="Nom" />
@@ -39,6 +41,8 @@
                               <JFXTextField fx:id="nameBankAccount" promptText="nom de la banque" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <JFXTextField fx:id="amount" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <JFXComboBox fx:id="typeAccount" prefHeight="25.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Compte par défaut" GridPane.rowIndex="4" />
+                              <JFXCheckBox fx:id="defaultAccount" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>

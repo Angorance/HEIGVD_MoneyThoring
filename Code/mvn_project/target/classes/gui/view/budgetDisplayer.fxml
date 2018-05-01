@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="budgetPane" prefHeight="130.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="lbltitre" text="TITRE DU BUDGET" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="13.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblcurrentExpense" text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="55.0" />
+      <Label fx:id="lblmaxExpense" text="Label" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+      <JFXProgressBar fx:id="expenseProgress" prefHeight="15.0" progress="0.56" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   </children>
+</AnchorPane>

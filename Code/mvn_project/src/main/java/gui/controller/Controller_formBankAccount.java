@@ -2,6 +2,7 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -12,13 +13,21 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_formBankAccount implements Initializable,IForm {
-    @FXML private JFXTextField nameAccount;
-    @FXML private JFXTextField nameBankAccount;
-    @FXML private JFXTextField amount;
-    @FXML private JFXComboBox<?> typeAccount;
-    @FXML private JFXButton returnButton;
-    @FXML private JFXButton accepteButton;
+public class Controller_formBankAccount implements Initializable, IForm {
+    @FXML
+    private JFXTextField nameAccount;
+    @FXML
+    private JFXTextField nameBankAccount;
+    @FXML
+    private JFXTextField amount;
+    @FXML
+    private JFXComboBox<?> typeAccount;
+    @FXML
+    private JFXButton returnButton;
+    @FXML
+    private JFXButton accepteButton;
+    @FXML
+    private JFXCheckBox defaultAccount;
 
     IController cba;
 
@@ -28,6 +37,7 @@ public class Controller_formBankAccount implements Initializable,IForm {
 
     /**
      * Return to the previous window
+     *
      * @param event
      */
     @FXML
@@ -38,17 +48,18 @@ public class Controller_formBankAccount implements Initializable,IForm {
 
     /**
      * TODO
+     *
      * @param event
      */
     @FXML
     @Override
     public void formValidation(ActionEvent event) {
-        if(checkValidInput()) {
+        if (checkValidInput()) {
             String name = nameAccount.getText();
             String bankName = nameBankAccount.getText();
             String type = (String) typeAccount.getValue();
             Double amountDouble = Double.parseDouble(amount.getText());
-            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, false, 0);
+            BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, defaultAccount.isSelected(), 0);
             cba.formReturn(ba);
         }
     }
@@ -60,7 +71,8 @@ public class Controller_formBankAccount implements Initializable,IForm {
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
-     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
