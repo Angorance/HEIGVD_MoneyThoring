@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static java.lang.System.exit;
+
 public class mainFrame {
 
     public mainFrame(){
@@ -20,6 +22,7 @@ public class mainFrame {
             primaryStage.setMinHeight(400);
             primaryStage.setMinWidth(500);
             primaryStage.show();
+            primaryStage.setOnCloseRequest(event -> exit(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
