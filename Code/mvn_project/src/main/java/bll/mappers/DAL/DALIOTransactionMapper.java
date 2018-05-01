@@ -28,17 +28,17 @@ public class DALIOTransactionMapper {
 		// Create the PostgreSQL transaction
 		IotransactionPgEntity pgEntity = new IotransactionPgEntity();
 		
-		//TODO - fix bugs
-		/*pgEntity.setId(model.getId());
+		//TODO - fix
+		pgEntity.setId(model.getId());
 		pgEntity.setName(model.getName());
 		pgEntity.setDescription(model.getDescription());
-		pgEntity.setDatetransaction(model.getDate());
+		//pgEntity.setDatetransaction(model.getDate());
 		pgEntity.setAmount(model.getAmount());
 		pgEntity.setCurrency(model.getCurrency());
 		pgEntity.setIsincome(model.isIncome());
 		pgEntity.setCategoryId(model.getCategoryID());
 		pgEntity.setBankaccountId(model.getBankAccountID());
-		pgEntity.setBudgetId(model.getBudgetID());*/
+		pgEntity.setBudgetId(model.getBudgetID());
 		
 		return pgEntity;
 	}
@@ -55,17 +55,17 @@ public class DALIOTransactionMapper {
 		// Create the Derby transaction
 		IotransactionDeEntity derbyEntity = new IotransactionDeEntity();
 		
-		//TODO - fix bugs
-		/*derbyEntity.setId(model.getId());
+		//TODO - fix
+		derbyEntity.setId(model.getId());
 		derbyEntity.setName(model.getName());
 		derbyEntity.setDescription(model.getDescription());
-		derbyEntity.setDatetransaction(model.getDate());
+		//derbyEntity.setDatetransaction(model.getDate());
 		derbyEntity.setAmount(model.getAmount());
 		derbyEntity.setCurrency(model.getCurrency());
 		derbyEntity.setIsincome(model.isIncome());
 		derbyEntity.setCategoryId(model.getCategoryID());
 		derbyEntity.setBankaccountId(model.getBankAccountID());
-		derbyEntity.setBudgetId(model.getBudgetID());*/
+		derbyEntity.setBudgetId(model.getBudgetID());
 		
 		return derbyEntity;
 	}
@@ -82,17 +82,17 @@ public class DALIOTransactionMapper {
 		// Create the transaction
 		IOTransactionLogic object = new IOTransactionLogic();
 		
-		//TODO - fix bugs
-		/*object.setId(entity.getId());
+		//TODO - fix
+		object.setId(entity.getId());
 		object.setName(entity.getName());
 		object.setDescription(entity.getDescription());
-		object.setDate(entity.getDatetransaction());
+		//object.setDate(entity.getDatetransaction());
 		object.setAmount(entity.getAmount());
 		object.setCurrency(entity.getCurrency());
 		object.setIncome(entity.isIsincome());
 		object.setCategoryID(entity.getCategoryId());
 		object.setBankAccountID(entity.getBankaccountId());
-		object.setBudgetID(entity.getBudgetId());*/
+		object.setBudgetID(entity.getBudgetId());
 		
 		return object;
 	}
