@@ -12,6 +12,8 @@ public class IOTransactionModel {
 	
 	private int id;
 	private int BankAccountID;
+	private int categoryID;
+	private int budgetID;
 	
 	private double amount;
 	
@@ -130,6 +132,26 @@ public class IOTransactionModel {
 		return BankAccountID;
 	}
 	
+	/**
+	 * TODO
+	 *
+	 * @return
+	 */
+	public int getCategoryID() {
+		
+		return categoryID;
+	}
+	
+	/**
+	 * TODO
+	 * ¨
+	 * @return
+	 */
+	public int getBudgetID() {
+		
+		return budgetID;
+	}
+	
 	// SETTERS
 	
 	/**
@@ -210,5 +232,25 @@ public class IOTransactionModel {
 	public void setBankAccountID(int bankAccountID) {
 		
 		BankAccountID = bankAccountID;
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param categoryID
+	 */
+	public void setCategoryID(int categoryID) {
+		
+		this.categoryID = categoryID;
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @param budgetID
+	 */
+	public void setBudgetID(int budgetID) {
+		
+		this.budgetID = budgetID;
 	}
 }
