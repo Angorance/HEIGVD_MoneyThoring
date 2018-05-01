@@ -23,6 +23,9 @@ public class IOTransactionModel {
 	private boolean isIncome;
 	
 	
+	public IOTransactionModel() {}
+	
+	
 	/**
 	 * TODO
 	 *

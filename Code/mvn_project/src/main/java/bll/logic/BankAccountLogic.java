@@ -17,8 +17,12 @@ import java.util.ArrayList;
  */
 public class BankAccountLogic extends BankAccountModel {
 	
-	private ArrayList<IOTransactionLogic> transactions;
+	private ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
 	
+	
+	public BankAccountLogic() {
+		ClientLogic.getInstance().addBankAccount(this);
+	}
 	
 	/**
 	 * TODO
@@ -34,7 +38,6 @@ public class BankAccountLogic extends BankAccountModel {
 		super(name, bankName, type, amount, isDefault, clientID);
 		
 		ClientLogic.getInstance().addBankAccount(this);
-		transactions = new ArrayList<>();
 	}
 	
 	public BankAccountLogic(IDALBankaccountEntity bae) {
@@ -48,7 +51,6 @@ public class BankAccountLogic extends BankAccountModel {
 		setClientId(bae.getClientId());
 		
 		ClientLogic.getInstance().addBankAccount(this);
-		transactions = new ArrayList<>();
 		
 	}
 	

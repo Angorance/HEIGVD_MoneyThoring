@@ -1,5 +1,6 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALClientMapper;
 import dal.ientites.IDALClientEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
@@ -162,7 +163,9 @@ public class Authentication {
 		    
 		    IDALClientEntity ce = orm.getClientRepository().checkUserAndPassword(username, hash);
 		    
-		    ClientLogic.getInstance().connectedUser(ce.getId(), ce.getEmail(), username, hash);
+		    //ClientLogic.getInstance().connectedUser(ce.getId(), ce.getEmail(), username, hash);
+		    DALClientMapper.toBo(ce); // TODO - Check if ok
+		    ClientLogic.getInstance().setDataFromDB();
 		    
 		    success = true;
 	    } catch (Exception e) {

@@ -10,6 +10,8 @@ import dal.ientites.IDALCategoryEntity;
  * @version 1.0
  */
 public class CategoryLogic extends CategoryModel {
+    
+    public CategoryLogic() {}
 
     public CategoryLogic(String name, String color, boolean isDefault) {
         super(name, color, isDefault);
