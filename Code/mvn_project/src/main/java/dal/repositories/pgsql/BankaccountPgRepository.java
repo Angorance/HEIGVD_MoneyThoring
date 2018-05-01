@@ -22,66 +22,32 @@ public class BankaccountPgRepository implements IBankaccountRepository {
         this.transaction = transaction;
     }
 
-
-
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        BankaccountPgEntity bankaccont = null;
+        BankaccountPgEntity BankAccount = null;
+
         try {
-
-            tr = session.beginTransaction();
-
-            bankaccont = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            BankAccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            tr.commit();
         } catch (Exception e) {
-
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
-        return bankaccont;
+
+        return BankAccount;
     }
 
     @Override
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        List<IDALBankaccountEntity> bankaccounts = null;
+        List<IDALBankaccountEntity> BankAccounts = null;
         try {
-            tr = session.beginTransaction();
+            BankAccounts = session.createQuery("from BankaccountPgEntity").list();
 
-            bankaccounts = session.createQuery("from BankaccountPgEntity").list();
 
-            tr.commit();
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
-        return bankaccounts;
+        return BankAccounts;
     }
 
     @Override
@@ -89,9 +55,6 @@ public class BankaccountPgRepository implements IBankaccountRepository {
         List<IDALBankaccountEntity> bankaccountEntities = null;
         try {
             bankaccountEntities = session.createQuery("from BankaccountPgEntity where clientId = :clientid").setParameter("clientid",id).list();
-
-
-
         } catch (Exception e) {
             throw new DALException(e);
         }
@@ -101,97 +64,51 @@ public class BankaccountPgRepository implements IBankaccountRepository {
     @Override
     public void update(IDALBankaccountEntity bankaccount) throws DALException {
 
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        BankaccountPgEntity bankaccountPG = null;
+        BankaccountPgEntity BankAccountPg = null;
         if (bankaccount.getClass() == BankaccountPgEntity.class)
-            bankaccountPG = (BankaccountPgEntity) bankaccount;
+            BankAccountPg = (BankaccountPgEntity) bankaccount;
         else
             throw new DALException();
 
         try {
 
-            tr = session.beginTransaction();
 
-            session.update(bankaccountPG);
+            session.update(BankAccountPg);
 
-            tr.commit();
+
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
+
     }
 
     @Override
     public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-
-        IDALBankaccountEntity newbankaccount = null;
+        BankaccountPgEntity newBankAccount = null;
         if (bankaccount.getClass() == BankaccountPgEntity.class)
-            newbankaccount = (BankaccountPgEntity) bankaccount;
+            newBankAccount = (BankaccountPgEntity) bankaccount;
         else
             throw new DALException();
 
         try {
-            tr = session.beginTransaction();
-            session.save(newbankaccount);
-            tr.commit();
-        } catch (RuntimeException e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            session.save(newBankAccount);
+        } catch (Exception e) {
+            throw new DALException(e);
         }
 
     }
 
-    public void delete(int id) {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        IDALBankaccountEntity bankaccount = null;
+    @Override
+    public void delete(int id) throws DALException {
+        IDALBankaccountEntity BankAccount = null;
         try {
-
-            tr = session.beginTransaction();
-
-            bankaccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+            BankAccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(bankaccount);
-
-            tr.commit();
+            session.delete(BankAccount);
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
 
     }
