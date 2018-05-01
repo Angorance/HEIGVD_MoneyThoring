@@ -13,6 +13,8 @@ public class IOTransactionLogic extends IOTransactionModel {
     private CategoryLogic category;
 
 
+    public IOTransactionLogic() {}
+    
     /**
      * TODO
      * @param amount

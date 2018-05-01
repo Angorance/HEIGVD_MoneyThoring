@@ -1,11 +1,10 @@
 package bll.mappers.DAL;
 
+import bll.logic.BankAccountLogic;
 import bll.model.BankAccountModel;
-import bll.model.ClientModel;
 import dal.entities.derby.BankaccountDeEntity;
 import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
-import dal.ientites.IDALClientEntity;
 
 import java.util.*;
 
@@ -63,45 +62,71 @@ public class DALBankaccountMapper {
     }
     
     /**
-     * Entity -> BankAccountModel
+     * Entity -> BankAccountLogic
      */
-    public static BankAccountModel toBo(IDALBankaccountEntity entity) {
+    public static BankAccountLogic toBo(IDALBankaccountEntity entity) {
         
         if (entity == null) {
             return null;
         }
     
         // Create the bank account model
-        BankAccountModel model = new BankAccountModel(null, null, null, 0, false, 0);
+        BankAccountLogic account = new BankAccountLogic();
     
-        model.setId(entity.getId());
-        model.setName(entity.getName());
-        model.setBankName(entity.getNamebank());
-        model.setType(entity.getTypeaccount());
-        model.setAmount(entity.getAmount());
-        model.setDefault(entity.isIsdefault());
-        model.setVisible(entity.isIsvisible());
-        model.setClientId(entity.getClientId());
+        account.setId(entity.getId());
+        account.setName(entity.getName());
+        account.setBankName(entity.getNamebank());
+        account.setType(entity.getTypeaccount());
+        account.setAmount(entity.getAmount());
+        account.setDefault(entity.isIsdefault());
+        account.setVisible(entity.isIsvisible());
+        account.setClientId(entity.getClientId());
     
-        return model;
+        return account;
     }
-
-    public static Collection<BankAccountModel> toBos(Collection<IDALBankaccountEntity> dbos) {
-       return null;
+    
+    /**
+     * Entities -> BankAccountsLogic
+     */
+    public static List<BankAccountLogic> toBos(List<IDALBankaccountEntity> entities) {
+        
+        // Create the list of bank accounts
+        List<BankAccountLogic> accounts = new ArrayList<BankAccountLogic>();
+    
+        for(IDALBankaccountEntity entity : entities){
+            accounts.add(toBo(entity));
+        }
+    
+        return accounts;
     }
-
-    public static Collection<IDALBankaccountEntity> toDbosPG(Collection<BankAccountModel> bos) {
-       return null;
-
+    
+    /**
+     * BankAccountsModel -> PostgreSQL Entities
+     */
+    public static List<IDALBankaccountEntity> toDbosPG(List<BankAccountModel> models) {
+        
+        // Create the list of entities
+        List<IDALBankaccountEntity> entities = new ArrayList<IDALBankaccountEntity>();
+    
+        for(BankAccountModel model : models){
+            entities.add(toDboPG(model));
+        }
+    
+        return entities;
     }
-
-    public static Collection<IDALClientEntity> toDbosDe(Collection<ClientModel> bos) {
-        // throw new Exception("TODO");
-//        Collection<IDALClientEntity> dbos = new ArrayList<IDALClientEntity>();
-//        Iterator<ClientModel> it = bos.iterator();
-//        while (it.hasNext()) {
-//            dbos.formReturn((ClientPgEntity) toDboDe(it.next()));
-//        }
-        return null;
+    
+    /**
+     * BankAccountsModel -> Derby Entities
+     */
+    public static List<IDALBankaccountEntity> toDbosDe(List<BankAccountModel> models) {
+    
+        // Create the list of entities
+        List<IDALBankaccountEntity> entities = new ArrayList<IDALBankaccountEntity>();
+    
+        for(BankAccountModel model : models){
+            entities.add(toDboDe(model));
+        }
+    
+        return entities;
     }
 }

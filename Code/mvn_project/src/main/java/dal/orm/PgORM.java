@@ -111,7 +111,6 @@ public class PgORM implements IORM {
         try {
             openSession();
             transaction = session.beginTransaction();
-            System.out.println("Session du begin transaction " + session);
 
         } catch (Exception e) {
             throw new DALException(e);
