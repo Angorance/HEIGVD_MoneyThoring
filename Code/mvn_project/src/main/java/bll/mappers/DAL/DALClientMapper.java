@@ -1,5 +1,6 @@
 package bll.mappers.DAL;
 
+import bll.logic.ClientLogic;
 import bll.model.ClientModel;
 import dal.entities.derby.ClientDeEntity;
 import dal.entities.pgsql.ClientPgEntity;
@@ -59,9 +60,29 @@ public class DALClientMapper {
     }
 	
 	/**
+	 * Entity -> ClientLogic
+	 */
+	public static void toBo(IDALClientEntity entity) {
+		
+		if (entity == null) {
+			
+			// Create the client
+			ClientLogic client = ClientLogic.getInstance();
+			
+			client.setId(entity.getId());
+			client.setUsername(entity.getUsername());
+			client.setEmail(entity.getEmail());
+			client.setPassword(entity.getPassword());
+			client.setActivated(entity.getIsactivated());
+			client.setKey(entity.getActivationkey());
+			client.setSalt(entity.getSalt());
+		}
+	}
+	
+	/**
 	 * Entity -> ClientModel
 	 */
-    public static ClientModel toBo(IDALClientEntity entity) {
+    private static ClientModel toClientModel(IDALClientEntity entity) {
     	
         if (entity == null) {
             return null;
@@ -90,7 +111,7 @@ public class DALClientMapper {
         List<ClientModel> models = new ArrayList<ClientModel>();
 	
 	    for(IDALClientEntity entity : entities){
-		    models.add(toBo(entity));
+		    models.add(toClientModel(entity));
 	    }
         
         return models;
