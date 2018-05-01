@@ -113,4 +113,64 @@
             <column name="client_id" sql-type="integer"/>
         </property>
     </class>
+    <class name="dal.entities.derby.DebtDeEntity" table="DEBT" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="description">
+            <column name="DESCRIPTION" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="isincome">
+            <column name="ISINCOME" sql-type="boolean(1)"/>
+        </property>
+        <property name="expirationdate">
+            <column name="EXPIRATIONDATE" sql-type="date(10)"/>
+        </property>
+        <property name="clientId">
+            <column name="CLIENT_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="clientId1">
+            <column name="CLIENT_ID1" sql-type="integer(10)" not-null="true"/>
+        </property>
+    </class>
+    <class name="dal.entities.derby.IotransactionDeEntity" table="IOTRANSACTION" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="description">
+            <column name="DESCRIPTION" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="datetransaction">
+            <column name="DATETRANSACTION" sql-type="date(10)"/>
+        </property>
+        <property name="amount">
+            <column name="AMOUNT" sql-type="double(52)" precision="52"/>
+        </property>
+        <property name="currency">
+            <column name="CURRENCY" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="isincome">
+            <column name="ISINCOME" sql-type="boolean(1)"/>
+        </property>
+        <property name="categoryId">
+            <column name="CATEGORY_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="bankaccountId">
+            <column name="BANKACCOUNT_ID" sql-type="integer(10)"/>
+        </property>
+        <property name="budgetId">
+            <column name="BUDGET_ID" sql-type="integer(10)" not-null="true"/>
+        </property>
+    </class>
 </hibernate-mapping>
