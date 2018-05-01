@@ -11,7 +11,7 @@ import dal.orm.PgORM;
  * Allows the mapping between the DAL entities and the Business Logic.
  * Only implements the constructors, the getters and the setters.
  *
- * @authors Daniel Gonzalez Lopez
+ * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class ClientModel {
@@ -162,6 +162,10 @@ public class ClientModel {
         this.key = key;
     }
     
+    /**
+     * TODO
+     * @param orm
+     */
     protected void createUser(IORM orm) {
         try {
             orm.beginTransaction();
@@ -171,5 +175,16 @@ public class ClientModel {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    protected void updateUser(IORM orm) {
+    	try {
+    		orm.beginTransaction();
+    		orm.getClientRepository().update(DALClientMapper.toDboPG(this));
+    		orm.commit();
+    		
+	    } catch (Exception e) {
+		    System.out.println(e);
+	    }
     }
 }
