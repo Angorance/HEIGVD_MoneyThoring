@@ -64,7 +64,7 @@ public class DALClientMapper {
 	 */
 	public static void toBo(IDALClientEntity entity) {
 		
-		if (entity == null) {
+		if (entity != null) {
 			
 			// Create the client
 			ClientLogic client = ClientLogic.getInstance();
