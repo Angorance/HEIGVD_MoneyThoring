@@ -29,69 +29,218 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller_transactionList implements Initializable {
 
 
+    @FXML
+    private AnchorPane parent;
 
-    @FXML private AnchorPane parent;
-    @FXML private ComboBox<BankAccountLogic> accountSelect;
-    @FXML private ComboBox<?> periodSelect;
-    @FXML private ComboBox<?> monthSelect;
-    @FXML private Label lblTotalDepense;
-    @FXML private JFXTreeTableView<User> outGoTreeTableView;
-    @FXML private Label lblTotalRevenu;
-    @FXML private JFXTreeTableView<User> incomeTreeTableView;
-    @FXML private JFXNodesList nodeList;
+    @FXML
+    private ComboBox<BankAccountLogic> accountSelect;
+    @FXML
+    private ComboBox<String> periodSelect;
+    @FXML
+    private ComboBox<String> monthSelect;
+
+    @FXML
+    private Label lblTotalDepense;
+    @FXML
+    private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
+    @FXML
+    private Label lblTotalRevenu;
+    @FXML
+    private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
+    @FXML
+    private JFXNodesList nodeList;
 
     JFXButton transactionButton;
     JFXButton outGoButton;
     JFXButton incomeButton;
 
-    class User extends RecursiveTreeObject<User> {
 
-        StringProperty userName;
-        StringProperty age;
-        StringProperty department;
-
-        public User(String department, String age, String userName) {
-            this.department = new SimpleStringProperty(department);
-            this.userName = new SimpleStringProperty(userName);
-            this.age = new SimpleStringProperty(age);
-        }
-
-    }
+    ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
+    ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
+    JFXTreeTableColumn<WrapperTransaction, String> dateIncome;
+    JFXTreeTableColumn<WrapperTransaction, String> nameIncome;
+    JFXTreeTableColumn<WrapperTransaction, String> amountIncome;
+    JFXTreeTableColumn<WrapperTransaction, String> dateOutgo;
+    JFXTreeTableColumn<WrapperTransaction, String> nameOutgo;
+    JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo;
 
     public Controller_transactionList() {
 
     }
 
+    private void setData() {
+
+        boolean selectedAccount = accountSelect.getSelectionModel().isEmpty();
+        boolean selectedPeriode = periodSelect.getSelectionModel().isEmpty();
+        boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
+
+        dateIncome = new JFXTreeTableColumn<>("Date");
+        dateIncome.setMinWidth(150);
+        dateIncome.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().date;
+            }
+        });
+
+        nameIncome = new JFXTreeTableColumn<>("nom");
+        nameIncome.setMinWidth(150);
+        nameIncome.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().name;
+            }
+        });
+
+        amountIncome = new JFXTreeTableColumn<>("montant");
+        amountIncome.setMinWidth(150);
+        amountIncome.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().amount;
+            }
+        });
+
+        dateOutgo = new JFXTreeTableColumn<>("Date");
+        dateOutgo.setMinWidth(150);
+        dateOutgo.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().date;
+            }
+        });
+
+        nameOutgo = new JFXTreeTableColumn<>("nom");
+        nameOutgo.setMinWidth(150);
+        nameOutgo.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().name;
+            }
+        });
+
+        amoutOutgo = new JFXTreeTableColumn<>("montant");
+        amoutOutgo.setMinWidth(150);
+        amoutOutgo.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
+                return param.getValue().getValue().amount;
+            }
+        });
+        int year;
+        if (!selectedAccount && !selectedPeriode && !selectedTime) {
+            income.clear();
+            outgo.clear();
+            if(periodSelect.getValue().equals("Mensuel")){
+                year = Calendar.getInstance().get(Calendar.YEAR);
+                int month = monthSelect.getSelectionModel().getSelectedIndex();
+                add(year,month);
+            }else if(periodSelect.getValue().equals("Annuel")){
+                year = Integer.valueOf(monthSelect.getValue());
+                for(int i = 0; i < 12; ++i){
+                    add(year,i);
+                }
+            }
+            final TreeItem<WrapperTransaction> root = new RecursiveTreeItem<WrapperTransaction>(income, RecursiveTreeObject::getChildren);
+            incomeTreeTableView.getColumns().setAll(dateIncome, nameIncome, amountIncome);
+            incomeTreeTableView.setRoot(root);
+            incomeTreeTableView.setShowRoot(false);
+
+
+            final TreeItem<WrapperTransaction> root2 = new RecursiveTreeItem<WrapperTransaction>(outgo, RecursiveTreeObject::getChildren);
+            outGoTreeTableView.getColumns().setAll(dateOutgo, nameOutgo, amoutOutgo);
+            outGoTreeTableView.setRoot(root2);
+            outGoTreeTableView.setShowRoot(false);
+        }
+
+        setTotal();
+    }
+
+
+    private void setTotal(){
+        double totalIncome = 0;
+        double totalOutgo = 0;
+        for(int i = 0; i < income.size();++i){
+            totalIncome += Double.valueOf(income.get(i).amount.getValue());
+        }
+
+        for(int i = 0; i < outgo.size();++i){
+            totalOutgo += Double.valueOf(outgo.get(i).amount.getValue());
+        }
+
+        lblTotalRevenu.setText(String.valueOf(totalIncome));
+        lblTotalDepense.setText(String.valueOf(totalOutgo));
+    }
+    private void add(int year,int month){
+        HashMap<Integer,LinkedList<IOTransactionLogic>[]> map = new HashMap<>();
+        LinkedList<IOTransactionLogic>[] list = new LinkedList[12];
+        Random rdm = new Random();
+        for(int i = 0; i < 12 ; ++i){
+            list[i] = new LinkedList<IOTransactionLogic>();
+            for(int j = 0; j < 10; ++j){
+                int amount = 1000 + rdm.nextInt(25000) * (rdm .nextBoolean() ? -1 : 1);
+                list[i].add(new IOTransactionLogic(amount,"transaction" + i,"a","10.10.2018","CHF", null,accountSelect.getValue()));
+            }
+        }
+        for(int i = 2000; i <= 2018; ++i){
+            map.put(i,list);
+        }
+        for(IOTransactionLogic transaction : map.get(year)[month]){
+            if(transaction.isIncome()){
+                income.add(new WrapperTransaction(transaction));
+            }else{
+                outgo.add(new WrapperTransaction(transaction));
+            }
+        }
+    }
+
+    private void yearOrMonth(){
+        ObservableList<String> items3 = FXCollections.observableArrayList();
+        items3.clear();
+        if (periodSelect.getValue().equals("Mensuel")) {
+            items3.addAll("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre",
+                    "Octobre", "Novembre", "Décembre");
+        } else if (periodSelect.getValue().equals("Annuel")) {
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            int firstYear = 2000;
+            for (int i = firstYear; i <= currentYear; ++i){
+                items3.addAll(String.valueOf(i));
+            }
+        }
+        monthSelect.setItems(items3);
+    }
+
+
     /**
      *
      */
-    private void createOutGo(){
+    private void createOutGo() {
 
     }
 
     /**
      *
      */
-    private void createInCome(){
+    private void createInCome() {
 
     }
 
-    private void generateNodeList(){
+    private void generateNodeList() {
         transactionButton = new JFXButton("+");
         transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
         //transactionButton.setStyle("-fx-background-color: green");
-        transactionButton.getStyleClass().addAll("animated-option-button","animated-option-sub-button2");
+        transactionButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button2");
         outGoButton = new JFXButton("Dep");
         outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
-        outGoButton.getStyleClass().addAll("animated-option-button","animated-option-sub-button3");
+        outGoButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button3");
         incomeButton = new JFXButton("Rev");
         incomeButton.setButtonType(JFXButton.ButtonType.RAISED);
-        incomeButton.getStyleClass().addAll("animated-option-button","animated-option-sub-button3");
+        incomeButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button3");
 
         nodeList.addAnimatedNode(transactionButton);
         nodeList.addAnimatedNode(outGoButton);
@@ -100,106 +249,53 @@ public class Controller_transactionList implements Initializable {
         nodeList.setRotate(180);
     }
 
-    private void generateComboBoxItem(){
+    private void generateComboBoxItem() {
         ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
-        for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
+        for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
             items.add(bal);
         }
         accountSelect.setItems(items);
+
+        ObservableList<String> items2 = FXCollections.observableArrayList();
+        items2.addAll("Mensuel", "Annuel");
+        periodSelect.setItems(items2);
+    }
+
+    private void generateNameColumn(){
+
     }
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
-     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         generateNodeList();
         generateComboBoxItem();
-
-        JFXTreeTableColumn<WrapperTransaction, String> dateTransaction = new JFXTreeTableColumn<>("Date");
-        dateTransaction.setMinWidth(150);
-        dateTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+        accountSelect.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
-                return param.getValue().getValue().date;
+            public void handle(ActionEvent event) {
+                setData();
             }
         });
 
-        JFXTreeTableColumn<WrapperTransaction, String> nameTransaction = new JFXTreeTableColumn<>("nom");
-        nameTransaction.setMinWidth(150);
-        nameTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+        periodSelect.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
-                return param.getValue().getValue().name;
+            public void handle(ActionEvent event) {
+                yearOrMonth();
+                setData();
             }
         });
 
-        /*TODO récurrence*/
-        /*JFXTreeTableColumn<WrapperTransaction, String> recTransaction = new JFXTreeTableColumn<>("nom");
-        recTransaction.setMinWidth(150);
-        recTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
+        monthSelect.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
-                return param.getValue().getValue().name;
-            }
-        });*/
-
-        JFXTreeTableColumn<WrapperTransaction, String> amountTransaction = new JFXTreeTableColumn<>("montant");
-        amountTransaction.setMinWidth(150);
-        amountTransaction.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
-                return param.getValue().getValue().amount;
+            public void handle(ActionEvent event) {
+                setData();
             }
         });
-
-
-        ObservableList<WrapperTransaction> transactions = FXCollections.observableArrayList();
-
-        /*JFXTreeTableColumn<User, String> deptName = new JFXTreeTableColumn<>("Department");
-        deptName.setPrefWidth(150);
-        deptName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<User, String> param) {
-                return param.getValue().getValue().department;
-            }
-        });
-
-        JFXTreeTableColumn<User, String> ageCol = new JFXTreeTableColumn<>("Age");
-        ageCol.setPrefWidth(150);
-        ageCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<User, String> param) {
-                return param.getValue().getValue().age;
-            }
-        });
-
-        JFXTreeTableColumn<User, String> nameCol = new JFXTreeTableColumn<>("Name");
-        nameCol.setPrefWidth(150);
-        nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<User, String> param) {
-                return param.getValue().getValue().userName;
-            }
-        });
-
-        ObservableList<User> users = FXCollections.observableArrayList();
-        users.formReturn(new User("Computer Department", "23", "CD 1"));
-        users.formReturn(new User("Sales Department", "22", "Employee 1"));
-        users.formReturn(new User("Sales Department", "22", "Employee 2"));
-        users.formReturn(new User("Sales Department", "25", "Employee 4"));
-        users.formReturn(new User("Sales Department", "25", "Employee 5"));
-        users.formReturn(new User("IT Department", "42", "ID 2"));
-        users.formReturn(new User("HR Department", "22", "HR 1"));
-        users.formReturn(new User("HR Department", "22", "HR 2"));
-
-        final TreeItem<User> root = new RecursiveTreeItem<User>(users, RecursiveTreeObject::getChildren);
-        outGoTreeTableView.getColumns().setAll(deptName, ageCol, nameCol);
-        outGoTreeTableView.setRoot(root);
-        outGoTreeTableView.setShowRoot(false);*/
-
 
         outGoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
