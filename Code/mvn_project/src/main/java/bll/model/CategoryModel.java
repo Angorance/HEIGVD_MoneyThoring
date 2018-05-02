@@ -1,12 +1,16 @@
 package bll.model;
 
+import bll.mappers.DAL.DALCategoryMapper;
+import dal.irepositories.ICategoryRepository;
+import dal.orm.IORM;
+
 /**
  * CategoryModel class.
  * Allows the mapping between the DAL entities and the Business Logic.
  * Only implements the constructors, the getters and the setters.
  *
- * @version 1.0
  * @author Daniel Gonzalez Lopez
+ * @version 1.2
  */
 public class CategoryModel {
 	
@@ -19,10 +23,11 @@ public class CategoryModel {
 	private boolean isDefault;
 	
 	
+	// Protected default constructor. Avoid instances creation outside package.
 	protected CategoryModel() {}
 	
 	/**
-	 * Construct an instance of ClientModel.
+	 * Construct an instance of ClientModel with the given parameters.
 	 *
 	 * @param name Name of the category.
 	 * @param color Color of the category.
@@ -34,6 +39,48 @@ public class CategoryModel {
 		this.color = color;
 		
 		setDefault(isDefault);
+	}
+	
+	/**
+	 * Create a category entry for the user into the database.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void createCategory(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			ICategoryRepository repo = orm.getCategoryRepository();
+			repo.addCategory(DALCategoryMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * Update category entry with new data.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void updateCategory(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			ICategoryRepository repo = orm.getCategoryRepository();
+			repo.update(DALCategoryMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	
@@ -81,14 +128,15 @@ public class CategoryModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the client ID for the category.
 	 *
-	 * @return
+	 * @return Client ID.
 	 */
 	public int getClientID() {
 		
 		return clientID;
 	}
+	
 	
 	// -------------------------------------------------------------------------
 	// SETTERS -----------------------------------------------------------------

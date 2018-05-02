@@ -1,12 +1,16 @@
 package bll.model;
 
+import bll.mappers.DAL.DALIOTransactionMapper;
+import dal.irepositories.IIotransactionRepository;
+import dal.orm.IORM;
+
 /**
  * IOTransactionModel class.
  * Allows the mapping between the DAL entities and the Business Logic.
  * Only implements the constructors, the getters and the setters.
  *
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @version 1.2
  */
 public class IOTransactionModel {
 	
@@ -25,21 +29,22 @@ public class IOTransactionModel {
 	private boolean isIncome;
 	
 	
-	public IOTransactionModel() {}
+	// Protected default constructor. Avoid instances creation outside package.
+	protected IOTransactionModel() {}
 	
 	
 	/**
-	 * TODO
+	 * Construct an instance with given parameters.
 	 *
-	 * @param amount
-	 * @param name
-	 * @param description
-	 * @param date
-	 * @param currency
-	 * @param isIncome
+	 * @param amount Amount of the transaction.
+	 * @param name Name of the transaction.
+	 * @param description Description of the transaction.
+	 * @param date Date of the transaction.
+	 * @param currency Currency used.
+	 * @param isIncome Flag to know if it is an income.
 	 */
-	public IOTransactionModel(double amount, String name, String description, String date, String currency,
-			boolean isIncome) {
+	public IOTransactionModel(double amount, String name, String description,
+			String date, String currency, boolean isIncome) {
 		
 		this.amount = amount;
 		this.name = name;
@@ -49,8 +54,51 @@ public class IOTransactionModel {
 		this.isIncome = isIncome;
 	}
 	
+	/**
+	 * Create a transaction entry for the user into the database.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void createCategory(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IIotransactionRepository repo = orm.getIotransactionRepository();
+			repo.addIotransaction(DALIOTransactionMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
-	// GETTERS
+	/**
+	 * Update transaction entry with new data.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void updateCategory(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IIotransactionRepository repo = orm.getIotransactionRepository();
+			repo.update(DALIOTransactionMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	// -------------------------------------------------------------------------
+	// GETTERS -----------------------------------------------------------------
 	
 	/**
 	 * Get the id of the transaction.
@@ -133,9 +181,9 @@ public class IOTransactionModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the category ID of the transaction.
 	 *
-	 * @return
+	 * @return ID of the category.
 	 */
 	public int getCategoryID() {
 		
@@ -143,16 +191,18 @@ public class IOTransactionModel {
 	}
 	
 	/**
-	 * TODO
-	 * ¨
-	 * @return
+	 * Get the budget ID of the category.
+	 *
+	 * @return ID of the budget.
 	 */
 	public int getBudgetID() {
 		
 		return budgetID;
 	}
 	
-	// SETTERS
+	
+	// -------------------------------------------------------------------------
+	// SETTERS -----------------------------------------------------------------
 	
 	/**
 	 * Set the id of the transaction.
@@ -235,9 +285,9 @@ public class IOTransactionModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the category ID of the transaction.
 	 *
-	 * @param categoryID
+	 * @param categoryID New ID to set.
 	 */
 	public void setCategoryID(int categoryID) {
 		
@@ -245,9 +295,9 @@ public class IOTransactionModel {
 	}
 	
 	/**
-	 * TODO
-	 * 
-	 * @param budgetID
+	 * Set the budget ID of the transaction.
+	 *
+	 * @param budgetID New ID to set.
 	 */
 	public void setBudgetID(int budgetID) {
 		
