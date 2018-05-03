@@ -1,7 +1,7 @@
 package bll.logic;
 
 import bll.model.BankAccountModel;
-import dal.ientites.IDALBankaccountEntity;
+import dal.orm.PgORM;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,7 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	
 	public BankAccountLogic() {
+		
 		ClientLogic.getInstance().addBankAccount(this);
 	}
 	
@@ -33,25 +34,14 @@ public class BankAccountLogic extends BankAccountModel {
 	 * @param amount
 	 * @param isDefault
 	 */
-	public BankAccountLogic(String name, String bankName, String type, double amount, boolean isDefault, int clientID) {
+	public BankAccountLogic(String name, String bankName, String type,
+			double amount, boolean isDefault, int clientID) {
 		
-		super(name, bankName, type, amount, isDefault, clientID);
+		super(name, bankName, type, amount, clientID);
 		
-		ClientLogic.getInstance().addBankAccount(this);
-	}
-	
-	public BankAccountLogic(IDALBankaccountEntity bae) {
-		
-		setId(bae.getId());
-		setName(bae.getName());
-		setBankName(bae.getNamebank());
-		setType(bae.getTypeaccount());
-		setAmount(bae.getAmount());
-		setDefault(bae.isIsdefault());
-		setClientId(bae.getClientId());
+		changeDefault(isDefault);
 		
 		ClientLogic.getInstance().addBankAccount(this);
-		
 	}
 	
 	public String toString() {
@@ -98,5 +88,29 @@ public class BankAccountLogic extends BankAccountModel {
 	public void supp() {
 		
 		setVisible(false);
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param isDefault
+	 */
+	private void changeDefault(boolean isDefault) {
+		
+		ClientLogic cl = ClientLogic.getInstance();
+		
+		if (isDefault) {
+			ArrayList<BankAccountLogic> list = cl.getBankAccounts();
+			
+			for (BankAccountLogic ba : list) {
+				if (ba.isDefault()) {
+					ba.setDefault(false);
+					ba.updateBankAccount(new PgORM());
+					break;
+				}
+			}
+		}
+		
+		setDefault(isDefault);
 	}
 }

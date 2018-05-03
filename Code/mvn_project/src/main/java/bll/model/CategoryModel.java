@@ -178,7 +178,6 @@ public class CategoryModel {
 	 * @param aDefault New default flag to set.
 	 */
 	public void setDefault(boolean aDefault) {
-		// TODO - Check for previous default category.
 		
 		isDefault = aDefault;
 	}

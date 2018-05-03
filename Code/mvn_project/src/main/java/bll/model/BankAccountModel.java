@@ -40,11 +40,10 @@ public class BankAccountModel {
 	 * @param bankName Name of the bank.
 	 * @param type Type of account.
 	 * @param amount Starting amount in the account.
-	 * @param isDefault Default account flag.
 	 * @param clientID Client's ID.
 	 */
-	public BankAccountModel(String name, String bankName, String type,
-			double amount, boolean isDefault, int clientID) {
+	protected BankAccountModel(String name, String bankName, String type,
+			double amount, int clientID) {
 		
 		this.name = name;
 		this.bankName = bankName;
@@ -52,8 +51,6 @@ public class BankAccountModel {
 		this.amount = amount;
 		this.isVisible = true;
 		this.clientID = clientID;
-		
-		setDefault(isDefault);
 	}
 	
 	/**
@@ -241,7 +238,7 @@ public class BankAccountModel {
 	 * @param aDefault New flag to set.
 	 */
 	public void setDefault(boolean aDefault) {
-		// TODO - Unset the previous default. Or do it in logic?
+		
 		isDefault = aDefault;
 	}
 	
