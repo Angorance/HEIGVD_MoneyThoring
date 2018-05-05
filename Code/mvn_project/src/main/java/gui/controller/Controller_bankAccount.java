@@ -76,7 +76,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	/**
 	 * Event on the create button that will load the account creation page
 	 */
-	@Override public void callform() {
+	public void callform() {
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
@@ -157,10 +157,10 @@ public class Controller_bankAccount implements Initializable, IController {
 		paneform.setMouseTransparent(true);
 		
 		//Go through the list of bank accounts and formReturn it to our frame
-        for(BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()){
-            AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
-            addToFrame(accountDisplayer);
-        }
+		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
+			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+			addToFrame(accountDisplayer);
+		}
 		
 		/*Add event at our button*/
 		create_button.setOnAction(new EventHandler<ActionEvent>() {

@@ -109,5 +109,6 @@
             </JFXNodesList>
          </children>
       </GridPane>
+      <AnchorPane fx:id="paneform" prefHeight="453.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
