@@ -2,6 +2,8 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -37,6 +39,10 @@ public class Controller_detailBankAccount implements Initializable {
     public Controller_detailBankAccount(Controller_bankAccount cba, BankAccountLogic bal){
         this.bal = bal;
         this.cba = cba;
+    }
+    
+    private void returnFrame() {
+        cba.formReturn(null);
     }
 
     /**
@@ -82,6 +88,13 @@ public class Controller_detailBankAccount implements Initializable {
         }
 
         lineChart.getData().addAll(series);
+        
+        returnButton.setOnAction(new EventHandler<ActionEvent>() {
+    
+            @Override public void handle(ActionEvent event) {
+                returnFrame();
+            }
+        });
 
 
     }
