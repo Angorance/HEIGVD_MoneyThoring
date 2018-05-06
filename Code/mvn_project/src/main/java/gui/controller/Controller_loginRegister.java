@@ -2,6 +2,7 @@ package gui.controller;
 
 import bll.logic.ClientLogic;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -79,20 +80,20 @@ public class Controller_loginRegister implements Initializable {
         /*Verify if username is already used*/
         if(usernameExists(username)){
             check = false;
-            register_username.setStyle("-fx-text-inner-color: red;");
+            register_username.setStyle("-fx-text-fill: red;");
         }
         
         /*Verify if password is not equale to confirm password*/
         if(!checkPasswords(password,confirmPassword)){
             check = false;
-            register_password.setStyle("-fx-text-inner-color: red;");
-            register_confirmPassword.setStyle("-fx-text-inner-color: red;");
+            register_password.setStyle("-fx-text-fill: red;");
+            register_confirmPassword.setStyle("-fx-text-fill: red;");
         }
         
         /*Verify if email is already used*/
         if(!checkEmail(email)){
             check = false;
-            register_email.setStyle("-fx-text-inner-color: red;");
+            register_email.setStyle("-fx-text-fill: red;");
         }
         
         /*If all is correcte we create a new client and load the main frame*/
