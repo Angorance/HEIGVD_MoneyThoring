@@ -34,7 +34,7 @@ public class Controller_formCategory implements Initializable, IForm {
             String oldname = item.getName();
             item.setColor(colorPicker.getValue().toString());
             item.setName(txtLabel.getText());
-            parent.modifyItem(oldname, item);
+            parent.modifyItem(item);
         }
     }
 

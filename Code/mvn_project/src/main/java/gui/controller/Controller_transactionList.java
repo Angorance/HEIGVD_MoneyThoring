@@ -100,7 +100,7 @@ public class Controller_transactionList implements Initializable, IController {
 	 * @param updated
 	 */
 	@Override
-	public void modifyItem(String oldKey, Object updated) {
+	public void modifyItem(Object updated) {
 
 	}
 	

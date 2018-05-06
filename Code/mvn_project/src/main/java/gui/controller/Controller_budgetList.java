@@ -127,7 +127,7 @@ public class Controller_budgetList implements IController, Initializable {
 	 * @param updated
 	 */
 	@Override
-	public void modifyItem(String oldKey, Object updated) {
+	public void modifyItem(Object updated) {
 
 	}
 	

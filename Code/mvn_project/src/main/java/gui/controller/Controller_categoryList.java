@@ -117,7 +117,7 @@ public class Controller_categoryList implements Initializable, IController {
         unloadform();
         if(toDelete != null) {
             CategoryLogic c = (CategoryLogic) toDelete;
-            CategoryDisplayer d = displayerList.get(c.getName());
+            CategoryDisplayer d = displayerList.get(c.getId());
             listContainer.getChildren().removeAll(d);
             // TODO delete in DB
         }
@@ -128,10 +128,10 @@ public class Controller_categoryList implements Initializable, IController {
      * @param updated
      */
     @Override
-    public void modifyItem(String oldKey, Object updated) {
+    public void modifyItem(Object updated) {
         unloadform();
         CategoryLogic c = (CategoryLogic) updated;
-        displayerList.get(c.getId());
+        displayerList.get(c.getId()).redraw();
         // TODO update in the DB
     }
 
@@ -145,7 +145,7 @@ public class Controller_categoryList implements Initializable, IController {
         CategoryLogic c = (CategoryLogic)result;
         if(result != null){
             CategoryDisplayer d = new CategoryDisplayer(c);
-            displayerList.put(c.getName(), d);
+            displayerList.put(c.getId(), d);
             listContainer.getChildren().add(d);
         }
 
@@ -173,12 +173,12 @@ public class Controller_categoryList implements Initializable, IController {
         CategoryLogic c = new CategoryLogic("Nourriture", "#20B4E6", false);
         c.setId(1);
         CategoryDisplayer d = new CategoryDisplayer(c);
-        displayerList.put("Nourriture", d);
+        displayerList.put(1, d);
         listContainer.getChildren().add(d);
         c = new CategoryLogic("Technologie", "#8D18D6", false);
         c.setId(2);
         d = new CategoryDisplayer(c);
-        displayerList.put("Technologie", d);
+        displayerList.put(2, d);
         listContainer.getChildren().add(d);
     }
 }
