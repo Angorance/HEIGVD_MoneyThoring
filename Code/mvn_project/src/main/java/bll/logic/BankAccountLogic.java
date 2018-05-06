@@ -42,6 +42,8 @@ public class BankAccountLogic extends BankAccountModel {
 		changeDefault(isDefault);
 		
 		ClientLogic.getInstance().addBankAccount(this);
+		
+		createBankAccount(new PgORM());
 	}
 	
 	public String toString() {
