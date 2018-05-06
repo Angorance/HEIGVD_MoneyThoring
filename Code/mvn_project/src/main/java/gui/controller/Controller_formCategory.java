@@ -19,7 +19,9 @@ public class Controller_formCategory implements Initializable, IForm {
     @FXML private JFXTextField txtLabel;
     @FXML private JFXButton btnCancel;
     @FXML private JFXButton btnConfirm;
-    IController parent;
+
+    private IController parent;
+    private CategoryLogic item;
 
 
     @Override
@@ -39,7 +41,10 @@ public class Controller_formCategory implements Initializable, IForm {
         btnConfirm.setOnAction(this::formValidation);
     }
 
-    Controller_formCategory(IController p){
+    Controller_formCategory(IController p, boolean isModif, CategoryLogic cat){
         parent = p;
+        if(isModif){
+            item = cat;
+        }
     }
 }

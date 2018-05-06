@@ -108,7 +108,25 @@ public class Controller_bankAccount implements Initializable, IController {
 			addToFrame(accountDisplayer);
 		}
 	}
-	
+
+	/**
+	 * Delete the displayer and the data in the DB
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
+
+	}
+
+	/**
+	 * update the datas in the DB and refresh
+	 * @param updated
+	 */
+	@Override
+	public void modifyItem(Object updated) {
+
+	}
+
 	/*Add an AccountDisplayer to the frame*/
 	private void addToFrame(AccountDisplayer accountDisplayer) {
 		

@@ -98,7 +98,10 @@ public class Controller_budgetList implements IController, Initializable {
 			budgetPane.setOnMouseClicked(event -> openDetail());
 		}
 	}
-	
+
+	/**
+	 * load the form to create a new Budget
+	 */
 	 public void callform() {
 		
 		paneForm.setVisible(true);
@@ -112,6 +115,24 @@ public class Controller_budgetList implements IController, Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Delete the displayer and the data in the DB
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
+
+	}
+
+	/**
+	 * update the datas in the DB and refresh
+	 * @param updated
+	 */
+	@Override
+	public void modifyItem(Object updated) {
+
 	}
 	
 	@Override public void formReturn(Object result) {

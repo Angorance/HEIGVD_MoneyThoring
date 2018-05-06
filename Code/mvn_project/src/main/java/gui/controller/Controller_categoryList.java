@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.CategoryLogic;
-import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.effects.JFXDepthManager;
 import javafx.event.EventHandler;
@@ -11,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -81,12 +79,17 @@ public class Controller_categoryList implements Initializable, IController {
                     (int)( color.getGreen() * 255 ),
                     (int)( color.getBlue() * 255 ) );
         }
+
+        public void redraw(){
+            lblCategorie.setText(cat.getName());
+            this.setStyle("-fx-background-color: " + toRGBCode(Color.valueOf(cat.getColor())) + "; -fx-background-radius: 10");
+        }
     }
 
     /**
      * Call the form to create or modify a category
      */
-    public void callform() {
+    public void callform(CategoryLogic cat) {
         formPane.setVisible(true);
         formPane.setMouseTransparent(false);
 
@@ -99,6 +102,24 @@ public class Controller_categoryList implements Initializable, IController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Delete the displayer and the data in the DB
+     * @param toDelete
+     */
+    @Override
+    public void deleteItem(Object toDelete) {
+
+    }
+
+    /**
+     * update the datas in the DB and refresh
+     * @param updated
+     */
+    @Override
+    public void modifyItem(Object updated) {
+
     }
 
     /**
@@ -121,7 +142,7 @@ public class Controller_categoryList implements Initializable, IController {
         formPane.setMouseTransparent(true);
         formPane.setVisible(false);
 
-        btnAdd.setOnAction(event -> callform());
+        btnAdd.setOnAction(event -> callform(null));
 
         // TODO formReturn the existing categories
 
