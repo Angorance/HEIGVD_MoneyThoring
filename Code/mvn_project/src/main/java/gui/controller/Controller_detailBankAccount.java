@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -16,13 +17,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class Controller_detailBankAccount implements Initializable {
+public class Controller_detailBankAccount implements Initializable,IController {
 	
 	
 	@FXML private Label name;
@@ -35,6 +38,7 @@ public class Controller_detailBankAccount implements Initializable {
 	@FXML private NumberAxis axeY;
 	@FXML private JFXButton returnButton;
 	@FXML private JFXNodesList nodelist;
+	@FXML private AnchorPane paneform;
 	
 	private JFXButton preferenceButton;
 	private JFXButton modifyButton;
@@ -82,12 +86,45 @@ public class Controller_detailBankAccount implements Initializable {
 		preferenceButton.setGraphic(image);
 	}
 	
-	private void removeBankAccount(){
+	private void removeBankAccount() {
+		
 		bal.supp();
-		cba.initialize(null,null);
+		cba.initialize(null, null);
 	}
 	
-	private void modifyBankAccount(){
+	private void modifyBankAccount() {
+		
+		/* we load the form fxml*/
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
+		
+		/*Create a instance of the controller of bank account form*/
+		Controller_formModBankAccount cba = new Controller_formModBankAccount(this,bal);
+		
+		/*Sets the controller associated with the root object*/
+		loader.setController(cba);
+		paneform.setVisible(true);
+		paneform.setMouseTransparent(false);
+		
+		try {
+			AnchorPane pane = loader.load();
+			paneform.getChildren().add(pane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void modify(String name,String nameBankAccount,String type,double amountDouble,boolean isDefault){
+		this.name.setText(name);
+		this.nameBankAccount.setText(nameBankAccount);
+		this.typeBankAccount.setText(type);
+		this.amountBankAccount.setText(String.valueOf(amountDouble));
+		bal.update(name, nameBankAccount,type,amountDouble,isDefault);
+	}
+	
+	@Override public void formReturn(Object result) {
+		paneform.getChildren().clear();
+		paneform.setMouseTransparent(true);
+		paneform.setVisible(false);
 	}
 	
 	/**
@@ -98,6 +135,9 @@ public class Controller_detailBankAccount implements Initializable {
 	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
+		paneform.setVisible(false);
+		paneform.setMouseTransparent(true);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
 		image.setFitWidth(48);
@@ -145,6 +185,7 @@ public class Controller_detailBankAccount implements Initializable {
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				modifyBankAccount();
 			}
 		});
@@ -152,6 +193,7 @@ public class Controller_detailBankAccount implements Initializable {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				removeBankAccount();
 			}
 		});

@@ -52,8 +52,15 @@ public class Controller_loginRegister implements Initializable {
             login_incorrect.setTextFill(Color.RED);
         //otherwise we load the main frame*/
         }else{
-            /*Load dashboard*/
-            loadMainFrame();
+            //boolean isActivated = isActivated(email, password); TODO
+            
+            //if(isActivated) {
+                /*Load dashboard*/
+                loadMainFrame();
+                
+            /*} else {
+                //TODO - display the box to set the activation code and handle another special button
+            }*/
         }
     }
     
@@ -99,9 +106,8 @@ public class Controller_loginRegister implements Initializable {
         /*If all is correcte we create a new client and load the main frame*/
         if(check){
             ClientLogic.getInstance().setClient(email,username,password);
-            loadMainFrame();
+            //TODO - say to the user that the account was created
         }
-        
     }
     
     /**
