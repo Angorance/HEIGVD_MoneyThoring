@@ -1,5 +1,10 @@
 package bll.model;
 
+import bll.mappers.DAL.DALBudgetMapper;
+import dal.irepositories.IBudgetRepository;
+import dal.orm.IORM;
+import dal.orm.PgORM;
+
 import java.sql.Date;
 
 /**
@@ -26,6 +31,56 @@ public class BudgetModel {
 	
 	
 	protected BudgetModel() {}
+	
+	protected BudgetModel(String name, double amount, Date startingDate, Date endingDate) {
+		
+		setName(name);
+		setAmount(amount);
+		setStartingDate(startingDate);
+		setEndingDate(endingDate);
+	}
+	
+	/**
+	 * Create a category entry for the user into the database.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void createBudget(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IBudgetRepository repo = orm.getBudgetRepository();
+			repo.addBudget(DALBudgetMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * Update category entry with new data.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void updateBudget(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IBudgetRepository repo = orm.getBudgetRepository();
+			repo.update(DALBudgetMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 	/**
 	 * TODO

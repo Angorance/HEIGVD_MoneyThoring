@@ -19,8 +19,11 @@ public class CategoryLogic extends CategoryModel {
 
     public CategoryLogic(String name, String color, boolean isDefault) {
         super(name, color, isDefault);
+        
+        createCategory(new PgORM());
     }
     
+    @Deprecated
     public CategoryLogic(IDALCategoryEntity cat) {
         setId(cat.getId());
         setName(cat.getName());
