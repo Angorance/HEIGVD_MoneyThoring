@@ -52,4 +52,18 @@
     -fx-background-color: RED;
 }
 
+.transaction-button{
+    -fx-pref-width: 30px;
+    -fx-background-color: #44b449;
+    -fx-background-radius: 30px;
+    -fx-pref-height: 30px;
+    -fx-text-fill: white;
+    -fx-border-radius: 30px;
+    -fx-border-width: 4px;
+}
+
+.transaction-button-sub{
+    -fx-background-color: red;
+}
+
 

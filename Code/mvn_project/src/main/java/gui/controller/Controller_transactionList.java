@@ -262,9 +262,9 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	private void generateNodeList() {
 		
-		transactionButton = new JFXButton("+");
+		transactionButton = new JFXButton();
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		transactionButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button2");
+		transactionButton.getStyleClass().addAll("transaction-button", "animated-option-sub-button2");
 		outGoButton = new JFXButton("Dep");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
 		outGoButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button3");
