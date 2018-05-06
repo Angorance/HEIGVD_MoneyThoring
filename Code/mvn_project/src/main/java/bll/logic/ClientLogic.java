@@ -95,9 +95,17 @@ public class ClientLogic extends ClientModel {
 	 *
 	 * @return ArrayList of bank accounts.
 	 */
-	public ArrayList<BankAccountLogic> getBankAccounts() {
+	public List<BankAccountLogic> getBankAccounts() {
 		
-		return bankAccounts;
+		ArrayList<BankAccountLogic> visibles = new ArrayList<>();
+		
+		for (BankAccountLogic ba : bankAccounts) {
+			if (ba.isVisible()) {
+				visibles.add(ba);
+			}
+		}
+		
+		return visibles;
 	}
 	
 	
