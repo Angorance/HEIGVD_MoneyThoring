@@ -24,6 +24,8 @@ public interface IClientRepository {
 
     public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException;
 
+    public boolean isActivated(String usernameOrEmail, String password) throws DALException;
+    
     public String retriveSaltByUserLogin(String usernameOrEmail) throws DALException;
 
 }
