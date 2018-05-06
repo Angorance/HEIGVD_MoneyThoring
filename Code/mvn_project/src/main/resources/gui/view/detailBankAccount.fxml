@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXNodesList?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -44,6 +45,7 @@
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <JFXNodesList fx:id="nodeList" layoutX="665.0" layoutY="14.0" />
          </children></AnchorPane>
       <Label fx:id="name" alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="40.0" prefWidth="630.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
          <font>

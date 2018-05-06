@@ -258,7 +258,6 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		transactionButton = new JFXButton("+");
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		//transactionButton.setStyle("-fx-background-color: green");
 		transactionButton.getStyleClass().addAll("animated-option-button", "animated-option-sub-button2");
 		outGoButton = new JFXButton("Dep");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
