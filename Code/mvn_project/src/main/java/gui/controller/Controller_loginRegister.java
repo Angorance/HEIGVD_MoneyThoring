@@ -81,6 +81,7 @@ public class Controller_loginRegister implements Initializable {
 	@FXML private TextField register_email;
 	@FXML private PasswordField register_password;
 	@FXML private PasswordField register_confirmPassword;
+	@FXML private Label register_message;
 	
 	/**
 	 * Event on the button register
@@ -120,7 +121,9 @@ public class Controller_loginRegister implements Initializable {
 		/*If all is correcte we create a new client and load the main frame*/
 		if (check) {
 			ClientLogic.getInstance().setClient(email, username, password);
-			//TODO - say to the user that the account was created
+			register_message.setText("Le compte a été enregisté");
+			register_message.setTextFill(Color.GREEN);
+			register_message.setStyle("-fx-border-color: green");
 		}
 	}
 	
@@ -132,6 +135,7 @@ public class Controller_loginRegister implements Initializable {
 			confirm_incorrect.setTextFill(Color.RED);
 		}*/
 	}
+	
 	/**
 	 * Closing the window
 	 */
@@ -159,6 +163,7 @@ public class Controller_loginRegister implements Initializable {
 		confirm_Button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				confirmButton();
 			}
 		});
