@@ -128,13 +128,14 @@ public class BankAccountLogic extends BankAccountModel {
 	 * @param amount
 	 * @param isDefault
 	 */
-	public void update(String name, String bankName, String type, double amount, boolean isDefault) {
+	public void update(String name, String bankName, String type, double amount,
+			boolean isDefault) {
 		
 		setName(name);
 		setType(type);
 		setBankName(bankName);
 		setAmount(amount);
-		setDefault(isDefault);
+		changeDefault(isDefault);
 		
 		updateBankAccount(new PgORM());
 	}
