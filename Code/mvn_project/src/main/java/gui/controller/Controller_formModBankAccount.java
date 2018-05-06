@@ -51,12 +51,6 @@ public class Controller_formModBankAccount implements Initializable,IForm {
 	@FXML @Override public void formValidation(ActionEvent event) {
 		
 		if (checkValidInput()) {
-			nameAccount.setText(bal.getName());
-			nameBankAccount.setText(bal.getName());
-			amount.setText(String.valueOf(bal.getAmount()));
-			typeAccount.getSelectionModel().select(bal.getType());
-			defaultAccount.setSelected(bal.isDefault());
-			
 			String name = nameAccount.getText();
 			String nameBankAccount = nameAccount.getText();
 			double amountDouble = Double.parseDouble(amount.getText());

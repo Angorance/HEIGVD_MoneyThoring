@@ -38,7 +38,6 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 * @param event
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
-		
 		cba.formReturn(null);
 	}
 	

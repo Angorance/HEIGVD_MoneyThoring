@@ -100,14 +100,13 @@ public class Controller_bankAccount implements Initializable, IController {
 	
 	/*Methode who create a AccountDisplayer and formReturn to the frame*/
 	public void formReturn(Object bal) {
-		
-		paneform.getChildren().clear();
+		/*paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
-		if (bal != null) {
+		if (bal != null) {*/
 			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
-		}
+		//}
 	}
 	
 	/*Add an AccountDisplayer to the frame*/
