@@ -1,6 +1,6 @@
 package bll.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author Daniel Gonzalez Lopez

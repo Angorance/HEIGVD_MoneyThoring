@@ -28,10 +28,9 @@ public class DALRecurrenceMapper {
 		// Create the PostgreSQL recurrence
 		RecurrencePgEntity pgEntity = new RecurrencePgEntity();
 		
-		//TODO - fix
 		pgEntity.setId(model.getId());
 		pgEntity.setGap(model.getGap());
-		//pgEntity.setNextdate(model.getNextDate());
+		pgEntity.setNextdate(model.getNextDate());
 		pgEntity.setIotransactionId(model.getTransactionID());
 		
 		return pgEntity;
@@ -49,10 +48,9 @@ public class DALRecurrenceMapper {
 		// Create the Derby recurrence
 		RecurrenceDeEntity derbyEntity = new RecurrenceDeEntity();
 		
-		//TODO - fix
 		derbyEntity.setId(model.getId());
 		derbyEntity.setGap(model.getGap());
-		//derbyEntity.setNextdate(model.getNextDate());
+		derbyEntity.setNextdate(model.getNextDate());
 		derbyEntity.setIotransactionId(model.getTransactionID());
 		
 		return derbyEntity;
@@ -70,10 +68,9 @@ public class DALRecurrenceMapper {
 		// Create the recurrence
 		RecurrenceLogic object = new RecurrenceLogic();
 		
-		//TODO - fix
 		object.setId(entity.getId());
 		object.setGap(entity.getGap());
-		//object.setNextDate(entity.getNextdate());
+		object.setNextDate(entity.getNextdate());
 		object.setTransactionID(entity.getIotransactionId());
 		
 		return object;
