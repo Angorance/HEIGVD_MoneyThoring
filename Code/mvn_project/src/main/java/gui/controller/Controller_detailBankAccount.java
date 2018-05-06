@@ -90,8 +90,8 @@ public class Controller_detailBankAccount implements Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
-		image.setFitHeight(25);
-		image.setFitHeight(25);
+		image.setFitWidth(48);
+		image.setFitHeight(36);
 		returnButton.setGraphic(image);
 		
 		generateNodeList();
