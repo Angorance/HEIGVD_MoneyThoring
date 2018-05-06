@@ -9,6 +9,8 @@ public interface IBudgetRepository {
     public IDALBudgetEntity getBudget(int id) throws DALException;
 
     public List<IDALBudgetEntity> getBudgets() throws DALException;
+    
+    public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException;
 
     public void update(IDALBudgetEntity Budget) throws DALException;
 
