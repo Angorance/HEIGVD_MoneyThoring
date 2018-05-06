@@ -30,7 +30,7 @@
     -fx-background-color: #d9dde2;
 }
 
-.animated-option-button{
+.transaction-animate-button{
     -fx-pref-width: 50px;
     -fx-background-color: #44b449;
     -fx-background-radius: 50px;
@@ -40,19 +40,15 @@
     -fx-border-width: 4px;
 }
 
-.animated-option-sub-button{
-    -fx-background-color: #43609C;
-}
-
-.animated-option-sub-button2{
+.transaction-animate-button-sub{
     -fx-background-color: #3a9b4b;
 }
 
-.animated-option-sub-button3{
+.transaction-animate-button-sub-2{
     -fx-background-color: RED;
 }
 
-.transaction-button{
+.preference-button{
     -fx-pref-width: 30px;
     -fx-background-color: #44b449;
     -fx-background-radius: 30px;
@@ -62,7 +58,7 @@
     -fx-border-width: 4px;
 }
 
-.transaction-button-sub{
+.preference-button-sub{
     -fx-background-color: red;
 }
 

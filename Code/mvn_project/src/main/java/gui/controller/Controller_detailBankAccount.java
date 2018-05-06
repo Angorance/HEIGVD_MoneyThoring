@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class Controller_detailBankAccount implements Initializable {
 	
-	Controller_bankAccount cba;
+	
 	@FXML private Label name;
 	@FXML private Label nameBankAccount;
 	@FXML private Label typeBankAccount;
@@ -39,7 +40,8 @@ public class Controller_detailBankAccount implements Initializable {
 	private JFXButton modifyButton;
 	private JFXButton removeButton;
 	
-	BankAccountLogic bal;
+	private Controller_bankAccount cba;
+	private BankAccountLogic bal;
 	
 	/**
 	 * Constructor of our controller
@@ -61,23 +63,32 @@ public class Controller_detailBankAccount implements Initializable {
 	private void generateNodeList() {
 		
 		preferenceButton = new JFXButton();
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
-		preferenceButton.setGraphic(image);
 		preferenceButton.setButtonType(JFXButton.ButtonType.RAISED);
-		
 		modifyButton = new JFXButton("M");
 		modifyButton.setButtonType(JFXButton.ButtonType.RAISED);
-		modifyButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		modifyButton.getStyleClass().addAll("preference-button", "preference-button-sub");
 		removeButton = new JFXButton("X");
 		removeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		removeButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		removeButton.getStyleClass().addAll("preference-button", "preference-button-sub");
 		
 		nodelist.addAnimatedNode(preferenceButton);
 		nodelist.addAnimatedNode(modifyButton);
 		nodelist.addAnimatedNode(removeButton);
 		nodelist.setSpacing(5d);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		preferenceButton.setGraphic(image);
+	}
+	
+	private void removeBankAccount(){
+		bal.supp();
+		cba.initialize(null,null);
+	}
+	
+	private void modifyBankAccount(){
+	
 	}
 	
 	/**
@@ -90,9 +101,11 @@ public class Controller_detailBankAccount implements Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
-		image.setFitHeight(48);
+		image.setFitWidth(48);
 		image.setFitHeight(36);
 		returnButton.setGraphic(image);
+		
+		generateNodeList();
 		/*Set the name of the account*/
 		name.setText(bal.getName());
 		
@@ -129,6 +142,20 @@ public class Controller_detailBankAccount implements Initializable {
 		}
 		
 		lineChart.getData().addAll(series);
+		
+		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				modifyBankAccount();
+			}
+		});
+		
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				removeBankAccount();
+			}
+		});
 		
 		returnButton.setOnAction(new EventHandler<ActionEvent>() {
 			
