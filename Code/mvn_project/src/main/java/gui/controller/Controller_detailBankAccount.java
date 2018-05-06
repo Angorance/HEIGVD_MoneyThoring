@@ -61,23 +61,23 @@ public class Controller_detailBankAccount implements Initializable {
 	private void generateNodeList() {
 		
 		preferenceButton = new JFXButton();
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
-		preferenceButton.setGraphic(image);
 		preferenceButton.setButtonType(JFXButton.ButtonType.RAISED);
-		
 		modifyButton = new JFXButton("M");
 		modifyButton.setButtonType(JFXButton.ButtonType.RAISED);
-		modifyButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		modifyButton.getStyleClass().addAll("preference-button", "preference-button-sub");
 		removeButton = new JFXButton("X");
 		removeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		removeButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		removeButton.getStyleClass().addAll("preference-button", "preference-button-sub");
 		
 		nodelist.addAnimatedNode(preferenceButton);
 		nodelist.addAnimatedNode(modifyButton);
 		nodelist.addAnimatedNode(removeButton);
 		nodelist.setSpacing(5d);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		preferenceButton.setGraphic(image);
 	}
 	
 	/**
@@ -90,9 +90,11 @@ public class Controller_detailBankAccount implements Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
-		image.setFitHeight(48);
-		image.setFitHeight(36);
+		image.setFitHeight(25);
+		image.setFitHeight(25);
 		returnButton.setGraphic(image);
+		
+		generateNodeList();
 		/*Set the name of the account*/
 		name.setText(bal.getName());
 		
