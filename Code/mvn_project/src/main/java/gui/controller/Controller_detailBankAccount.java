@@ -2,6 +2,7 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
@@ -31,9 +33,12 @@ public class Controller_detailBankAccount implements Initializable {
 	@FXML private CategoryAxis axeX;
 	@FXML private NumberAxis axeY;
 	@FXML private JFXButton returnButton;
+	@FXML private JFXNodesList nodelist;
 	
+	private JFXButton preferenceButton;
+	private JFXButton modifyButton;
+	private JFXButton removeButton;
 	
-	private JFXButton preference;
 	BankAccountLogic bal;
 	
 	/**
@@ -53,6 +58,28 @@ public class Controller_detailBankAccount implements Initializable {
 		cba.formReturn(null);
 	}
 	
+	private void generateNodeList() {
+		
+		preferenceButton = new JFXButton();
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		preferenceButton.setGraphic(image);
+		preferenceButton.setButtonType(JFXButton.ButtonType.RAISED);
+		
+		modifyButton = new JFXButton("M");
+		modifyButton.setButtonType(JFXButton.ButtonType.RAISED);
+		modifyButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		removeButton = new JFXButton("X");
+		removeButton.setButtonType(JFXButton.ButtonType.RAISED);
+		removeButton.getStyleClass().addAll("transaction-button", "transaction-button-sub");
+		
+		nodelist.addAnimatedNode(preferenceButton);
+		nodelist.addAnimatedNode(modifyButton);
+		nodelist.addAnimatedNode(removeButton);
+		nodelist.setSpacing(5d);
+	}
+	
 	/**
 	 * Called to initialize a controller after its root element has been completely processed.
 	 *
@@ -62,7 +89,10 @@ public class Controller_detailBankAccount implements Initializable {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		Button b = new Button("1",new ImageView("C:\\Users\\Asus\\Desktop\\Preferences-icon.png"));
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
+		image.setFitHeight(48);
+		image.setFitHeight(36);
+		returnButton.setGraphic(image);
 		/*Set the name of the account*/
 		name.setText(bal.getName());
 		
@@ -74,7 +104,8 @@ public class Controller_detailBankAccount implements Initializable {
 		
 		//if the list of transaction is not empty, we get the last transaction date
 		if (!bal.getTransactions().isEmpty()) {
-			dateLastTransaction.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate());
+			dateLastTransaction
+					.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
 		}
 		
 		/*Change the color if the amount is bigger or lesser than 0*/

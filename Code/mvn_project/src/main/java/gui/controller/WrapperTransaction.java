@@ -17,7 +17,7 @@ public class WrapperTransaction extends RecursiveTreeObject<WrapperTransaction> 
         this.amount = new SimpleStringProperty(String.valueOf(transaction.getAmount()));
         this.name = new SimpleStringProperty(transaction.getName());
         this.description = new SimpleStringProperty(transaction.getDescription());
-        this.date = new SimpleStringProperty(transaction.getDate());
+        this.date = new SimpleStringProperty(transaction.getDate().toString());
         this.currency = new SimpleStringProperty(transaction.getCurrency());
     }
 }

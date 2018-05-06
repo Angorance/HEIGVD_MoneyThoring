@@ -34,7 +34,7 @@ public class DALDebtMapper {
 		pgEntity.setDescription(model.getDescription());
 		pgEntity.setAmount(model.getAmount());
 		pgEntity.setIsincome(model.isIncome());
-		//pgEntity.setExpirationdate(model.getExpirationDate());
+		pgEntity.setExpirationdate(model.getExpirationDate());
 		pgEntity.setClientId(model.getCreatorID());             //TODO - INT?
 		pgEntity.setClientId1(model.getContributorID());        //TODO - INTEGER??
 		
@@ -59,7 +59,7 @@ public class DALDebtMapper {
 		derbyEntity.setDescription(model.getDescription());
 		derbyEntity.setAmount(model.getAmount());
 		derbyEntity.setIsincome(model.isIncome());
-		//derbyEntity.setExpirationdate(model.getExpirationDate());
+		derbyEntity.setExpirationdate(model.getExpirationDate());
 		derbyEntity.setClientId(model.getCreatorID());             //TODO - INT?
 		derbyEntity.setClientId1(model.getContributorID());        //TODO - INTEGER??
 		

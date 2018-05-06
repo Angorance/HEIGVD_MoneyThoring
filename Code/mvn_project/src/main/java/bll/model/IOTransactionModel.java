@@ -4,6 +4,8 @@ import bll.mappers.DAL.DALIOTransactionMapper;
 import dal.irepositories.IIotransactionRepository;
 import dal.orm.IORM;
 
+import java.sql.Date;
+
 /**
  * IOTransactionModel class.
  * Allows the mapping between the DAL entities and the Business Logic.
@@ -23,7 +25,7 @@ public class IOTransactionModel {
 	
 	private String name;
 	private String description;
-	private String date;
+	private Date date;
 	private String currency;
 	
 	private boolean isIncome;
@@ -44,7 +46,7 @@ public class IOTransactionModel {
 	 * @param isIncome Flag to know if it is an income.
 	 */
 	public IOTransactionModel(double amount, String name, String description,
-			String date, String currency, boolean isIncome) {
+			Date date, String currency, boolean isIncome) {
 		
 		this.amount = amount;
 		this.name = name;
@@ -145,7 +147,7 @@ public class IOTransactionModel {
 	 *
 	 * @return Date of the transaction.
 	 */
-	public String getDate() {
+	public Date getDate() {
 		
 		return date;
 	}
@@ -249,7 +251,7 @@ public class IOTransactionModel {
 	 *
 	 * @param date New date of the transaction.
 	 */
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		
 		this.date = date;
 	}

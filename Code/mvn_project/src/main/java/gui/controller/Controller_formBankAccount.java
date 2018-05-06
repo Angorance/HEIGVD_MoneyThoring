@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
     @FXML
     private JFXTextField amount;
     @FXML
-    private JFXComboBox<?> typeAccount;
+    private JFXComboBox<String> typeAccount;
     @FXML
     private JFXButton returnButton;
     @FXML
@@ -68,7 +70,14 @@ public class Controller_formBankAccount implements Initializable, IForm {
         // on vérifie tous les champs, s'ils sont erronés on les mets en rouge
         return true;
     }
-
+    
+    private void generateComboBoxItem() {
+        
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Compte d'épargne", "Compte courant");
+        typeAccount.setItems(items);
+        typeAccount.getSelectionModel().selectFirst();
+    }
     /**
      * Called to initialize a controller after its root element has been completely processed.
      *
@@ -77,6 +86,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        generateComboBoxItem();
         accepteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
