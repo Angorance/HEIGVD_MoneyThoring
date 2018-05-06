@@ -3,25 +3,30 @@ package gui.controller;
 import bll.logic.ClientLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import gui.model.mainFrame;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static bll.logic.Authentication.*;
 
 /**
  * Controller of the view loginRegister
  */
-public class Controller_loginRegister {
+public class Controller_loginRegister implements Initializable {
     
     @FXML private TextField login_email;
     @FXML private PasswordField login_password;
     @FXML private Label login_incorrect;
+    @FXML private AnchorPane paneSpinner;
     
     
     /**
@@ -29,12 +34,13 @@ public class Controller_loginRegister {
      * @param actionEvent
      * @throws IOException
      */
-    @FXML public void clickLoginButton(ActionEvent actionEvent) throws IOException {
+    @FXML public void clickLoginButton(ActionEvent actionEvent) {
         
         /*Retrieving text input*/
         String email = login_email.getText();
         String password = login_password.getText();
-        
+
+        // TODO lancer le connect dans un thread, faire apparaitre le paneSpinner en attendant, un fois le thread terminé on fait disparaire paneSpinner
         /*Retrieving the status of the login method*/
         boolean status = connect(email,password);
 
@@ -110,5 +116,13 @@ public class Controller_loginRegister {
     public void loadMainFrame(){
         closeStage();
         mainFrame mf = new mainFrame();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        paneSpinner.setVisible(false);
+        paneSpinner.setMouseTransparent(true);
+        login_password.setOnAction(this::clickLoginButton);
+        register_confirmPassword.setOnAction(this::clickRegisterButton);
     }
 }
