@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXNodesList?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -13,7 +14,7 @@
 
 <AnchorPane prefHeight="653.0" prefWidth="729.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="a" layoutX="25.0" layoutY="90.0" prefHeight="140.0" prefWidth="680.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <AnchorPane layoutX="25.0" layoutY="90.0" prefHeight="140.0" prefWidth="680.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <children>
             <Label layoutX="403.0" layoutY="14.0" text="Solde Actuel" AnchorPane.rightAnchor="140.0">
                <font>
@@ -44,7 +45,7 @@
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <JFXButton fx:id="preference" layoutX="613.0" layoutY="13.0" ripplerFill="BLACK" text="Button" />
+            <JFXNodesList fx:id="nodeList" layoutX="665.0" layoutY="14.0" />
          </children></AnchorPane>
       <Label fx:id="name" alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="40.0" prefWidth="630.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
          <font>
