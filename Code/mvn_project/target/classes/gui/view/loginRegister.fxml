@@ -15,14 +15,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="400.0" prefWidth="650.0" styleClass="pane" stylesheets="@../css/connexion.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_loginRegister">
+<Pane prefHeight="455.0" prefWidth="650.0" styleClass="pane" stylesheets="@../css/connexion.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_loginRegister">
    <children>
       <Label alignment="CENTER" prefWidth="650.0" text="Bienvenue sur MoneyThoring">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <GridPane layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="300.0" styleClass="grid-pane">
+      <GridPane layoutX="20.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -57,7 +57,6 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXPasswordField>
-            <Hyperlink text="mot de passe oublié" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
             <JFXButton onAction="#clickLoginButton" prefHeight="25.0" prefWidth="250.0" text="Connexion" GridPane.columnSpan="2" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -71,12 +70,13 @@
             <DropShadow />
          </effect>
       </GridPane>
-      <GridPane layoutX="336.0" layoutY="50.0" prefHeight="330.0" prefWidth="300.0" styleClass="grid-pane">
+      <GridPane fx:id="login_GridPane" layoutX="336.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="60.0" />
             <RowConstraints minHeight="10.0" prefHeight="60.0" />
             <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="BOTTOM" />
             <RowConstraints />
@@ -91,31 +91,75 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="register_username" promptText="Nom d'utilisateur" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <JFXTextField fx:id="register_username" promptText="Nom d'utilisateur" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXTextField>
-            <JFXTextField fx:id="register_email" promptText="Email" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <JFXTextField fx:id="register_email" promptText="Email" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXTextField>
-            <JFXPasswordField fx:id="register_password" promptText="Mot de passe" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <JFXPasswordField fx:id="register_password" promptText="Mot de passe" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXPasswordField>
-            <JFXPasswordField fx:id="register_confirmPassword" promptText="Confirmer mot de passe" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <JFXPasswordField fx:id="register_confirmPassword" promptText="Confirmer mot de passe" unFocusColor="#9e9e9e" GridPane.columnSpan="2" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </JFXPasswordField>
-            <JFXButton onAction="#clickRegisterButton" prefHeight="25.0" prefWidth="250.0" text="S'inscrire" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <JFXButton onAction="#clickRegisterButton" prefHeight="25.0" prefWidth="250.0" text="S'inscrire" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </GridPane.margin>
             </JFXButton>
+            <Label fx:id="register_message" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="250.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+         <effect>
+            <DropShadow />
+         </effect>
+      </GridPane>
+      <GridPane fx:id="login_Code" layoutX="25.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane" visible="false">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="60.0" />
+            <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="BOTTOM" />
+            <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="BOTTOM" />
+            <RowConstraints minHeight="10.0" prefHeight="60.0" />
+            <RowConstraints minHeight="10.0" prefHeight="100.0" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="270.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="confirm_incorrect" contentDisplay="CENTER" prefHeight="40.0" prefWidth="250.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="confirm_Button" onAction="#clickLoginButton" prefHeight="25.0" prefWidth="250.0" text="Confirmer" GridPane.columnSpan="2" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXTextField fx:id="confirm_textField" alignment="CENTER" prefWidth="250.0" promptText="Code de confirmation" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Hyperlink text="Renvoie du code" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
          </children>
          <padding>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

@@ -82,7 +82,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formBankAccount cba = new Controller_formBankAccount(this);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this,null);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -100,13 +100,21 @@ public class Controller_bankAccount implements Initializable, IController {
 	
 	/*Methode who create a AccountDisplayer and formReturn to the frame*/
 	public void formReturn(Object bal) {
-		/*paneform.getChildren().clear();
+		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
-		if (bal != null) {*/
+		if (bal != null) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
-		//}
+		}
+	}
+	
+	@Override public void deleteItem(Object toDelete) {
+		//TODO
+	}
+	
+	@Override public void modifyItem(Object toUpdated) {
+		//TODO
 	}
 	
 	/*Add an AccountDisplayer to the frame*/

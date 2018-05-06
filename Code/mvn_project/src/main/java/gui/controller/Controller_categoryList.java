@@ -113,8 +113,16 @@ public class Controller_categoryList implements Initializable, IController {
             listContainer.getChildren().add(new CategoryDisplayer((CategoryLogic)result));
         }
     }
-
-
+    
+    @Override public void deleteItem(Object toDelete) {
+    
+    }
+    
+    @Override public void modifyItem(Object toUpdated) {
+    
+    }
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // #5ACCF2
