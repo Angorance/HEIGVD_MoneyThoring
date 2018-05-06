@@ -1,9 +1,11 @@
 package bll.logic;
 
 import bll.mappers.DAL.DALBankaccountMapper;
+import bll.mappers.DAL.DALBudgetMapper;
 import bll.mappers.DAL.DALCategoryMapper;
 import bll.model.ClientModel;
 import dal.ientites.IDALBankaccountEntity;
+import dal.ientites.IDALBudgetEntity;
 import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
@@ -26,6 +28,7 @@ public class ClientLogic extends ClientModel {
 	
 	private ArrayList<BankAccountLogic> bankAccounts = new ArrayList<>();
 	private ArrayList<CategoryLogic> categories = new ArrayList<>();
+	private ArrayList<BudgetLogic> budgets = new ArrayList<>();
 	
 	
 	private ClientLogic() {}
@@ -186,6 +189,17 @@ public class ClientLogic extends ClientModel {
 		ca.setClientId(getId());
 	}
 	
+	/**
+	 * TODO
+	 *
+	 * @param bu
+	 */
+	public void addBudget(BudgetLogic bu) {
+		
+		budgets.add(bu);
+		bu.setClientID(getId());
+	}
+	
 	
 	// SUPPRESSORS
 	
@@ -211,8 +225,12 @@ public class ClientLogic extends ClientModel {
 			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
 					.getCategoriesByClientId(getId());
 			
+			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
+					.getBudgetsByClient(getId());
+			
 			DALBankaccountMapper.toBos(ba);
 			DALCategoryMapper.toBos(cat);
+			DALBudgetMapper.toBos(bu);
 			
 		} catch (Exception e) {
 			System.out.println(e);
