@@ -16,7 +16,7 @@
    <children>
       <AnchorPane layoutX="25.0" layoutY="90.0" prefHeight="140.0" prefWidth="680.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <children>
-            <JFXNodesList fx:id="nodelist" layoutX="664.0" layoutY="14.0" />
+            <JFXNodesList fx:id="nodelist" layoutX="664.0" layoutY="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
             <Label layoutX="403.0" layoutY="14.0" text="Solde Actuel" AnchorPane.rightAnchor="140.0">
                <font>
                   <Font size="24.0" />
