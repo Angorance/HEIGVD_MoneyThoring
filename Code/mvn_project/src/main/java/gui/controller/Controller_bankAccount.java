@@ -77,6 +77,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * Event on the create button that will load the account creation page
 	 */
 	public void callform() {
+		
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
@@ -123,6 +124,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * @param bal TODO
 	 */
 	private void detailBankAccount(BankAccountLogic bal) {
+		
 		/* we load the detailBankAccount fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/detailBankAccount.fxml"));
 		
@@ -151,6 +153,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
 		//Remove all children from FlowPane container (frame_bankAccount)
 		frame_bankAccount.getChildren().clear();
 		paneform.setVisible(false);
@@ -158,8 +161,8 @@ public class Controller_bankAccount implements Initializable, IController {
 		
 		//Go through the list of bank accounts and formReturn it to our frame
 		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
-				AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
-				addToFrame(accountDisplayer);
+			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+			addToFrame(accountDisplayer);
 		}
 		
 		/*Add event at our button*/
