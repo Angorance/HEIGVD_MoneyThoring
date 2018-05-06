@@ -90,6 +90,7 @@ public class BankAccountLogic extends BankAccountModel {
 	public void supp() {
 		
 		setVisible(false);
+		updateBankAccount(new PgORM());
 	}
 	
 	/**
