@@ -1,10 +1,15 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALBankaccountMapper;
+import bll.mappers.DAL.DALCategoryMapper;
 import bll.model.ClientModel;
+import dal.ientites.IDALBankaccountEntity;
+import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -70,7 +75,9 @@ public class ClientLogic extends ClientModel {
 	}
 	
 	
-	public void connectedUser(int id, String email, String username, String password) {
+	@Deprecated
+	public void connectedUser(int id, String email, String username,
+			String password) {
 		
 		setId(id);
 		setEmail(email);
@@ -78,7 +85,7 @@ public class ClientLogic extends ClientModel {
 		setPassword(password);
 		setKey("SYdjcvkbejbsl");
 		
-		setDataFromDB();
+		//setDataFromDB();
 	}
 	
 	// GETTERS
@@ -117,10 +124,12 @@ public class ClientLogic extends ClientModel {
 	
 	/**
 	 * Change the username of the client by the new one given in parameter.
-	 * Before setting the new username, setUsername() verifies it is not already
+	 * Before setting the new username, setUsername() verifies it is not
+	 * already
 	 * being used by another client.
 	 *
-	 * TODO - Logic works if online. If not, when synchronising, formReturn random number ?
+	 * TODO - Logic works if online. If not, when synchronising, formReturn
+	 * random number ?
 	 *
 	 * @param username New username to set.
 	 *
@@ -188,17 +197,14 @@ public class ClientLogic extends ClientModel {
 			
 			orm.beginTransaction();
 			
-			/* FIXME - IDALBankaccountEntity[] bankaccounts = orm.getBankaccountRepository().getBankaccounts(getId());
+			List<IDALBankaccountEntity> ba = orm.getBankaccountRepository()
+					.getBankAccoutsByClient(getId());
 			
-			for (IDALBankaccountEntity bae : bankaccounts) {
-				new BankAccountLogic(bae);
-			}
+			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
+					.getCategoriesByClientId(getId());
 			
-			// FIXME - IDALCategoryEntity[] categories = orm.getCategoryRepository().getCategories(getId());
-			
-			for (IDALCategoryEntity cat : categories) {
-				new CategoryLogic(cat);
-			}*/
+			DALBankaccountMapper.toBos(ba);
+			DALCategoryMapper.toBos(cat);
 			
 		} catch (Exception e) {
 			System.out.println(e);
