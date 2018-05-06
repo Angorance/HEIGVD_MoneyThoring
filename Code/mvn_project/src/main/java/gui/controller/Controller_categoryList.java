@@ -22,14 +22,14 @@ import java.util.ResourceBundle;
 /**
  * Controller for the category list view
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.3
  */
 public class Controller_categoryList implements Initializable, IController {
     @FXML private FlowPane listContainer;
     @FXML private JFXButton btnAdd;
     @FXML private AnchorPane formPane;
 
-    private HashMap<String, CategoryDisplayer> displayerList;
+    private HashMap<Integer, CategoryDisplayer> displayerList;
 
     /**
      * Class that wrap a category into a graphic element
@@ -131,7 +131,7 @@ public class Controller_categoryList implements Initializable, IController {
     public void modifyItem(String oldKey, Object updated) {
         unloadform();
         CategoryLogic c = (CategoryLogic) updated;
-        displayerList.get(c.getName()).redraw();
+        displayerList.get(c.getId());
         // TODO update in the DB
     }
 
@@ -170,10 +170,14 @@ public class Controller_categoryList implements Initializable, IController {
         // TODO list the existing categories
 
         // sample category
-        CategoryDisplayer d = new CategoryDisplayer(new CategoryLogic("Nourriture", "#20B4E6", false));
+        CategoryLogic c = new CategoryLogic("Nourriture", "#20B4E6", false);
+        c.setId(1);
+        CategoryDisplayer d = new CategoryDisplayer(c);
         displayerList.put("Nourriture", d);
         listContainer.getChildren().add(d);
-        d = new CategoryDisplayer(new CategoryLogic("Technologie", "#8D18D6", false));
+        c = new CategoryLogic("Technologie", "#8D18D6", false);
+        c.setId(2);
+        d = new CategoryDisplayer(c);
         displayerList.put("Technologie", d);
         listContainer.getChildren().add(d);
     }
