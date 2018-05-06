@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class Controller_detailBankAccount implements Initializable {
 	
-	Controller_bankAccount cba;
+	
 	@FXML private Label name;
 	@FXML private Label nameBankAccount;
 	@FXML private Label typeBankAccount;
@@ -39,7 +40,8 @@ public class Controller_detailBankAccount implements Initializable {
 	private JFXButton modifyButton;
 	private JFXButton removeButton;
 	
-	BankAccountLogic bal;
+	private Controller_bankAccount cba;
+	private BankAccountLogic bal;
 	
 	/**
 	 * Constructor of our controller
@@ -78,6 +80,15 @@ public class Controller_detailBankAccount implements Initializable {
 		image.setFitWidth(25);
 		image.setFitHeight(25);
 		preferenceButton.setGraphic(image);
+	}
+	
+	private void removeBankAccount(){
+		bal.supp();
+		cba.initialize(null,null);
+	}
+	
+	private void modifyBankAccount(){
+	
 	}
 	
 	/**
@@ -131,6 +142,20 @@ public class Controller_detailBankAccount implements Initializable {
 		}
 		
 		lineChart.getData().addAll(series);
+		
+		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				modifyBankAccount();
+			}
+		});
+		
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				removeBankAccount();
+			}
+		});
 		
 		returnButton.setOnAction(new EventHandler<ActionEvent>() {
 			

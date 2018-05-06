@@ -158,8 +158,10 @@ public class Controller_bankAccount implements Initializable, IController {
 		
 		//Go through the list of bank accounts and formReturn it to our frame
 		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
-			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
-			addToFrame(accountDisplayer);
+			if(bankAccount.isVisible()) {
+				AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+				addToFrame(accountDisplayer);
+			}
 		}
 		
 		/*Add event at our button*/
