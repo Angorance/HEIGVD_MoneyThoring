@@ -61,5 +61,6 @@
           <NumberAxis fx:id="axeY" label="montant [CHF]" side="LEFT" />
         </yAxis>
       </LineChart>
+      <AnchorPane fx:id="paneform" prefHeight="653.0" prefWidth="729.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

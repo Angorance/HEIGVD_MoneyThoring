@@ -15,8 +15,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller_formBankAccount implements Initializable, IForm {
-	
+public class Controller_formModBankAccount implements Initializable,IForm {
 	@FXML private JFXTextField nameAccount;
 	@FXML private JFXTextField nameBankAccount;
 	@FXML private JFXTextField amount;
@@ -25,12 +24,14 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	@FXML private JFXButton accepteButton;
 	@FXML private JFXCheckBox defaultAccount;
 	
-	private IController cba;
+	Controller_detailBankAccount cdb;
+	BankAccountLogic bal;
 	
-	public Controller_formBankAccount(IController cba) {
-		
-		this.cba = cba;
+	Controller_formModBankAccount(Controller_detailBankAccount cdb, BankAccountLogic bal){
+		this.cdb = cdb;
+		this.bal = bal;
 	}
+	
 	
 	/**
 	 * Return to the previous window
@@ -39,7 +40,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
 		
-		cba.formReturn(null);
+		cdb.formReturn(null);
 	}
 	
 	/**
@@ -50,13 +51,19 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	@FXML @Override public void formValidation(ActionEvent event) {
 		
 		if (checkValidInput()) {
+			nameAccount.setText(bal.getName());
+			nameBankAccount.setText(bal.getName());
+			amount.setText(String.valueOf(bal.getAmount()));
+			typeAccount.getSelectionModel().select(bal.getType());
+			defaultAccount.setSelected(bal.isDefault());
+			
 			String name = nameAccount.getText();
-			String bankName = nameBankAccount.getText();
-			String type = (String) typeAccount.getValue();
-			Double amountDouble = Double.parseDouble(amount.getText());
-			BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, defaultAccount.isSelected(),
-					0);
-			cba.formReturn(ba);
+			String nameBankAccount = nameAccount.getText();
+			double amountDouble = Double.parseDouble(amount.getText());
+			String type = typeAccount.getValue();
+			boolean isDefault = defaultAccount.isSelected();
+			cdb.modify(name, nameBankAccount,type,amountDouble,isDefault);
+			cdb.formReturn(null);
 		}
 	}
 	
@@ -83,6 +90,13 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		generateComboBoxItem();
+		
+		nameAccount.setText(bal.getName());
+		nameBankAccount.setText(bal.getName());
+		amount.setText(String.valueOf(bal.getAmount()));
+		typeAccount.getSelectionModel().select(bal.getType());
+		defaultAccount.setSelected(bal.isDefault());
+		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
