@@ -97,7 +97,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formModBankAccount cba = new Controller_formModBankAccount(this,bal);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this,bal);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -112,18 +112,22 @@ public class Controller_detailBankAccount implements Initializable,IController {
 		}
 	}
 	
-	public void modify(String name,String nameBankAccount,String type,double amountDouble,boolean isDefault){
-		this.name.setText(name);
-		this.nameBankAccount.setText(nameBankAccount);
-		this.typeBankAccount.setText(type);
-		this.amountBankAccount.setText(String.valueOf(amountDouble));
-		bal.update(name, nameBankAccount,type,amountDouble,isDefault);
-	}
-	
 	@Override public void formReturn(Object result) {
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
+	}
+	
+	@Override public void deleteItem(Object toDelete) {
+	
+	}
+	
+	@Override public void modifyItem(Object toUpdated) {
+		BankAccountLogic bal = (BankAccountLogic)toUpdated;
+		this.name.setText(bal.getName());
+		this.nameBankAccount.setText(bal.getBankName());
+		this.typeBankAccount.setText(bal.getType());
+		this.amountBankAccount.setText(String.valueOf(bal.getAmount()));
 	}
 	
 	/**

@@ -26,10 +26,12 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	@FXML private JFXCheckBox defaultAccount;
 	
 	private IController cba;
+	BankAccountLogic bal;
 	
-	public Controller_formBankAccount(IController cba) {
+	public Controller_formBankAccount(IController cba,BankAccountLogic bal) {
 		
 		this.cba = cba;
+		this.bal = bal;
 	}
 	
 	/**
@@ -53,9 +55,16 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			String bankName = nameBankAccount.getText();
 			String type = (String) typeAccount.getValue();
 			Double amountDouble = Double.parseDouble(amount.getText());
-			BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, defaultAccount.isSelected(),
-					0);
-			cba.formReturn(ba);
+			boolean isDefault = defaultAccount.isSelected();
+			if(bal == null) {
+				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault,
+						0);
+				cba.formReturn(ba);
+			}else{
+				bal.update(name, bankName,type,amountDouble,isDefault);
+				cba.modifyItem(bal);
+				cba.formReturn(null);
+			}
 		}
 	}
 	
@@ -82,6 +91,15 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		generateComboBoxItem();
+		
+		if(bal != null){
+			nameAccount.setText(bal.getName());
+			nameBankAccount.setText(bal.getName());
+			amount.setText(String.valueOf(bal.getAmount()));
+			typeAccount.getSelectionModel().select(bal.getType());
+			defaultAccount.setSelected(bal.isDefault());
+		}
+		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
