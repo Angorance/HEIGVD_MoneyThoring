@@ -60,8 +60,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 	}
 	
 	private void returnFrame() {
-		
-		cba.formReturn(null);
+		cba.initialize(null,null);
 	}
 	
 	private void generateNodeList() {
