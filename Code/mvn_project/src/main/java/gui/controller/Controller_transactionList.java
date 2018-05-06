@@ -221,7 +221,13 @@ public class Controller_transactionList implements Initializable, IController {
 			list[i] = new LinkedList<IOTransactionLogic>();
 			for (int j = 0; j < 10; ++j) {
 				int amount = 1000 + rdm.nextInt(25000) * (rdm.nextBoolean() ? -1 : 1);
-				list[i].add(new IOTransactionLogic(amount, "transaction" + i, "a", "10.10.2018", "CHF", null,
+				
+				String format = "10/10/2018";
+				java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+				java.util.Date date = new java.util.Date();
+				java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+				
+				list[i].add(new IOTransactionLogic(amount, "transaction" + i, "a", sqlDate, "CHF", null,
 						accountSelect.getValue()));
 			}
 		}

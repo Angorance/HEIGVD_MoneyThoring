@@ -2,6 +2,8 @@ package bll.logic;
 
 import bll.model.IOTransactionModel;
 
+import java.sql.Date;
+
 /**
  * TODO
  *
@@ -26,7 +28,7 @@ public class IOTransactionLogic extends IOTransactionModel {
      * @param bankAccount
      */
     public IOTransactionLogic(double amount, String name, String description,
-                              String date, String currency, CategoryLogic category,
+                              Date date, String currency, CategoryLogic category,
                               BankAccountLogic bankAccount) {
 
         super(amount, name, description, date, currency, (amount >= 0));
