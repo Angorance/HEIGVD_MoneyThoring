@@ -62,8 +62,19 @@ public class BudgetDeRepository implements IBudgetRepository {
         }
         return Budgets;
     }
-
-
+    
+    @Override public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException {
+    
+        List<IDALBudgetEntity> budgetEntities = null;
+        try {
+            budgetEntities = session.createQuery("from BudgetDeEntity where clientId = :clientid").setParameter("clientid",id).list();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return budgetEntities;
+    }
+    
+    
     public void update(IDALBudgetEntity Budget) throws DALException {
 
         BudgetDeEntity BudgetPg = null;

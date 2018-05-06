@@ -43,7 +43,7 @@ public class BankaccountDeRepository implements IBankaccountRepository {
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
         List<IDALBankaccountEntity> BankAccounts = null;
         try {
-            BankAccounts = session.createQuery("from BankAccountDeEntity").list();
+            BankAccounts = session.createQuery("from BankaccountDeEntity").list();
 
 
         } catch (Exception e) {
