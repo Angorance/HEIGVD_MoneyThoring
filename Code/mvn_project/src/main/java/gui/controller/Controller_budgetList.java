@@ -92,7 +92,8 @@ public class Controller_budgetList implements IController, Initializable {
 			lblcurrentExpense.setText("Dépenses actuelles : 999.99 CHF");
 			lblmaxExpense.setText("Plafond : 9999.99 CHF");
 			expenseProgress.setProgress(0.5);
-			
+			budgetPane.setMinHeight(130);
+
 			JFXDepthManager.setDepth(budgetPane, 1);
 			budgetPane.setOnMouseClicked(event -> openDetail());
 		}
@@ -128,7 +129,7 @@ public class Controller_budgetList implements IController, Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		// event on the click of the button
-		btnAdd.setOnAction(event -> formReturn(null));
+		btnAdd.setOnAction(event -> formReturn(null));//callform());
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		// we set the basics data

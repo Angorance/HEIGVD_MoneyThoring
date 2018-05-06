@@ -49,14 +49,14 @@ public class Controller_mainFrame implements Initializable {
 			
 			initLateralButton(box);
 			
-			HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
-			transition.setRate(-1);
+			//HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
+			//transition.setRate(-1);
 			drawer.setOnDrawerClosing(event -> {drawer.setMouseTransparent(true);});
 			drawer.setOnDrawerOpening(event -> drawer.setMouseTransparent(false));
 			burgerBtn.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-				transition.setRate(transition.getRate() * -1);
-				transition.play();
-				
+				//transition.setRate(transition.getRate() * -1);
+				//transition.play();
+
 				if (drawer.isShown()) {
 					drawer.close();
 					
@@ -83,6 +83,7 @@ public class Controller_mainFrame implements Initializable {
 			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 				try {
 					loadContent(Integer.valueOf(node.getAccessibleText()));
+					drawer.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -106,6 +107,7 @@ public class Controller_mainFrame implements Initializable {
 			case 0: // Dashboard
 				break;
 			case 1: // Budget
+				loader.setController(new Controller_budgetList());
 				break;
 			case 2: // Transactions
 				loader.setController(new Controller_transactionList());
