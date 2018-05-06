@@ -4,7 +4,6 @@ import bll.logic.BankAccountLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
-import bll.model.BankAccountModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
@@ -44,7 +43,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 * @param event
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
-		controller.formReturn(null);
+		controller.createItem(null);
 	}
 	
 	/**
@@ -80,7 +79,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 			String dateText = formater.format(date);
 			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "", dateText, "CHF", cl,
 					bal);
-			controller.formReturn(transaction);
+			controller.createItem(transaction);
 		}
 	}
 	

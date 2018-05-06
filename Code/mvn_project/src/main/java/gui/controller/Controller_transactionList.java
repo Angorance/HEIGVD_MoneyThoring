@@ -79,7 +79,7 @@ public class Controller_transactionList implements Initializable, IController {
 		}
 	}
 	
-	@Override public void formReturn(Object result) {
+	@Override public void createItem(Object result) {
 		paneform.getChildren().clear();
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
@@ -100,7 +100,7 @@ public class Controller_transactionList implements Initializable, IController {
 	 * @param updated
 	 */
 	@Override
-	public void modifyItem(Object updated) {
+	public void modifyItem(String oldKey, Object updated) {
 
 	}
 	

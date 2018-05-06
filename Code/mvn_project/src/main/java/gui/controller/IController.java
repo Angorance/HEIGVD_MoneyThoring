@@ -1,7 +1,9 @@
 package gui.controller;
 
+import java.awt.event.ActionEvent;
+
 public interface IController{
-    void formReturn(Object result);
+    void createItem(Object result);
     void deleteItem(Object toDelete);
-    void modifyItem(Object updated);
+    void modifyItem(String oldKey, Object updated);
 }
