@@ -140,7 +140,26 @@ public class ClientPgRepository implements IClientRepository {
 
         return client;
     }
-
+    
+    @Override public boolean isActivated(String usernameOrEmail, String password) throws DALException {
+    
+        ClientPgEntity client = null;
+        boolean isActivated = false;
+        
+        try {
+            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class)
+                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
+                            Restrictions.eq("username", usernameOrEmail)))).uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        if(client != null)
+            isActivated = client.getIsactivated();
+        
+        return isActivated;
+    }
+    
     @Override
     public String retriveSaltByUserLogin(String usernameOrEmail) throws DALException {
         ClientPgEntity client = null;
