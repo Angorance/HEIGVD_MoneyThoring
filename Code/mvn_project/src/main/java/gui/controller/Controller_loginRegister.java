@@ -71,7 +71,6 @@ public class Controller_loginRegister implements Initializable {
             /*} else {
                 login_GridPane.setVisible(false);
                 login_Code.setVisible(true);
-                //TODO - display the box to set the activation code and handle another special button
             }*/
 			
 		}
