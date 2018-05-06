@@ -88,7 +88,6 @@ public class Controller_detailBankAccount implements Initializable {
 	}
 	
 	private void modifyBankAccount(){
-	
 	}
 	
 	/**
