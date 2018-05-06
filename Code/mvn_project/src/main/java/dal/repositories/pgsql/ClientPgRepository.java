@@ -36,7 +36,7 @@ public class ClientPgRepository implements IClientRepository {
     }
 
     public void addClient(IDALClientEntity client) throws DALException {
-        System.out.println("session du repo " + session);
+        
         ClientPgEntity newClient = null;
         if (client.getClass() == ClientPgEntity.class)
             newClient = (ClientPgEntity) client;

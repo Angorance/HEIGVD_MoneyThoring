@@ -34,7 +34,7 @@ public class RecurrencePgRepository implements IRecurrenceRepository {
     }
 
     public void addRecurrence(IDALRecurrenceEntity Recurrence) throws DALException {
-        System.out.println("session du repo " + session);
+        
         RecurrencePgEntity newRecurrence = null;
         if (Recurrence.getClass() == RecurrencePgEntity.class)
             newRecurrence = (RecurrencePgEntity) Recurrence;
