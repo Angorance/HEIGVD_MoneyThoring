@@ -34,7 +34,7 @@ public class Controller_loginRegister implements Initializable {
      * @param actionEvent
      * @throws IOException
      */
-    @FXML public void clickLoginButton(ActionEvent actionEvent) throws IOException {
+    @FXML public void clickLoginButton(ActionEvent actionEvent) {
         
         /*Retrieving text input*/
         String email = login_email.getText();
@@ -122,5 +122,7 @@ public class Controller_loginRegister implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         paneSpinner.setVisible(false);
         paneSpinner.setMouseTransparent(true);
+        login_password.setOnAction(this::clickLoginButton);
+        register_confirmPassword.setOnAction(this::clickRegisterButton);
     }
 }
