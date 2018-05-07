@@ -39,6 +39,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	@FXML private JFXButton returnButton;
 	@FXML private JFXNodesList nodelist;
 	@FXML private AnchorPane paneform;
+	@FXML private Label default_label;
 	
 	private JFXButton preferenceButton;
 	private JFXButton modifyButton;
@@ -131,6 +132,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		this.nameBankAccount.setText(bal.getBankName());
 		this.typeBankAccount.setText(bal.getType());
 		this.amountBankAccount.setText(String.valueOf(bal.getAmount()));
+		default_label.setText(bal.isDefault() ? "Oui" : "Non");
 	}
 	
 	/**
@@ -175,6 +177,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		/*Set the amount of the bank account*/
 		amountBankAccount.setText(String.valueOf(bal.getAmount()) + " CHF");
+		default_label.setText(bal.isDefault() ? "Oui" : "Non");
 		
 		/*TODO mettre les données dans le graphique*/
 		/*TODO max min des valeur de l'axe Y*/

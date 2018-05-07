@@ -64,14 +64,14 @@ public class Controller_loginRegister implements Initializable {
 			//otherwise we load the main frame*/
 		} else {
 			boolean isActivated = ClientLogic.getInstance().getIsActivated();
-			if (isActivated) {
+			/*if (isActivated) {
 				/*Load dashboard*/
 				loadMainFrame();
 				
-			} else {
+			/*} else {
 				login_GridPane.setVisible(false);
 				login_Code.setVisible(true);
-			}
+			}*/
 			
 		}
 	}
