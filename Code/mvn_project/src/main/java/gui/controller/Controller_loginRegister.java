@@ -95,6 +95,11 @@ public class Controller_loginRegister implements Initializable {
 		String password = register_password.getText();
 		String confirmPassword = register_confirmPassword.getText();
 		
+		register_username.setStyle("-fx-text-fill: black;");
+		register_email.setStyle("-fx-text-fill: black;");
+		register_password.setStyle("-fx-text-fill: black;");
+		register_confirmPassword.setStyle("-fx-text-fill: black;");
+		
 		//Check if passord, email and username is correct
 		boolean check = true;
 		
