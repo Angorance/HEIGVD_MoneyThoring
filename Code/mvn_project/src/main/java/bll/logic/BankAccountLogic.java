@@ -100,11 +100,15 @@ public class BankAccountLogic extends BankAccountModel {
 				transactionsList.get(year)[date.getMonth()].add(transaction);
 			} else {
 				
-				ArrayList<IOTransactionLogic>[] l = new ArrayList[12];
-			
-				transactionsList.put(year, l);
+				ArrayList<IOTransactionLogic>[] tab = new ArrayList[12];
 				
-				l[date.getMonth()].add(transaction);
+				for (int i = 0; i < 12; ++i) {
+					tab[i] = new ArrayList<>();
+				}
+			
+				transactionsList.put(year, tab);
+				
+				tab[date.getMonth()].add(transaction);
 			}
 		}
 		
