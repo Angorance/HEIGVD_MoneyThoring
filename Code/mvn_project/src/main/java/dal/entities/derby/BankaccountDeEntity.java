@@ -19,36 +19,64 @@ public class BankaccountDeEntity implements IDALBankaccountEntity {
     private int clientId;
     private ClientDeEntity clientByClientId;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Id
     @Column(name = "ID", nullable = false)
     public int getId() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "NAME", nullable = false, length = 50)
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "NAMEBANK", nullable = true, length = 50)
     public String getNamebank() {
         return namebank;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setNamebank(String namebank) {
         this.namebank = namebank;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "TYPEACCOUNT", nullable = false, length = 100)
     public String getTypeaccount() {
@@ -59,16 +87,28 @@ public class BankaccountDeEntity implements IDALBankaccountEntity {
         this.typeaccount = typeaccount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "AMOUNT", nullable = false, precision = 0)
     public double getAmount() {
         return amount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "ISDEFAULT", nullable = false)
     public boolean isIsdefault() {
@@ -79,6 +119,10 @@ public class BankaccountDeEntity implements IDALBankaccountEntity {
         this.isdefault = isdefault;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "ISVISIBLE", nullable = false)
     public boolean isIsvisible() {
@@ -89,16 +133,27 @@ public class BankaccountDeEntity implements IDALBankaccountEntity {
         this.isvisible = isvisible;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "CLIENT_ID", nullable = false)
     public int getClientId() {
         return clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,6 +169,9 @@ public class BankaccountDeEntity implements IDALBankaccountEntity {
                 Objects.equals(typeaccount, that.typeaccount);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
 

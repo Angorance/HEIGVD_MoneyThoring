@@ -38,7 +38,7 @@ public interface IBudgetRepository {
     /**
      * Update a budget
      *
-     * @param Budget would'you update
+     * @param budget would'you update
      * @throws DALException
      */
     public void update(IDALBudgetEntity budget) throws DALException;
@@ -46,7 +46,7 @@ public interface IBudgetRepository {
     /**
      * add a budget
      *
-     * @param Budget would'you add
+     * @param budget would'you add
      * @throws DALException
      */
     public void addBudget(IDALBudgetEntity budget) throws DALException;

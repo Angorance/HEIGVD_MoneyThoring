@@ -17,46 +17,82 @@ public class BankaccountPgEntity implements IDALBankaccountEntity {
     private boolean isvisible;
     private int clientId;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "namebank", nullable = true, length = 50)
     public String getNamebank() {
         return namebank;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setNamebank(String namebank) {
         this.namebank = namebank;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "typeaccount", nullable = false, length = 100)
     public String getTypeaccount() {
         return typeaccount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setTypeaccount(String typeaccount) {
         this.typeaccount = typeaccount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "amount", nullable = false, precision = 0)
     public double getAmount() {
@@ -73,30 +109,53 @@ public class BankaccountPgEntity implements IDALBankaccountEntity {
         return isdefault;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIsdefault(boolean isdefault) {
         this.isdefault = isdefault;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "isvisible", nullable = false)
     public boolean isIsvisible() {
         return isvisible;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIsvisible(boolean isvisible) {
         this.isvisible = isvisible;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "client_id", nullable = false)
     public int getClientId() {
         return clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,7 +171,9 @@ public class BankaccountPgEntity implements IDALBankaccountEntity {
                 Objects.equals(typeaccount, that.typeaccount);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
 
