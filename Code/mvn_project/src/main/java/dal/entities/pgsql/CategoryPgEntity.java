@@ -14,56 +14,99 @@ public class CategoryPgEntity implements IDALCategoryEntity {
     private boolean isdefault;
     private int clientId;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "colour", nullable = false, length = 50)
     public String getColour() {
         return colour;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setColour(String colour) {
         this.colour = colour;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "isdefault", nullable = false)
     public boolean isIsdefault() {
         return isdefault;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIsdefault(boolean isdefault) {
         this.isdefault = isdefault;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "client_id", nullable = false)
     public int getClientId() {
         return clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +119,9 @@ public class CategoryPgEntity implements IDALCategoryEntity {
                 Objects.equals(colour, that.colour);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
 
