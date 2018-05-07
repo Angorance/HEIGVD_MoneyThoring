@@ -33,7 +33,7 @@ public class CategoryModel {
 	 * @param color Color of the category.
 	 * @param isDefault Flag for the default category.
 	 */
-	public CategoryModel(String name, String color, boolean isDefault) {
+	protected CategoryModel(String name, String color, boolean isDefault) {
 		
 		this.name = name;
 		this.color = color;

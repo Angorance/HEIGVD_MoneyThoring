@@ -144,6 +144,14 @@ public class Controller_budgetList implements IController, Initializable {
 		}
 	}
 	
+	@Override public void deleteItem(Object toDelete) {
+	
+	}
+	
+	@Override public void modifyItem(Object toUpdated) {
+	
+	}
+	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		// event on the click of the button
 		btnAdd.setOnAction(event -> createItem(null));//callform());

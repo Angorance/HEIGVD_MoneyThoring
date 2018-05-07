@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 public class Controller_formTransaction implements Initializable, IForm {
@@ -75,9 +76,9 @@ public class Controller_formTransaction implements Initializable, IForm {
 			String format = "dd/MM/yyyy";
 			java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
 			java.util.Date date = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 			
-			String dateText = formater.format(date);
-			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "", dateText, "CHF", cl,
+			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "", sqlDate, "CHF", cl,
 					bal);
 			controller.createItem(transaction);
 		}

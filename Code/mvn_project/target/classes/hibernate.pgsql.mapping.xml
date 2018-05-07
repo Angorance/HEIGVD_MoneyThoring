@@ -166,5 +166,21 @@
             <column name="budget_id" sql-type="integer" not-null="true"/>
         </property>
     </class>
+    <class name="dal.entities.pgsql.RecurrencePgEntity" table="recurrence" schema="moneythoring"
+           catalog="moneythoring">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
+            <generator class="identity"/>
+        </id>
+        <property name="gap">
+            <column name="gap" sql-type="integer"/>
+        </property>
+        <property name="nextdate">
+            <column name="nextdate" sql-type="date"/>
+        </property>
+        <property name="iotransactionId">
+            <column name="iotransaction_id" sql-type="integer"/>
+        </property>
+    </class>
 
 </hibernate-mapping>

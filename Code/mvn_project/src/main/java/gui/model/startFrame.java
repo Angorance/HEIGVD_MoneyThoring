@@ -12,7 +12,7 @@ public class startFrame extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/gui/view/loginRegister.fxml"));
         primaryStage.setTitle("MoneyThoring");
-        primaryStage.setScene(new Scene(root, 650, 400));
+        primaryStage.setScene(new Scene(root, 650, 450));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

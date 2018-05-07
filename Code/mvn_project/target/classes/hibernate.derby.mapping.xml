@@ -173,4 +173,19 @@
             <column name="BUDGET_ID" sql-type="integer(10)" not-null="true"/>
         </property>
     </class>
+    <class name="dal.entities.derby.RecurrenceDeEntity" table="RECURRENCE" schema="MONEYTHORING">
+        <id name="id">
+            <column name="ID" sql-type="integer(10)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="gap">
+            <column name="GAP" sql-type="integer(10)"/>
+        </property>
+        <property name="nextdate">
+            <column name="NEXTDATE" sql-type="date(10)"/>
+        </property>
+        <property name="iotransactionId">
+            <column name="IOTRANSACTION_ID" sql-type="integer(10)"/>
+        </property>
+    </class>
 </hibernate-mapping>

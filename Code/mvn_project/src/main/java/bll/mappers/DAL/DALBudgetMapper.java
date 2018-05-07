@@ -28,14 +28,13 @@ public class DALBudgetMapper {
 		// Create the PostgreSQL budget
 		BudgetPgEntity pgEntity = new BudgetPgEntity();
 		
-		//TODO - fix
 		pgEntity.setId(model.getId());
 		pgEntity.setName(model.getName());
 		pgEntity.setAmount(model.getAmount());
 		pgEntity.setIsshared(model.isShared());
 		pgEntity.setIsrecurrent(model.isRecurrent());
-		//pgEntity.setStartingdate(model.getStartingDate());
-		//pgEntity.setEndingdate(model.getEndingDate());
+		pgEntity.setStartingdate(model.getStartingDate());
+		pgEntity.setEndingdate(model.getEndingDate());
 		pgEntity.setGap(model.getGap());
 		pgEntity.setClientId(model.getClientID());
 		
@@ -54,14 +53,13 @@ public class DALBudgetMapper {
 		// Create the Derby budget
 		BudgetDeEntity derbyEntity = new BudgetDeEntity();
 		
-		//TODO - fix
 		derbyEntity.setId(model.getId());
 		derbyEntity.setName(model.getName());
 		derbyEntity.setAmount(model.getAmount());
 		derbyEntity.setIsshared(model.isShared());
 		derbyEntity.setIsrecurrent(model.isRecurrent());
-		//derbyEntity.setStartingdate(model.getStartingDate());
-		//derbyEntity.setEndingdate(model.getEndingDate());
+		derbyEntity.setStartingdate(model.getStartingDate());
+		derbyEntity.setEndingdate(model.getEndingDate());
 		derbyEntity.setGap(model.getGap());
 		derbyEntity.setClientId(model.getClientID());
 		

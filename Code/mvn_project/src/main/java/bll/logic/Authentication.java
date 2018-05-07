@@ -152,24 +152,32 @@ public class Authentication {
     	
     	boolean success = false;
     	
-    	IORM orm = new PgORM();
-    	String salt;
-    	
-    	try {
-		    orm.beginTransaction();
-		    salt = orm.getClientRepository().retriveSaltByUserLogin(username);
-		    
-		    String hash = hash(password, salt);
-		    
-		    IDALClientEntity ce = orm.getClientRepository().checkUserAndPassword(username, hash);
-		    
-		    //ClientLogic.getInstance().connectedUser(ce.getId(), ce.getEmail(), username, hash);
-		    DALClientMapper.toBo(ce); // TODO - Check if ok
-		    ClientLogic.getInstance().setDataFromDB();
-		    
-		    success = true;
-	    } catch (Exception e) {
-		    System.out.println(e);
+    	if (!password.isEmpty()) {
+		
+		    IORM orm = new PgORM();
+		    String salt;
+		
+		    try {
+			    orm.beginTransaction();
+			    salt = orm.getClientRepository().retriveSaltByUserLogin(username);
+			
+			    String hash = hash(password, salt);
+			
+			    IDALClientEntity ce = orm.getClientRepository()
+					    .checkUserAndPassword(username, hash);
+			    
+			    if (ce != null) {
+				
+				    //ClientLogic.getInstance().connectedUser(ce.getId(), ce.getEmail(), username, hash);
+				    DALClientMapper.toBo(ce); // TODO - Check if ok
+				    ClientLogic.getInstance().setDataFromDB();
+				    
+				    success = true;
+			    }
+			
+		    } catch (Exception e) {
+			    System.out.println(e);
+		    }
 	    }
 	    
 	    return success;

@@ -4,6 +4,7 @@ import bll.model.BankAccountModel;
 import dal.orm.PgORM;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ClientLogic class.
@@ -42,6 +43,8 @@ public class BankAccountLogic extends BankAccountModel {
 		changeDefault(isDefault);
 		
 		ClientLogic.getInstance().addBankAccount(this);
+		
+		createBankAccount(new PgORM());
 	}
 	
 	public String toString() {
@@ -88,6 +91,8 @@ public class BankAccountLogic extends BankAccountModel {
 	public void supp() {
 		
 		setVisible(false);
+		setDefault(false);
+		updateBankAccount(new PgORM());
 	}
 	
 	/**
@@ -100,7 +105,7 @@ public class BankAccountLogic extends BankAccountModel {
 		ClientLogic cl = ClientLogic.getInstance();
 		
 		if (isDefault) {
-			ArrayList<BankAccountLogic> list = cl.getBankAccounts();
+			List<BankAccountLogic> list = cl.getBankAccounts();
 			
 			for (BankAccountLogic ba : list) {
 				if (ba.isDefault()) {
@@ -112,5 +117,26 @@ public class BankAccountLogic extends BankAccountModel {
 		}
 		
 		setDefault(isDefault);
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param name
+	 * @param bankName
+	 * @param type
+	 * @param amount
+	 * @param isDefault
+	 */
+	public void update(String name, String bankName, String type, double amount,
+			boolean isDefault) {
+		
+		setName(name);
+		setType(type);
+		setBankName(bankName);
+		setAmount(amount);
+		changeDefault(isDefault);
+		
+		updateBankAccount(new PgORM());
 	}
 }

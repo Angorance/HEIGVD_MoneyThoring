@@ -77,11 +77,12 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * Event on the create button that will load the account creation page
 	 */
 	public void callform() {
+		
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formBankAccount cba = new Controller_formBankAccount(this);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this,null);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -97,9 +98,10 @@ public class Controller_bankAccount implements Initializable, IController {
 		}
 	}
 	
-	/*Methode who create a AccountDisplayer and createItem to the frame*/
-	public void createItem(Object bal) {
-		
+
+	/*Methode who create a AccountDisplayer and formReturn to the frame*/
+	public void formReturn(Object bal) {
+
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
@@ -141,6 +143,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * @param bal TODO
 	 */
 	private void detailBankAccount(BankAccountLogic bal) {
+		
 		/* we load the detailBankAccount fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/detailBankAccount.fxml"));
 		
@@ -169,6 +172,7 @@ public class Controller_bankAccount implements Initializable, IController {
 	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
 		//Remove all children from FlowPane container (frame_bankAccount)
 		frame_bankAccount.getChildren().clear();
 		paneform.setVisible(false);
