@@ -3,6 +3,7 @@ package bll.model;
 import bll.mappers.DAL.DALCategoryMapper;
 import dal.irepositories.ICategoryRepository;
 import dal.orm.IORM;
+import dal.orm.PgORM;
 
 /**
  * CategoryModel class.
@@ -58,7 +59,7 @@ public class CategoryModel {
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -70,7 +71,7 @@ public class CategoryModel {
 	protected void updateCategory(IORM orm) {
 		
 		try {
-			
+			//PgORM or = (PgORM) orm;
 			orm.beginTransaction();
 			
 			ICategoryRepository repo = orm.getCategoryRepository();
@@ -79,7 +80,7 @@ public class CategoryModel {
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

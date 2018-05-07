@@ -3,6 +3,7 @@ package bll.logic;
 import bll.model.CategoryModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoryEntity;
+import dal.orm.IORM;
 import dal.orm.PgORM;
 
 /**
@@ -19,21 +20,10 @@ public class CategoryLogic extends CategoryModel {
 
     public CategoryLogic(String name, String color, boolean isDefault) {
         super(name, color, isDefault);
-        
-        createCategory(new PgORM());
-    }
-    
-    @Deprecated
-    public CategoryLogic(IDALCategoryEntity cat) {
-        setId(cat.getId());
-        setName(cat.getName());
-        setColor(cat.getColour());
-        setDefault(cat.isIsdefault());
-        setClientId(cat.getClientId());
 	
 	    ClientLogic.getInstance().addCategory(this);
-	    
-	    createCategory(new PgORM());
+        
+        createCategory(new PgORM());
     }
     
     /**
@@ -50,7 +40,12 @@ public class CategoryLogic extends CategoryModel {
     public void supp() {
 	
 	    try {
-		    new PgORM().getCategoryRepository().delete(getId());
+	    	IORM orm = new PgORM();
+	    	
+	    	orm.beginTransaction();
+	    	
+	    	orm.getCategoryRepository().delete(getId());
+	    	
 	    } catch (DALException e) {
 		    e.printStackTrace();
 	    }
