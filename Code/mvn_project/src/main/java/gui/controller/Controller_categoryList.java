@@ -49,7 +49,6 @@ public class Controller_categoryList implements Initializable, IController {
             cat = c;
 
             // setting the data and behavior
-            lblCategorie.setText(cat.getName());
             this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -64,11 +63,11 @@ public class Controller_categoryList implements Initializable, IController {
             lblCategorie.setPadding(new Insets(0,10,0,10));
             lblCategorie.setAlignment(Pos.CENTER);
             this.setPadding(new Insets(0,10,0,10));
-            this.setStyle("-fx-background-color: " + toRGBCode(Color.valueOf(cat.getColor())) + "; -fx-background-radius: 10");
             this.getChildren().add(lblCategorie);
             this.setHeight(HEIGHT);
             this.setAlignment(Pos.CENTER);
             JFXDepthManager.setDepth(this, 1); // shadow manager
+	        redraw();
 
         }
 
@@ -101,7 +100,7 @@ public class Controller_categoryList implements Initializable, IController {
 
         // we load the category form
         FXMLLoader l = new FXMLLoader(getClass().getResource("/gui/view/formCategory.fxml"));
-        l.setController(new Controller_formCategory(this, (cat != null), cat));
+        l.setController(new Controller_formCategory(this, cat));
         try {
             formPane.getChildren().add(l.load());
         } catch (IOException e) {

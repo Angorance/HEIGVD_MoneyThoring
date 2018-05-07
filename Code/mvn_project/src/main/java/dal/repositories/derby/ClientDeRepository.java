@@ -182,30 +182,7 @@ public class ClientDeRepository implements IClientRepository {
 
         return client;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isActivated(String usernameOrEmail, String password) throws DALException {
-        
-        ClientDeEntity client = null;
-        boolean isActivated = false;
-        
-        try {
-            client = (ClientDeEntity) session.createCriteria(ClientDeEntity.class)
-                    .add(Restrictions.and(Restrictions.or(Restrictions.eq("email", usernameOrEmail),
-                            Restrictions.eq("username", usernameOrEmail)))).uniqueResult();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-        
-        if(client != null)
-            isActivated = client.getIsactivated();
-        
-        return isActivated;
-    }
-
+    
     /**
      * {@inheritDoc}
      */

@@ -44,7 +44,8 @@ public class Controller_formCategory implements Initializable, IForm {
     }
 
     private void formDelete(ActionEvent event){
-        parent.deleteItem(item);
+     
+    	parent.deleteItem(item);
     }
 
     @Override
@@ -53,12 +54,21 @@ public class Controller_formCategory implements Initializable, IForm {
         btnConfirm.setOnAction(this::formValidation);
         btnDelete.setOnAction(this::formDelete);
         if(item != null){
+        	btnDelete.setVisible(true);
             txtLabel.setText(item.getName());
             colorPicker.setValue(Color.valueOf(item.getColor()));
+            if(item.isDefault()){
+            	txtLabel.setDisable(true);
+            	btnDelete.setDisable(true);
+            } else {
+            	txtLabel.setDisable(false);
+            }
+        } else {
+        	btnDelete.setVisible(false);
         }
     }
 
-    Controller_formCategory(IController p, boolean isModif, CategoryLogic cat){
+    Controller_formCategory(IController p, CategoryLogic cat){
         parent = p;
         item = cat;
     }

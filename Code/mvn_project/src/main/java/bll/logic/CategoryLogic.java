@@ -45,6 +45,7 @@ public class CategoryLogic extends CategoryModel {
 	    	orm.beginTransaction();
 	    	
 	    	orm.getCategoryRepository().delete(getId());
+	    	orm.commit();
 	    	
 	    } catch (DALException e) {
 		    e.printStackTrace();

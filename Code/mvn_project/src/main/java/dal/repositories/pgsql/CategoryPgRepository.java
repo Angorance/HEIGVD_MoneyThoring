@@ -113,8 +113,9 @@ public class CategoryPgRepository implements ICategoryRepository {
     @Override
     public void addCategory(IDALCategoryEntity Category) throws DALException {
         CategoryPgEntity newCategory = null;
-        if (newCategory.getClass() == CategoryPgEntity.class)
-            newCategory = (CategoryPgEntity) newCategory;
+        
+        if (Category.getClass() == CategoryPgEntity.class)
+            newCategory = (CategoryPgEntity) Category;
         else
             throw new DALException();
 

@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import gui.model.mainFrame;
+import smtp.Mail;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,16 +63,15 @@ public class Controller_loginRegister implements Initializable {
 			login_incorrect.setTextFill(Color.RED);
 			//otherwise we load the main frame*/
 		} else {
-			//boolean isActivated = isActivated(email, password); TODO
-			
-			//if(isActivated) {
-			/*Load dashboard*/
-			loadMainFrame();
-                
-            /*} else {
-                login_GridPane.setVisible(false);
-                login_Code.setVisible(true);
-            }*/
+			boolean isActivated = ClientLogic.getInstance().getIsActivated();
+			if (isActivated) {
+				/*Load dashboard*/
+				loadMainFrame();
+				
+			} else {
+				login_GridPane.setVisible(false);
+				login_Code.setVisible(true);
+			}
 			
 		}
 	}
@@ -133,11 +133,14 @@ public class Controller_loginRegister implements Initializable {
 			register_email.clear();
 			register_password.clear();
 			register_confirmPassword.clear();
+			
+			/*Send the key*/
+			Mail.sendMail(username, email, ClientLogic.getInstance().getKey());
 		}
 	}
 	
 	private void confirmButton() {
-		/*if(isCorrectCode()){
+		/*if(ClientLogic.getInstance().isCorrectKey(confirm_textField.getText())){
 			loadMainFrame();
 		}else{
 			confirm_incorrect.setText("Le code est incorrecte");

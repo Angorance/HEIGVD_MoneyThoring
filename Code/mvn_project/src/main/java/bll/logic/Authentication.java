@@ -93,29 +93,51 @@ public class Authentication {
         
         return result;
     }
-
-    /**
-     * Check if the username is not already used by another client.
-     *
-     * @param username Username entered by the client.
-     *
-     * @return True if username already exists, false otherwise.
-     */
-    public static boolean usernameExists(String username) {
-        // TODO - Manage if connected to internet or not!
-	    
-	    IORM orm = new PgORM();
-	    boolean result = false;
-	    
-	    try {
-	    	orm.beginTransaction();
-	    	result = orm.getClientRepository().pseudoExist(username);
-	    } catch (Exception e) {
-		    System.out.println(e);
-	    }
-
-        return result;
-    }
+	
+	/**
+	 * Check if the username is not already used by another client.
+	 *
+	 * @param username Username entered by the client.
+	 *
+	 * @return True if username already exists, false otherwise.
+	 */
+	public static boolean usernameExists(String username) {
+		// TODO - Manage if connected to internet or not!
+		
+		IORM orm = new PgORM();
+		boolean result = false;
+		
+		try {
+			orm.beginTransaction();
+			result = orm.getClientRepository().pseudoExist(username);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Check if the activation code entered by the client is the good one.
+	 *
+	 * @param activationCode    Code entered by the client.
+	 *
+	 * @return True if the code is the good one, false otherwise.
+	 */
+	public static boolean checkActivationCode(String activationCode) {
+		
+		boolean isCorrect = false;
+		
+		// Check if the code is correct
+		if(ClientLogic.getInstance().getKey().equals(activationCode)){
+			isCorrect = true;
+			
+			// Activate the client
+			ClientLogic.getInstance().setActivated(true);
+		}
+		
+		return isCorrect;
+	}
     
     private static String saltGenerator() {
 	    byte[] salt = new byte[16];
