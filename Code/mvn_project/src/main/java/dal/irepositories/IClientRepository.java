@@ -77,24 +77,6 @@ public interface IClientRepository {
     public IDALClientEntity checkUserAndPassword(String usernameOrEmail, String password) throws DALException;
 
     /**
-     * test if the user is activated
-     * @param usernameOrEmail the username or email of the user
-     * @param password the password of the user
-     * @return boolean true if the user is activated, false if se user is desactivated
-     * @throws DALException
-     */
-    public boolean isActivated(String usernameOrEmail, String password) throws DALException;
-    
-    /**
-     * check if the activation code given by the user is the good one
-     * @param usernameOrEmail the username or email of the user
-     * @param password the password of the user
-     * @return boolean true if the code is the good one, false otherwise
-     * @throws DALException
-     */
-    public boolean checkActivationCode(String usernameOrEmail, String password, String activationCode) throws DALException;
-
-    /**
      * retrieve the salt by the username or the email
      * @param usernameOrEmail
      * @return String the salt corresponding to the username or email

@@ -177,57 +177,6 @@ public class ClientPgRepository implements IClientRepository {
 
         return client;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isActivated(String usernameOrEmail, String password) throws DALException {
-
-        ClientPgEntity client = null;
-        boolean isActivated = false;
-
-        try {
-            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class).add(
-                    Restrictions.and(
-                            Restrictions.or(
-                                    Restrictions.eq("email", usernameOrEmail),
-                                    Restrictions.eq("username", usernameOrEmail)),
-                            Restrictions.eq("password", password))).uniqueResult();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-
-        if (client != null)
-            isActivated = client.getIsactivated();
-
-        return isActivated;
-    }
-    
-    @Override
-    public boolean checkActivationCode(String usernameOrEmail, String password, String activationCode) throws DALException {
-    
-        ClientPgEntity client = null;
-        boolean isCorrect = false;
-    
-        try {
-            client = (ClientPgEntity) session.createCriteria(ClientPgEntity.class).add(
-                    Restrictions.and(
-                            Restrictions.or(
-                                    Restrictions.eq("email", usernameOrEmail),
-                                    Restrictions.eq("username", usernameOrEmail)),
-                            Restrictions.eq("password", password),
-                            Restrictions.eq("activationkey", activationCode))).uniqueResult();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    
-        if (client != null) {
-            isCorrect = true;
-        }
-        
-        return isCorrect;
-    }
     
     /**
      * {@inheritDoc}

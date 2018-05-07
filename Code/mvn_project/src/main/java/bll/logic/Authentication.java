@@ -116,55 +116,6 @@ public class Authentication {
 		
 		return result;
 	}
-	
-    /**
-     * Check if the client is activated or not.
-     *
-     * @param username Username entered by the client.
-     * @param password  Password entered by the client.
-     *
-     * @return True if client has been activated, false otherwise.
-     */
-    public static boolean clientIsActivated(String username, String password) {
-        // TODO - Manage if connected to internet or not!
-	    
-	    IORM orm = new PgORM();
-	    boolean result = false;
-	    
-	    try {
-	    	orm.beginTransaction();
-	    	result = orm.getClientRepository().isActivated(username, password);
-	    } catch (Exception e) {
-		    System.out.println(e);
-	    }
-
-        return result;
-    }
-	
-	
-	/**
-	 * Check if the activation code entered by the client is the good one.
-	 *
-	 * @param username Username entered by the client.
-	 * @param password  Password entered by the client.
-	 * @param activationCode    Code entered by the client.
-	 *
-	 * @return True if the code is the good one, false otherwise.
-	 */
-	public static boolean checkActivationCode(String username, String password, String activationCode) {
-		
-		IORM orm = new PgORM();
-		boolean result = false;
-		
-		try {
-			orm.beginTransaction();
-			result = orm.getClientRepository().checkActivationCode(username, password, activationCode);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		return result;
-	}
     
     private static String saltGenerator() {
 	    byte[] salt = new byte[16];
