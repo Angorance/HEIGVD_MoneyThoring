@@ -27,15 +27,20 @@ public class Mail {
 		String to = email;
 		String objet = "Activation code for your MoneyThoring account";
 		
-		String texte = "Welcome to MoneyThoring " + username + ", \n\n"
-						+ "To use this app, you need to activate your account with \n"
-						+ "this code on your next connection : " + activationCode + " \n\n"
-						+ "Thanks for joining us \n\n"
+		String texte = "Welcome to MoneyThoring " + username + ", <br><br>"
+						+ "To use this app you need to activate your account with <br>"
+						+ "this code on your next connection : " + activationCode + " <br><br>"
+						+ "Thanks for joining us <br><br>"
 						+ "MoneyThoring";
+		
+		// Connection to the smtp server
+		Authenticator auth = new SMTPAuthenticator();
 		
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", smtpServer);
-		Session session = Session.getDefaultInstance(props, null);
+		props.put("mail.smtp.auth", "true");
+		
+		Session session = Session.getDefaultInstance(props, auth);
 		
 		// Create the message
 		Message msg = new MimeMessage(session);
@@ -48,7 +53,6 @@ public class Mail {
 			msg.setSubject(objet);
 			msg.setText(texte);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-			msg.addHeader("format", "flowed");
 			msg.addHeader("Content-Transfer-Encoding", "8bit");
 			
 			// Send the message
