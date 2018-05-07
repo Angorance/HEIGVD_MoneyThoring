@@ -46,7 +46,7 @@
                   <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Compte par défaut :" GridPane.rowIndex="2" />
-                  <Label fx:id="default_label" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="default_label" text="☑" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children></AnchorPane>
