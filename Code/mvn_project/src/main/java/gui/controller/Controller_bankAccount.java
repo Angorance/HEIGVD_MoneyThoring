@@ -154,8 +154,11 @@ public class Controller_bankAccount implements Initializable, IController {
 		BankAccountLogic bal = (BankAccountLogic) updated;
 		displayerList.get(bal.getId()).redraw();
 	}
-	
-	/*Add an AccountDisplayer to the frame*/
+
+	/**
+	 * Add an AccountDisplayer to the frame
+	 * @param accountDisplayer node to display
+	 */
 	private void addToFrame(AccountDisplayer accountDisplayer) {
 		
 		frame_bankAccount.getChildren().add(accountDisplayer);
