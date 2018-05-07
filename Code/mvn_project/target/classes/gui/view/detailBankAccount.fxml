@@ -36,14 +36,17 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Banque :" />
                   <Label fx:id="nameBankAccount" text="UBS" GridPane.columnIndex="1" />
                   <Label text="Type :" GridPane.rowIndex="1" />
-                  <Label text="Dernier transaction : " GridPane.rowIndex="2" />
+                  <Label text="Dernier transaction : " GridPane.rowIndex="3" />
                   <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Compte par défaut :" GridPane.rowIndex="2" />
+                  <Label fx:id="default_label" text="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children></AnchorPane>
@@ -61,6 +64,6 @@
           <NumberAxis fx:id="axeY" label="montant [CHF]" side="LEFT" />
         </yAxis>
       </LineChart>
-      <AnchorPane fx:id="paneform" prefHeight="653.0" prefWidth="729.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="paneform" mouseTransparent="true" prefHeight="653.0" prefWidth="729.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
