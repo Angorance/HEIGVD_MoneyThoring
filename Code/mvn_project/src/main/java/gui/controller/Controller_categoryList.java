@@ -158,14 +158,6 @@ public class Controller_categoryList implements Initializable, IController {
         formPane.setMouseTransparent(true);
     }
     
-    @Override public void deleteItem(Object toDelete) {
-    
-    }
-    
-    @Override public void modifyItem(Object toUpdated) {
-    
-    }
-    
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
