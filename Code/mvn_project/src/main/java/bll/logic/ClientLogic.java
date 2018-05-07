@@ -240,6 +240,10 @@ public class ClientLogic extends ClientModel {
 			DALCategoryMapper.toBos(cat);
 			DALBudgetMapper.toBos(bu);
 			
+			for (BankAccountLogic b : getBankAccounts()) {
+				b.setDataFromDB();
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}

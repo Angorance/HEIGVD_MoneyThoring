@@ -1,9 +1,14 @@
 package bll.logic;
 
 import bll.model.BankAccountModel;
+import dal.dalexception.DALException;
+import dal.ientites.IDALIotransactionEntity;
+import dal.orm.IORM;
 import dal.orm.PgORM;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -80,9 +85,30 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @return List of transactions.
 	 */
-	public ArrayList<IOTransactionLogic> getTransactions() {
+	public HashMap<Integer, ArrayList<IOTransactionLogic>[]> getTransactions() {
 		
-		return transactions;
+		HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsList
+				= new HashMap<>();
+		
+		for (IOTransactionLogic transaction : transactions) {
+		
+			Date date = transaction.getDate();
+			int year = date.getYear();
+			
+			if (transactionsList.containsKey(year)) {
+			
+				transactionsList.get(year)[date.getMonth()].add(transaction);
+			} else {
+				
+				ArrayList<IOTransactionLogic>[] l = new ArrayList[12];
+			
+				transactionsList.put(year, l);
+				
+				l[date.getMonth()].add(transaction);
+			}
+		}
+		
+		return transactionsList;
 	}
 	
 	/**
@@ -138,5 +164,23 @@ public class BankAccountLogic extends BankAccountModel {
 		changeDefault(isDefault);
 		
 		updateBankAccount(new PgORM());
+	}
+	
+	/**
+	 * TODO
+	 */
+	public void setDataFromDB() {
+		
+		try {
+			IORM orm = new PgORM();
+			
+			orm.beginTransaction();
+			
+			List<IDALIotransactionEntity> ba = orm.getIotransactionRepository()
+					.getIotransactionsByBankaccount(getId());
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 }
