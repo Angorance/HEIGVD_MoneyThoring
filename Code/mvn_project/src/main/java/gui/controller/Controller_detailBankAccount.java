@@ -162,8 +162,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		//if the list of transaction is not empty, we get the last transaction date
 		if (!bal.getTransactions().isEmpty()) {
-			dateLastTransaction
-					.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
+			//dateLastTransaction
+					//.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
 		}
 		
 		/*Change the color if the amount is bigger or lesser than 0*/

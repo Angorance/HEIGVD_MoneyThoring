@@ -1,6 +1,9 @@
 package bll.logic;
 
 import bll.model.IOTransactionModel;
+import dal.dalexception.DALException;
+import dal.orm.IORM;
+import dal.orm.PgORM;
 
 import java.sql.Date;
 
@@ -34,7 +37,44 @@ public class IOTransactionLogic extends IOTransactionModel {
         super(amount, name, description, date, currency, (amount >= 0));
 
         this.category = category;
+        
+        setCategoryID(category.getId());
 
         bankAccount.addTransaction(this);
+        
+        createIOTransaction(new PgORM());
+    }
+    
+    /**
+     * TODO
+     */
+    public void update(double amount, String name, String description,
+		    Date date, String currency, CategoryLogic category) {
+        
+        setAmount(amount);
+        setName(name);
+        setDescription(description);
+        setDate(date);
+        setCurrency(currency);
+        
+        this.category = category;
+	    setCategoryID(category.getId());
+        
+        updateIOTransaction(new PgORM());
+    }
+    
+    public void supp() {
+        
+        try {
+            IORM orm = new PgORM();
+            
+            orm.beginTransaction();
+            
+            orm.getIotransactionRepository().delete(getId());
+            orm.commit();
+            
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
     }
 }

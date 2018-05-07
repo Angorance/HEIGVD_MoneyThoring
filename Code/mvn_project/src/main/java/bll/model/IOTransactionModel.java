@@ -62,7 +62,7 @@ public class IOTransactionModel {
      *
      * @param orm ORM instance to use.
      */
-    protected void createCategory(IORM orm) {
+    protected void createIOTransaction(IORM orm) {
 
         try {
 
@@ -83,7 +83,7 @@ public class IOTransactionModel {
      *
      * @param orm ORM instance to use.
      */
-    protected void updateCategory(IORM orm) {
+    protected void updateIOTransaction(IORM orm) {
 
         try {
 
