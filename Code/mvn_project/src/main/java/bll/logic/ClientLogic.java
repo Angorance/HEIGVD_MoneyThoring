@@ -111,6 +111,14 @@ public class ClientLogic extends ClientModel {
 		return visibles;
 	}
 	
+	public List<CategoryLogic> getCategories() {
+		return categories;
+	}
+	
+	public List<BudgetLogic> getBudgets() {
+		return budgets;
+	}
+	
 	
 	// SETTERS
 	
