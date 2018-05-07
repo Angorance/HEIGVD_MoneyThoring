@@ -1,5 +1,6 @@
 package gui.controller;
 
+import bll.logic.Authentication;
 import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -64,14 +66,14 @@ public class Controller_loginRegister implements Initializable {
 			//otherwise we load the main frame*/
 		} else {
 			boolean isActivated = ClientLogic.getInstance().getIsActivated();
-			/*if (isActivated) {
+			if (isActivated) {
 				/*Load dashboard*/
 				loadMainFrame();
 				
-			/*} else {
+			} else {
 				login_GridPane.setVisible(false);
 				login_Code.setVisible(true);
-			}*/
+			}
 			
 		}
 	}
@@ -140,12 +142,12 @@ public class Controller_loginRegister implements Initializable {
 	}
 	
 	private void confirmButton() {
-		/*if(ClientLogic.getInstance().isCorrectKey(confirm_textField.getText())){
+		if(Authentication.checkActivationCode(confirm_textField.getText())){
 			loadMainFrame();
-		}else{
-			confirm_incorrect.setText("Le code est incorrecte");
-			confirm_incorrect.setTextFill(Color.RED);
-		}*/
+		} else {
+			confirm_incorrect.setText("Code invalide\nVeuillezr réessayer");
+			confirm_incorrect.setVisible(true);
+		}
 	}
 	
 	/**
@@ -179,5 +181,18 @@ public class Controller_loginRegister implements Initializable {
 				confirmButton();
 			}
 		});
+		
+		confirm_textField.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				
+				confirmButton();
+			}
+		});
+		confirm_textField.setOnMouseClicked(event -> resetConfirmErrorMessage());
+	}
+	
+	public void resetConfirmErrorMessage() {
+		confirm_incorrect.setVisible(false);
 	}
 }
