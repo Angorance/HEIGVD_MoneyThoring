@@ -4,10 +4,7 @@ import bll.logic.BankAccountLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,11 +26,13 @@ public class Controller_formTransaction implements Initializable, IForm {
 	@FXML private JFXComboBox<CategoryLogic> category;
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
+	@FXML private JFXDatePicker datePicker;
 	
 	IController controller;
 	boolean isIncome;
 	
 	public Controller_formTransaction(IController controller, boolean isIncome) {
+		
 		this.controller = controller;
 		this.isIncome = isIncome;
 	}
@@ -44,6 +43,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 * @param event
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
+		
 		controller.createItem(null);
 	}
 	
@@ -59,7 +59,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 			String nameText = name.getText();
 			/*transaction amount*/
 			double amountDouble = Math.abs(Double.parseDouble(amount.getText()));
-			amountDouble = isIncome ? amountDouble : amountDouble*(-1);
+			amountDouble = isIncome ? amountDouble : amountDouble * (-1);
 			
 			/*bank account we will do the transaction*/
 			BankAccountLogic bal = bankAccount.getValue();
@@ -73,12 +73,13 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}
 			
 			//Date actuelle
-			String format = "dd/MM/yyyy";
-			java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-			java.util.Date date = new java.util.Date();
-			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 			
-			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "", sqlDate, "CHF", cl,
+			/*String format = "dd/MM/yyyy";
+			java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+			java.util.Date date = new java.util.Date();*/
+			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());/*new java.sql.Date(date.getTime());*/
+			
+			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF", cl,
 					bal);
 			controller.createItem(transaction);
 		}
@@ -118,12 +119,12 @@ public class Controller_formTransaction implements Initializable, IForm {
 		bankAccount.setItems(items);
 		bankAccount.getSelectionModel().selectFirst();
 		
-		/*ObservableList<CategoryLogic> items2 = FXCollections.observableArrayList();
+		ObservableList<CategoryLogic> items2 = FXCollections.observableArrayList();
 		for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
 			items2.add(cl);
 		}
 		category.setItems(items2);
-		category.getSelectionModel().selectFirst();*/
+		category.getSelectionModel().selectFirst();
 		
 		ObservableList<String> items3 = FXCollections.observableArrayList();
 		items3.addAll("Mensuel", "Annuel");
