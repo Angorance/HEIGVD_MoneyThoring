@@ -47,13 +47,15 @@ public class Controller_transactionList implements Initializable, IController {
 	@FXML private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
 	@FXML private JFXNodesList nodeList;
 	
-	JFXButton transactionButton;
-	JFXButton outGoButton;
-	JFXButton incomeButton;
+	private JFXButton transactionButton;
+	private JFXButton outGoButton;
+	private JFXButton incomeButton;
 	
 	
-	ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
-	ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
+	private ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
+	private ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
+	
+	private BankAccountLogic bal;
 	
 	/**
 	 * Event on the create button that will load the transaction creation page
@@ -83,7 +85,6 @@ public class Controller_transactionList implements Initializable, IController {
 		paneform.getChildren().clear();
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
-		
 	}
 
 	/**
@@ -106,6 +107,7 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	private void setData() {
 		
+		bal = accountSelect.getValue();
 		boolean selectedAccount = accountSelect.getSelectionModel().isEmpty();
 		boolean selectedPeriode = periodSelect.getSelectionModel().isEmpty();
 		boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
@@ -183,6 +185,7 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		
+		
 		if (!selectedAccount && !selectedPeriode && !selectedTime) {
 			income.clear();
 			outgo.clear();
@@ -232,9 +235,11 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	private void add(int year, int month) {
 		
-		HashMap<Integer, LinkedList<IOTransactionLogic>[]> map = new HashMap<>();
+		/*HashMap<Integer, LinkedList<IOTransactionLogic>[]> map = new HashMap<>();
 		LinkedList<IOTransactionLogic>[] list = new LinkedList[12];
 		Random rdm = new Random();
+		
+		//
 		for (int i = 0; i < 12; ++i) {
 			list[i] = new LinkedList<IOTransactionLogic>();
 			for (int j = 0; j < 10; ++j) {
@@ -251,8 +256,10 @@ public class Controller_transactionList implements Initializable, IController {
 		}
 		for (int i = 2000; i <= 2018; ++i) {
 			map.put(i, list);
-		}
-		for (IOTransactionLogic transaction : map.get(year)[month]) {
+		}*/
+		
+		
+		for (IOTransactionLogic transaction : bal.getTransactions().get(year)[month]) {
 			if (transaction.isIncome()) {
 				income.add(new WrapperTransaction(transaction));
 			} else {
@@ -270,7 +277,12 @@ public class Controller_transactionList implements Initializable, IController {
 					"Octobre", "Novembre", "Décembre");
 		} else if (periodSelect.getValue().equals("Annuel")) {
 			int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-			int firstYear = 2000;
+			int firstYear = currentYear + 1;
+			for(int i : bal.getTransactions().keySet()){
+				if( firstYear > i){
+					firstYear = i;
+				}
+			}
 			for (int i = firstYear; i <= currentYear; ++i) {
 				items3.addAll(String.valueOf(i));
 			}
