@@ -79,11 +79,29 @@ public class Controller_transactionList implements Initializable, IController {
 		}
 	}
 	
-	@Override public void formReturn(Object result) {
+	@Override public void createItem(Object result) {
 		paneform.getChildren().clear();
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
 		
+	}
+
+	/**
+	 * Delete the displayer and the data in the DB
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
+
+	}
+
+	/**
+	 * update the datas in the DB and refresh
+	 * @param updated
+	 */
+	@Override
+	public void modifyItem(Object updated) {
+
 	}
 	
 	@Override public void deleteItem(Object toDelete) {

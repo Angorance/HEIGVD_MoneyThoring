@@ -98,8 +98,10 @@ public class Controller_bankAccount implements Initializable, IController {
 		}
 	}
 	
+
 	/*Methode who create a AccountDisplayer and formReturn to the frame*/
 	public void formReturn(Object bal) {
+
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
@@ -108,15 +110,25 @@ public class Controller_bankAccount implements Initializable, IController {
 			addToFrame(accountDisplayer);
 		}
 	}
-	
-	@Override public void deleteItem(Object toDelete) {
-		//TODO
+
+	/**
+	 * Delete the displayer and the data in the DB
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
+
 	}
-	
-	@Override public void modifyItem(Object toUpdated) {
-		//TODO
+
+	/**
+	 * update the datas in the DB and refresh
+	 * @param updated
+	 */
+	@Override
+	public void modifyItem(Object updated) {
+
 	}
-	
+
 	/*Add an AccountDisplayer to the frame*/
 	private void addToFrame(AccountDisplayer accountDisplayer) {
 		
@@ -166,7 +178,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
 		
-		//Go through the list of bank accounts and formReturn it to our frame
+		//Go through the list of bank accounts and createItem it to our frame
 		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
 			addToFrame(accountDisplayer);

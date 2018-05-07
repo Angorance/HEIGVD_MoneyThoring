@@ -21,6 +21,7 @@
                   </HBox>
                   <JFXButton fx:id="btnCancel" layoutX="28.0" layoutY="54.0" style="-fx-background-color: #dedede;" text="back" AnchorPane.leftAnchor="20.0" />
                   <JFXButton fx:id="btnConfirm" layoutX="520.0" layoutY="54.0" style="-fx-background-color: lightgreen;" text="Confirm" AnchorPane.rightAnchor="20.0" />
+                  <JFXButton fx:id="btnDelete" layoutX="525.0" layoutY="93.0" text="Delete" />
                </children>
             </AnchorPane>
          </children>

@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.CategoryLogic;
-import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.effects.JFXDepthManager;
 import javafx.event.EventHandler;
@@ -11,24 +10,26 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
  * Controller for the category list view
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.3
  */
 public class Controller_categoryList implements Initializable, IController {
     @FXML private FlowPane listContainer;
     @FXML private JFXButton btnAdd;
     @FXML private AnchorPane formPane;
+
+    private HashMap<Integer, CategoryDisplayer> displayerList;
 
     /**
      * Class that wrap a category into a graphic element
@@ -52,6 +53,7 @@ public class Controller_categoryList implements Initializable, IController {
                 @Override
                 public void handle(MouseEvent event) {
                     // open the form for modification
+                    callform(cat);
                 }
             });
 
@@ -81,19 +83,24 @@ public class Controller_categoryList implements Initializable, IController {
                     (int)( color.getGreen() * 255 ),
                     (int)( color.getBlue() * 255 ) );
         }
+
+        public void redraw(){
+            lblCategorie.setText(cat.getName());
+            this.setStyle("-fx-background-color: " + toRGBCode(Color.valueOf(cat.getColor())) + "; -fx-background-radius: 10");
+        }
     }
 
     /**
      * Call the form to create or modify a category
+     * @param cat category to eventually modify. if null we open the form in order to create a category
      */
-    public void callform() {
+    public void callform(CategoryLogic cat) {
         formPane.setVisible(true);
         formPane.setMouseTransparent(false);
 
         // we load the category form
         FXMLLoader l = new FXMLLoader(getClass().getResource("/gui/view/formCategory.fxml"));
-        l.setController(new Controller_formCategory(this));
-        formPane.getChildren().clear();
+        l.setController(new Controller_formCategory(this, (cat != null), cat));
         try {
             formPane.getChildren().add(l.load());
         } catch (IOException e) {
@@ -102,16 +109,53 @@ public class Controller_categoryList implements Initializable, IController {
     }
 
     /**
+     * Delete the displayer and the data in the DB
+     * @param toDelete
+     */
+    @Override
+    public void deleteItem(Object toDelete) {
+        unloadform();
+        if(toDelete != null) {
+            CategoryLogic c = (CategoryLogic) toDelete;
+            CategoryDisplayer d = displayerList.get(c.getId());
+            listContainer.getChildren().removeAll(d);
+            // TODO delete in DB
+        }
+    }
+
+    /**
+     * update the datas in the DB and refresh
+     * @param updated
+     */
+    @Override
+    public void modifyItem(Object updated) {
+        unloadform();
+        CategoryLogic c = (CategoryLogic) updated;
+        displayerList.get(c.getId()).redraw();
+        // TODO update in the DB
+    }
+
+    /**
      * Called by the form controller. Close the form, and retrieve the created object if existing
      * @param result created objet, null if the operation was cancelled
      */
     @Override
-    public void formReturn(Object result) {
+    public void createItem(Object result) {
+        unloadform();
+        CategoryLogic c = (CategoryLogic)result;
+        if(result != null){
+            CategoryDisplayer d = new CategoryDisplayer(c);
+            displayerList.put(c.getId(), d);
+            listContainer.getChildren().add(d);
+        }
+
+        // TODO create in DB
+    }
+
+    private void unloadform() {
+        formPane.getChildren().clear();
         formPane.setVisible(false);
         formPane.setMouseTransparent(true);
-        if(result != null){
-            listContainer.getChildren().add(new CategoryDisplayer((CategoryLogic)result));
-        }
     }
     
     @Override public void deleteItem(Object toDelete) {
@@ -128,13 +172,21 @@ public class Controller_categoryList implements Initializable, IController {
         // #5ACCF2
         formPane.setMouseTransparent(true);
         formPane.setVisible(false);
+        btnAdd.setOnAction(event -> callform(null));
+        displayerList = new HashMap<>();
 
-        btnAdd.setOnAction(event -> callform());
-
-        // TODO formReturn the existing categories
+        // TODO list the existing categories
 
         // sample category
-        listContainer.getChildren().add(new CategoryDisplayer(new CategoryLogic("une première catégorie", "#20B4E6", false)));
-        listContainer.getChildren().add(new CategoryDisplayer(new CategoryLogic("Technologie", "#8D18D6", false)));
+        CategoryLogic c = new CategoryLogic("Nourriture", "#20B4E6", false);
+        c.setId(1);
+        CategoryDisplayer d = new CategoryDisplayer(c);
+        displayerList.put(1, d);
+        listContainer.getChildren().add(d);
+        c = new CategoryLogic("Technologie", "#8D18D6", false);
+        c.setId(2);
+        d = new CategoryDisplayer(c);
+        displayerList.put(2, d);
+        listContainer.getChildren().add(d);
     }
 }

@@ -6,12 +6,8 @@ import com.jfoenix.effects.JFXDepthManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.net.URL;
@@ -98,7 +94,10 @@ public class Controller_budgetList implements IController, Initializable {
 			budgetPane.setOnMouseClicked(event -> openDetail());
 		}
 	}
-	
+
+	/**
+	 * load the form to create a new Budget
+	 */
 	 public void callform() {
 		
 		paneForm.setVisible(true);
@@ -113,8 +112,26 @@ public class Controller_budgetList implements IController, Initializable {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Delete the displayer and the data in the DB
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
+
+	}
+
+	/**
+	 * update the datas in the DB and refresh
+	 * @param updated
+	 */
+	@Override
+	public void modifyItem(Object updated) {
+
+	}
 	
-	@Override public void formReturn(Object result) {
+	@Override public void createItem(Object result) {
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
@@ -137,7 +154,7 @@ public class Controller_budgetList implements IController, Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		// event on the click of the button
-		btnAdd.setOnAction(event -> formReturn(null));//callform());
+		btnAdd.setOnAction(event -> createItem(null));//callform());
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		// we set the basics data
