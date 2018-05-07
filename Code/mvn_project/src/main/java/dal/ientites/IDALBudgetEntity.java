@@ -14,6 +14,7 @@ import java.sql.Date;
 public interface IDALBudgetEntity {
     /**
      * get budget id
+     *
      * @return budget id
      */
     @Id
@@ -22,12 +23,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set budget id
+     *
      * @param id of the budget
      */
     void setId(int id);
 
     /**
      * get the name of the budget
+     *
      * @return name of the budget
      */
     @Basic
@@ -36,12 +39,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set the name of the budget
+     *
      * @param name of the budget
      */
     void setName(String name);
 
     /**
      * get ammount of the budget
+     *
      * @return the ammount of the budget
      */
     @Basic
@@ -50,12 +55,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set amount of the budget
+     *
      * @param amount of the budget
      */
     void setAmount(double amount);
 
     /**
      * get if the budget is a shared budget
+     *
      * @return true if the budget is shared otherwise false
      */
     @Basic
@@ -64,12 +71,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set isshared budget
+     *
      * @param isshared if the budget isshared = true otherwise isshared = false
      */
     void setIsshared(boolean isshared);
 
     /**
      * get is a recurent budget
+     *
      * @return boolean if the budget is recurent return true else false
      */
     @Basic
@@ -78,12 +87,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set is recurrent
+     *
      * @param isrecurrent
      */
     void setIsrecurrent(boolean isrecurrent);
 
     /**
      * get starting date
+     *
      * @return Date when the budget started
      */
     @Basic
@@ -92,12 +103,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set starting date
+     *
      * @param startingdate starting date of the budget
      */
     void setStartingdate(Date startingdate);
 
     /**
      * get the termination date
+     *
      * @return the termination date
      */
     @Basic
@@ -106,12 +119,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set the termination date
+     *
      * @param endingdate termination date
      */
     void setEndingdate(Date endingdate);
 
     /**
      * get gap
+     *
      * @return the gap of the budget
      */
     @Basic
@@ -120,12 +135,14 @@ public interface IDALBudgetEntity {
 
     /**
      * set gap
+     *
      * @param gap of the budget
      */
     void setGap(Integer gap);
 
     /**
      * get client id
+     *
      * @return the client id
      */
     @Basic
@@ -134,6 +151,7 @@ public interface IDALBudgetEntity {
 
     /**
      * set the client id
+     *
      * @param clientId the client id
      */
     void setClientId(int clientId);

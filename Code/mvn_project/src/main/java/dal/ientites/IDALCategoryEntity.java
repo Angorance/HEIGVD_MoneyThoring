@@ -13,6 +13,7 @@ import javax.persistence.Id;
 public interface IDALCategoryEntity {
     /**
      * get categorie id
+     *
      * @return id of the category
      */
     @Id
@@ -21,12 +22,14 @@ public interface IDALCategoryEntity {
 
     /**
      * set the categorie id
+     *
      * @param id id of the category
      */
     void setId(int id);
 
     /**
      * get name of the category
+     *
      * @return String the name of the category
      */
     @Basic
@@ -35,12 +38,14 @@ public interface IDALCategoryEntity {
 
     /**
      * set the name of the category
+     *
      * @param name of the category
      */
     void setName(String name);
 
     /**
      * get colour of the category
+     *
      * @return String clour of the categorys
      */
     @Basic
@@ -49,12 +54,14 @@ public interface IDALCategoryEntity {
 
     /**
      * set the category colour
+     *
      * @param colour of the category
      */
     void setColour(String colour);
 
     /**
      * get if is a default category
+     *
      * @return if the is a defaulte categor ture else false
      */
     @Basic
@@ -63,12 +70,14 @@ public interface IDALCategoryEntity {
 
     /**
      * set is default categorie
+     *
      * @param isdefault true if is defaulte esle false
      */
     void setIsdefault(boolean isdefault);
 
     /**
      * get client id
+     *
      * @return the client id
      */
     @Basic
@@ -77,6 +86,7 @@ public interface IDALCategoryEntity {
 
     /**
      * set the client id
+     *
      * @param clientId id of the client
      */
     void setClientId(int clientId);

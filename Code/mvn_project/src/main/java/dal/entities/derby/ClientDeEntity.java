@@ -20,8 +20,10 @@ public class ClientDeEntity implements IDALClientEntity {
     private Collection<IDALBankaccountEntity> bankaccountsById;
 
 
-    /*@Id
-    @Column(name = "ID", nullable = true)*/
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Id
     @Column(name= "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,70 +31,125 @@ public class ClientDeEntity implements IDALClientEntity {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "USERNAME", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "EMAIL", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "PASSWORD", nullable = false, length = 250)
     public String getPassword() {
         return password;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "ISACTIVATED", nullable = false)
     public boolean getIsactivated() {
         return isactivated;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIsactivated(boolean isactivated) {
         this.isactivated = isactivated;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "ACTIVATIONKEY", nullable = true, length = 50)
     public String getActivationkey() {
         return activationkey;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setActivationkey(String activationkey) {
         this.activationkey = activationkey;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Basic
     @Column(name = "SALT", nullable = false, length = 50)
     public String getSalt() {
         return salt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,6 +164,9 @@ public class ClientDeEntity implements IDALClientEntity {
                 Objects.equals(salt, that.salt);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
 
