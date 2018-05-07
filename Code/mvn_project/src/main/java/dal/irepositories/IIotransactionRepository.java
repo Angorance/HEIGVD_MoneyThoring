@@ -45,8 +45,16 @@ public interface IIotransactionRepository {
     /**
      * delete otransaction by id
      *
-     * @param otransaction the otransaction would'you delete
+     * @param id the otransaction would'you delete
      * @throws DALException
      */
     public void delete(int id) throws DALException;
+
+    /**
+     * Retreave all iotransactions by bankaccount id
+     *
+     * @return List<IDALIotransactionEntity> the list of iotransaction by bankaccout
+     * @throws DALException
+     */
+    public List<IDALIotransactionEntity> getIotransactionByBankaccount(int bankaccountId) throws DALException;
 }

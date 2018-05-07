@@ -28,7 +28,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	private IController cba;
 	BankAccountLogic bal;
 	
-	public Controller_formBankAccount(IController cba,BankAccountLogic bal) {
+	public Controller_formBankAccount(IController cba, BankAccountLogic bal) {
 		
 		this.cba = cba;
 		this.bal = bal;
@@ -40,6 +40,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 * @param event
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
+		
 		cba.createItem(null);
 	}
 	
@@ -56,12 +57,11 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			String type = (String) typeAccount.getValue();
 			Double amountDouble = Double.parseDouble(amount.getText());
 			boolean isDefault = defaultAccount.isSelected();
-			if(bal == null) {
-				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault,
-						0);
+			if (bal == null) {
+				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault, 0);
 				cba.createItem(ba);
-			}else{
-				bal.update(name, bankName,type,amountDouble,isDefault);
+			} else {
+				bal.update(name, bankName, type, amountDouble, isDefault);
 				cba.modifyItem(bal);
 				cba.createItem(null);
 			}
@@ -92,7 +92,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		generateComboBoxItem();
 		
-		if(bal != null){
+		if (bal != null) {
 			nameAccount.setText(bal.getName());
 			nameBankAccount.setText(bal.getBankName());
 			amount.setText(String.valueOf(bal.getAmount()));

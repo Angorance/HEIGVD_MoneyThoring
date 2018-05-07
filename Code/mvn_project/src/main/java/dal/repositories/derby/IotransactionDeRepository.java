@@ -121,4 +121,19 @@ public class IotransactionDeRepository implements IIotransactionRepository {
         }
 
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALIotransactionEntity> getIotransactionByBankaccount(int bankaccountId) throws DALException {
+        List<IDALIotransactionEntity> iotransaction = null;
+        try {
+            iotransaction = session.createQuery("from IotransactionDeEntity where  bankaccountId = :bankaccountId").setParameter("bankaccountId", bankaccountId).list();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return iotransaction;
+    }
 }
