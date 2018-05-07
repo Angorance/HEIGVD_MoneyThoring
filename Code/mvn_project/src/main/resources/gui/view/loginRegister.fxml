@@ -22,7 +22,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <GridPane layoutX="20.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
+      <GridPane fx:id="login_GridPane" layoutX="20.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,7 +70,7 @@
             <DropShadow />
          </effect>
       </GridPane>
-      <GridPane fx:id="login_GridPane" layoutX="336.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
+      <GridPane layoutX="336.0" layoutY="50.0" prefHeight="383.0" prefWidth="300.0" styleClass="grid-pane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
