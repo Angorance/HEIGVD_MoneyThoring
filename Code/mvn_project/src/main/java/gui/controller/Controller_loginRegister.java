@@ -128,6 +128,11 @@ public class Controller_loginRegister implements Initializable {
 			register_message.setText("Le compte a été enregisté");
 			register_message.setTextFill(Color.GREEN);
 			register_message.setStyle("-fx-border-color: green");
+			
+			register_username.clear();
+			register_email.clear();
+			register_password.clear();
+			register_confirmPassword.clear();
 		}
 	}
 	

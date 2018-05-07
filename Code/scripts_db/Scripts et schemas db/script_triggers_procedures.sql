@@ -26,7 +26,7 @@ CREATE TRIGGER before_category_deleted
 /******* Trigger default category (OK) *******/
 CREATE OR REPLACE FUNCTION moneythoring.create_default_category() RETURNS TRIGGER AS $after_client_created$
     BEGIN
-    	INSERT INTO moneythoring.category (name, colour, isdefault, client_id) VALUES ('non-catégorisé', 'GREY', true, NEW.id);
+    	INSERT INTO moneythoring.category (name, colour, isdefault, client_id) VALUES ('non-catégorisé', '0xdcdcdc', true, NEW.id);
     	RETURN NULL;
     END
 $after_client_created$ LANGUAGE plpgsql;
