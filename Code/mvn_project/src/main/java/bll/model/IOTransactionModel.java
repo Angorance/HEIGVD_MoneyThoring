@@ -19,7 +19,7 @@ public class IOTransactionModel {
     private int id;
     private int BankAccountID;
     private int categoryID;
-    private int budgetID;
+    private Integer budgetID;
 
     private double amount;
 
@@ -74,7 +74,7 @@ public class IOTransactionModel {
             orm.commit();
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -198,7 +198,7 @@ public class IOTransactionModel {
      *
      * @return ID of the budget.
      */
-    public int getBudgetID() {
+    public Integer getBudgetID() {
 
         return budgetID;
     }
@@ -302,7 +302,7 @@ public class IOTransactionModel {
      *
      * @param budgetID New ID to set.
      */
-    public void setBudgetID(int budgetID) {
+    public void setBudgetID(Integer budgetID) {
 
         this.budgetID = budgetID;
     }

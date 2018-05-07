@@ -37,8 +37,9 @@ public class IOTransactionLogic extends IOTransactionModel {
         super(amount, name, description, date, currency, (amount >= 0));
 
         this.category = category;
-        
         setCategoryID(category.getId());
+	
+	    setBudgetID(null);
 
         bankAccount.addTransaction(this);
         
@@ -56,6 +57,8 @@ public class IOTransactionLogic extends IOTransactionModel {
         setDescription(description);
         setDate(date);
         setCurrency(currency);
+        
+        setBudgetID(null);
         
         this.category = category;
 	    setCategoryID(category.getId());

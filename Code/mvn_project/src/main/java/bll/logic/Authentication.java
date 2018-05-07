@@ -21,8 +21,6 @@ import org.apache.commons.codec.binary.Base64;
 public class Authentication {
 	
 	private static final Random RANDOM = new SecureRandom();
-	private static final int ITERATIONS = 10000;
-	private static final int KEY_LENGTH = 256;
 	
     // Regex to check email format. Found on the internet
     // stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method

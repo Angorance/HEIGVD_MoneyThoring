@@ -220,7 +220,6 @@ public class ClientLogic extends ClientModel {
 	
 	
 	protected void setDataFromDB() {
-		// TODO - check if connected
 		
 		try {
 			IORM orm = new PgORM();
