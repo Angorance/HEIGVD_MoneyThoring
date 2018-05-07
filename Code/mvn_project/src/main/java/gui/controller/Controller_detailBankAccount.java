@@ -112,7 +112,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 		}
 	}
 	
-	@Override public void formReturn(Object result) {
+	@Override public void createItem(Object result) {
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);

@@ -88,7 +88,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		loader.setController(cba);
 		paneform.setVisible(true);
 		paneform.setMouseTransparent(false);
-		
+		paneform.getChildren().clear();
 		try {
 			AnchorPane pane = loader.load();
 			// todo faire en sorte que le pane prenne les dimmensions du parent (paneform)
@@ -99,10 +99,10 @@ public class Controller_bankAccount implements Initializable, IController {
 	}
 	
 
-	/*Methode who create a AccountDisplayer and formReturn to the frame*/
-	public void formReturn(Object bal) {
+	/*Methode who create a AccountDisplayer and createItem to the frame*/
+	public void createItem(Object bal) {
 
-		paneform.getChildren().clear();
+		//paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
 		if (bal != null) {

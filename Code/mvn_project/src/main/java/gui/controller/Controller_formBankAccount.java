@@ -40,7 +40,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 * @param event
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
-		cba.formReturn(null);
+		cba.createItem(null);
 	}
 	
 	/**
@@ -59,11 +59,11 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			if(bal == null) {
 				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault,
 						0);
-				cba.formReturn(ba);
+				cba.createItem(ba);
 			}else{
 				bal.update(name, bankName,type,amountDouble,isDefault);
 				cba.modifyItem(bal);
-				cba.formReturn(null);
+				cba.createItem(null);
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		if(bal != null){
 			nameAccount.setText(bal.getName());
-			nameBankAccount.setText(bal.getName());
+			nameBankAccount.setText(bal.getBankName());
 			amount.setText(String.valueOf(bal.getAmount()));
 			typeAccount.getSelectionModel().select(bal.getType());
 			defaultAccount.setSelected(bal.isDefault());

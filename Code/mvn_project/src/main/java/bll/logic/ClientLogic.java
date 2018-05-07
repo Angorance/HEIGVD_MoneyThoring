@@ -111,6 +111,14 @@ public class ClientLogic extends ClientModel {
 		return visibles;
 	}
 	
+	public List<CategoryLogic> getCategories() {
+		return categories;
+	}
+	
+	public List<BudgetLogic> getBudgets() {
+		return budgets;
+	}
+	
 	
 	// SETTERS
 	
@@ -139,7 +147,7 @@ public class ClientLogic extends ClientModel {
 	 * already
 	 * being used by another client.
 	 *
-	 * TODO - Logic works if online. If not, when synchronising, formReturn
+	 * TODO - Logic works if online. If not, when synchronising, createItem
 	 * random number ?
 	 *
 	 * @param username New username to set.
@@ -170,7 +178,7 @@ public class ClientLogic extends ClientModel {
 	/**
 	 * Link a bank account to its client.
 	 *
-	 * @param ba Bank account to formReturn to the list.
+	 * @param ba Bank account to createItem to the list.
 	 */
 	public void addBankAccount(BankAccountLogic ba) {
 		

@@ -104,14 +104,6 @@ public class Controller_transactionList implements Initializable, IController {
 
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
-	
-	}
-	
-	@Override public void modifyItem(Object toUpdated) {
-	
-	}
-	
 	private void setData() {
 		
 		boolean selectedAccount = accountSelect.getSelectionModel().isEmpty();

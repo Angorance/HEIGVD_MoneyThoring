@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.logic.CategoryLogic;
+import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.effects.JFXDepthManager;
 import javafx.event.EventHandler;
@@ -119,7 +120,7 @@ public class Controller_categoryList implements Initializable, IController {
             CategoryLogic c = (CategoryLogic) toDelete;
             CategoryDisplayer d = displayerList.get(c.getId());
             listContainer.getChildren().removeAll(d);
-            // TODO delete in DB
+            c.supp();
         }
     }
 
@@ -132,7 +133,7 @@ public class Controller_categoryList implements Initializable, IController {
         unloadform();
         CategoryLogic c = (CategoryLogic) updated;
         displayerList.get(c.getId()).redraw();
-        // TODO update in the DB
+        c.update(c.getName(), c.getColor());
     }
 
     /**
@@ -148,22 +149,12 @@ public class Controller_categoryList implements Initializable, IController {
             displayerList.put(c.getId(), d);
             listContainer.getChildren().add(d);
         }
-
-        // TODO create in DB
     }
 
     private void unloadform() {
         formPane.getChildren().clear();
         formPane.setVisible(false);
         formPane.setMouseTransparent(true);
-    }
-    
-    @Override public void deleteItem(Object toDelete) {
-    
-    }
-    
-    @Override public void modifyItem(Object toUpdated) {
-    
     }
     
     
@@ -175,9 +166,15 @@ public class Controller_categoryList implements Initializable, IController {
         btnAdd.setOnAction(event -> callform(null));
         displayerList = new HashMap<>();
 
-        // TODO list the existing categories
+        // list the existing categories
+        for(CategoryLogic c : ClientLogic.getInstance().getCategories()){
+            CategoryDisplayer d = new CategoryDisplayer(c);
+            displayerList.put(c.getId(), d);
+            listContainer.getChildren().add(d);
+        }
 
         // sample category
+        /*
         CategoryLogic c = new CategoryLogic("Nourriture", "#20B4E6", false);
         c.setId(1);
         CategoryDisplayer d = new CategoryDisplayer(c);
@@ -187,6 +184,6 @@ public class Controller_categoryList implements Initializable, IController {
         c.setId(2);
         d = new CategoryDisplayer(c);
         displayerList.put(2, d);
-        listContainer.getChildren().add(d);
+        listContainer.getChildren().add(d);*/
     }
 }

@@ -55,7 +55,7 @@ public class BankAccountLogic extends BankAccountModel {
 	/**
 	 * Increment the bank account by the value of the parameter.
 	 *
-	 * @param io Income to formReturn to the amount.
+	 * @param io Income to createItem to the amount.
 	 */
 	private void updateAmount(double io) {
 		
@@ -65,7 +65,7 @@ public class BankAccountLogic extends BankAccountModel {
 	/**
 	 * Add the transaction to the transaction list of the bank account.
 	 *
-	 * @param transaction New transaction to formReturn to the list.
+	 * @param transaction New transaction to createItem to the list.
 	 */
 	public void addTransaction(IOTransactionLogic transaction) {
 		

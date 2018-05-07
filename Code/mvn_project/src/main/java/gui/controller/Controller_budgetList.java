@@ -126,8 +126,7 @@ public class Controller_budgetList implements IController, Initializable {
 	 * update the datas in the DB and refresh
 	 * @param updated
 	 */
-	@Override
-	public void modifyItem(Object updated) {
+	@Override public void modifyItem(Object updated) {
 
 	}
 	
@@ -142,14 +141,6 @@ public class Controller_budgetList implements IController, Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Override public void deleteItem(Object toDelete) {
-	
-	}
-	
-	@Override public void modifyItem(Object toUpdated) {
-	
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
