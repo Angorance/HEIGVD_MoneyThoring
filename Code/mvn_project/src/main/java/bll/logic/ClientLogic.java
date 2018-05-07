@@ -71,7 +71,7 @@ public class ClientLogic extends ClientModel {
 			System.out.println(e);
 		}
 		
-		setKey("SYdjcvkbejbsl"); //
+		setKey(KeyGenerator.generateKey(12));
 		
 		// TODO - Manage if connected and use Derby if necessary.
 		createUser(new PgORM());
