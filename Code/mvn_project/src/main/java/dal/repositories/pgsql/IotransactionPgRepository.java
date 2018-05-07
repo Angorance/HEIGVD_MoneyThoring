@@ -124,7 +124,7 @@ public class IotransactionPgRepository implements IIotransactionRepository {
      * {@inheritDoc}
      */
     @Override
-    public List<IDALIotransactionEntity> getIotransactionByBankaccountId(int bankaccountId) throws DALException {
+    public List<IDALIotransactionEntity> getIotransactionByBankaccount(int bankaccountId) throws DALException {
         List<IDALIotransactionEntity> iotransaction = null;
         try {
             iotransaction = session.createQuery("from IotransactionPgEntity where  bankaccountId = :bankaccountId").setParameter("bankaccountId", bankaccountId).list();

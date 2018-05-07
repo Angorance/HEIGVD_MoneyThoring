@@ -56,5 +56,5 @@ public interface IIotransactionRepository {
      * @return List<IDALIotransactionEntity> the list of iotransaction by bankaccout
      * @throws DALException
      */
-    public List<IDALIotransactionEntity> getIotransactionByBankaccountId(int bankaccountId) throws DALException;
+    public List<IDALIotransactionEntity> getIotransactionByBankaccount(int bankaccountId) throws DALException;
 }
