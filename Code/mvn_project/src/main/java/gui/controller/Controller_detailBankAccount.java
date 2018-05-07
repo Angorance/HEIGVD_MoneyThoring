@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class Controller_detailBankAccount implements Initializable,IController {
+public class Controller_detailBankAccount implements Initializable, IController {
 	
 	
 	@FXML private Label name;
@@ -60,7 +60,8 @@ public class Controller_detailBankAccount implements Initializable,IController {
 	}
 	
 	private void returnFrame() {
-		cba.initialize(null,null);
+		
+		cba.modifyItem(bal);
 	}
 	
 	private void generateNodeList() {
@@ -88,7 +89,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 	private void removeBankAccount() {
 		
 		bal.supp();
-		cba.initialize(null, null);
+		cba.deleteItem(bal);
 	}
 	
 	private void modifyBankAccount() {
@@ -97,7 +98,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formBankAccount cba = new Controller_formBankAccount(this,bal);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this, bal);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -113,6 +114,7 @@ public class Controller_detailBankAccount implements Initializable,IController {
 	}
 	
 	@Override public void createItem(Object result) {
+		
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
@@ -123,7 +125,8 @@ public class Controller_detailBankAccount implements Initializable,IController {
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
-		BankAccountLogic bal = (BankAccountLogic)toUpdated;
+		
+		BankAccountLogic bal = (BankAccountLogic) toUpdated;
 		this.name.setText(bal.getName());
 		this.nameBankAccount.setText(bal.getBankName());
 		this.typeBankAccount.setText(bal.getType());

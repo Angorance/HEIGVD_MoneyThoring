@@ -15,8 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -26,6 +28,9 @@ import java.util.ResourceBundle;
  * @version 1.5
  */
 public class Controller_bankAccount implements Initializable, IController {
+	
+	
+	HashMap<Integer, AccountDisplayer> displayerList;
 	
 	/**
 	 * class to display a bank account with a GridPane
@@ -38,6 +43,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		
 		private Label nameAccount;
 		private Label amountAccount;
+		private BankAccountLogic bankAccount;
 		
 		/**
 		 * Constructor of the class
@@ -46,6 +52,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		 */
 		public AccountDisplayer(BankAccountLogic bankAccount) {
 			
+			this.bankAccount = bankAccount;
 			nameAccount = new Label(bankAccount.getName());
 			amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
 			
@@ -66,6 +73,12 @@ public class Controller_bankAccount implements Initializable, IController {
 				}
 			});
 		}
+		
+		public void redraw() {
+			
+			nameAccount.setText(bankAccount.getName());
+			amountAccount.setText(String.valueOf(bankAccount.getAmount()));
+		}
 	}
 	
 	
@@ -82,13 +95,14 @@ public class Controller_bankAccount implements Initializable, IController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formBankAccount cba = new Controller_formBankAccount(this,null);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this, null);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
+		
 		paneform.setVisible(true);
 		paneform.setMouseTransparent(false);
-		paneform.getChildren().clear();
+		
 		try {
 			AnchorPane pane = loader.load();
 			// todo faire en sorte que le pane prenne les dimmensions du parent (paneform)
@@ -98,37 +112,49 @@ public class Controller_bankAccount implements Initializable, IController {
 		}
 	}
 	
-
+	
 	/*Methode who create a AccountDisplayer and createItem to the frame*/
 	public void createItem(Object bal) {
-
-		//paneform.getChildren().clear();
-		paneform.setMouseTransparent(true);
-		paneform.setVisible(false);
+		
+		unloadform();
 		if (bal != null) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
 		}
 	}
-
+	
 	/**
 	 * Delete the displayer and the data in the DB
+	 *
 	 * @param toDelete
 	 */
-	@Override
-	public void deleteItem(Object toDelete) {
-
+	@Override public void deleteItem(Object toDelete) {
+		
+		unloadform();
+		BankAccountLogic bal = (BankAccountLogic) toDelete;
+		frame_bankAccount.getChildren().remove(displayerList.get(bal.getId()));
+		
 	}
-
+	
+	private void unloadform() {
+		
+		paneform.getChildren().clear();
+		paneform.setMouseTransparent(true);
+		paneform.setVisible(false);
+	}
+	
 	/**
 	 * update the datas in the DB and refresh
+	 *
 	 * @param updated
 	 */
-	@Override
-	public void modifyItem(Object updated) {
-
+	@Override public void modifyItem(Object updated) {
+		
+		unloadform();
+		BankAccountLogic bal = (BankAccountLogic) updated;
+		displayerList.get(bal.getId()).redraw();
 	}
-
+	
 	/*Add an AccountDisplayer to the frame*/
 	private void addToFrame(AccountDisplayer accountDisplayer) {
 		
@@ -173,6 +199,8 @@ public class Controller_bankAccount implements Initializable, IController {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		displayerList = new HashMap<>();
+		
 		//Remove all children from FlowPane container (frame_bankAccount)
 		frame_bankAccount.getChildren().clear();
 		paneform.setVisible(false);
@@ -181,6 +209,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		//Go through the list of bank accounts and createItem it to our frame
 		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+			displayerList.put(bankAccount.getId(), accountDisplayer);
 			addToFrame(accountDisplayer);
 		}
 		
