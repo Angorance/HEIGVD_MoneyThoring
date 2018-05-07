@@ -1,6 +1,7 @@
 package bll.logic;
 
 import bll.mappers.DAL.DALClientMapper;
+import bll.model.ClientModel;
 import dal.ientites.IDALClientEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
@@ -21,8 +22,6 @@ import org.apache.commons.codec.binary.Base64;
 public class Authentication {
 	
 	private static final Random RANDOM = new SecureRandom();
-	private static final int ITERATIONS = 10000;
-	private static final int KEY_LENGTH = 256;
 	
     // Regex to check email format. Found on the internet
     // stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
@@ -134,6 +133,9 @@ public class Authentication {
 			
 			// Activate the client
 			ClientLogic.getInstance().setActivated(true);
+			
+			// Update the database
+			ClientLogic.getInstance().updateClientToDB();
 		}
 		
 		return isCorrect;
