@@ -1,6 +1,7 @@
 package bll.logic;
 
 import bll.mappers.DAL.DALClientMapper;
+import bll.model.ClientModel;
 import dal.ientites.IDALClientEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
@@ -132,6 +133,9 @@ public class Authentication {
 			
 			// Activate the client
 			ClientLogic.getInstance().setActivated(true);
+			
+			// Update the database
+			ClientLogic.getInstance().updateClientToDB();
 		}
 		
 		return isCorrect;

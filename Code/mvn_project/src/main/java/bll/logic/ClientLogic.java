@@ -71,24 +71,10 @@ public class ClientLogic extends ClientModel {
 			System.out.println(e);
 		}
 		
-		setKey("SYdjcvkbejbsl");
+		setKey(KeyGenerator.generateKey(12));
 		
 		// TODO - Manage if connected and use Derby if necessary.
 		createUser(new PgORM());
-	}
-	
-	
-	@Deprecated
-	public void connectedUser(int id, String email, String username,
-			String password) {
-		
-		setId(id);
-		setEmail(email);
-		setUsername(username);
-		setPassword(password);
-		setKey("SYdjcvkbejbsl");
-		
-		//setDataFromDB();
 	}
 	
 	// GETTERS
@@ -259,5 +245,12 @@ public class ClientLogic extends ClientModel {
 		client += "Salt: " + getSalt();
 		
 		return client;
+	}
+	
+	/**
+	 * Update the client into the database.
+	 */
+	public void updateClientToDB() {
+		updateUser(new PgORM());
 	}
 }

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import static java.lang.System.exit;
+
 public class startFrame extends Application {
 
     @Override
@@ -15,6 +17,7 @@ public class startFrame extends Application {
         primaryStage.setScene(new Scene(root, 650, 450));
         primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> exit(0));
     }
 
     public static void main(String[] args) {
