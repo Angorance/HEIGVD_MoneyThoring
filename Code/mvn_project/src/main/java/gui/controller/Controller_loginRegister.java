@@ -4,14 +4,16 @@ import bll.logic.Authentication;
 import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.effects.JFXDepthManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -38,7 +40,10 @@ public class Controller_loginRegister implements Initializable {
 	@FXML private JFXButton confirm_Button;
 	@FXML private JFXTextField confirm_textField;
 	@FXML private GridPane login_GridPane;
-	@FXML private GridPane login_Code;
+	@FXML private GridPane confirmation_GridPane;
+	@FXML private GridPane register_GridPane;
+	@FXML private JFXButton btnConfirmRetour;
+	@FXML private Hyperlink hplSendCode;
 	
 	
 	/**
@@ -72,7 +77,9 @@ public class Controller_loginRegister implements Initializable {
 				
 			} else {
 				login_GridPane.setVisible(false);
-				login_Code.setVisible(true);
+				login_GridPane.setMouseTransparent(true);
+				confirmation_GridPane.setVisible(true);
+				confirmation_GridPane.setMouseTransparent(false);
 			}
 			
 		}
@@ -146,6 +153,7 @@ public class Controller_loginRegister implements Initializable {
 			loadMainFrame();
 		} else {
 			confirm_incorrect.setText("Code invalide\nVeuillezr réessayer");
+			confirm_incorrect.setStyle("-fx-text-fill: red;-fx-border-color: red;-fx-border-width: 2px");
 			confirm_incorrect.setVisible(true);
 		}
 	}
@@ -173,6 +181,14 @@ public class Controller_loginRegister implements Initializable {
 		paneSpinner.setMouseTransparent(true);
 		login_password.setOnAction(this::clickLoginButton);
 		register_confirmPassword.setOnAction(this::clickRegisterButton);
+		login_GridPane.setMouseTransparent(false);
+		login_GridPane.setVisible(true);
+		confirmation_GridPane.setVisible(false);
+		confirmation_GridPane.setMouseTransparent(true);
+		
+		JFXDepthManager.setDepth(confirmation_GridPane, 3);
+		JFXDepthManager.setDepth(register_GridPane, 3);
+		JFXDepthManager.setDepth(login_GridPane, 3);
 		
 		confirm_Button.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -190,6 +206,19 @@ public class Controller_loginRegister implements Initializable {
 			}
 		});
 		confirm_textField.setOnMouseClicked(event -> resetConfirmErrorMessage());
+		btnConfirmRetour.setOnAction(event -> {
+			confirmation_GridPane.setVisible(false);
+			confirmation_GridPane.setMouseTransparent(true);
+			login_GridPane.setMouseTransparent(false);
+			login_GridPane.setVisible(true);
+		});
+		
+		hplSendCode.setOnMouseClicked(event -> {
+			Mail.sendMail(ClientLogic.getInstance().getUsername(), ClientLogic.getInstance().getEmail(), ClientLogic.getInstance().getKey());
+			confirm_incorrect.setVisible(true);
+			confirm_incorrect.setText("Le code a été ré-envoyé");
+			confirm_incorrect.setStyle("-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
+		});
 	}
 	
 	public void resetConfirmErrorMessage() {
