@@ -12,36 +12,51 @@ import org.hibernate.criterion.Restrictions;
 import javax.management.Query;
 import java.util.List;
 
+/**
+ * CategoryDeRepository give the access methodes for handle the categories into derby persistence
+ */
 public class CategoryDeRepository implements ICategoryRepository {
 
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of CategoryDeRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public CategoryDeRepository(Session session, Transaction transaction){
         this.session = session;
         this.transaction = transaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IDALCategoryEntity getCategory(int id) throws DALException {
-        CategoryDeEntity Category = null;
+        CategoryDeEntity category = null;
 
         try {
-            Category = (CategoryDeEntity) session.createCriteria(CategoryDeEntity.class)
+            category = (CategoryDeEntity) session.createCriteria(CategoryDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
 
-        return Category;
+        return category;
     }
 
-
-    public void addCategory(IDALCategoryEntity Category) throws DALException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addCategory(IDALCategoryEntity category) throws DALException {
 
         CategoryDeEntity newCategory = null;
-        if (Category.getClass() == CategoryDeEntity.class)
-            newCategory = (CategoryDeEntity) Category;
+        if (category.getClass() == CategoryDeEntity.class)
+            newCategory = (CategoryDeEntity) category;
         else
             throw new DALException();
 
@@ -52,45 +67,55 @@ public class CategoryDeRepository implements ICategoryRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<IDALCategoryEntity> getCategories() throws DALException{
-        List<IDALCategoryEntity> Categorys = null;
+        List<IDALCategoryEntity> categorys = null;
         try {
-            Categorys = session.createQuery("from CategoryDeEntity").list();
+            categorys = session.createQuery("from CategoryDeEntity").list();
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return Categorys;
+        return categorys;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException {
-        List<IDALCategoryEntity> Categorys = null;
+        List<IDALCategoryEntity> categorys = null;
         try {
-            Categorys = session.createQuery("from CategoryDeEntity where clientId = :clientid").setParameter("clientid",id).list();
+            categorys = session.createQuery("from CategoryDeEntity where clientId = :clientid").setParameter("clientid",id).list();
 
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return Categorys;
+        return categorys;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALCategoryEntity category) throws DALException{
 
-    public void update(IDALCategoryEntity Category) throws DALException{
-
-        CategoryDeEntity CategoryPg = null;
-        if (Category.getClass() == CategoryDeEntity.class)
-            CategoryPg = (CategoryDeEntity) Category;
+        CategoryDeEntity categoryPg = null;
+        if (category.getClass() == CategoryDeEntity.class)
+            categoryPg = (CategoryDeEntity) category;
         else
             throw new DALException();
 
         try {
 
 
-            session.update(CategoryPg);
+            session.update(categoryPg);
 
 
         } catch (Exception e) {
@@ -98,14 +123,18 @@ public class CategoryDeRepository implements ICategoryRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete(int id) throws DALException {
-        IDALCategoryEntity Category = null;
+        IDALCategoryEntity category = null;
         try {
-            Category = (CategoryDeEntity) session.createCriteria(CategoryDeEntity.class)
+            category = (CategoryDeEntity) session.createCriteria(CategoryDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(Category);
+            session.delete(category);
         } catch (Exception e) {
             throw new DALException(e);
         }

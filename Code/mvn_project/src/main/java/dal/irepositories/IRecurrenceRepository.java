@@ -6,13 +6,45 @@ import dal.ientites.IDALRecurrenceEntity;
 import java.util.List;
 
 public interface IRecurrenceRepository {
+
+    /**
+     * Retreave a recurrence by id
+     *
+     * @param id of the recurrence
+     * @return IDALRecurrenceEntity the recurrence
+     * @throws DALException
+     */
     public IDALRecurrenceEntity getRecurrence(int id) throws DALException;
 
+    /**
+     * Retreave all recurrence
+     *
+     * @return List<IDALRecurrenceEntity> the list of recurrence
+     * @throws DALException
+     */
     public List<IDALRecurrenceEntity> getRecurrences() throws DALException;
 
-    public void update(IDALRecurrenceEntity Recurrence) throws DALException;
+    /**
+     * Update recurrence
+     *
+     * @param recurrence the recurrence would'you update
+     * @throws DALException
+     */
+    public void update(IDALRecurrenceEntity recurrence) throws DALException;
 
-    public void addRecurrence(IDALRecurrenceEntity Recurrence) throws DALException;
+    /**
+     * add recurrence
+     *
+     * @param recurrence the recurrence would'you add
+     * @throws DALException
+     */
+    public void addRecurrence(IDALRecurrenceEntity recurrence) throws DALException;
 
+    /**
+     * delete recurrence by id
+     *
+     * @param recurrence the recurrence would'you delete
+     * @throws DALException
+     */
     public void delete(int id) throws DALException;
 }

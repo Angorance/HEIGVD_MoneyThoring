@@ -11,36 +11,52 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * BudgetDeRepository give the access methodes for handle the budget into derby persistence
+ */
 public class BudgetDeRepository implements IBudgetRepository {
 
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of BudgetDeRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public BudgetDeRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IDALBudgetEntity getBudget(int id) throws DALException {
-        BudgetDeEntity Budget = null;
+        BudgetDeEntity budget = null;
 
         try {
-            Budget = (BudgetDeEntity) session.createCriteria(BudgetDeEntity.class)
+            budget = (BudgetDeEntity) session.createCriteria(BudgetDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
 
-        return Budget;
+        return budget;
     }
 
 
-    public void addBudget(IDALBudgetEntity Budget) throws DALException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addBudget(IDALBudgetEntity budget) throws DALException {
 
-        BudgetDeEntity newBudget = null;
-        if (Budget.getClass() == BudgetDeEntity.class)
-            newBudget = (BudgetDeEntity) Budget;
+        BudgetDeEntity newBudget = (BudgetDeEntity) budget;
+        if (budget.getClass() == BudgetDeEntity.class)
+            newBudget = (BudgetDeEntity) budget;
         else
             throw new DALException();
 
@@ -51,19 +67,27 @@ public class BudgetDeRepository implements IBudgetRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<IDALBudgetEntity> getBudgets() throws DALException {
-        List<IDALBudgetEntity> Budgets = null;
+        List<IDALBudgetEntity> budgets = null;
         try {
-            Budgets = session.createQuery("from BudgetDeEntity").list();
+            budgets = session.createQuery("from BudgetDeEntity").list();
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return Budgets;
+        return budgets;
     }
-    
-    @Override public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException {
     
         List<IDALBudgetEntity> budgetEntities = null;
         try {
@@ -73,20 +97,23 @@ public class BudgetDeRepository implements IBudgetRepository {
         }
         return budgetEntities;
     }
-    
-    
-    public void update(IDALBudgetEntity Budget) throws DALException {
 
-        BudgetDeEntity BudgetPg = null;
-        if (Budget.getClass() == BudgetDeEntity.class)
-            BudgetPg = (BudgetDeEntity) Budget;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALBudgetEntity budget) throws DALException {
+
+        BudgetDeEntity budgetPg = null;
+        if (budget.getClass() == BudgetDeEntity.class)
+            budgetPg = (BudgetDeEntity) budget;
         else
             throw new DALException();
 
         try {
 
 
-            session.update(BudgetPg);
+            session.update(budgetPg);
 
 
         } catch (Exception e) {
@@ -94,14 +121,18 @@ public class BudgetDeRepository implements IBudgetRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete(int id) throws DALException {
-        IDALBudgetEntity Budget = null;
+        IDALBudgetEntity budget = null;
         try {
-            Budget = (BudgetDeEntity) session.createCriteria(BudgetDeEntity.class)
+            budget = (BudgetDeEntity) session.createCriteria(BudgetDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(Budget);
+            session.delete(budget);
         } catch (Exception e) {
             throw new DALException(e);
         }

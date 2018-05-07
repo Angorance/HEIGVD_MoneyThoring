@@ -17,167 +17,105 @@ public class IotransactionPgRepository implements IIotransactionRepository {
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of IotransactionPgRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public IotransactionPgRepository(Session session, Transaction transaction){
         this.session = session;
         this.transaction = transaction;
     }
 
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IDALIotransactionEntity getIotransaction(int id) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        IotransactionPgEntity bankaccont = null;
+        IotransactionPgEntity iotransaction = null;
+
         try {
-
-            tr = session.beginTransaction();
-
-            bankaccont = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
+            iotransaction = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            tr.commit();
         } catch (Exception e) {
-
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
-        return bankaccont;
+
+        return iotransaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALIotransactionEntity> getIotransactions() throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        List<IDALIotransactionEntity> Iotransactions = null;
+        List<IDALIotransactionEntity> iotransaction = null;
         try {
-            tr = session.beginTransaction();
+            iotransaction = session.createQuery("from IotransactionPgEntity").list();
 
-            Iotransactions = session.createQuery("from IotransactionPgEntity").list();
 
-            tr.commit();
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
-        return Iotransactions;
+        return iotransaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void update(IDALIotransactionEntity Iotransaction) throws DALException {
+    public void addIotransaction(IDALIotransactionEntity iotransaction) throws DALException {
 
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        IotransactionPgEntity IotransactionPG = null;
-        if (Iotransaction.getClass() == IotransactionPgEntity.class)
-            IotransactionPG = (IotransactionPgEntity) Iotransaction;
+        IotransactionPgEntity newIotransaction = null;
+        if (iotransaction.getClass() == IotransactionPgEntity.class)
+            newIotransaction = (IotransactionPgEntity) iotransaction;
         else
             throw new DALException();
 
         try {
-
-            tr = session.beginTransaction();
-
-            session.update(IotransactionPG);
-
-            tr.commit();
-        } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
-        }
-    }
-
-    @Override
-    public void addIotransaction(IDALIotransactionEntity Iotransaction) throws DALException {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-
-        IDALIotransactionEntity newIotransaction = null;
-        if (Iotransaction.getClass() == IotransactionPgEntity.class)
-            newIotransaction = (IotransactionPgEntity) Iotransaction;
-        else
-            throw new DALException();
-
-        try {
-            tr = session.beginTransaction();
             session.save(newIotransaction);
-            tr.commit();
-        } catch (RuntimeException e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+        } catch (Exception e) {
+            throw new DALException(e);
         }
-
     }
 
-    public void delete(int id) {
-        Session session = HibernateUtil.getPGSessionFactory().openSession();
-        Transaction tr = null;
-        IDALIotransactionEntity Iotransaction = null;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALIotransactionEntity iotransaction) throws DALException{
+
+        IotransactionPgEntity iotransactionDe = null;
+        if (iotransaction.getClass() == IotransactionPgEntity.class)
+            iotransactionDe = (IotransactionPgEntity) iotransaction;
+        else
+            throw new DALException();
+
         try {
 
-            tr = session.beginTransaction();
 
-            Iotransaction = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
+            session.update(iotransactionDe);
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(int id) throws DALException {
+        IDALIotransactionEntity iotransaction = null;
+        try {
+            iotransaction = (IotransactionPgEntity) session.createCriteria(IotransactionPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            session.delete(Iotransaction);
-
-            tr.commit();
+            session.delete(iotransaction);
         } catch (Exception e) {
-            try {
-                tr.rollback();
-            } catch (HibernateException he) {
-                throw he;
-            }
-        } finally {
-            try {
-                //session.flush();
-                session.close();
-            } catch (HibernateException he) {
-                System.out.println(he.toString());
-            }
+            throw new DALException(e);
         }
 
     }

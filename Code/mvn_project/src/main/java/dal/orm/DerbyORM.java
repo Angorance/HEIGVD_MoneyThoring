@@ -25,6 +25,9 @@ public class DerbyORM implements IORM {
     private IotransactionDeRepository iotranscationRepository;
     private IRecurrenceRepository recurrenceRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IClientRepository getClientRepository() {
         //if (clientRepository == null) {
@@ -33,6 +36,9 @@ public class DerbyORM implements IORM {
         return clientRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IBankaccountRepository getBankaccountRepository() {
         // if(bankaccountRepository == null){
@@ -41,6 +47,9 @@ public class DerbyORM implements IORM {
         return bankaccountRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ICategoryRepository getCategoryRepository() {
         categoryRepository =  new CategoryDeRepository(session, transaction);
@@ -59,9 +68,7 @@ public class DerbyORM implements IORM {
     }
 
     /**
-     * Construct an single instance of dbbtRepository and return it
-     *
-     * @return an instance of IDebtRepository
+     * {@inheritDoc}
      */
     @Override
     public IDebtRepository getDebtRepository() {
@@ -70,9 +77,7 @@ public class DerbyORM implements IORM {
     }
 
     /**
-     * Construct an single instance of clientrepositoriy and return it
-     *
-     * @return an instance of IClientRepository
+     * {@inheritDoc}
      */
     @Override
     public IRecurrenceRepository getRecurrenceRepository() {
@@ -81,9 +86,7 @@ public class DerbyORM implements IORM {
     }
 
     /**
-     * Construct an single instance of IotransactionDeRepository and return it
-     *
-     * @return an instance of IIotransactionRepository
+     * {@inheritDoc}
      */
     @Override
     public IIotransactionRepository getIotransactionRepository() {
@@ -116,6 +119,9 @@ public class DerbyORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void beginTransaction() throws DALException {
         try {
@@ -126,6 +132,9 @@ public class DerbyORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rollback() throws DALException {
         try {
@@ -135,6 +144,9 @@ public class DerbyORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void commit() throws DALException {
         try {

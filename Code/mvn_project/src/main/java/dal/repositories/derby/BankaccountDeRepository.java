@@ -12,46 +12,61 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * BankaccountDeRepository give the access methodes for handle the bank account into derby persistence
+ */
 public class BankaccountDeRepository implements IBankaccountRepository {
 
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of BankaccountDeRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public  BankaccountDeRepository(Session session, Transaction transaction){
         this.session = session;
         this.transaction = transaction;
     }
 
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IDALBankaccountEntity getBankaccount(int id) throws DALException {
-        BankaccountDeEntity BankAccount = null;
+        BankaccountDeEntity bankAccount = null;
 
         try {
-            BankAccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
+            bankAccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
 
-        return BankAccount;
+        return bankAccount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALBankaccountEntity> getBankaccounts() throws DALException {
-        List<IDALBankaccountEntity> BankAccounts = null;
+        List<IDALBankaccountEntity> bankAccounts = null;
         try {
-            BankAccounts = session.createQuery("from BankaccountDeEntity").list();
+            bankAccounts = session.createQuery("from BankaccountDeEntity").list();
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return BankAccounts;
+        return bankAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALBankaccountEntity> getBankAccoutsByClient(int id) throws DALException {
         List<IDALBankaccountEntity> bankaccountEntities = null;
@@ -63,19 +78,22 @@ public class BankaccountDeRepository implements IBankaccountRepository {
         return bankaccountEntities;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(IDALBankaccountEntity bankaccount) throws DALException {
 
-        BankaccountDeEntity BankAccountPg = null;
+        BankaccountDeEntity bankAccountPg = null;
         if (bankaccount.getClass() == BankaccountDeEntity.class)
-            BankAccountPg = (BankaccountDeEntity) bankaccount;
+            bankAccountPg = (BankaccountDeEntity) bankaccount;
         else
             throw new DALException();
 
         try {
 
 
-            session.update(BankAccountPg);
+            session.update(bankAccountPg);
 
 
         } catch (Exception e) {
@@ -84,6 +102,9 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
         BankaccountDeEntity newBankAccount = null;
@@ -100,15 +121,18 @@ public class BankaccountDeRepository implements IBankaccountRepository {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(int id) throws DALException {
-        IDALBankaccountEntity BankAccount = null;
+        IDALBankaccountEntity bankaccount = null;
         try {
-            BankAccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
+            bankaccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(BankAccount);
+            session.delete(bankaccount);
         } catch (Exception e) {
             throw new DALException(e);
         }

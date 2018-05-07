@@ -26,6 +26,9 @@ public class PgORM implements IORM {
     private IIotransactionRepository iotransactionRepository;
     private IRecurrenceRepository recurrenceRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IClientRepository getClientRepository() {
         //if (clientRepository == null) {
@@ -35,6 +38,9 @@ public class PgORM implements IORM {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IBankaccountRepository getBankaccountRepository() {
         //if (bankaccountRepository == null) {
@@ -44,9 +50,7 @@ public class PgORM implements IORM {
     }
 
     /**
-     * Construct an single instance of categoryrepostiory and return it
-     *
-     * @return an instance of ICategoryRepository
+     * {@inheritDoc}
      */
     @Override
     public ICategoryRepository getCategoryRepository() {
@@ -55,9 +59,7 @@ public class PgORM implements IORM {
     }
 
     /**
-     * Construct an single instance of budgetrepostiory and return it
-     *
-     * @return an instance of IBudgetRepository
+     * {@inheritDoc}
      */
     @Override
     public IBudgetRepository getBudgetRepository() {
@@ -67,9 +69,7 @@ public class PgORM implements IORM {
     }
 
     /**
-     * Construct an single instance of dbbtRepository and return it
-     *
-     * @return an instance of IDebtRepository
+     * {@inheritDoc}
      */
     @Override
     public IDebtRepository getDebtRepository() {
@@ -79,9 +79,7 @@ public class PgORM implements IORM {
     }
 
     /**
-     * Construct an single instance of recurrenceRepository and return it
-     *
-     * @return an instance of IRecurrenceRepository
+     * {@inheritDoc}
      */
     @Override
     public IRecurrenceRepository getRecurrenceRepository() {
@@ -90,9 +88,7 @@ public class PgORM implements IORM {
     }
 
     /**
-     * begin a transaction shared bitween all IIotransactionRepository
-     *
-     * @throws DALException
+     * {@inheritDoc}
      */
     @Override
     public IIotransactionRepository getIotransactionRepository() {
@@ -119,6 +115,9 @@ public class PgORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void beginTransaction() throws DALException {
         try {
@@ -130,6 +129,9 @@ public class PgORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rollback() throws DALException {
         try {
@@ -139,6 +141,9 @@ public class PgORM implements IORM {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void commit() throws DALException {
         try {

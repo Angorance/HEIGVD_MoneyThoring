@@ -10,34 +10,50 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * RecurrencePgRepository give the access methodes for handle the recurrence into derby persistence
+ */
 public class RecurrencePgRepository implements IRecurrenceRepository {
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of IotransactionDeRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public RecurrencePgRepository(Session session, Transaction transaction) {
         this.session = session;
         this.transaction = transaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IDALRecurrenceEntity getRecurrence(int id) throws DALException {
-        RecurrencePgEntity Recurrence = null;
+        RecurrencePgEntity recurrence = null;
 
         try {
-            Recurrence = (RecurrencePgEntity) session.createCriteria(RecurrencePgEntity.class)
+            recurrence = (RecurrencePgEntity) session.createCriteria(RecurrencePgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
 
-        return Recurrence;
+        return recurrence;
     }
 
-    public void addRecurrence(IDALRecurrenceEntity Recurrence) throws DALException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addRecurrence(IDALRecurrenceEntity recurrence) throws DALException {
         
         RecurrencePgEntity newRecurrence = null;
-        if (Recurrence.getClass() == RecurrencePgEntity.class)
-            newRecurrence = (RecurrencePgEntity) Recurrence;
+        if (recurrence.getClass() == RecurrencePgEntity.class)
+            newRecurrence = (RecurrencePgEntity) recurrence;
         else
             throw new DALException();
 
@@ -48,30 +64,38 @@ public class RecurrencePgRepository implements IRecurrenceRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<IDALRecurrenceEntity> getRecurrences() throws DALException {
-        List<IDALRecurrenceEntity> Recurrences = null;
+        List<IDALRecurrenceEntity> recurrence = null;
         try {
-            Recurrences = session.createQuery("from RecurrencePgEntity").list();
+            recurrence = session.createQuery("from RecurrencePgEntity").list();
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return Recurrences;
+        return recurrence;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update(IDALRecurrenceEntity Recurrence) throws DALException {
 
-        RecurrencePgEntity RecurrencePg = null;
+        RecurrencePgEntity recurrencePg = null;
         if (Recurrence.getClass() == RecurrencePgEntity.class)
-            RecurrencePg = (RecurrencePgEntity) Recurrence;
+            recurrencePg = (RecurrencePgEntity) Recurrence;
         else
             throw new DALException();
 
         try {
 
 
-            session.update(RecurrencePg);
+            session.update(recurrencePg);
 
 
         } catch (Exception e) {
@@ -80,6 +104,10 @@ public class RecurrencePgRepository implements IRecurrenceRepository {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete(int id) throws DALException {
         IDALRecurrenceEntity Recurrence = null;
         try {

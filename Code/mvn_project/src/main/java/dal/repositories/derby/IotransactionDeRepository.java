@@ -11,49 +11,67 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * IotransactionDeRepository give the access methodes for handle the iotransaction into derby persistence
+ */
 public class IotransactionDeRepository implements IIotransactionRepository {
 
     private Session session;
     private Transaction transaction;
 
+    /**
+     * Constructor of IotransactionDeRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
     public IotransactionDeRepository(Session session, Transaction transaction){
         this.session = session;
         this.transaction = transaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IDALIotransactionEntity getIotransaction(int id) throws DALException {
-        IotransactionDeEntity Iotransaction = null;
+        IotransactionDeEntity iotransaction = null;
 
         try {
-            Iotransaction = (IotransactionDeEntity) session.createCriteria(IotransactionDeEntity.class)
+            iotransaction = (IotransactionDeEntity) session.createCriteria(IotransactionDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
         }
 
-        return Iotransaction;
+        return iotransaction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALIotransactionEntity> getIotransactions() throws DALException {
-        List<IDALIotransactionEntity> Iotransactions = null;
+        List<IDALIotransactionEntity> iotransaction = null;
         try {
-            Iotransactions = session.createQuery("from IotransactionDeEntity").list();
+            iotransaction = session.createQuery("from IotransactionDeEntity").list();
 
 
         } catch (Exception e) {
             throw new DALException(e);
         }
-        return Iotransactions;
+        return iotransaction;
     }
 
-
-    public void addIotransaction(IDALIotransactionEntity Iotransaction) throws DALException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addIotransaction(IDALIotransactionEntity iotransaction) throws DALException {
 
         IotransactionDeEntity newIotransaction = null;
-        if (Iotransaction.getClass() == IotransactionDeEntity.class)
-            newIotransaction = (IotransactionDeEntity) Iotransaction;
+        if (iotransaction.getClass() == IotransactionDeEntity.class)
+            newIotransaction = (IotransactionDeEntity) iotransaction;
         else
             throw new DALException();
 
@@ -64,21 +82,22 @@ public class IotransactionDeRepository implements IIotransactionRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALIotransactionEntity iotransaction) throws DALException{
 
-
-
-    public void update(IDALIotransactionEntity Iotransaction) throws DALException{
-
-        IotransactionDeEntity IotransactionPg = null;
-        if (Iotransaction.getClass() == IotransactionDeEntity.class)
-            IotransactionPg = (IotransactionDeEntity) Iotransaction;
+        IotransactionDeEntity iotransactionDe = null;
+        if (iotransaction.getClass() == IotransactionDeEntity.class)
+            iotransactionDe = (IotransactionDeEntity) iotransaction;
         else
             throw new DALException();
 
         try {
 
 
-            session.update(IotransactionPg);
+            session.update(iotransactionDe);
 
 
         } catch (Exception e) {
@@ -86,14 +105,17 @@ public class IotransactionDeRepository implements IIotransactionRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete(int id) throws DALException {
-        IDALIotransactionEntity Iotransaction = null;
+        IDALIotransactionEntity iotransaction = null;
         try {
-            Iotransaction = (IotransactionDeEntity) session.createCriteria(IotransactionDeEntity.class)
+            iotransaction = (IotransactionDeEntity) session.createCriteria(IotransactionDeEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
-
-            session.delete(Iotransaction);
+            session.delete(iotransaction);
         } catch (Exception e) {
             throw new DALException(e);
         }

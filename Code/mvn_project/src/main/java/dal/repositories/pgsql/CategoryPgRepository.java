@@ -13,114 +13,132 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * CategoryPgRepository give the access methodes for handle the category into postgres persistence
+ */
 public class CategoryPgRepository implements ICategoryRepository {
-	
-	private Session session;
-	private Transaction transaction;
-	
-	public CategoryPgRepository(Session session, Transaction transaction) {
-		
-		this.session = session;
-		this.transaction = transaction;
-	}
-	
-	
-	@Override
-	public IDALCategoryEntity getCategory(int id) throws DALException {
-		
-		CategoryPgEntity Category = null;
-		
-		try {
-			Category = (CategoryPgEntity) session
-					.createCriteria(CategoryPgEntity.class)
-					.add(Restrictions.eq("id", id)).uniqueResult();
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		
-		return Category;
-	}
-	
-	@Override
-	public List<IDALCategoryEntity> getCategories() throws DALException {
-		
-		List<IDALCategoryEntity> Categorys = null;
-		try {
-			Categorys = session.createQuery("from CategoryPgEntity").list();
-			
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		return Categorys;
-	}
-	
-	@Override
-	public List<IDALCategoryEntity> getCategoriesByClientId(int id)
-			throws DALException {
-		
-		List<IDALCategoryEntity> Categorys = null;
-		try {
-			Categorys = session.createQuery(
-					"from CategoryPgEntity where clientId = :clientid")
-					.setParameter("clientid", id).list();
-			
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		return Categorys;
-	}
-	
-	
-	@Override
-	public void update(IDALCategoryEntity Category) throws DALException {
-		
-		CategoryPgEntity CategoryPg = null;
-		if (Category.getClass() == CategoryPgEntity.class) {
-			CategoryPg = (CategoryPgEntity) Category;
-		} else {
-			throw new DALException();
-		}
-		
-		try {
-			
-			
-			session.update(CategoryPg);
-			
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
-	
-	@Override
-	public void addCategory(IDALCategoryEntity category) throws DALException {
-		
-		CategoryPgEntity newCategory = null;
-		if (category.getClass() == CategoryPgEntity.class) {
-			newCategory = (CategoryPgEntity) category;
-		} else {
-			throw new DALException();
-		}
-		
-		try {
-			session.save(newCategory);
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
-	
-	@Override
-	public void delete(int id) throws DALException {
-		
-		IDALCategoryEntity Category = null;
-		
-		try {
-			Category = (CategoryPgEntity) session
-					.createCriteria(CategoryPgEntity.class)
-					.add(Restrictions.eq("id", id)).uniqueResult();
-			
-			session.delete(Category);
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
+    private Session session;
+    private Transaction transaction;
+
+
+    /**
+     * Constructor of CategoryPgRepository
+     *
+     * @param session     current session used
+     * @param transaction current transaction used into the same session
+     */
+    public CategoryPgRepository(Session session, Transaction transaction) {
+        this.session = session;
+        this.transaction = transaction;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IDALCategoryEntity getCategory(int id) throws DALException {
+        CategoryPgEntity category = null;
+
+        try {
+            category = (CategoryPgEntity) session.createCriteria(CategoryPgEntity.class)
+                    .add(Restrictions.eq("id", id))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return category;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALCategoryEntity> getCategories() throws DALException {
+
+        List<IDALCategoryEntity> categorys = null;
+        try {
+            categorys = session.createQuery("from CategoryPgEntity").list();
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return categorys;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALCategoryEntity> getCategoriesByClientId(int id) throws DALException {
+        List<IDALCategoryEntity> categorys = null;
+        try {
+            categorys = session.createQuery("from CategoryPgEntity where clientId = :clientid").setParameter("clientid", id).list();
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return categorys;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALCategoryEntity Category) throws DALException {
+        CategoryPgEntity categoryPg = null;
+        if (Category.getClass() == CategoryPgEntity.class)
+            categoryPg = (CategoryPgEntity) Category;
+        else
+            throw new DALException();
+
+        try {
+
+
+            session.update(categoryPg);
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addCategory(IDALCategoryEntity Category) throws DALException {
+        CategoryPgEntity newCategory = null;
+        if (newCategory.getClass() == CategoryPgEntity.class)
+            newCategory = (CategoryPgEntity) newCategory;
+        else
+            throw new DALException();
+
+        try {
+            session.save(newCategory);
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(int id) throws DALException {
+        IDALCategoryEntity category = null;
+        try {
+            category = (CategoryPgEntity) session.createCriteria(CategoryPgEntity.class)
+                    .add(Restrictions.eq("id", id))
+                    .uniqueResult();
+
+            session.delete(category);
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
 }

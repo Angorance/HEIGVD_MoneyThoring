@@ -10,6 +10,9 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * BudgetDeRepository give the access methodes for handle the budget into postgres persistence
+ */
 public class BudgetPgRepository implements IBudgetRepository {
     private Session session;
     private Transaction transaction;
@@ -20,6 +23,9 @@ public class BudgetPgRepository implements IBudgetRepository {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IDALBudgetEntity getBudget(int id) throws DALException {
         BudgetPgEntity Budget = null;
@@ -36,6 +42,9 @@ public class BudgetPgRepository implements IBudgetRepository {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALBudgetEntity> getBudgets() throws DALException {
 
@@ -49,23 +58,29 @@ public class BudgetPgRepository implements IBudgetRepository {
         }
         return Budgets;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException {
         List<IDALBudgetEntity> budgetEntities = null;
         try {
-            budgetEntities = session.createQuery("from BudgetPgEntity where clientId = :clientid").setParameter("clientid",id).list();
+            budgetEntities = session.createQuery("from BudgetPgEntity where clientId = :clientid").setParameter("clientid", id).list();
         } catch (Exception e) {
             throw new DALException(e);
         }
         return budgetEntities;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void update(IDALBudgetEntity Budget) throws DALException {
+    public void update(IDALBudgetEntity budget) throws DALException {
         BudgetPgEntity BudgetPg = null;
-        if (Budget.getClass() == BudgetPgEntity.class)
-            BudgetPg = (BudgetPgEntity) Budget;
+        if (budget.getClass() == BudgetPgEntity.class)
+            BudgetPg = (BudgetPgEntity) budget;
         else
             throw new DALException();
 
@@ -80,11 +95,14 @@ public class BudgetPgRepository implements IBudgetRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addBudget(IDALBudgetEntity Budget) throws DALException {
+    public void addBudget(IDALBudgetEntity budget) throws DALException {
         BudgetPgEntity newBudget = null;
         if (newBudget.getClass() == BudgetPgEntity.class)
-            newBudget = (BudgetPgEntity) newBudget;
+            newBudget = (BudgetPgEntity) budget;
         else
             throw new DALException();
 
@@ -95,15 +113,18 @@ public class BudgetPgRepository implements IBudgetRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void delete(int id) throws DALException {
-        IDALBudgetEntity Budget = null;
+        IDALBudgetEntity budget = null;
         try {
-            Budget = (BudgetPgEntity) session.createCriteria(BudgetPgEntity.class)
+            budget = (BudgetPgEntity) session.createCriteria(BudgetPgEntity.class)
                     .add(Restrictions.eq("id", id))
                     .uniqueResult();
 
-            session.delete(Budget);
+            session.delete(budget);
         } catch (Exception e) {
             throw new DALException(e);
         }
