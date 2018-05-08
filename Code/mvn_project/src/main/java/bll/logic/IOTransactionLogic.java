@@ -6,6 +6,10 @@ import dal.orm.IORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * TODO
@@ -16,6 +20,8 @@ import java.sql.Date;
 public class IOTransactionLogic extends IOTransactionModel {
 
     private CategoryLogic category;
+    
+    private static Set yearsWithTransactions = new TreeSet();
 
 
     public IOTransactionLogic() {}
@@ -45,8 +51,21 @@ public class IOTransactionLogic extends IOTransactionModel {
         
         createIOTransaction(new PgORM());
     }
-    
-    /**
+	
+	@Override
+	public void setDate(Date date) {
+		
+		super.setDate(date);
+		
+		yearsWithTransactions.add(date.getYear());
+	}
+	
+	public static Set getYearsWithTransactions() {
+		
+		return yearsWithTransactions;
+	}
+	
+	/**
      * TODO
      */
     public void update(double amount, String name, String description,

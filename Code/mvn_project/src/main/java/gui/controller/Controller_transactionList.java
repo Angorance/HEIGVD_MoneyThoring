@@ -36,24 +36,36 @@ import java.util.*;
 public class Controller_transactionList implements Initializable, IController {
 	
 	
-	@FXML private AnchorPane parent;
-	@FXML private AnchorPane paneform;
-	@FXML private ComboBox<BankAccountLogic> accountSelect;
-	@FXML private ComboBox<String> periodSelect;
-	@FXML private ComboBox<String> monthSelect;
-	@FXML private Label lblTotalDepense;
-	@FXML private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
-	@FXML private Label lblTotalRevenu;
-	@FXML private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
-	@FXML private JFXNodesList nodeList;
+	@FXML
+	private AnchorPane parent;
+	@FXML
+	private AnchorPane paneform;
+	@FXML
+	private ComboBox<BankAccountLogic> accountSelect;
+	@FXML
+	private ComboBox<String> periodSelect;
+	@FXML
+	private ComboBox<String> monthSelect;
+	@FXML
+	private Label lblTotalDepense;
+	@FXML
+	private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
+	@FXML
+	private Label lblTotalRevenu;
+	@FXML
+	private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
+	@FXML
+	private JFXNodesList nodeList;
 	
 	private JFXButton transactionButton;
 	private JFXButton outGoButton;
 	private JFXButton incomeButton;
 	
 	
-	private ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
-	private ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
+	private ObservableList<WrapperTransaction> income = FXCollections
+			.observableArrayList();
+	private ObservableList<WrapperTransaction> outgo = FXCollections
+			.observableArrayList();
 	
 	private BankAccountLogic bal;
 	
@@ -62,10 +74,12 @@ public class Controller_transactionList implements Initializable, IController {
 	 */
 	public void callform(boolean isIncome) {
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formTransaction.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formTransaction controller = new Controller_formTransaction(this,isIncome);
+		Controller_formTransaction controller = new Controller_formTransaction(
+				this, isIncome);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(controller);
@@ -81,28 +95,32 @@ public class Controller_transactionList implements Initializable, IController {
 		}
 	}
 	
-	@Override public void createItem(Object result) {
+	@Override
+	public void createItem(Object result) {
+		
 		paneform.getChildren().clear();
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
 	}
-
+	
 	/**
 	 * Delete the displayer and the data in the DB
+	 *
 	 * @param toDelete
 	 */
 	@Override
 	public void deleteItem(Object toDelete) {
-
+	
 	}
-
+	
 	/**
 	 * update the datas in the DB and refresh
+	 *
 	 * @param updated
 	 */
 	@Override
 	public void modifyItem(Object updated) {
-
+	
 	}
 	
 	private void setData() {
@@ -112,78 +130,89 @@ public class Controller_transactionList implements Initializable, IController {
 		boolean selectedPeriode = periodSelect.getSelectionModel().isEmpty();
 		boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
 		
-		JFXTreeTableColumn<WrapperTransaction, String> dateIncome = new JFXTreeTableColumn<>("Date");
+		JFXTreeTableColumn<WrapperTransaction, String> dateIncome
+				= new JFXTreeTableColumn<>("Date");
 		dateIncome.setMinWidth(150);
 		dateIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().date;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> nameIncome = new JFXTreeTableColumn<>("nom");
+		JFXTreeTableColumn<WrapperTransaction, String> nameIncome
+				= new JFXTreeTableColumn<>("nom");
 		nameIncome.setMinWidth(150);
 		nameIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().name;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> amountIncome = new JFXTreeTableColumn<>("montant");
+		JFXTreeTableColumn<WrapperTransaction, String> amountIncome
+				= new JFXTreeTableColumn<>("montant");
 		amountIncome.setMinWidth(150);
 		amountIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().amount;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo = new JFXTreeTableColumn<>("Date");
+		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo
+				= new JFXTreeTableColumn<>("Date");
 		dateOutgo.setMinWidth(150);
 		dateOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().date;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo = new JFXTreeTableColumn<>("nom");
+		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo
+				= new JFXTreeTableColumn<>("nom");
 		nameOutgo.setMinWidth(150);
 		nameOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().name;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo = new JFXTreeTableColumn<>("montant");
+		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo
+				= new JFXTreeTableColumn<>("montant");
 		amoutOutgo.setMinWidth(150);
 		amoutOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().amount;
 					}
 				});
-		
 		
 		
 		if (!selectedAccount && !selectedPeriode && !selectedTime) {
@@ -201,14 +230,18 @@ public class Controller_transactionList implements Initializable, IController {
 			}
 			
 			
-			TreeItem<WrapperTransaction> root = new RecursiveTreeItem<WrapperTransaction>(income,
+			TreeItem<WrapperTransaction> root
+					= new RecursiveTreeItem<WrapperTransaction>(income,
 					RecursiveTreeObject::getChildren);
-			incomeTreeTableView.getColumns().setAll(dateIncome, nameIncome, amountIncome);
+			incomeTreeTableView.getColumns()
+					.setAll(dateIncome, nameIncome, amountIncome);
 			incomeTreeTableView.setRoot(root);
 			incomeTreeTableView.setShowRoot(false);
 			
-			root = new RecursiveTreeItem<WrapperTransaction>(outgo, RecursiveTreeObject::getChildren);
-			outGoTreeTableView.getColumns().setAll(dateOutgo, nameOutgo, amoutOutgo);
+			root = new RecursiveTreeItem<WrapperTransaction>(outgo,
+					RecursiveTreeObject::getChildren);
+			outGoTreeTableView.getColumns()
+					.setAll(dateOutgo, nameOutgo, amoutOutgo);
 			outGoTreeTableView.setRoot(root);
 			outGoTreeTableView.setShowRoot(false);
 		}
@@ -259,11 +292,11 @@ public class Controller_transactionList implements Initializable, IController {
 		}*/
 		
 		
-		for (IOTransactionLogic transaction : bal.getTransactions().get(year)[month]) {
-			if (transaction.isIncome()) {
-				income.add(new WrapperTransaction(transaction));
+		for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+			if (tr.isIncome()) {
+				income.add(new WrapperTransaction(tr));
 			} else {
-				outgo.add(new WrapperTransaction(transaction));
+				outgo.add(new WrapperTransaction(tr));
 			}
 		}
 	}
@@ -273,13 +306,14 @@ public class Controller_transactionList implements Initializable, IController {
 		ObservableList<String> items3 = FXCollections.observableArrayList();
 		items3.clear();
 		if (periodSelect.getValue().equals("Mensuel")) {
-			items3.addAll("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre",
-					"Octobre", "Novembre", "Décembre");
+			items3.addAll("Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+					"Juillet", "Aout", "Septembre", "Octobre", "Novembre",
+					"Décembre");
 		} else if (periodSelect.getValue().equals("Annuel")) {
 			int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 			int firstYear = currentYear + 1;
-			for(int i : bal.getTransactions().keySet()){
-				if( firstYear > i){
+			for (int i : bal.getTransactions().keySet()) {
+				if (firstYear > i) {
 					firstYear = i;
 				}
 			}
@@ -294,13 +328,16 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		transactionButton = new JFXButton();
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		transactionButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub");
+		transactionButton.getStyleClass().addAll("transaction-animate-button",
+				"transaction-animate-button-sub");
 		outGoButton = new JFXButton("Dep");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
-		outGoButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		outGoButton.getStyleClass().addAll("transaction-animate-button",
+				"transaction-animate-button-sub-2");
 		incomeButton = new JFXButton("Rev");
 		incomeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		incomeButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		incomeButton.getStyleClass().addAll("transaction-animate-button",
+				"transaction-animate-button-sub-2");
 		
 		nodeList.addAnimatedNode(transactionButton);
 		nodeList.addAnimatedNode(outGoButton);
@@ -310,8 +347,11 @@ public class Controller_transactionList implements Initializable, IController {
 	}
 	
 	private void generateComboBoxItem() {
-		ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
-		for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+		
+		ObservableList<BankAccountLogic> items = FXCollections
+				.observableArrayList();
+		for (BankAccountLogic bal : ClientLogic.getInstance()
+				.getBankAccounts()) {
 			items.add(bal);
 		}
 		accountSelect.setItems(items);
@@ -323,13 +363,17 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	
 	/**
-	 * Called to initialize a controller after its root element has been completely processed.
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
 	 *
-	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
 	 * 		known.
-	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		paneform.setVisible(false);
 		paneform.setMouseTransparent(true);
@@ -338,7 +382,8 @@ public class Controller_transactionList implements Initializable, IController {
 		generateComboBoxItem();
 		accountSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				setData();
 			}
@@ -346,7 +391,8 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		periodSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				yearOrMonth();
 				setData();
@@ -355,7 +401,8 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		monthSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				setData();
 			}
@@ -363,7 +410,8 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		outGoButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callform(false);
 			}
@@ -371,7 +419,8 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		incomeButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callform(true);
 			}

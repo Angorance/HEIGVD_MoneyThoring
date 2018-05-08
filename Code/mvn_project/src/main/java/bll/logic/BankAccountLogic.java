@@ -26,6 +26,9 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	private ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
 	
+	private HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsMap
+			= new HashMap<>();
+	
 	
 	public BankAccountLogic() {
 		
@@ -53,6 +56,28 @@ public class BankAccountLogic extends BankAccountModel {
 		createBankAccount(new PgORM());
 	}
 	
+	private void addToHashMap(IOTransactionLogic tl) {
+		
+		Date date = tl.getDate();
+		int year = date.getYear();
+		
+		if (transactionsMap.containsKey(year)) {
+			
+			transactionsMap.get(year)[date.getMonth()].add(tl);
+		} else {
+			
+			ArrayList<IOTransactionLogic>[] tab = new ArrayList[12];
+			
+			for (int i = 0; i < 12; ++i) {
+				tab[i] = new ArrayList<>();
+			}
+			
+			transactionsMap.put(year, tab);
+			
+			tab[date.getMonth()].add(tl);
+		}
+	}
+	
 	public String toString() {
 		
 		return getName();
@@ -77,6 +102,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		transactions.add(transaction);
 		transaction.setBankAccountID(getId());
+		addToHashMap(transaction);
 		
 		updateAmount(transaction.getAmount());
 	}
@@ -88,32 +114,7 @@ public class BankAccountLogic extends BankAccountModel {
 	 */
 	public HashMap<Integer, ArrayList<IOTransactionLogic>[]> getTransactions() {
 		
-		HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsList
-				= new HashMap<>();
-		
-		for (IOTransactionLogic transaction : transactions) {
-		
-			Date date = transaction.getDate();
-			int year = date.getYear();
-			
-			if (transactionsList.containsKey(year)) {
-			
-				transactionsList.get(year)[date.getMonth()].add(transaction);
-			} else {
-				
-				ArrayList<IOTransactionLogic>[] tab = new ArrayList[12];
-				
-				for (int i = 0; i < 12; ++i) {
-					tab[i] = new ArrayList<>();
-				}
-			
-				transactionsList.put(year, tab);
-				
-				tab[date.getMonth()].add(transaction);
-			}
-		}
-		
-		return transactionsList;
+		return transactionsMap;
 	}
 	
 	/**
@@ -184,7 +185,7 @@ public class BankAccountLogic extends BankAccountModel {
 			List<IDALIotransactionEntity> ba = orm.getIotransactionRepository()
 					.getIotransactionsByBankaccount(getId());
 			
-			DALIOTransactionMapper.toBos(ba);
+			transactions.addAll(DALIOTransactionMapper.toBos(ba));
 			
 		} catch (DALException e) {
 			e.printStackTrace();
