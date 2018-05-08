@@ -94,6 +94,26 @@ public class DerbyORM implements IORM {
         return iotranscationRepository;
     }
 
+    /**
+     * Construct an single instance of ICategoriesBudgetRepository
+     *
+     * @throws DALException
+     */
+    @Override
+    public ICategoriesBudgetRepository getCategoriesBudgetRepository() {
+        return null;
+    }
+
+    /**
+     * Construct an single instance of ISharedBudgetRepository
+     *
+     * @throws DALException
+     */
+    @Override
+    public ISharedBudgetRepository getSharedBudgetRepository() {
+        return null;
+    }
+
     private void openSession() throws DALException {
         //if(sessionFactory == null) {
         try {

@@ -51,11 +51,25 @@ public interface IORM {
 	IRecurrenceRepository getRecurrenceRepository();
 	
 	/**
-	 * begin a transaction shared bitween all IIotransactionRepository
+	 * Construct an single instance of IIotransactionRepository
 	 *
 	 * @throws DALException
 	 */
 	IIotransactionRepository getIotransactionRepository();
+
+	/**
+	 * Construct an single instance of ICategoriesBudgetRepository
+	 *
+	 * @throws DALException
+	 */
+	ICategoriesBudgetRepository getCategoriesBudgetRepository();
+
+	/**
+	 * Construct an single instance of ISharedBudgetRepository
+	 *
+	 * @throws DALException
+	 */
+	ISharedBudgetRepository getSharedBudgetRepository();
 	
 	/**
 	 * begin a transaction shared bitween all repositories

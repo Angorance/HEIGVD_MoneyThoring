@@ -1,5 +1,6 @@
 package gui.controller;
 
+import bll.logic.BudgetLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
@@ -7,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -22,6 +25,9 @@ public class Controller_budgetList implements IController, Initializable {
 	@FXML private VBox paneList;
 	@FXML private JFXButton btnAdd;
 	@FXML private AnchorPane paneForm;
+	@FXML private ScrollPane scrollPane;
+	
+	HashMap<Integer, budgetDisplayer> displayerList;
 	
 	private class budgetDisplayer extends AnchorPane implements Initializable {
 		int maxExpense, currentExpense;
@@ -30,56 +36,26 @@ public class Controller_budgetList implements IController, Initializable {
 		@FXML Label lblcurrentExpense;
 		@FXML Label lblmaxExpense;
 		@FXML JFXProgressBar expenseProgress;
-		// BudgetLogic b;
+		BudgetLogic budget;
 		
-		budgetDisplayer(Object budget){
-			/*lbltitre = new Label();
-			lblcurrentExpense = new Label();
-			lblmaxExpense = new Label();
-			expenseProgress = new JFXProgressBar();*/
-			//expenseProgress.setMinHeight(15.0);
-			
-			/*this.setPrefHeight(100);
-			
-			this.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(10), null)));
-			
-			this.setPadding(new Insets(10));
-			this.getChildren().add(lblcurrentExpense);
-			this.getChildren().add(lblmaxExpense);
-			this.getChildren().add(lbltitre);
-			this.getChildren().add(expenseProgress);
-			
-			/*setLeftAnchor(this, 20.0);
-			setRightAnchor(this, 20.0);
-			setRightAnchor(lblmaxExpense, 10.0);
-			setTopAnchor(lblmaxExpense, 35.0);
-			setLeftAnchor(lbltitre, 10.0);
-			setTopAnchor(lbltitre, 20.0);
-			setLeftAnchor(lblcurrentExpense, 10.0);
-			setTopAnchor(lblcurrentExpense, 350.0);
-			setLeftAnchor(expenseProgress, 10.0);
-			setRightAnchor(expenseProgress, 10.0);
-			setBottomAnchor(expenseProgress, 10.0);*/
-			
+		budgetDisplayer(BudgetLogic budget){
 			JFXDepthManager.setDepth(this, 1);
-			
+			this.budget = budget;
 		}
 		
 		private void openDetail() {
-			
-			System.out.println("ouverture du détail");
-			/*
+
 			paneForm.setVisible(true);
 			paneForm.setMouseTransparent(false);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget"));
-			loader.setController(new Controller_detailBudget(Controller_budgetList.this, null));
+			loader.setController(new Controller_detailBudget(Controller_budgetList.this, budget));
 			
 			paneForm.getChildren().clear();
 			try {
 				paneForm.getChildren().add(loader.load());
 			} catch (IOException e) {
 				e.printStackTrace();
-			}*/
+			}
 		}
 		
 		@Override public void initialize(URL location, ResourceBundle resources) {
@@ -98,12 +74,12 @@ public class Controller_budgetList implements IController, Initializable {
 	/**
 	 * load the form to create a new Budget
 	 */
-	 public void callform() {
+	 public void callform(BudgetLogic budget) {
 		
 		paneForm.setVisible(true);
 		paneForm.setMouseTransparent(false);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget"));
-		loader.setController(new Controller_formBudget(this));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget.fxml"));
+		loader.setController(new Controller_formBudget(this, budget));
 		
 		paneForm.getChildren().clear();
 		try {
@@ -131,11 +107,12 @@ public class Controller_budgetList implements IController, Initializable {
 	}
 	
 	@Override public void createItem(Object result) {
+		BudgetLogic b = (BudgetLogic)result;
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
-		loader.setController(new budgetDisplayer(result));
+		loader.setController(new budgetDisplayer(b));
 		try {
 			paneList.getChildren().add(loader.load());
 		} catch (IOException e) {
@@ -145,9 +122,10 @@ public class Controller_budgetList implements IController, Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		// event on the click of the button
-		btnAdd.setOnAction(event -> createItem(null));//callform());
+		btnAdd.setOnAction(event -> callform(null));
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
+		scrollPane.setStyle("-fx-background-color:transparent;");
 		// we set the basics data
 		/*
 		for(BudgetLogic : ClientLogic.getInstance().getBudgets()){

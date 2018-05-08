@@ -3,8 +3,6 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-
-
     <class name="dal.entities.pgsql.ClientPgEntity" table="client" schema="moneythoring" catalog="moneythoring">
         <id name="id">
             <column name="id" sql-type="integer"/>
@@ -181,6 +179,28 @@
         <property name="iotransactionId">
             <column name="iotransaction_id" sql-type="integer"/>
         </property>
+    </class>
+    <class name="dal.entities.pgsql.CategoriesbudgetPgEntity" table="categoriesbudget" schema="moneythoring"
+           catalog="moneythoring">
+        <composite-id mapped="true" class="dal.entities.pgsql.CategoriesbudgetPgEntityPK">
+            <key-property name="categoryId">
+                <column name="category_id" sql-type="integer"/>
+            </key-property>
+            <key-property name="budgetId">
+                <column name="budget_id" sql-type="integer"/>
+            </key-property>
+        </composite-id>
+    </class>
+    <class name="dal.entities.pgsql.SharedbudgetPgEntity" table="sharedbudget" schema="moneythoring"
+           catalog="moneythoring">
+        <composite-id mapped="true" class="dal.entities.pgsql.SharedbudgetPgEntityPK">
+            <key-property name="clientId">
+                <column name="client_id" sql-type="integer"/>
+            </key-property>
+            <key-property name="budgetId">
+                <column name="budget_id" sql-type="integer"/>
+            </key-property>
+        </composite-id>
     </class>
 
 </hibernate-mapping>
