@@ -21,7 +21,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 
     private CategoryLogic category;
     
-    private static Set yearsWithTransactions = new TreeSet();
+    private static Set<Integer> yearsWithTransactions = new TreeSet<>();
 
 
     public IOTransactionLogic() {}
