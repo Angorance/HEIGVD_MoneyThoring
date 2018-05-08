@@ -1,13 +1,18 @@
 package gui.controller;
 
 import bll.logic.ClientLogic;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.fxml.Initializable;
@@ -26,6 +31,8 @@ public class Controller_mainFrame implements Initializable {
 	@FXML private JFXHamburger burgerBtn;
 	@FXML private JFXDrawer drawer;
 	@FXML private Label lblInfo;
+	@FXML private JFXButton disconnect_button;
+	
 	
 	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
 			"Catégories" };
@@ -56,7 +63,7 @@ public class Controller_mainFrame implements Initializable {
 			burgerBtn.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
 				//transition.setRate(transition.getRate() * -1);
 				//transition.play();
-
+				
 				if (drawer.isShown()) {
 					drawer.close();
 					
@@ -69,6 +76,21 @@ public class Controller_mainFrame implements Initializable {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/logout.png")));
+		image.setFitWidth(43);
+		image.setFitHeight(43);
+		disconnect_button.setGraphic(image);
+		disconnect_button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				disconnect();
+			}
+		});
+	}
+	
+	private void disconnect() {
+		//TODO
 	}
 	
 	

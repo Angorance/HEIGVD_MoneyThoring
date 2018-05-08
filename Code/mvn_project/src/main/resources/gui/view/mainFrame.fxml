@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.control.Label?>
@@ -33,6 +34,7 @@
                   <Font size="29.0" />
                </font>
             </Label>
+            <JFXButton fx:id="disconnect_button" layoutX="707.0" layoutY="4.0" prefHeight="43.0" prefWidth="43.0" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </top>
