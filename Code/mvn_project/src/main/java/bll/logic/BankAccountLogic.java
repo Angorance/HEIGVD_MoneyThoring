@@ -59,11 +59,12 @@ public class BankAccountLogic extends BankAccountModel {
 	private void addToHashMap(IOTransactionLogic tl) {
 		
 		Date date = tl.getDate();
-		int year = date.getYear();
+		int year = date.toLocalDate().getYear();
+		int month = date.toLocalDate().getMonthValue();
 		
 		if (transactionsMap.containsKey(year)) {
 			
-			transactionsMap.get(year)[date.getMonth()].add(tl);
+			transactionsMap.get(year)[month].add(tl);
 		} else {
 			
 			ArrayList<IOTransactionLogic>[] tab = new ArrayList[12];
@@ -74,7 +75,7 @@ public class BankAccountLogic extends BankAccountModel {
 			
 			transactionsMap.put(year, tab);
 			
-			tab[date.getMonth()].add(tl);
+			tab[month].add(tl);
 		}
 	}
 	
