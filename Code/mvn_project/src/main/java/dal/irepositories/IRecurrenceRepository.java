@@ -23,7 +23,16 @@ public interface IRecurrenceRepository {
      * @throws DALException
      */
     public List<IDALRecurrenceEntity> getRecurrences() throws DALException;
-
+    
+    /**
+     * Retrieve the recurrence by transaction id
+     *
+     * @param id of the transaction
+     * @return List<IDALRecurrenceEntity>
+     * @throws DALException
+     */
+    public IDALRecurrenceEntity getRecurrenceByTransaction(int id) throws DALException;
+    
     /**
      * Update recurrence
      *

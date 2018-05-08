@@ -81,7 +81,23 @@ public class RecurrenceDeRepository implements IRecurrenceRepository {
         }
         return Recurrences;
     }
+    
+    @Override
+    public IDALRecurrenceEntity getRecurrenceByTransaction(int id) throws DALException {
+    
+        IDALRecurrenceEntity recurrenceEntity = null;
 
+        try {
+            recurrenceEntity = (RecurrenceDeEntity) session.createCriteria(RecurrenceDeEntity.class)
+                    .add(Restrictions.eq("iotransaction_id", id))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        return recurrenceEntity;
+    }
+    
     /**
      * {@inheritDoc}
      */
