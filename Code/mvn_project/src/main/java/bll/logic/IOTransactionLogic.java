@@ -45,7 +45,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 	
 	    setBudgetID(null);
 
-        bankAccount.addTransaction(this);
+        bankAccount.addNewTransaction(this);
         
         createIOTransaction(new PgORM());
     }

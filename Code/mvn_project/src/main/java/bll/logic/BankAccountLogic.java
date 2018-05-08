@@ -92,6 +92,7 @@ public class BankAccountLogic extends BankAccountModel {
 	private void updateAmount(double io) {
 		
 		setAmount(getAmount() + io);
+		updateBankAccount(new PgORM());
 	}
 	
 	/**
@@ -99,13 +100,29 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @param transaction New transaction to createItem to the list.
 	 */
-	public void addTransaction(IOTransactionLogic transaction) {
+	protected void addNewTransaction(IOTransactionLogic transaction) {
+		
+		addTransaction(transaction);
+		transaction.setBankAccountID(getId());
+		updateAmount(transaction.getAmount());
+	}
+	
+	/**
+	 * Add the transaction to the transaction list of the bank account.
+	 *
+	 * @param transaction New transaction to createItem to the list.
+	 */
+	private void addTransaction(IOTransactionLogic transaction) {
 		
 		transactions.add(transaction);
-		transaction.setBankAccountID(getId());
 		addToHashMap(transaction);
+	}
+	
+	private void addAllTransactions(List<IOTransactionLogic> ls) {
 		
-		updateAmount(transaction.getAmount());
+		for (IOTransactionLogic tl : ls) {
+			addTransaction(tl);
+		}
 	}
 	
 	/**
@@ -186,7 +203,7 @@ public class BankAccountLogic extends BankAccountModel {
 			List<IDALIotransactionEntity> ba = orm.getIotransactionRepository()
 					.getIotransactionsByBankaccount(getId());
 			
-			transactions.addAll(DALIOTransactionMapper.toBos(ba));
+			addAllTransactions(DALIOTransactionMapper.toBos(ba));
 			
 		} catch (DALException e) {
 			e.printStackTrace();
