@@ -3,12 +3,13 @@ package dal.entities.pgsql;
 import dal.ientites.IDALSharedbudgetEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "sharedbudget", schema = "moneythoring", catalog = "moneythoring")
 @IdClass(SharedbudgetPgEntityPK.class)
-public class SharedbudgetPgEntity implements IDALSharedbudgetEntity {
+public class SharedbudgetPgEntity implements IDALSharedbudgetEntity, Serializable {
     private int clientId;
     private int budgetId;
 

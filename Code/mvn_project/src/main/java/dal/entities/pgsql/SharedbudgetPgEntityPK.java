@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 public class SharedbudgetPgEntityPK implements Serializable {
     private int clientId;
     private int budgetId;
