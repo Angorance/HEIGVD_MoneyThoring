@@ -170,7 +170,7 @@
             <column name="BANKACCOUNT_ID" sql-type="integer(10)"/>
         </property>
         <property name="budgetId">
-            <column name="BUDGET_ID" sql-type="integer(10)" not-null="true"/>
+            <column name="BUDGET_ID" sql-type="integer(10)" not-null="false"/>
         </property>
     </class>
     <class name="dal.entities.derby.RecurrenceDeEntity" table="RECURRENCE" schema="MONEYTHORING">
