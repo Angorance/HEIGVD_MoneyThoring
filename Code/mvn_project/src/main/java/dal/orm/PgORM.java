@@ -25,6 +25,8 @@ public class PgORM implements IORM {
     private IDebtRepository debtRepository;
     private IIotransactionRepository iotransactionRepository;
     private IRecurrenceRepository recurrenceRepository;
+    private ISharedBudgetRepository sharedBudgetRepository;
+    private ICategoriesBudgetRepository categoriesBudgetRepository;
 
     /**
      * {@inheritDoc}
@@ -94,6 +96,28 @@ public class PgORM implements IORM {
     public IIotransactionRepository getIotransactionRepository() {
         iotransactionRepository = new IotransactionPgRepository(session, transaction);
         return iotransactionRepository;
+    }
+
+    /**
+     * Construct an single instance of ICategoriesBudgetRepository
+     *
+     * @throws DALException
+     */
+    @Override
+    public ICategoriesBudgetRepository getCategoriesBudgetRepository() {
+        categoriesBudgetRepository = new CategoryBudgetPgRepository(session, transaction);
+        return categoriesBudgetRepository;
+    }
+
+    /**
+     * Construct an single instance of ISharedBudgetRepository
+     *
+     * @throws DALException
+     */
+    @Override
+    public ISharedBudgetRepository getSharedBudgetRepository() {
+        sharedBudgetRepository = new SharedBudgetPgRepository(session, transaction);
+        return sharedBudgetRepository;
     }
 
     private void openSession() throws DALException {
