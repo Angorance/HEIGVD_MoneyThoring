@@ -2,6 +2,7 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.ClientLogic;
+import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +24,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -39,7 +42,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	@FXML private JFXButton returnButton;
 	@FXML private JFXNodesList nodelist;
 	@FXML private AnchorPane paneform;
-	@FXML private Label default_label;
+	@FXML private CheckBox chkDefaultAccount;
 	
 	private JFXButton preferenceButton;
 	private JFXButton modifyButton;
@@ -132,7 +135,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		this.nameBankAccount.setText(bal.getBankName());
 		this.typeBankAccount.setText(bal.getType());
 		this.amountBankAccount.setText(String.valueOf(bal.getAmount()));
-		default_label.setText(bal.isDefault() ? "Oui" : "Non");
+		chkDefaultAccount.setSelected(bal.isDefault());
 	}
 	
 	/**
@@ -177,19 +180,35 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		/*Set the amount of the bank account*/
 		amountBankAccount.setText(String.valueOf(bal.getAmount()) + " CHF");
-		default_label.setText(bal.isDefault() ? "Oui" : "Non");
+		chkDefaultAccount.setSelected(bal.isDefault());
+		chkDefaultAccount.setMouseTransparent(true);
 		
 		/*TODO mettre les données dans le graphique*/
 		/*TODO max min des valeur de l'axe Y*/
 		XYChart.Series series = new XYChart.Series();
 		series.setName("Evolution du solde");
 		Random random = new Random();
-		for (int i = 0; i < 31; ++i) {
-			int value = 15000 + random.nextInt(5000);
-			series.getData().add(new XYChart.Data(String.valueOf(i + 1), value));
+		
+		double solde = bal.getAmount();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		/*for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
+			solde -= transaction.getAmount();
 		}
 		
-		lineChart.getData().addAll(series);
+		for (int i = 0; i < currentDay; ++i) {
+			for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
+				if(transaction.getDate().getDay() == i) {
+					solde += transaction.getAmount();
+				}
+			}
+			
+			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+		}
+		
+		lineChart.getData().addAll(series);*/
 		
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			

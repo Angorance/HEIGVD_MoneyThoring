@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -55,7 +56,10 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXTreeTableView fx:id="outGoTreeTableView" prefHeight="319.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXTreeTableView fx:id="outGoTreeTableView" prefHeight="319.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnResizePolicy>
+                              <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy></JFXTreeTableView>
                      </children>
                   </AnchorPane>
                </center>
@@ -94,7 +98,10 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXTreeTableView fx:id="incomeTreeTableView" layoutX="62.0" layoutY="-48.0" prefHeight="352.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXTreeTableView fx:id="incomeTreeTableView" layoutX="62.0" layoutY="-48.0" prefHeight="352.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnResizePolicy>
+                              <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy></JFXTreeTableView>
                      </children>
                   </AnchorPane>
                </center>

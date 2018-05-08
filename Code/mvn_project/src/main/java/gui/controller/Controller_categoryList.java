@@ -164,6 +164,7 @@ public class Controller_categoryList implements Initializable, IController {
         formPane.setVisible(false);
         btnAdd.setOnAction(event -> callform(null));
         displayerList = new HashMap<>();
+        listContainer.setPadding(new Insets(20, 5,5,5));
 
         // list the existing categories
         for(CategoryLogic c : ClientLogic.getInstance().getCategories()){
@@ -171,18 +172,5 @@ public class Controller_categoryList implements Initializable, IController {
             displayerList.put(c.getId(), d);
             listContainer.getChildren().add(d);
         }
-
-        // sample category
-        /*
-        CategoryLogic c = new CategoryLogic("Nourriture", "#20B4E6", false);
-        c.setId(1);
-        CategoryDisplayer d = new CategoryDisplayer(c);
-        displayerList.put(1, d);
-        listContainer.getChildren().add(d);
-        c = new CategoryLogic("Technologie", "#8D18D6", false);
-        c.setId(2);
-        d = new CategoryDisplayer(c);
-        displayerList.put(2, d);
-        listContainer.getChildren().add(d);*/
     }
 }

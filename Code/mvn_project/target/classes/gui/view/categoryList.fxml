@@ -20,4 +20,7 @@
       </JFXButton>
       <AnchorPane fx:id="formPane" prefHeight="403.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
+   <opaqueInsets>
+      <Insets top="15.0" />
+   </opaqueInsets>
 </AnchorPane>

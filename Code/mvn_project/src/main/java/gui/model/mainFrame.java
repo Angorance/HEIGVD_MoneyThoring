@@ -19,8 +19,8 @@ public class mainFrame {
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Main Frame");
             primaryStage.setScene(new Scene(root, 750, 500));
-            primaryStage.setMinHeight(400);
-            primaryStage.setMinWidth(500);
+            primaryStage.setMinHeight(500);
+            primaryStage.setMinWidth(750);
             primaryStage.show();
             primaryStage.setOnCloseRequest(event -> exit(0));
         } catch (IOException e) {
