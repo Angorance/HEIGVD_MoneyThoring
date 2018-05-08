@@ -163,7 +163,7 @@
             <column name="bankaccount_id" sql-type="integer"/>
         </property>
         <property name="budgetId">
-            <column name="budget_id" sql-type="integer" not-null="true"/>
+            <column name="budget_id" sql-type="integer" not-null="false"/>
         </property>
     </class>
     <class name="dal.entities.pgsql.RecurrencePgEntity" table="recurrence" schema="moneythoring"
