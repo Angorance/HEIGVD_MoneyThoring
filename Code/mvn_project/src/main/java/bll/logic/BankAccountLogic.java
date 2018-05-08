@@ -1,5 +1,6 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALIOTransactionMapper;
 import bll.model.BankAccountModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
@@ -182,6 +183,8 @@ public class BankAccountLogic extends BankAccountModel {
 			
 			List<IDALIotransactionEntity> ba = orm.getIotransactionRepository()
 					.getIotransactionsByBankaccount(getId());
+			
+			DALIOTransactionMapper.toBos(ba);
 			
 		} catch (DALException e) {
 			e.printStackTrace();
