@@ -182,7 +182,8 @@
     </class>
     <class name="dal.entities.pgsql.CategoriesbudgetPgEntity" table="categoriesbudget" schema="moneythoring"
            catalog="moneythoring">
-        <composite-id mapped="true" class="dal.entities.pgsql.CategoriesbudgetPgEntityPK">
+        <!--mapped="true"  class="dal.entities.pgsql.CategoriesbudgetPgEntityPK"-->
+        <composite-id >
             <key-property name="categoryId">
                 <column name="category_id" sql-type="integer"/>
             </key-property>
@@ -193,7 +194,8 @@
     </class>
     <class name="dal.entities.pgsql.SharedbudgetPgEntity" table="sharedbudget" schema="moneythoring"
            catalog="moneythoring">
-        <composite-id mapped="true" class="dal.entities.pgsql.SharedbudgetPgEntityPK">
+        <!--mapped="true" class="dal.entities.pgsql.SharedbudgetPgEntityPK"-->
+        <composite-id  >
             <key-property name="clientId">
                 <column name="client_id" sql-type="integer"/>
             </key-property>

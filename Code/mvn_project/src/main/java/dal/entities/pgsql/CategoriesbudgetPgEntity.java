@@ -3,12 +3,13 @@ package dal.entities.pgsql;
 import dal.ientites.IDALCategoriesbudgetEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "categoriesbudget", schema = "moneythoring", catalog = "moneythoring")
 @IdClass(CategoriesbudgetPgEntityPK.class)
-public class CategoriesbudgetPgEntity implements IDALCategoriesbudgetEntity {
+public class CategoriesbudgetPgEntity implements IDALCategoriesbudgetEntity, Serializable {
     private int categoryId;
     private int budgetId;
 
