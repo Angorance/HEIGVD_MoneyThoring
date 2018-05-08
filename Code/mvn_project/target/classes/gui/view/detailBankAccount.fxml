@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXNodesList?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -14,22 +16,33 @@
 
 <AnchorPane prefHeight="653.0" prefWidth="729.0" style="-fx-background-color: white;" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="25.0" layoutY="90.0" prefHeight="140.0" prefWidth="680.0" style="-fx-background-color: #f9f9f9;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <GridPane layoutX="32.0" layoutY="97.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 15;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="16.0" minHeight="0.0" prefHeight="4.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <JFXNodesList fx:id="nodelist" layoutX="664.0" layoutY="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
-            <Label layoutX="403.0" layoutY="14.0" text="Solde Actuel" AnchorPane.rightAnchor="140.0">
+            <JFXNodesList fx:id="nodelist" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label text="Solde Actuel" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="amountBankAccount" layoutX="372.0" layoutY="53.0" text="Solde Actuel" AnchorPane.rightAnchor="110.0">
+            <Label fx:id="amountBankAccount" text="Solde Actuel" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <GridPane layoutX="30.0" layoutY="25.0" prefHeight="90.0" prefWidth="242.0" AnchorPane.leftAnchor="30.0">
+            <GridPane prefHeight="90.0" prefWidth="242.0" GridPane.rowIndex="1" GridPane.rowSpan="3">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
@@ -46,10 +59,17 @@
                   <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Compte par défaut :" GridPane.rowIndex="2" />
-                  <Label fx:id="default_label" text="☑" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXCheckBox fx:id="chkDefaultAccount" focusTraversable="false" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-         </children></AnchorPane>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </GridPane>
       <Label fx:id="name" alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="40.0" prefWidth="630.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font size="27.0" />

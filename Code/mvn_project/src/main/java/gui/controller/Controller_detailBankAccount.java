@@ -14,6 +14,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,7 +40,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	@FXML private JFXButton returnButton;
 	@FXML private JFXNodesList nodelist;
 	@FXML private AnchorPane paneform;
-	@FXML private Label default_label;
+	@FXML private CheckBox chkDefaultAccount;
 	
 	private JFXButton preferenceButton;
 	private JFXButton modifyButton;
@@ -132,7 +133,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		this.nameBankAccount.setText(bal.getBankName());
 		this.typeBankAccount.setText(bal.getType());
 		this.amountBankAccount.setText(String.valueOf(bal.getAmount()));
-		default_label.setText(bal.isDefault() ? "Oui" : "Non");
+		chkDefaultAccount.setSelected(bal.isDefault());
 	}
 	
 	/**
@@ -177,7 +178,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		/*Set the amount of the bank account*/
 		amountBankAccount.setText(String.valueOf(bal.getAmount()) + " CHF");
-		default_label.setText(bal.isDefault() ? "Oui" : "Non");
+		chkDefaultAccount.setSelected(bal.isDefault());
+		chkDefaultAccount.setMouseTransparent(true);
 		
 		/*TODO mettre les données dans le graphique*/
 		/*TODO max min des valeur de l'axe Y*/

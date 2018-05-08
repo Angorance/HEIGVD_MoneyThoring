@@ -4,11 +4,13 @@ import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -28,6 +30,7 @@ public class Controller_mainFrame implements Initializable {
 	
 	@FXML private Label header_mainFrame;
 	@FXML private AnchorPane mainContent;
+	@FXML private AnchorPane paneHeader;
 	@FXML private JFXHamburger burgerBtn;
 	@FXML private JFXDrawer drawer;
 	@FXML private Label lblInfo;
@@ -46,7 +49,9 @@ public class Controller_mainFrame implements Initializable {
 		drawer.setMouseTransparent(true);
 		drawer.setVisible(true);
 		VBox box = null;
+		JFXDepthManager.setDepth(paneHeader, 3);
 		lblInfo.setText(ClientLogic.getInstance().toString());
+		mainContent.setPadding(new Insets(15,5,5,5));
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
 			gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();

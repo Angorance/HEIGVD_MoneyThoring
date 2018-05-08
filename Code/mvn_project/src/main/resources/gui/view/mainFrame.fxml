@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,7 +13,7 @@
    <center>
       <AnchorPane style="-fx-background-color: #efefef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane id="mainContent" fx:id="mainContent" style="-fx-background-color: #d3f7ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane id="mainContent" fx:id="mainContent" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="lblInfo" layoutX="55.0" layoutY="44.0" prefHeight="311.0" prefWidth="661.0" text="adhfbahdfb">
                      <font>
@@ -20,13 +21,19 @@
                      </font>
                   </Label>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </AnchorPane>
             <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" prefHeight="453.0" prefWidth="238.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </AnchorPane>
    </center>
    <top>
-      <AnchorPane prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #0a7729;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="paneHeader" prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #0a7729;" BorderPane.alignment="CENTER">
          <children>
             <JFXHamburger id="burgerBtn" fx:id="burgerBtn" layoutX="28.0" layoutY="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0" />
             <Label fx:id="header_mainFrame" alignment="TOP_LEFT" layoutX="123.0" layoutY="3.0" prefHeight="43.0" prefWidth="627.0" text="Un titre des plus banal" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
