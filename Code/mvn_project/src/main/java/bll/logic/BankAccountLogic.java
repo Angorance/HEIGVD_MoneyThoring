@@ -54,7 +54,7 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public String toString() {
 		
-		return super.getName();
+		return getName();
 	}
 	
 	/**

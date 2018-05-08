@@ -51,4 +51,10 @@ public class CategoryLogic extends CategoryModel {
 		    e.printStackTrace();
 	    }
     }
+	
+	@Override
+	public String toString() {
+		
+		return getName();
+	}
 }
