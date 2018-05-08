@@ -2,6 +2,7 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.ClientLogic;
+import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -186,12 +188,27 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		XYChart.Series series = new XYChart.Series();
 		series.setName("Evolution du solde");
 		Random random = new Random();
-		for (int i = 0; i < 31; ++i) {
-			int value = 15000 + random.nextInt(5000);
-			series.getData().add(new XYChart.Data(String.valueOf(i + 1), value));
+		
+		double solde = bal.getAmount();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		/*for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
+			solde -= transaction.getAmount();
 		}
 		
-		lineChart.getData().addAll(series);
+		for (int i = 0; i < currentDay; ++i) {
+			for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
+				if(transaction.getDate().getDay() == i) {
+					solde += transaction.getAmount();
+				}
+			}
+			
+			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+		}
+		
+		lineChart.getData().addAll(series);*/
 		
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			

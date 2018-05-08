@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.Insets?>
@@ -12,9 +13,9 @@
    <center>
       <AnchorPane style="-fx-background-color: #efefef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane id="mainContent" fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane id="mainContent" fx:id="mainContent" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label fx:id="lblInfo" layoutX="55.0" layoutY="44.0" prefHeight="311.0" prefWidth="661.0" text="adhfbahdfb">
+                  <Label fx:id="lblInfo" layoutX="55.0" layoutY="44.0" prefHeight="311.0" prefWidth="661.0" text="adhfbahdf">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -40,6 +41,7 @@
                   <Font size="29.0" />
                </font>
             </Label>
+            <JFXButton fx:id="disconnect_button" layoutX="707.0" layoutY="4.0" prefHeight="43.0" prefWidth="43.0" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </top>

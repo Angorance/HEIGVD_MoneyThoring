@@ -86,6 +86,8 @@ public class Controller_mainFrame implements Initializable {
 		image.setFitWidth(43);
 		image.setFitHeight(43);
 		disconnect_button.setGraphic(image);
+		
+		
 		disconnect_button.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="456.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="456.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;">
    <children>
       <AnchorPane layoutX="28.0" layoutY="22.0" prefHeight="160.0" prefWidth="703.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
