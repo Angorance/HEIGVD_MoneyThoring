@@ -39,7 +39,7 @@ public class Controller_mainFrame implements Initializable {
 	
 	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
 			"Catégories" };
-	private static final String[] tabViewFile = { "/gui/view/Dashboard.fxml", "/gui/view/budgetList.fxml",
+	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
 			"/gui/view/transactionList.fxml", "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml",
 			"/gui/view/categoryList.fxml" };
 	
@@ -82,8 +82,8 @@ public class Controller_mainFrame implements Initializable {
 		}
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/logout.png")));
-		image.setFitWidth(43);
-		image.setFitHeight(43);
+		image.setFitWidth(30);
+		image.setFitHeight(30);
 		disconnect_button.setGraphic(image);
 		
 		
@@ -93,6 +93,12 @@ public class Controller_mainFrame implements Initializable {
 				disconnect();
 			}
 		});
+		
+		try {
+			loadContent(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void disconnect() {
@@ -133,6 +139,7 @@ public class Controller_mainFrame implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(tabViewFile[id]));
 		switch (id) {
 			case 0: // Dashboard
+				loader.setController(new Controller_dashboard());
 				break;
 			case 1: // Budget
 				loader.setController(new Controller_budgetList());
@@ -141,6 +148,7 @@ public class Controller_mainFrame implements Initializable {
 				loader.setController(new Controller_transactionList());
 				break;
 			case 3: // Dettes
+				loader.setController(new Controller_debtList());
 				break;
 			case 4: // compte bancaire
 				loader.setController(new Controller_bankAccount());
