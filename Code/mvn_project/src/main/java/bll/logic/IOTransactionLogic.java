@@ -13,7 +13,7 @@ import java.util.TreeSet;
  * TODO
  *
  * @author Daniel Gonzalez Lopez, Héléna Line Reymond
- * @version 1.0
+ * @version 1.2
  */
 public class IOTransactionLogic extends IOTransactionModel {
 
@@ -38,8 +38,10 @@ public class IOTransactionLogic extends IOTransactionModel {
                               Date date, String currency, CategoryLogic category,
                               BankAccountLogic bankAccount) {
 
-        super(amount, name, description, date, currency, (amount >= 0));
+        super(amount, name, description, currency, (amount >= 0));
 
+        setDate(date);
+        
         this.category = category;
         setCategoryID(category.getId());
 	

@@ -20,7 +20,7 @@ import java.util.List;
  * to avoid data problems.
  *
  * @author Daniel Gonzalez Lopez
- * @version 1.1
+ * @version 1.5
  */
 public class BankAccountLogic extends BankAccountModel {
 	
