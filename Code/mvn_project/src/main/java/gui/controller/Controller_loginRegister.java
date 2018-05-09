@@ -111,27 +111,28 @@ public class Controller_loginRegister implements Initializable {
 		
 		//Check if passord, email and username is correct
 		boolean check = true;
+		boolean[] checkRegistration = checkRegistration(username, email, password, confirmPassword);
 		
 		/*Verify if username is already used*/
-		if (usernameExists(username)) {
+		if (!checkRegistration[0]) {
 			check = false;
 			register_username.setStyle("-fx-text-fill: red;");
 		}
 		
-		/*Verify if password is not equale to confirm password*/
-		if (!checkPasswords(password, confirmPassword)) {
+		/*Verify if email is already used*/
+		if (!checkRegistration[1]) {
+			check = false;
+			register_email.setStyle("-fx-text-fill: red;");
+		}
+		
+		/*Verify if password is not equal to confirm password*/
+		if (!checkRegistration[2]) {
 			check = false;
 			register_password.setStyle("-fx-text-fill: red;");
 			register_confirmPassword.setStyle("-fx-text-fill: red;");
 		}
 		
-		/*Verify if email is already used*/
-		if (!checkEmail(email)) {
-			check = false;
-			register_email.setStyle("-fx-text-fill: red;");
-		}
-		
-		/*If all is correcte we create a new client and load the main frame*/
+		/*If all is correct we create a new client and load the main frame*/
 		if (check) {
 			ClientLogic.getInstance().setClient(email, username, password);
 			register_message.setText("Le compte a été enregisté");

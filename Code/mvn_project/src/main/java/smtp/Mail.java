@@ -29,7 +29,7 @@ public class Mail {
 		
 		String texte = "Welcome to MoneyThoring " + username + ", <br><br>"
 						+ "To use this app you need to activate your account with <br>"
-						+ "this code on your next connection : " + activationCode + " <br><br>"
+						+ "this code on your next connection : " + activationCode + "<br><br>"
 						+ "Thanks for joining us <br><br>"
 						+ "MoneyThoring";
 		
