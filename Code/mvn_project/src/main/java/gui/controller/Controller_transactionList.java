@@ -26,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -368,6 +369,29 @@ public class Controller_transactionList implements Initializable, IController {
 				callform(true);
 			}
 		});
+		
+		incomeTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				if(event.getButton().equals(MouseButton.PRIMARY)){
+					if(event.getClickCount() == 2){
+						int t = incomeTreeTableView.getSelectionModel().getFocusedIndex();
+						System.out.println(incomeTreeTableView.getTreeItem(t).getValue().getTransaction());
+						//TODO formulaire
+					}
+				}
+			}
+		});
+		
+		
+		outGoTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				callform(true);
+			}
+		});
+		
+		
 	}
 	
 }

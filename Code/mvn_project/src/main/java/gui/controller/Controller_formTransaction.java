@@ -71,13 +71,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 			if (recurrence.isSelected()) {
 				String recurrenceText = time.getValue();
 			}
-			
-			//Date actuelle
-			
-			/*String format = "dd/MM/yyyy";
-			java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-			java.util.Date date = new java.util.Date();*/
-			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());/*new java.sql.Date(date.getTime());*/
+			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
 			
 			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF", cl,
 					bal);

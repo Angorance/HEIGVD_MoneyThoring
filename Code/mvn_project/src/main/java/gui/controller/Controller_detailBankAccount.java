@@ -93,7 +93,6 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	
 	private void removeBankAccount() {
 		
-		bal.supp();
 		cba.deleteItem(bal);
 	}
 	

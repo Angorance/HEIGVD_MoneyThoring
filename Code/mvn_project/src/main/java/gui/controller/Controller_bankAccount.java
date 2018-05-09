@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -120,6 +121,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		if (bal != null) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
+			displayerList.put(((BankAccountLogic) bal).getId(),accountDisplayer);
 		}
 	}
 	
@@ -130,9 +132,18 @@ public class Controller_bankAccount implements Initializable, IController {
 	 */
 	@Override public void deleteItem(Object toDelete) {
 		
-		unloadform();
+		/*unloadform();
 		BankAccountLogic bal = (BankAccountLogic) toDelete;
-		frame_bankAccount.getChildren().remove(displayerList.get(bal.getId()));
+		System.out.println("Suppression du compte id : " + bal.getId());
+		frame_bankAccount.getChildren().remove(displayerList.get(bal.getId()));*/
+		
+		unloadform();
+		if(toDelete != null) {
+			BankAccountLogic bal = (BankAccountLogic) toDelete;
+			System.out.println("Suppression du compte id : " + bal.getId());
+			frame_bankAccount.getChildren().removeAll(displayerList.get(bal.getId()));
+			bal.supp();
+		}
 		
 	}
 	
