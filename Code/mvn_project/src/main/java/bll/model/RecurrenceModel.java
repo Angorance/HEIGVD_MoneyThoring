@@ -9,6 +9,7 @@ import java.sql.Date;
  * @version 1.0
  */
 public class RecurrenceModel {
+	
 	private int id;
 	private int transactionID;
 	private int gap;

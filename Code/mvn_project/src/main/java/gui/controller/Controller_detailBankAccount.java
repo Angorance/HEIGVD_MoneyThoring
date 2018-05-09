@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -168,7 +169,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		//if the list of transaction is not empty, we get the last transaction date
 		if (!bal.getTransactions().isEmpty()) {
 			//dateLastTransaction
-					//.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
+			//.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
 		}
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
@@ -194,21 +195,32 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
-		/*for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
-			solde -= transaction.getAmount();
+		// Create a calendar object and set year and month
+		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
+		
+		// Get the number of days in that month
+		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		if (!bal.getTransactions().isEmpty()) {
+			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+				solde -= transaction.getAmount();
+			}
 		}
 		
 		for (int i = 0; i < currentDay; ++i) {
-			for(IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]){
-				if(transaction.getDate().getDay() == i) {
-					solde += transaction.getAmount();
+			if (!bal.getTransactions().isEmpty()) {
+				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+					if (transaction.getDate().getDay() - 1 == i) {
+						solde += transaction.getAmount();
+					}
 				}
 			}
-			
-			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+			/*if (i < currentDay) {
+				series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+			}*/
 		}
 		
-		lineChart.getData().addAll(series);*/
+		lineChart.getData().addAll(series);
 		
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			

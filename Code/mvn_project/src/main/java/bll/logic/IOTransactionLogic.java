@@ -6,9 +6,7 @@ import dal.orm.IORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -47,7 +45,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 	
 	    setBudgetID(null);
 
-        bankAccount.addTransaction(this);
+        bankAccount.addNewTransaction(this);
         
         createIOTransaction(new PgORM());
     }
@@ -57,7 +55,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 		
 		super.setDate(date);
 		
-		yearsWithTransactions.add(date.getYear());
+		yearsWithTransactions.add(date.toLocalDate().getYear());
 	}
 	
 	public static Set getYearsWithTransactions() {
