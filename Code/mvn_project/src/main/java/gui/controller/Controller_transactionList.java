@@ -26,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
@@ -208,7 +209,7 @@ public class Controller_transactionList implements Initializable, IController {
 			outgo.clear();
 			if (periodSelect.getValue().equals("Mensuel")) {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
-				int month = monthSelect.getSelectionModel().getSelectedIndex() - 1;
+				int month = monthSelect.getSelectionModel().getSelectedIndex();
 				add(year, month);
 			} else if (periodSelect.getValue().equals("Annuel")) {
 				int year = Integer.valueOf(monthSelect.getValue());
@@ -367,7 +368,6 @@ public class Controller_transactionList implements Initializable, IController {
 				callform(true);
 			}
 		});
-		// get the account list, and the transaction list associated to each account
 	}
 	
 }

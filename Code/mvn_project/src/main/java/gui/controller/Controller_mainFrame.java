@@ -82,8 +82,8 @@ public class Controller_mainFrame implements Initializable {
 		}
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/logout.png")));
-		image.setFitWidth(43);
-		image.setFitHeight(43);
+		image.setFitWidth(30);
+		image.setFitHeight(30);
 		disconnect_button.setGraphic(image);
 		
 		
