@@ -60,7 +60,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		Date date = tl.getDate();
 		int year = date.toLocalDate().getYear();
-		int month = date.toLocalDate().getMonthValue();
+		int month = date.toLocalDate().getMonthValue() - 1;
 		
 		if (transactionsMap.containsKey(year)) {
 			
