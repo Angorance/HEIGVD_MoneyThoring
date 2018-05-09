@@ -16,41 +16,42 @@ import java.util.TreeSet;
  * @version 1.2
  */
 public class IOTransactionLogic extends IOTransactionModel {
-
-    private CategoryLogic category;
-    
-    private static Set<Integer> yearsWithTransactions = new TreeSet<>();
-
-
-    public IOTransactionLogic() {}
-    
-    /**
-     * TODO
-     * @param amount
-     * @param name
-     * @param description
-     * @param date
-     * @param currency
-     * @param category
-     * @param bankAccount
-     */
-    public IOTransactionLogic(double amount, String name, String description,
-                              Date date, String currency, CategoryLogic category,
-                              BankAccountLogic bankAccount) {
-
-        super(amount, name, description, currency, (amount >= 0));
-
-        setDate(date);
-        
-        this.category = category;
-        setCategoryID(category.getId());
 	
-	    setBudgetID(null);
-
-        bankAccount.addNewTransaction(this);
-        
-        createIOTransaction(new PgORM());
-    }
+	private CategoryLogic category;
+	
+	private static Set<Integer> yearsWithTransactions = new TreeSet<>();
+	
+	
+	public IOTransactionLogic() {}
+	
+	/**
+	 * TODO
+	 *
+	 * @param amount
+	 * @param name
+	 * @param description
+	 * @param date
+	 * @param currency
+	 * @param category
+	 * @param bankAccount
+	 */
+	public IOTransactionLogic(double amount, String name, String description,
+			Date date, String currency, CategoryLogic category,
+			BankAccountLogic bankAccount) {
+		
+		super(amount, name, description, currency, (amount >= 0));
+		
+		setDate(date);
+		
+		this.category = category;
+		setCategoryID(category.getId());
+		
+		setBudgetID(null);
+		
+		bankAccount.addNewTransaction(this);
+		
+		createIOTransaction(new PgORM());
+	}
 	
 	@Override
 	public void setDate(Date date) {
@@ -66,37 +67,47 @@ public class IOTransactionLogic extends IOTransactionModel {
 	}
 	
 	/**
-     * TODO
-     */
-    public void update(double amount, String name, String description,
-		    Date date, String currency, CategoryLogic category) {
-        
-        setAmount(amount);
-        setName(name);
-        setDescription(description);
-        setDate(date);
-        setCurrency(currency);
-        
-        setBudgetID(null);
-        
-        this.category = category;
-	    setCategoryID(category.getId());
-        
-        updateIOTransaction(new PgORM());
-    }
-    
-    public void supp() {
-        
-        try {
-            IORM orm = new PgORM();
-            
-            orm.beginTransaction();
-            
-            orm.getIotransactionRepository().delete(getId());
-            orm.commit();
-            
-        } catch (DALException e) {
-            e.printStackTrace();
-        }
-    }
+	 * TODO
+	 */
+	public void update(double amount, String name, String description,
+			Date date, String currency, CategoryLogic category) {
+		
+		setAmount(amount);
+		setName(name);
+		setDescription(description);
+		setDate(date);
+		setCurrency(currency);
+		
+		setBudgetID(null);
+		
+		this.category = category;
+		setCategoryID(category.getId());
+		
+		updateIOTransaction(new PgORM());
+	}
+	
+	public void supp() {
+		
+		try {
+			IORM orm = new PgORM();
+			
+			orm.beginTransaction();
+			
+			orm.getIotransactionRepository().delete(getId());
+			orm.commit();
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Deprecated(since = "1.2")
+	@Override
+	public String toString() {
+		
+		String s = getName() + " " + getAmount() + " " + getBankAccountID()
+				+ " " + getDate();
+		
+		return s;
+	}
 }
