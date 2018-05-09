@@ -71,7 +71,7 @@ public class IotransactionPgRepository implements IIotransactionRepository {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addIotransaction(IDALIotransactionEntity iotransaction)
+	public Integer addIotransaction(IDALIotransactionEntity iotransaction)
 			throws DALException {
 		
 		IotransactionPgEntity newIotransaction = null;
@@ -82,7 +82,7 @@ public class IotransactionPgRepository implements IIotransactionRepository {
 		}
 		
 		try {
-			session.save(newIotransaction);
+			return (Integer) session.save(newIotransaction);
 		} catch (Exception e) {
 			throw new DALException(e);
 		}

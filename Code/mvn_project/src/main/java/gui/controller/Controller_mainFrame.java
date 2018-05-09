@@ -148,7 +148,7 @@ public class Controller_mainFrame implements Initializable {
 				loader.setController(new Controller_transactionList());
 				break;
 			case 3: // Dettes
-				loader.setController(new Controller_debtList());
+				//loader.setController(new Controller_debtList());
 				break;
 			case 4: // compte bancaire
 				loader.setController(new Controller_bankAccount());

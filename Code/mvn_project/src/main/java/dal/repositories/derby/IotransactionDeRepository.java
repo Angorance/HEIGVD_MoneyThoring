@@ -67,7 +67,7 @@ public class IotransactionDeRepository implements IIotransactionRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addIotransaction(IDALIotransactionEntity iotransaction) throws DALException {
+    public Integer addIotransaction(IDALIotransactionEntity iotransaction) throws DALException {
 
         IotransactionDeEntity newIotransaction = null;
         if (iotransaction.getClass() == IotransactionDeEntity.class)
@@ -76,7 +76,7 @@ public class IotransactionDeRepository implements IIotransactionRepository {
             throw new DALException();
 
         try {
-            session.save(newIotransaction);
+            return (Integer) session.save(newIotransaction);
         } catch (Exception e) {
             throw new DALException(e);
         }

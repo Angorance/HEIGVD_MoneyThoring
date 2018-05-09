@@ -40,7 +40,7 @@ public interface IIotransactionRepository {
      * @param otransaction the otransaction would'you add
      * @throws DALException
      */
-    public void addIotransaction(IDALIotransactionEntity otransaction) throws DALException;
+    public Integer addIotransaction(IDALIotransactionEntity otransaction) throws DALException;
 
     /**
      * delete otransaction by id

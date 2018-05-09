@@ -66,7 +66,7 @@ public class BankAccountModel {
 			orm.beginTransaction();
 			
 			IBankaccountRepository repo = orm.getBankaccountRepository();
-			repo.addBankaccount(DALBankaccountMapper.toDboPG(this));
+			setId(repo.addBankaccount(DALBankaccountMapper.toDboPG(this)));
 			
 			orm.commit();
 			

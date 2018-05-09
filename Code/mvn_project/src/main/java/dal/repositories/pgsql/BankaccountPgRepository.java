@@ -106,7 +106,7 @@ public class BankaccountPgRepository implements IBankaccountRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
+    public Integer addBankaccount(IDALBankaccountEntity bankaccount) throws DALException {
         BankaccountPgEntity newBankAccount = null;
         if (bankaccount.getClass() == BankaccountPgEntity.class)
             newBankAccount = (BankaccountPgEntity) bankaccount;
@@ -114,11 +114,10 @@ public class BankaccountPgRepository implements IBankaccountRepository {
             throw new DALException();
 
         try {
-            session.save(newBankAccount);
+            return (Integer) session.save(newBankAccount);
         } catch (Exception e) {
             throw new DALException(e);
         }
-
     }
 
     /**

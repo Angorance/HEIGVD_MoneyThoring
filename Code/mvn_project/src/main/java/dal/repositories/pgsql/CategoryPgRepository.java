@@ -111,7 +111,7 @@ public class CategoryPgRepository implements ICategoryRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addCategory(IDALCategoryEntity Category) throws DALException {
+    public Integer addCategory(IDALCategoryEntity Category) throws DALException {
         CategoryPgEntity newCategory = null;
         
         if (Category.getClass() == CategoryPgEntity.class)
@@ -120,7 +120,7 @@ public class CategoryPgRepository implements ICategoryRepository {
             throw new DALException();
 
         try {
-            session.save(newCategory);
+            return (Integer) session.save(newCategory);
         } catch (Exception e) {
             throw new DALException(e);
         }

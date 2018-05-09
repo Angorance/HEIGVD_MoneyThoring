@@ -51,7 +51,7 @@ public interface ICategoryRepository {
      * @param category the category would'you add
      * @throws DALException
      */
-    public void addCategory(IDALCategoryEntity category) throws DALException;
+    public Integer addCategory(IDALCategoryEntity category) throws DALException;
 
     /**
      * Delete addCategory

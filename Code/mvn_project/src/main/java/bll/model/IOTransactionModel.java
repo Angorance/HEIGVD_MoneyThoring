@@ -69,7 +69,7 @@ public class IOTransactionModel {
 			orm.beginTransaction();
 			
 			IIotransactionRepository repo = orm.getIotransactionRepository();
-			repo.addIotransaction(DALIOTransactionMapper.toDboPG(this));
+			setId(repo.addIotransaction(DALIOTransactionMapper.toDboPG(this)));
 			
 			orm.commit();
 			

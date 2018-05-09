@@ -51,7 +51,7 @@ public interface IBankaccountRepository {
      * @param bankaccount would'you add
      * @throws DALException
      */
-    public void addBankaccount(IDALBankaccountEntity bankaccount) throws DALException;
+    public Integer addBankaccount(IDALBankaccountEntity bankaccount) throws DALException;
 
     /**
      * delete a bankaccount by bankaccount id
