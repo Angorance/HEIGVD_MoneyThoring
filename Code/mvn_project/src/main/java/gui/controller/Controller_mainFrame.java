@@ -51,7 +51,6 @@ public class Controller_mainFrame implements Initializable {
 		VBox box = null;
 		JFXDepthManager.setDepth(paneHeader, 3);
 		lblInfo.setText(ClientLogic.getInstance().toString());
-		mainContent.setPadding(new Insets(15,5,5,5));
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
 			gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();

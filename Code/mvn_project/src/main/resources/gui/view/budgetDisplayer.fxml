@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -16,4 +17,7 @@
       <Label fx:id="lblmaxExpense" text="Label" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
       <JFXProgressBar fx:id="expenseProgress" prefHeight="15.0" progress="0.56" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </AnchorPane>

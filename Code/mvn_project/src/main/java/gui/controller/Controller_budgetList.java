@@ -68,6 +68,8 @@ public class Controller_budgetList implements IController, Initializable {
 
 			JFXDepthManager.setDepth(budgetPane, 1);
 			budgetPane.setOnMouseClicked(event -> openDetail());
+			
+			
 		}
 	}
 
@@ -110,6 +112,7 @@ public class Controller_budgetList implements IController, Initializable {
 		BudgetLogic b = (BudgetLogic)result;
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
+		
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
 		loader.setController(new budgetDisplayer(b));

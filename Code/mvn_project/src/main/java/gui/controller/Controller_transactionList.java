@@ -35,27 +35,16 @@ import java.util.*;
 
 public class Controller_transactionList implements Initializable, IController {
 	
-	
-	@FXML
-	private AnchorPane parent;
-	@FXML
-	private AnchorPane paneform;
-	@FXML
-	private ComboBox<BankAccountLogic> accountSelect;
-	@FXML
-	private ComboBox<String> periodSelect;
-	@FXML
-	private ComboBox<String> monthSelect;
-	@FXML
-	private Label lblTotalDepense;
-	@FXML
-	private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
-	@FXML
-	private Label lblTotalRevenu;
-	@FXML
-	private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
-	@FXML
-	private JFXNodesList nodeList;
+	@FXML private AnchorPane parent;
+	@FXML private AnchorPane paneform;
+	@FXML private ComboBox<BankAccountLogic> accountSelect;
+	@FXML private ComboBox<String> periodSelect;
+	@FXML private ComboBox<String> monthSelect;
+	@FXML private Label lblTotalDepense;
+	@FXML private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
+	@FXML private Label lblTotalRevenu;
+	@FXML private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
+	@FXML private JFXNodesList nodeList;
 	
 	private JFXButton transactionButton;
 	private JFXButton outGoButton;
@@ -295,7 +284,7 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	private void generateNodeList() {
 		
-		transactionButton = new JFXButton();
+		transactionButton = new JFXButton("+");
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
 		transactionButton.getStyleClass().addAll("transaction-animate-button",
 				"transaction-animate-button-sub");
