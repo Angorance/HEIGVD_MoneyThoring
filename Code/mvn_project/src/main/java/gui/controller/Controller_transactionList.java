@@ -151,7 +151,15 @@ public class Controller_transactionList implements Initializable, IController {
 	 * @param updated
 	 */
 	@Override public void modifyItem(Object updated) {
-	
+		unloadform();
+		IOTransactionLogic tr = (IOTransactionLogic) updated;
+		
+		periodSelect.getSelectionModel().select("Annuel");
+		Date date = tr.getDate();
+		int year = date.toLocalDate().getYear();
+		monthSelect.getSelectionModel().select(year);
+		
+		setData();
 	}
 	
 	/**

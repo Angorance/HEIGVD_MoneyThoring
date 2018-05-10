@@ -86,6 +86,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 				controller.createItem(transaction);
 			}else{
 				tr.update(amountDouble,nameText,"toto",sqlDate,"CHF",cl);
+				controller.modifyItem(tr);
 			}
 		}
 	}
