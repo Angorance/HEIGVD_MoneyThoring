@@ -167,7 +167,7 @@ public class Controller_loginRegister implements Initializable {
 		if(Authentication.checkActivationCode(confirm_textField.getText())){
 			loadMainFrame();
 		} else {
-			confirm_incorrect.setText("Code invalide\nVeuillezr réessayer");
+			confirm_incorrect.setText("Code invalide\nVeuillez réessayer");
 			confirm_incorrect.setStyle("-fx-text-fill: red;-fx-border-color: red;-fx-border-width: 2px");
 			confirm_incorrect.setVisible(true);
 		}
