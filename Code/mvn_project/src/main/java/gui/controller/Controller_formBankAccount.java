@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import org.apache.derby.iapi.util.StringUtil;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -68,10 +70,50 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		}
 	}
 	
+	/**
+	 * Method to check if our field is correct
+	 *
+	 * @return true if all is correct otherwise false
+	 */
 	private boolean checkValidInput() {
-		// on vérifie tous les champs, s'ils sont erronés on les mets en rouge
-		return true;
+		
+		String name = nameAccount.getText();
+		String bankName = nameBankAccount.getText();
+		String amountDouble = amount.getText();
+		
+		boolean check = true;
+		
+		/*Check if the name is empty*/
+		if (name.isEmpty()) {
+			nameAccount.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		/*Check if the bankName is empty*/
+		if (bankName.isEmpty()) {
+			nameBankAccount.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		/*Check if the amount is empty and it's not a double*/
+		if (amountDouble.isEmpty() || !isDouble(amountDouble)) {
+			amount.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
+			check = false;
+		}
+		
+		return check;
 	}
+	
+	private boolean isDouble(String str) {
+		
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
 	
 	private void generateComboBoxItem() {
 		
@@ -115,5 +157,30 @@ public class Controller_formBankAccount implements Initializable, IForm {
 				formCancel(event);
 			}
 		});
+		
+		nameAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				nameAccount.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		nameBankAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				nameBankAccount.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		amount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				amount.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
+		
 	}
 }

@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
-import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -121,7 +119,7 @@ public class Controller_bankAccount implements Initializable, IController {
 		if (bal != null) {
 			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
-			displayerList.put(((BankAccountLogic) bal).getId(),accountDisplayer);
+			displayerList.put(((BankAccountLogic) bal).getId(), accountDisplayer);
 		}
 	}
 	
@@ -132,13 +130,8 @@ public class Controller_bankAccount implements Initializable, IController {
 	 */
 	@Override public void deleteItem(Object toDelete) {
 		
-		/*unloadform();
-		BankAccountLogic bal = (BankAccountLogic) toDelete;
-		System.out.println("Suppression du compte id : " + bal.getId());
-		frame_bankAccount.getChildren().remove(displayerList.get(bal.getId()));*/
-		
 		unloadform();
-		if(toDelete != null) {
+		if (toDelete != null) {
 			BankAccountLogic bal = (BankAccountLogic) toDelete;
 			System.out.println("Suppression du compte id : " + bal.getId());
 			frame_bankAccount.getChildren().removeAll(displayerList.get(bal.getId()));
@@ -147,6 +140,9 @@ public class Controller_bankAccount implements Initializable, IController {
 		
 	}
 	
+	/**
+	 * Unload the form bank account
+	 */
 	private void unloadform() {
 		
 		paneform.getChildren().clear();
@@ -165,9 +161,10 @@ public class Controller_bankAccount implements Initializable, IController {
 		BankAccountLogic bal = (BankAccountLogic) updated;
 		displayerList.get(bal.getId()).redraw();
 	}
-
+	
 	/**
 	 * Add an AccountDisplayer to the frame
+	 *
 	 * @param accountDisplayer node to display
 	 */
 	private void addToFrame(AccountDisplayer accountDisplayer) {
@@ -178,9 +175,9 @@ public class Controller_bankAccount implements Initializable, IController {
 	
 	
 	/**
-	 * TODO
+	 * Event on the create bankAccountDisplayer that will load the detail bank account page
 	 *
-	 * @param bal TODO
+	 * @param bal the bank account to show the detail
 	 */
 	private void detailBankAccount(BankAccountLogic bal) {
 		

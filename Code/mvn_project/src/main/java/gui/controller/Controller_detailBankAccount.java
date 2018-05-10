@@ -55,8 +55,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	/**
 	 * Constructor of our controller
 	 *
-	 * @param cba TODO
-	 * @param bal TODO
+	 * @param cba The controller bank account
+	 * @param bal The bank account
 	 */
 	public Controller_detailBankAccount(Controller_bankAccount cba, BankAccountLogic bal) {
 		
@@ -64,11 +64,17 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		this.cba = cba;
 	}
 	
+	/**
+	 * Method that returns us to the main bank accounts page
+	 */
 	private void returnFrame() {
 		
 		cba.modifyItem(bal);
 	}
 	
+	/**
+	 * Generate the the node list with our button
+	 */
 	private void generateNodeList() {
 		
 		preferenceButton = new JFXButton();
@@ -91,11 +97,17 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		preferenceButton.setGraphic(image);
 	}
 	
+	/**
+	 * Methode to say to our controller to remove the bank account
+	 */
 	private void removeBankAccount() {
 		
 		cba.deleteItem(bal);
 	}
 	
+	/**
+	 * Load the form to modify the bank account
+	 */
 	private void modifyBankAccount() {
 		
 		/* we load the form fxml*/
@@ -117,15 +129,31 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		}
 	}
 	
-	@Override public void createItem(Object result) {
+	/**
+	 * Unload the form bank account
+	 */
+	private void unloadform() {
 		
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
+	/**
+	 * Do nothing
+	 *
+	 * @param result the bank account
+	 */
+	@Override public void createItem(Object result) {
+		
+		/*we don't create an item on detail bank account*/
+		/*We just unload the form*/
+		unloadform();
+	}
 	
+	@Override public void deleteItem(Object toDelete) {
+		/*Do nothing*/
+		/*We don't delete an item directly in this controller*/
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
