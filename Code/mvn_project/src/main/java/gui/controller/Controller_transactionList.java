@@ -12,8 +12,6 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +51,6 @@ public class Controller_transactionList implements Initializable, IController {
 	private JFXButton outGoButton;
 	private JFXButton incomeButton;
 	
-	
 	private ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
 	private ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
 	
@@ -63,6 +60,7 @@ public class Controller_transactionList implements Initializable, IController {
 	 * Event on the create button that will load the transaction creation page
 	 */
 	public void callform(boolean isIncome) {
+		
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
 		
@@ -76,35 +74,53 @@ public class Controller_transactionList implements Initializable, IController {
 		paneform.setMouseTransparent(false);
 		
 		try {
+			
 			AnchorPane pane = loader.load();
 			paneform.getChildren().add(pane);
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Methode to create the item in the TreeTableView
+	 *
+	 * @param result the transaction to insert in the TreeTableView
+	 */
 	@Override public void createItem(Object result) {
 		
-		paneform.getChildren().clear();
-		paneform.setVisible(false);
-		paneform.setMouseTransparent(true);
+		unloadform();
 		
-		IOTransactionLogic tr = (IOTransactionLogic)result;
-		for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
-			if(bal.getId() == tr.getBankAccountID()){
-				accountSelect.getSelectionModel().select(bal);
-				break;
+		if (result != null) {
+			IOTransactionLogic tr = (IOTransactionLogic) result;
+			for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+				if (bal.getId() == tr.getBankAccountID()) {
+					accountSelect.getSelectionModel().select(bal);
+					break;
+				}
 			}
+			
+			
+			periodSelect.getSelectionModel().select("Mensuel");
+			
+			Date date = tr.getDate();
+			int month = date.toLocalDate().getMonthValue() - 1;
+			
+			monthSelect.getSelectionModel().select(month);
+			
+			setData();
 		}
+	}
+	
+	/**
+	 * Unload the form bank account
+	 */
+	private void unloadform() {
 		
-		periodSelect.getSelectionModel().select("Mensuel");
-		
-		Date date = tr.getDate();
-		int month = date.toLocalDate().getMonthValue() - 1;
-		
-		monthSelect.getSelectionModel().select(month);
-		
-		setData();
+		paneform.getChildren().clear();
+		paneform.setMouseTransparent(true);
+		paneform.setVisible(false);
 	}
 	
 	/**
@@ -125,6 +141,9 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	}
 	
+	/**
+	 * Set the data in the TreeTableView
+	 */
 	private void setData() {
 		
 		bal = accountSelect.getValue();
@@ -236,6 +255,9 @@ public class Controller_transactionList implements Initializable, IController {
 	}
 	
 	
+	/**
+	 * Set the total amount of outgo and income
+	 */
 	private void setTotal() {
 		
 		double totalIncome = 0;
@@ -323,11 +345,10 @@ public class Controller_transactionList implements Initializable, IController {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		paneform.setVisible(false);
-		paneform.setMouseTransparent(true);
-		
+		unloadform();
 		generateNodeList();
 		generateComboBoxItem();
+		setTotal();
 		
 		accountSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -373,8 +394,9 @@ public class Controller_transactionList implements Initializable, IController {
 		incomeTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
-				if(event.getButton().equals(MouseButton.PRIMARY)){
-					if(event.getClickCount() == 2){
+				
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
 						int t = incomeTreeTableView.getSelectionModel().getFocusedIndex();
 						System.out.println(incomeTreeTableView.getTreeItem(t).getValue().getTransaction());
 						//TODO formulaire
@@ -387,10 +409,10 @@ public class Controller_transactionList implements Initializable, IController {
 		outGoTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override public void handle(MouseEvent event) {
+				
 				callform(true);
 			}
 		});
-		
 		
 	}
 	

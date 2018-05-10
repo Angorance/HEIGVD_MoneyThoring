@@ -35,7 +35,7 @@
                   <Label text="Montant" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="name" prefWidth="110.0" promptText="nom de la transaction" GridPane.columnIndex="1" />
                   <JFXTextField fx:id="amount" prefHeight="25.0" prefWidth="61.0" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <JFXCheckBox fx:id="recurrence" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label prefHeight="17.0" prefWidth="155.0" text="Compte bancaire" GridPane.rowIndex="2" />
                   <JFXComboBox fx:id="bankAccount" prefHeight="25.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />

@@ -104,6 +104,13 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		return check;
 	}
 	
+	/**
+	 * Check if a string is a double
+	 *
+	 * @param str string to check
+	 *
+	 * @return true if is a double otherwise false
+	 */
 	private boolean isDouble(String str) {
 		
 		try {

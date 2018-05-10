@@ -11,9 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class Controller_formTransaction implements Initializable, IForm {
@@ -57,6 +57,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 		if (checkValidInput()) {
 			/*name of transaction*/
 			String nameText = name.getText();
+			
 			/*transaction amount*/
 			double amountDouble = Math.abs(Double.parseDouble(amount.getText()));
 			amountDouble = isIncome ? amountDouble : amountDouble * (-1);
@@ -71,10 +72,12 @@ public class Controller_formTransaction implements Initializable, IForm {
 			if (recurrence.isSelected()) {
 				String recurrenceText = time.getValue();
 			}
+			
 			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
 			
 			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF", cl,
 					bal);
+			
 			controller.createItem(transaction);
 		}
 	}
@@ -82,22 +85,56 @@ public class Controller_formTransaction implements Initializable, IForm {
 	private void checkRecurrence() {
 		
 		if (recurrence.isSelected()) {
-			
 			time.setVisible(true);
 		} else {
-			
 			time.setVisible(false);
 		}
 	}
 	
 	/**
-	 * TODO
+	 * Method to check if our field is correct
 	 *
-	 * @return
+	 * @return true if all is correct otherwise false
 	 */
 	private boolean checkValidInput() {
+		String nameText = name.getText();
+		String amountDouble = amount.getText();
+		boolean check = true;
 		
-		return true;
+		/*Check if the bankName is empty*/
+		if (nameText.isEmpty()) {
+			name.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		/*Check if the amount is empty and it's not a double*/
+		if (amountDouble.isEmpty() || !isDouble(amountDouble)) {
+			amount.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
+			check = false;
+		}
+		
+		if(datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())){
+			datePicker.setStyle("-jfx-default-color: red;");
+		}
+		
+		return check;
+	}
+	
+	/**
+	 * Check if a string is a double
+	 *
+	 * @param str string to check
+	 *
+	 * @return true if is a double otherwise false
+	 */
+	private boolean isDouble(String str) {
+		
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	private void generateComboBox() {
@@ -158,6 +195,30 @@ public class Controller_formTransaction implements Initializable, IForm {
 			@Override public void handle(ActionEvent event) {
 				
 				checkRecurrence();
+			}
+		});
+		
+		name.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				name.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		amount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				amount.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
+		
+		datePicker.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				datePicker.setStyle("-jfx-default-color: green;");
 			}
 		});
 	}
