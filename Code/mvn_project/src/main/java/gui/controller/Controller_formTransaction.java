@@ -11,10 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class Controller_formTransaction implements Initializable, IForm {
@@ -186,8 +190,10 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		
 		generateComboBox();
 		deleteButton.setVisible(false);
+
 		if(tr != null){
 			
 			deleteButton.setVisible(true);

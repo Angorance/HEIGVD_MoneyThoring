@@ -47,7 +47,7 @@ public class Controller_budgetList implements IController, Initializable {
 
 			paneForm.setVisible(true);
 			paneForm.setMouseTransparent(false);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDetail.fxml"));
 			loader.setController(new Controller_detailBudget(Controller_budgetList.this, budget));
 			
 			paneForm.getChildren().clear();

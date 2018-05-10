@@ -24,10 +24,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller_detailBankAccount implements Initializable, IController {
 	
@@ -232,8 +229,17 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		//if the list of transaction is not empty, we get the last transaction date
 		if (!bal.getTransactions().isEmpty()) {
-			//dateLastTransaction
-			//.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
+			/*int year = Calendar.getInstance().get(Calendar.YEAR);
+			if(bal.getTransactions().containsKey(year)) {
+				int cnt = 0;
+				while (!bal.getTransactions().get(year)[cnt].isEmpty()) {
+					cnt++;
+				}
+				int size =  bal.getTransactions().get(year)[cnt].size();
+				Date date = bal.getTransactions().get(year)[cnt].get(size -1).getDate();
+				dateLastTransaction.setText(date.toString());
+			}
+			dateLastTransaction.setText("-");*/
 		}
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
