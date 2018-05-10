@@ -166,6 +166,43 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		chkDefaultAccount.setSelected(bal.isDefault());
 	}
 	
+	private void setDataToChart() {
+		XYChart.Series series = new XYChart.Series();
+		series.setName("Evolution du solde");
+		
+		double solde = bal.getAmount();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		// Create a calendar object and set year and month
+		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
+		
+		// Get the number of days in that month
+		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		if (!bal.getTransactions().isEmpty()) {
+			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+				solde -= transaction.getAmount();
+			}
+		}
+		
+		for (int i = 0; i < currentDay; ++i) {
+			if (!bal.getTransactions().isEmpty()) {
+				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+					if (transaction.getDate().getDay() - 1 == i) {
+						solde += transaction.getAmount();
+					}
+				}
+			}
+			
+			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+		}
+		
+		lineChart.getData().addAll(series);
+		
+	}
+	
 	/**
 	 * Called to initialize a controller after its root element has been completely processed.
 	 *
@@ -211,43 +248,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		chkDefaultAccount.setSelected(bal.isDefault());
 		chkDefaultAccount.setMouseTransparent(true);
 		
-		/*TODO mettre les données dans le graphique*/
-		/*TODO max min des valeur de l'axe Y*/
-		XYChart.Series series = new XYChart.Series();
-		series.setName("Evolution du solde");
-		Random random = new Random();
-		
-		double solde = bal.getAmount();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		
-		// Create a calendar object and set year and month
-		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
-		
-		// Get the number of days in that month
-		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		
-		if (!bal.getTransactions().isEmpty()) {
-			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-				solde -= transaction.getAmount();
-			}
-		}
-		
-		for (int i = 0; i < currentDay; ++i) {
-			if (!bal.getTransactions().isEmpty()) {
-				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-					if (transaction.getDate().getDay() - 1 == i) {
-						solde += transaction.getAmount();
-					}
-				}
-			}
-			/*if (i < currentDay) {
-				series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
-			}*/
-		}
-		
-		lineChart.getData().addAll(series);
+		setDataToChart();
 		
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			
