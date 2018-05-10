@@ -173,7 +173,6 @@ public class Controller_transactionList implements Initializable, IController {
 		boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
 		
 		JFXTreeTableColumn<WrapperTransaction, String> dateIncome = new JFXTreeTableColumn<>("Date");
-		dateIncome.setMinWidth(150);
 		dateIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -185,7 +184,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> nameIncome = new JFXTreeTableColumn<>("nom");
-		nameIncome.setMinWidth(150);
 		nameIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -197,7 +195,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> amountIncome = new JFXTreeTableColumn<>("montant");
-		amountIncome.setMinWidth(150);
 		amountIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -209,7 +206,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo = new JFXTreeTableColumn<>("Date");
-		dateOutgo.setMinWidth(150);
 		dateOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -221,7 +217,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo = new JFXTreeTableColumn<>("nom");
-		nameOutgo.setMinWidth(150);
 		nameOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -233,7 +228,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo = new JFXTreeTableColumn<>("montant");
-		amoutOutgo.setMinWidth(150);
 		amoutOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -274,7 +268,6 @@ public class Controller_transactionList implements Initializable, IController {
 		
 		setTotal();
 	}
-	
 	
 	/**
 	 * Set the total amount of outgo and income
