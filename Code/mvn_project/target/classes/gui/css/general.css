@@ -63,3 +63,22 @@
 }
 
 
+.dashboard-animate-button{
+    -fx-pref-width: 25px;
+    -fx-background-color: #44b449;
+    -fx-background-radius: 25px;
+    -fx-pref-height: 25px;
+    -fx-text-fill: white;
+    -fx-border-radius: 25px;
+    -fx-border-width: 4px;
+}
+
+.dashboard-animate-button-sub{
+    -fx-background-color: #3a9b4b;
+}
+
+.dashboard-animate-button-sub-2{
+    -fx-background-color: RED;
+}
+
+
