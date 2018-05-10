@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -11,11 +12,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="855.0" style="-fx-background-color: #ffffff80;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="855.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" layoutX="110.0" layoutY="-1.0" prefHeight="400.0" prefWidth="394.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;">
+            <AnchorPane prefHeight="291.0" prefWidth="655.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;">
                <children>
                   <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="94.0" style="-fx-background-color: #cecece;" text="Retour" AnchorPane.leftAnchor="15.0" />
                   <JFXButton fx:id="btnValidation" layoutX="328.0" layoutY="94.0" style="-fx-background-color: lightgreen;" text="Valider" AnchorPane.rightAnchor="15.0" />
@@ -26,6 +27,12 @@
                            <children>
                               <JFXTextField fx:id="txtCeiling" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="116.0" promptText="Valeur plafond" />
                               <Label text="CHF" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="274.0" spacing="10.0">
+                           <children>
+                              <JFXCheckBox text="Périodique" />
+                              <JFXComboBox prefHeight="25.0" prefWidth="108.0" />
                            </children>
                         </HBox>
                         <BorderPane prefHeight="143.0" prefWidth="300.0">

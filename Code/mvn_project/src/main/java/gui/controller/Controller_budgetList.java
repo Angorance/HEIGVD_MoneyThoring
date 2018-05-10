@@ -63,7 +63,7 @@ public class Controller_budgetList implements IController, Initializable {
 			lbltitre.setStyle("-fx-font-size: 24");
 			lblcurrentExpense.setText("Dépenses actuelles : 999.99 CHF");
 			lblmaxExpense.setText("Plafond : 9999.99 CHF");
-			expenseProgress.setProgress(0.5);
+			expenseProgress.setProgress(0.5); // TODO Dépensé/plafond
 			budgetPane.setMinHeight(130);
 
 			JFXDepthManager.setDepth(budgetPane, 1);

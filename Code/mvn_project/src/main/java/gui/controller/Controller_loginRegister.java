@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -24,6 +23,7 @@ import smtp.Mail;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static bll.logic.Authentication.*;
 
@@ -60,6 +60,20 @@ public class Controller_loginRegister implements Initializable {
 		String password = login_password.getText();
 		
 		// TODO lancer le connect dans un thread, faire apparaitre le paneSpinner en attendant, un fois le thread terminé on fait disparaire paneSpinner
+		/*// WHAT THE FUCK
+		AtomicBoolean status = new AtomicBoolean(false);
+		Thread connect = new Thread(() -> {status.set(connect(email, password));});
+		
+		paneSpinner.setVisible(true);
+		
+		try {
+			connect.start();
+			connect.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		paneSpinner.setVisible(false);
 		/*Retrieving the status of the login method*/
 		boolean status = connect(email, password);
 		
