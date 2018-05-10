@@ -56,16 +56,19 @@ public class Controller_transactionList implements Initializable, IController {
 	
 	private BankAccountLogic bal;
 	
+	
 	/**
-	 * Event on the create button that will load the transaction creation page
+	 * Load the fom
+	 *
+	 * @param isIncome
 	 */
-	public void callform(boolean isIncome) {
+	public void callform(boolean isIncome, IOTransactionLogic tr) {
 		
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome);
+		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome, tr);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(controller);
@@ -102,12 +105,10 @@ public class Controller_transactionList implements Initializable, IController {
 			}
 			
 			
-			periodSelect.getSelectionModel().select("Mensuel");
-			
+			periodSelect.getSelectionModel().select("Annuel");
 			Date date = tr.getDate();
-			int month = date.toLocalDate().getMonthValue() - 1;
-			
-			monthSelect.getSelectionModel().select(month);
+			int year = date.toLocalDate().getYear();
+			monthSelect.getSelectionModel().select(year);
 			
 			setData();
 		}
@@ -126,10 +127,22 @@ public class Controller_transactionList implements Initializable, IController {
 	/**
 	 * Delete the displayer and the data in the DB
 	 *
-	 * @param toDelete
+	 * @param toDelete transaction to delete
 	 */
 	@Override public void deleteItem(Object toDelete) {
-	
+		
+		unloadform();
+		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
+		
+		periodSelect.getSelectionModel().select("Annuel");
+		Date date = tr.getDate();
+		int year = date.toLocalDate().getYear();
+		monthSelect.getSelectionModel().select(year);
+		
+		tr.supp();
+		
+		setData();
+		
 	}
 	
 	/**
@@ -379,7 +392,7 @@ public class Controller_transactionList implements Initializable, IController {
 			
 			@Override public void handle(ActionEvent event) {
 				
-				callform(false);
+				callform(false, null);
 			}
 		});
 		
@@ -387,7 +400,7 @@ public class Controller_transactionList implements Initializable, IController {
 			
 			@Override public void handle(ActionEvent event) {
 				
-				callform(true);
+				callform(true, null);
 			}
 		});
 		
@@ -398,8 +411,10 @@ public class Controller_transactionList implements Initializable, IController {
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (event.getClickCount() == 2) {
 						int t = incomeTreeTableView.getSelectionModel().getFocusedIndex();
-						System.out.println(incomeTreeTableView.getTreeItem(t).getValue().getTransaction());
-						//TODO formulaire
+						if (t >= 0) {
+							IOTransactionLogic tr = incomeTreeTableView.getTreeItem(t).getValue().getTransaction();
+							callform(true, tr);
+						}
 					}
 				}
 			}
@@ -410,7 +425,15 @@ public class Controller_transactionList implements Initializable, IController {
 			
 			@Override public void handle(MouseEvent event) {
 				
-				callform(true);
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
+						int t = outGoTreeTableView.getSelectionModel().getFocusedIndex();
+						if (t >= 0) {
+							IOTransactionLogic tr = outGoTreeTableView.getTreeItem(t).getValue().getTransaction();
+							callform(false, tr);
+						}
+					}
+				}
 			}
 		});
 		
