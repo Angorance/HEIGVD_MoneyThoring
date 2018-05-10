@@ -187,7 +187,10 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		for (int i = 0; i < currentDay; ++i) {
 			if (!bal.getTransactions().isEmpty()) {
 				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-					if (transaction.getDate().getDay() - 1 == i) {
+					java.sql.Date dat = transaction.getDate();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(dat);
+					if (cal.get(Calendar.DAY_OF_MONTH) - 1 == i) {
 						solde += transaction.getAmount();
 					}
 				}

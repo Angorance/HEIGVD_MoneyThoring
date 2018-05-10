@@ -59,9 +59,9 @@ public class Controller_dashboard implements IController, Initializable {
 			
 			transaction = t;
 			
-			lblDate = new Label(transaction.getDate().toString());
-			lblCaption = new Label(transaction.getName());
-			lblPrix = new Label(Double.toString(transaction.getAmount()));
+			lblDate = new Label(transaction.getDate().toString() + "\t");
+			lblCaption = new Label(transaction.getName() + "\t");
+			lblPrix = new Label(Double.toString(transaction.getAmount()) + "\t");
 			paneDisplay = new GridPane();
 			
 			paneDisplay.getChildren().add(lblDate);
@@ -69,9 +69,9 @@ public class Controller_dashboard implements IController, Initializable {
 			paneDisplay.getChildren().add(lblPrix);
 			
 			
-			paneDisplay.setConstraints(lblDate, 0, 0, 0, 0, HPos.LEFT, VPos.CENTER);
-			paneDisplay.setConstraints(lblCaption, 1, 0, 0, 0, HPos.CENTER, VPos.CENTER);
-			paneDisplay.setConstraints(lblPrix, 2, 0, 0, 0, HPos.RIGHT, VPos.CENTER);
+			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER);
+			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
 			
 			if (transaction.isIncome()) {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + incomeColor + ";");
@@ -113,10 +113,16 @@ public class Controller_dashboard implements IController, Initializable {
 		paneForm.setMouseTransparent(true);
 		paneForm.setVisible(false);
 	}
+	
 	@Override public void createItem(Object result) {
+		
 		unloadform();
-		if(result != null){
+		if (result != null) {
+			IOTransactionLogic tr = (IOTransactionLogic) result;
 			// TODO création du transactionDisplayer
+			transactionDisplayer trDisplayer = new transactionDisplayer(tr);
+			setDataLineChart();
+			
 		}
 	}
 	
@@ -146,6 +152,7 @@ public class Controller_dashboard implements IController, Initializable {
 		btnIncome.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				callForm(true);
 			}
 		});
@@ -162,6 +169,8 @@ public class Controller_dashboard implements IController, Initializable {
 	
 	private void setDataLineChart() {
 		
+		chartLine.getData().clear();
+		
 		BankAccountLogic bal = new BankAccountLogic();
 		
 		for (BankAccountLogic b : ClientLogic.getInstance().getBankAccounts()) {
@@ -171,12 +180,15 @@ public class Controller_dashboard implements IController, Initializable {
 			}
 		}
 		XYChart.Series series = new XYChart.Series();
+		series.getData().clear();
 		series.setName("Evolution du solde");
 		
 		double solde = bal.getAmount();
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		System.out.println(currentYear + "-" + currentMonth + "-" + currentDay);
 		
 		// Create a calendar object and set year and month
 		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
@@ -193,7 +205,10 @@ public class Controller_dashboard implements IController, Initializable {
 		for (int i = 0; i < currentDay; ++i) {
 			if (!bal.getTransactions().isEmpty()) {
 				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-					if (transaction.getDate().getDay() - 1 == i) {
+					java.sql.Date dat = transaction.getDate();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(dat);
+					if (cal.get(Calendar.DAY_OF_MONTH) - 1 == i) {
 						solde += transaction.getAmount();
 					}
 				}
