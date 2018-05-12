@@ -34,7 +34,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.*;
 
-public class Controller_transactionList implements Initializable, IController {
+public class Controller_listTransaction implements Initializable, IController {
 	
 	@FXML private AnchorPane parent;
 	@FXML private AnchorPane paneform;

@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
-import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
@@ -14,7 +13,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -46,7 +44,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	private JFXButton modifyButton;
 	private JFXButton removeButton;
 	
-	private Controller_bankAccount cba;
+	private Controller_listBankAccount cba;
 	private BankAccountLogic bal;
 	
 	/**
@@ -55,7 +53,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	 * @param cba The controller bank account
 	 * @param bal The bank account
 	 */
-	public Controller_detailBankAccount(Controller_bankAccount cba, BankAccountLogic bal) {
+	public Controller_detailBankAccount(Controller_listBankAccount cba, BankAccountLogic bal) {
 		
 		this.bal = bal;
 		this.cba = cba;

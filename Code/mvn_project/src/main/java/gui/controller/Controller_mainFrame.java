@@ -5,12 +5,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.effects.JFXDepthManager;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -142,19 +140,19 @@ public class Controller_mainFrame implements Initializable {
 				loader.setController(new Controller_dashboard());
 				break;
 			case 1: // Budget
-				loader.setController(new Controller_budgetList());
+				loader.setController(new Controller_listBudget());
 				break;
 			case 2: // Transactions
-				loader.setController(new Controller_transactionList());
+				loader.setController(new Controller_listTransaction());
 				break;
 			case 3: // Dettes
-				loader.setController(new Controller_debtList());
+				loader.setController(new Controller_listDebt());
 				break;
 			case 4: // compte bancaire
-				loader.setController(new Controller_bankAccount());
+				loader.setController(new Controller_listBankAccount());
 				break;
 			case 5: // catégories
-				loader.setController(new Controller_categoryList());
+				loader.setController(new Controller_listCategory());
 				break;
 		}
 		AnchorPane pane = loader.load();

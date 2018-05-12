@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * @author Bryan Curchod
  * @version 1.3
  */
-public class Controller_categoryList implements Initializable, IController {
+public class Controller_listCategory implements Initializable, IController {
     @FXML private FlowPane listContainer;
     @FXML private JFXButton btnAdd;
     @FXML private AnchorPane formPane;

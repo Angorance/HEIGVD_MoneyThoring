@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * @author Bryan Curchod
  * @version 1.0
  */
-public class Controller_debtList implements IController, Initializable {
+public class Controller_listDebt implements IController, Initializable {
 	
 	@FXML private BorderPane paneDebt;
 	@FXML private FlowPane paneDebtList; // list the debts

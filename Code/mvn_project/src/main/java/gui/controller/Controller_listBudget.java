@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * @author Bryan Curchod
  * @version 1.0
  */
-public class Controller_budgetList implements IController, Initializable {
+public class Controller_listBudget implements IController, Initializable {
 	
 	@FXML private VBox paneList;
 	@FXML private JFXButton btnAdd;
@@ -48,7 +48,7 @@ public class Controller_budgetList implements IController, Initializable {
 			paneForm.setVisible(true);
 			paneForm.setMouseTransparent(false);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDetail.fxml"));
-			loader.setController(new Controller_detailBudget(Controller_budgetList.this, budget));
+			loader.setController(new Controller_detailBudget(Controller_listBudget.this, budget));
 			
 			paneForm.getChildren().clear();
 			try {

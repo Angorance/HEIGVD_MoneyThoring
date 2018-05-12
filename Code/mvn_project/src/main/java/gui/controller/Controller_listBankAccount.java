@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * @author François Burgener, Bryan Curchod
  * @version 1.5
  */
-public class Controller_bankAccount implements Initializable, IController {
+public class Controller_listBankAccount implements Initializable, IController {
 	
 	
 	HashMap<Integer, AccountDisplayer> displayerList;
