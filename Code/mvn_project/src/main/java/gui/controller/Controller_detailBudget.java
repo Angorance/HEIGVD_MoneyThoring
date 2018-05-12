@@ -73,7 +73,8 @@ public class Controller_detailBudget implements Initializable, IController {
 		paneForm.setMouseTransparent(true);
 		
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
-		
+
+		lblTitre.setText(budget.getName());
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses

@@ -36,7 +36,7 @@ public class Controller_categoryList implements Initializable, IController {
      * Class that wrap a category into a graphic element
      */
     private class CategoryDisplayer extends HBox {
-        private final int HEIGHT = 30;
+        private final int HEIGHT = 50;
         CategoryLogic cat;
         Label lblCategorie = new Label();
 
@@ -58,7 +58,7 @@ public class Controller_categoryList implements Initializable, IController {
             });
 
             // formatting the graphic elements
-            lblCategorie.setStyle("-fx-background-color: white");
+            lblCategorie.setStyle("-fx-background-color: white;-fx-font-size: 15");
             lblCategorie.setPrefHeight(HEIGHT);
             lblCategorie.setPadding(new Insets(0,10,0,10));
             lblCategorie.setAlignment(Pos.CENTER);

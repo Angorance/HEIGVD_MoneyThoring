@@ -117,17 +117,19 @@ public class Controller_budgetList implements IController, Initializable {
 	}
 	
 	@Override public void createItem(Object result) {
-		BudgetLogic b = (BudgetLogic)result;
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
-		
-		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
-		loader.setController(new budgetDisplayer(b));
-		try {
-			paneList.getChildren().add(loader.load());
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		if(result != null) {
+			BudgetLogic b = (BudgetLogic) result;
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
+			loader.setController(new budgetDisplayer(b));
+			try {
+				paneList.getChildren().add(loader.load());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -146,6 +148,5 @@ public class Controller_budgetList implements IController, Initializable {
 			displayerList.put(b.getId(), bd);
 			paneList.getChildren().add(bd);
 		}
-
 	}
 }
