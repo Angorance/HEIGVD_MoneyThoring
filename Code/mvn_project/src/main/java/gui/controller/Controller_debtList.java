@@ -1,7 +1,9 @@
 package gui.controller;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.effects.JFXDepthManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +27,7 @@ public class Controller_debtList implements IController, Initializable {
 	@FXML private FlowPane paneDebtList; // list the debts
 	@FXML private BorderPane paneClaim;
 	@FXML private FlowPane paneClaimList; // list the claims
-	@FXML private JFXButton btnAdd;
+	@FXML private JFXNodesList ndlAdd;
 	@FXML private AnchorPane paneForm;
 	
 	/**
@@ -62,6 +65,8 @@ public class Controller_debtList implements IController, Initializable {
 			contentPane.getChildren().add(btnValidation);
 			contentPane.setMinWidth(250);
 			contentPane.setMinHeight(250);
+
+			contentPane.setOnMouseClicked(event -> callForm(debt, debt.isIncome()));
 			
 			JFXDepthManager.setDepth(contentPane, 1);
 			this.getChildren().add(contentPane);
@@ -102,10 +107,10 @@ public class Controller_debtList implements IController, Initializable {
 		paneForm.setMouseTransparent(true);
 	}
 	
-	private void callForm(){
+	private void callForm(DebtLogic d,boolean isClaim){
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formDebt.fxml"));
-		loader.setController(new Controller_formDebt(this, null));
+		loader.setController(new Controller_formDebt(this, d, isClaim));
 		
 		try {
 			paneForm.getChildren().add(loader.load());
@@ -122,9 +127,35 @@ public class Controller_debtList implements IController, Initializable {
 		
 		JFXDepthManager.setDepth(paneDebt, 2);
 		JFXDepthManager.setDepth(paneClaim, 2);
-		btnAdd.setOnAction(event -> callForm());
+		//btnAdd.setOnAction(event -> callForm());
 		unloadForm();
-		
+
+		JFXButton btnMenu = new JFXButton("V");
+		btnMenu.setStyle("-fx-background-radius: 50; -fx-background-color: #e8e8e8");
+		btnMenu.setPrefHeight(50);
+		btnMenu.setPrefWidth(50);
+		btnMenu.setOnAction(event -> {
+			btnMenu.setRotate((btnMenu.getRotate() + 180)%360);
+		});
+
+		JFXButton btnClaim= new JFXButton("C");
+		btnClaim.setPrefHeight(50);
+		btnClaim.setPrefWidth(50);
+		btnClaim.setStyle("-fx-background-radius: 50; -fx-background-color: lightgreen");
+		btnClaim.setOnAction(event -> callForm(null, true));
+
+		JFXButton btnDebt = new JFXButton("D");
+		btnDebt.setPrefHeight(50);
+		btnDebt.setPrefWidth(50);
+		btnDebt.setStyle("-fx-background-radius: 50; -fx-background-color: #E38F8F");
+		btnDebt.setOnAction(event -> callForm(null, false));
+
+		ndlAdd.addAnimatedNode(btnMenu);
+		ndlAdd.addAnimatedNode(btnClaim);
+		ndlAdd.addAnimatedNode(btnDebt);
+		ndlAdd.setSpacing(5);
+		ndlAdd.setRotate(180);
+
 		// TODO lister les dettes et les mettres dans le bon conteneur
 	}
 }

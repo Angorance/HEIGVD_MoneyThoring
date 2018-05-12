@@ -26,10 +26,12 @@ public class Controller_formDebt implements Initializable, IForm {
 	
 	DebtLogic debt;
 	IController parent;
+	boolean isIncome;
 	
-	Controller_formDebt(IController p, DebtLogic d){
-		parent = p;
+	Controller_formDebt(IController caller, DebtLogic d, boolean isClaim){
+		parent = caller;
 		debt = d;
+		isIncome = isClaim;
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
