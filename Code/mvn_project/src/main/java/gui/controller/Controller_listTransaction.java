@@ -106,9 +106,11 @@ public class Controller_listTransaction implements Initializable, IController {
 			
 			
 			periodSelect.getSelectionModel().select("Annuel");
-			Date date = tr.getDate();
-			int year = date.toLocalDate().getYear();
-			monthSelect.getSelectionModel().select(year);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(tr.getDate());
+			int year = cal.get(Calendar.YEAR);
+			monthSelect.getSelectionModel().select(String.valueOf(year));
 			
 			setData();
 		}
