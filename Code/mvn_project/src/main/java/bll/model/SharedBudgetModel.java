@@ -40,7 +40,7 @@ public class SharedBudgetModel {
 			orm.beginTransaction();
 			
 			ISharedBudgetRepository repo = orm.getSharedBudgetRepository();
-			repo.addSharedbudget(DALSharedBudgetMapper.toDboPG(this));
+			//repo.addSharedbudget(DALSharedBudgetMapper.toDboPG(this));
 			
 			orm.commit();
 			
