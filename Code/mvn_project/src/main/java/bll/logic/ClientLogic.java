@@ -10,6 +10,7 @@ import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 import dal.orm.PgORM;
+import smtp.Mail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,9 @@ public class ClientLogic extends ClientModel {
 		
 		// TODO - Manage if connected and use Derby if necessary.
 		createUser(MasterORM.getInstance().getPgORM());
+		
+		/*Send the key*/
+		Mail.sendMail(username, email, getKey());
 	}
 	
 	// GETTERS
