@@ -52,7 +52,7 @@ public class BudgetModel {
 			orm.beginTransaction();
 			
 			IBudgetRepository repo = orm.getBudgetRepository();
-			repo.addBudget(DALBudgetMapper.toDboPG(this));
+			setId(repo.addBudget(DALBudgetMapper.toDboPG(this)));
 			
 			orm.commit();
 			

@@ -51,7 +51,7 @@ public class RecurrenceDeRepository implements IRecurrenceRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addRecurrence(IDALRecurrenceEntity recurrence) throws DALException {
+    public Integer addRecurrence(IDALRecurrenceEntity recurrence) throws DALException {
 
         RecurrenceDeEntity newRecurrence = null;
         if (recurrence.getClass() == RecurrenceDeEntity.class)
@@ -60,7 +60,7 @@ public class RecurrenceDeRepository implements IRecurrenceRepository {
             throw new DALException();
 
         try {
-            session.save(newRecurrence);
+            return (Integer) session.save(newRecurrence);
         } catch (Exception e) {
             throw new DALException(e);
         }

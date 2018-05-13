@@ -237,7 +237,7 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public void wipe() {
 		
-		transactions = new ArrayList<>();
-		transactionsByDate = new HashMap<>();
+		transactions.clear();
+		transactionsByDate.clear();
 	}
 }

@@ -85,7 +85,7 @@ public class DebtPgRepository implements IDebtRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addDebt(IDALDebtEntity debt) throws DALException {
+    public Integer addDebt(IDALDebtEntity debt) throws DALException {
         DebtPgEntity newDebt = null;
         if (newDebt.getClass() == DebtPgEntity.class)
             newDebt = (DebtPgEntity) debt;
@@ -93,7 +93,7 @@ public class DebtPgRepository implements IDebtRepository {
             throw new DALException();
 
         try {
-            session.save(newDebt);
+            return (Integer) session.save(newDebt);
         } catch (Exception e) {
             throw new DALException(e);
         }
