@@ -5,6 +5,7 @@ import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.model.windowManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,21 +17,21 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import gui.model.mainFrame;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import smtp.Mail;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static bll.logic.Authentication.*;
 
 /**
  * Controller of the view loginRegister
  */
-public class Controller_loginRegister implements Initializable {
+public class Controller_loginRegister implements Initializable, IWindow {
 	
 	@FXML private TextField login_email;
 	@FXML private PasswordField login_password;
@@ -44,6 +45,8 @@ public class Controller_loginRegister implements Initializable {
 	@FXML private GridPane register_GridPane;
 	@FXML private JFXButton btnConfirmRetour;
 	@FXML private Hyperlink hplSendCode;
+	
+	private Stage thisStage;
 	
 	
 	/**
@@ -163,7 +166,8 @@ public class Controller_loginRegister implements Initializable {
 		}
 	}
 	
-	private void confirmButton() {
+	@FXML
+	public void confirmButton() {
 		if(Authentication.checkActivationCode(confirm_textField.getText())){
 			loadMainFrame();
 		} else {
@@ -174,20 +178,16 @@ public class Controller_loginRegister implements Initializable {
 	}
 	
 	/**
-	 * Closing the window
-	 */
-	public void closeStage() {
-		
-		((Stage) login_email.getScene().getWindow()).close();
-	}
-	
-	/**
 	 * Loading the main window
 	 */
-	public void loadMainFrame() {
+	private void loadMainFrame() {
+		windowManager wm = windowManager.getInstance();
 		
-		closeStage();
-		mainFrame mf = new mainFrame();
+		if(!wm.hasMainframe()) {
+			new mainFrame();
+		}
+		
+		wm.displayMainFrame();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -234,9 +234,46 @@ public class Controller_loginRegister implements Initializable {
 			confirm_incorrect.setText("Le code a été ré-envoyé");
 			confirm_incorrect.setStyle("-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
 		});
+		
+//		thisStage = (Stage)hplSendCode.getScene().getWindow();
+		windowManager.getInstance().setConnectionFrame(this);
+		
+		/*
+		btnConfirmRetour.getScene().getWindow().setOnShowing(event -> {
+			clearFields();
+		});*/
 	}
 	
+	private void clearFields() {
+		
+		login_password.setText("");
+		login_email.setText("");
+		confirm_textField.setText("");
+		register_email.setText("");
+		register_password.setText("");
+		register_confirmPassword.setText("");
+		register_username.setText("");
+	
+	}
+	
+	@FXML
 	public void resetConfirmErrorMessage() {
 		confirm_incorrect.setVisible(false);
+	}
+	
+	@Override public void hide() {
+		if(thisStage == null){
+			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		}
+			thisStage.hide();
+	}
+	
+	@Override public void show() {
+		clearFields();
+		
+		if(thisStage == null){
+			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		}
+		thisStage.show();
 	}
 }

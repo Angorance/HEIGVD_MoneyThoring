@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.model.windowManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Implements the behavior of the main frame. Basically, it simply changes the view when we select
  */
-public class Controller_mainFrame implements Initializable {
+public class Controller_mainFrame implements Initializable, IWindow {
 	
 	@FXML private Label header_mainFrame;
 	@FXML private AnchorPane mainContent;
@@ -34,7 +37,7 @@ public class Controller_mainFrame implements Initializable {
 	@FXML private Label lblInfo;
 	@FXML private JFXButton disconnect_button;
 	
-	
+	private Stage thisStage = null;
 	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
 			"Catégories" };
 	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
@@ -55,8 +58,18 @@ public class Controller_mainFrame implements Initializable {
 			loader.setController(controller_lateralMenu);
 			box = loader.load();
 			drawer.setSidePane(box);
-			
-			initLateralButton(box);
+
+			// setting the lateral menu's button behavior
+			for (Node node : box.getChildren()) {
+				node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+					try {
+						loadContent(Integer.valueOf(node.getAccessibleText()));
+						drawer.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				});
+			}
 			
 			//HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
 			//transition.setRate(-1);
@@ -91,6 +104,15 @@ public class Controller_mainFrame implements Initializable {
 				disconnect();
 			}
 		});
+		windowManager.getInstance().setMainFrame(this);
+		resetDisplay();
+	}
+	
+	private void disconnect() {
+		windowManager.getInstance().displayConnectionFrame();
+	}
+	
+	public void resetDisplay(){
 		
 		try {
 			loadContent(0);
@@ -99,34 +121,10 @@ public class Controller_mainFrame implements Initializable {
 		}
 	}
 	
-	private void disconnect() {
-		//TODO
-	}
-	
-	
 	/**
-	 * TODO
+	 * Load the content requested in the mainContent pane
 	 *
-	 * @param box TODO
-	 */
-	public void initLateralButton(VBox box) {
-		
-		for (Node node : box.getChildren()) {
-			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-				try {
-					loadContent(Integer.valueOf(node.getAccessibleText()));
-					drawer.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			});
-		}
-	}
-	
-	/**
-	 * TODO
-	 *
-	 * @param id TODO
+	 * @param id id of the view to display
 	 *
 	 * @throws IOException
 	 */
@@ -162,4 +160,18 @@ public class Controller_mainFrame implements Initializable {
 		
 	}
 	
+	@Override public void hide() {
+		if(thisStage == null){
+			thisStage = (Stage)paneHeader.getScene().getWindow();
+		}
+		thisStage.hide();
+	}
+	
+	@Override public void show() {
+		if(thisStage == null){
+			thisStage = (Stage)paneHeader.getScene().getWindow();
+		}
+		resetDisplay();
+		thisStage.show();
+	}
 }
