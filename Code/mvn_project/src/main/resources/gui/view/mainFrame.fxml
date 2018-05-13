@@ -26,6 +26,7 @@
                </opaqueInsets>
             </AnchorPane>
             <JFXDrawer id="drawer" fx:id="drawer" alignment="TOP_CENTER" defaultDrawerSize="238.0" prefHeight="453.0" prefWidth="238.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane fx:id="parameterPane" prefHeight="453.0" prefWidth="750.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
          <BorderPane.margin>
             <Insets />
