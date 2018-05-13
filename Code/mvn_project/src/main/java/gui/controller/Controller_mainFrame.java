@@ -83,7 +83,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 					});
 				} else {
 					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+							drawer.close();
 							loadParameter();
+							
 					});
 				}
 			}
@@ -127,6 +129,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	
 	private void loadParameter() {
 		
+		burgerBtn.setMouseTransparent(true);
 		parameterPane.setVisible(true);
 		parameterPane.setMouseTransparent(false);
 		parameterPane.getChildren().clear();
@@ -141,6 +144,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	}
 	
 	private void unloadParameter(){
+		burgerBtn.setMouseTransparent(false);
 		parameterPane.getChildren().clear();
 		parameterPane.setMouseTransparent(true);
 		parameterPane.setVisible(false);
