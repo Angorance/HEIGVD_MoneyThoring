@@ -5,6 +5,7 @@ import bll.model.ClientModel;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
+import dal.orm.MasterORM;
 import dal.orm.PgORM;
 
 import java.io.UnsupportedEncodingException;
@@ -45,7 +46,7 @@ public class Authentication {
 	 */
 	public static boolean[] checkRegistration(String username, String email, String password1, String password2) {
 		
-		IORM orm = new PgORM(); // TODO - Manage if connected to internet or not!
+		IORM orm = MasterORM.getInstance().getPgORM(); // TODO - Manage if connected to internet or not!
 		
 		boolean usernameIsCorrect = false;
 		boolean emailIsCorrect = false;
@@ -72,7 +73,7 @@ public class Authentication {
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		// Create the result
@@ -111,7 +112,7 @@ public class Authentication {
     	
     	if (!password.isEmpty()) {
 		
-		    IORM orm = new PgORM();
+		    IORM orm = MasterORM.getInstance().getPgORM();
 		    String salt;
 		
 		    try {
@@ -136,7 +137,7 @@ public class Authentication {
 			    }
 			
 		    } catch (Exception e) {
-			    System.out.println(e);
+			    e.printStackTrace();
 		    }
 	    }
 	    
