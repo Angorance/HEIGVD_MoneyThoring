@@ -75,7 +75,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 		return null;
 	}
 	
-	public HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
+	public static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
 		
 		return transactionsByCategory;
 	}
