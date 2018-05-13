@@ -70,7 +70,6 @@ public class Controller_dashboard implements IController, Initializable {
 			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
 			paneDisplay = new GridPane();
 			
-			
 			paneDisplay.getChildren().add(lblDate);
 			paneDisplay.getChildren().add(lblCaption);
 			paneDisplay.getChildren().add(lblPrix);
