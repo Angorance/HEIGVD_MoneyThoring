@@ -15,9 +15,11 @@ import javafx.geometry.VPos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -44,6 +46,8 @@ public class Controller_dashboard implements IController, Initializable {
 	private JFXButton btnOutgo = new JFXButton("D");
 	private JFXButton btnIncome = new JFXButton("R");
 	
+	private BankAccountLogic bal;
+	
 	private class transactionDisplayer {
 		
 		private Label lblDate;
@@ -58,20 +62,20 @@ public class Controller_dashboard implements IController, Initializable {
 		transactionDisplayer(IOTransactionLogic t) {
 			
 			transaction = t;
-			
-			lblDate = new Label(transaction.getDate().toString() + "\t");
-			lblCaption = new Label(transaction.getName() + "\t");
-			lblPrix = new Label(Double.toString(transaction.getAmount()) + "\t");
+			double width = paneList.getWidth() / 3;
+			lblDate = new Label(transaction.getDate().toString());
+			lblCaption = new Label(transaction.getName());
+			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
 			paneDisplay = new GridPane();
+			
 			
 			paneDisplay.getChildren().add(lblDate);
 			paneDisplay.getChildren().add(lblCaption);
 			paneDisplay.getChildren().add(lblPrix);
 			
-			
-			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER);
-			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.CENTER, VPos.CENTER);
-			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
+			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
+			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
+			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			
 			if (transaction.isIncome()) {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + incomeColor + ";");
@@ -139,6 +143,13 @@ public class Controller_dashboard implements IController, Initializable {
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
+		for (BankAccountLogic b : ClientLogic.getInstance().getBankAccounts()) {
+			if (b.isDefault()) {
+				bal = b;
+				break;
+			}
+		}
+		
 		initNodeListe();
 		
 		btnOutgo.setOnAction(new EventHandler<ActionEvent>() {
@@ -163,7 +174,14 @@ public class Controller_dashboard implements IController, Initializable {
 		// TODO pie chart : répartition des dépenses des 30 derniers jours par catégories
 		
 		// TODO lister les 30 dernière transaction dans le paneList (juste créer les displayer)
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
 		
+		for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+			
+			transactionDisplayer trD = new transactionDisplayer(tr);
+		}
 		
 	}
 	
@@ -171,14 +189,6 @@ public class Controller_dashboard implements IController, Initializable {
 		
 		chartLine.getData().clear();
 		
-		BankAccountLogic bal = new BankAccountLogic();
-		
-		for (BankAccountLogic b : ClientLogic.getInstance().getBankAccounts()) {
-			if (b.isDefault()) {
-				bal = b;
-				break;
-			}
-		}
 		XYChart.Series series = new XYChart.Series();
 		series.getData().clear();
 		series.setName("Evolution du solde");
