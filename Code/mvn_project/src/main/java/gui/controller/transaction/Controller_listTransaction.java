@@ -1,4 +1,4 @@
-package gui.controller;/* ***********************************************
+package gui.controller.transaction;/* ***********************************************
     HEIG-VD
     Date : 12.04.2018
     Nom du fichier : 
@@ -12,6 +12,7 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import gui.controller.IController;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -106,9 +107,11 @@ public class Controller_listTransaction implements Initializable, IController {
 			
 			
 			periodSelect.getSelectionModel().select("Annuel");
-			Date date = tr.getDate();
-			int year = date.toLocalDate().getYear();
-			monthSelect.getSelectionModel().select(year);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(tr.getDate());
+			int year = cal.get(Calendar.YEAR);
+			monthSelect.getSelectionModel().select(String.valueOf(year));
 			
 			setData();
 		}

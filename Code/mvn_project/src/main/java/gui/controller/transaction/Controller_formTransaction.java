@@ -1,10 +1,12 @@
-package gui.controller;
+package gui.controller.transaction;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
+import gui.controller.IController;
+import gui.controller.IForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

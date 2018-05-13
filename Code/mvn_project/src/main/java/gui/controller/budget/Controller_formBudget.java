@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controller.budget;
 
 import bll.logic.BudgetLogic;
 import bll.logic.CategoryLogic;
@@ -8,6 +8,8 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.IController;
+import gui.controller.IForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

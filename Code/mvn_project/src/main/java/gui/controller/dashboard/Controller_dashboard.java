@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controller.dashboard;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.CategoryLogic;
@@ -6,6 +6,8 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import gui.controller.transaction.Controller_formTransaction;
+import gui.controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +20,6 @@ import javafx.geometry.VPos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
