@@ -179,20 +179,19 @@ public class Controller_dashboard implements IController, Initializable {
 			}
 		});
 		
-		// TODO line chart : progression du/des comptes bancaire pour les 30 derniers jours
-		setDataLineChart();
-		
-		// TODO pie chart : répartition des dépenses des 30 derniers jours par catégories
-		setDataPieChart();
-		
-		// TODO lister les 30 dernière transaction dans le paneList (juste créer les displayer)
-		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		
-		for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+		if(bal != null) {
+			setDataLineChart();
 			
-			transactionDisplayer trD = new transactionDisplayer(tr);
+			setDataPieChart();
+			
+			Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			
+			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+				
+				transactionDisplayer trD = new transactionDisplayer(tr);
+			}
 		}
 		
 	}

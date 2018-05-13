@@ -1,5 +1,6 @@
 package bll.mappers.DAL;
 
+import bll.logic.IOTransactionLogic;
 import bll.logic.RecurrenceLogic;
 import bll.model.RecurrenceModel;
 import dal.entities.derby.RecurrenceDeEntity;
@@ -71,7 +72,7 @@ public class DALRecurrenceMapper {
 		object.setId(entity.getId());
 		object.setGap(entity.getGap());
 		object.setNextDate(entity.getNextdate());
-		object.setTransactionID(entity.getIotransactionId());
+		object.setTransaction(IOTransactionLogic.getIOTransactionByID(entity.getIotransactionId()));
 		
 		return object;
 	}
