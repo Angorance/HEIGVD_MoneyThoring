@@ -1,10 +1,12 @@
-package gui.controller;
+package gui.controller.bankAccount;
 
 import bll.logic.BankAccountLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import gui.controller.IController;
+import gui.controller.IForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

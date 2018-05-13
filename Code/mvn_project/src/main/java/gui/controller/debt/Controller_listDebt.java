@@ -1,17 +1,17 @@
-package gui.controller;
+package gui.controller.debt;
 
-import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.IController;
+import gui.controller.debt.Controller_formDebt;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.net.URL;

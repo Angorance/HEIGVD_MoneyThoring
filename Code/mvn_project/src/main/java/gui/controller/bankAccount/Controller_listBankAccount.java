@@ -1,8 +1,11 @@
-package gui.controller;
+package gui.controller.bankAccount;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.ClientLogic;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.IController;
+import gui.controller.bankAccount.Controller_detailBankAccount;
+import gui.controller.bankAccount.Controller_formBankAccount;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

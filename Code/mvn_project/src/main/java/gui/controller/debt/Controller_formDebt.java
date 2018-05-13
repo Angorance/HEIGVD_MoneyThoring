@@ -1,10 +1,12 @@
-package gui.controller;
+package gui.controller.debt;
 
 import bll.logic.DebtLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import gui.controller.IController;
+import gui.controller.IForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

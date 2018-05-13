@@ -1,9 +1,10 @@
-package gui.controller;
+package gui.controller.budget;
 
 import bll.logic.BudgetLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
+import gui.controller.IController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
