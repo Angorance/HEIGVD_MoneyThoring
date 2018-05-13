@@ -15,10 +15,10 @@
          <children>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="400.0" prefWidth="633.0">
                <children>
-                  <AnchorPane prefHeight="186.0" prefWidth="573.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 15;">
+                  <AnchorPane prefHeight="186.0" prefWidth="573.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 15;" stylesheets="@../css/general.css">
                      <children>
-                        <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="88.0" style="-fx-background-color: #e0e0e0;" styleClass="formBackButton" text="retour" AnchorPane.leftAnchor="15.0" />
-                        <JFXButton fx:id="btnValider" layoutX="334.0" layoutY="88.0" style="-fx-background-color: lightgreen;" styleClass="formValidButton" text="valider" AnchorPane.rightAnchor="15.0" />
+                        <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="88.0" styleClass="return" text="Retour" AnchorPane.leftAnchor="15.0" />
+                        <JFXButton fx:id="btnValider" layoutX="334.0" layoutY="88.0" styleClass="accept" text="Valider" AnchorPane.rightAnchor="15.0" />
                         <JFXTextField fx:id="txtAmount" alignment="CENTER_RIGHT" layoutX="216.0" layoutY="127.0" prefHeight="25.0" prefWidth="111.0" promptText="Montant" />
                         <Label layoutX="336.0" layoutY="131.0" text="CHF" />
                         <JFXComboBox fx:id="cbbDebtor" editable="true" layoutX="165.0" layoutY="27.0" prefHeight="25.0" prefWidth="243.0" promptText="Débiteur (nom utilisateur)" />

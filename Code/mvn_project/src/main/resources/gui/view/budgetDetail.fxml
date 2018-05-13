@@ -16,7 +16,7 @@
 
 <AnchorPane prefHeight="456.0" prefWidth="743.0" style="-fx-background-color: white;" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="28.0" layoutY="22.0" prefHeight="160.0" prefWidth="703.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <AnchorPane layoutX="28.0" layoutY="22.0" prefHeight="160.0" prefWidth="703.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
          <children>
             <Label fx:id="lblTitre" layoutX="91.0" layoutY="15.0" text="Nom du Budget" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="15.0">
                <font>
@@ -30,7 +30,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
-            <JFXButton fx:id="btnRetour" layoutX="14.0" layoutY="20.0" text="retour" />
+            <JFXButton fx:id="btnRetour" layoutX="14.0" layoutY="20.0" text="Retour" />
          </children>
       </AnchorPane>
       <GridPane hgap="20.0" layoutX="20.0" layoutY="195.0" prefHeight="90.0" prefWidth="703.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
