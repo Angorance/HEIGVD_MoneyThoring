@@ -67,7 +67,6 @@ public class Controller_detailBudget implements Initializable, IController {
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(15);
-		nodeModifDelete.setRotate(180);
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);

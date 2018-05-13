@@ -36,7 +36,7 @@ public interface IRecurrenceRepository {
     /**
      * Update recurrence
      *
-     * @param recurrence the recurrence would'you update
+     * @param recurrence the recurrence to update
      * @throws DALException
      */
     public void update(IDALRecurrenceEntity recurrence) throws DALException;
@@ -44,15 +44,15 @@ public interface IRecurrenceRepository {
     /**
      * add recurrence
      *
-     * @param recurrence the recurrence would'you add
+     * @param recurrence the recurrence to add
      * @throws DALException
      */
-    public void addRecurrence(IDALRecurrenceEntity recurrence) throws DALException;
+    public Integer addRecurrence(IDALRecurrenceEntity recurrence) throws DALException;
 
     /**
      * delete recurrence by id
      *
-     * @param recurrence the recurrence would'you delete
+     * @param id the recurrence ID to delete
      * @throws DALException
      */
     public void delete(int id) throws DALException;

@@ -1,5 +1,9 @@
 package bll.model;
 
+import bll.mappers.DAL.DALRecurrenceMapper;
+import dal.irepositories.IRecurrenceRepository;
+import dal.orm.IORM;
+
 import java.sql.Date;
 
 /**
@@ -18,6 +22,48 @@ public class RecurrenceModel {
 	
 	
 	protected RecurrenceModel() {}
+	
+	/**
+	 * Create a transaction entry for the user into the database.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void createRecurrence(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IRecurrenceRepository repo = orm.getRecurrenceRepository();
+			setId(repo.addRecurrence(DALRecurrenceMapper.toDboPG(this)));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Update transaction entry with new data.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void updateRecurrence(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IRecurrenceRepository repo = orm.getRecurrenceRepository();
+			repo.update(DALRecurrenceMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 	/**
 	 * TODO

@@ -1,5 +1,9 @@
 package bll.model;
 
+import bll.mappers.DAL.DALDebtMapper;
+import dal.irepositories.IDebtRepository;
+import dal.orm.IORM;
+
 import java.sql.Date;
 
 /**
@@ -24,6 +28,48 @@ public class DebtModel {
 	
 	protected DebtModel() {}
 	
+	
+	/**
+	 * Create a transaction entry for the user into the database.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void createIOTransaction(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IDebtRepository repo = orm.getDebtRepository();
+			setId(repo.addDebt(DALDebtMapper.toDboPG(this)));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Update transaction entry with new data.
+	 *
+	 * @param orm ORM instance to use.
+	 */
+	protected void updateIOTransaction(IORM orm) {
+		
+		try {
+			
+			orm.beginTransaction();
+			
+			IDebtRepository repo = orm.getDebtRepository();
+			repo.update(DALDebtMapper.toDboPG(this));
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * TODO

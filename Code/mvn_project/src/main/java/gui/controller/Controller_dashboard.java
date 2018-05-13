@@ -5,6 +5,8 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
+import javafx.beans.binding.Bindings;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
@@ -67,7 +69,6 @@ public class Controller_dashboard implements IController, Initializable {
 			lblCaption = new Label(transaction.getName());
 			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
 			paneDisplay = new GridPane();
-			
 			
 			paneDisplay.getChildren().add(lblDate);
 			paneDisplay.getChildren().add(lblCaption);
@@ -123,9 +124,19 @@ public class Controller_dashboard implements IController, Initializable {
 		unloadform();
 		if (result != null) {
 			IOTransactionLogic tr = (IOTransactionLogic) result;
-			// TODO création du transactionDisplayer
-			transactionDisplayer trDisplayer = new transactionDisplayer(tr);
-			setDataLineChart();
+			int year = Calendar.getInstance().get(Calendar.YEAR);
+			int month = Calendar.getInstance().get(Calendar.MONTH);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(tr.getDate());
+			int trYear = cal.get(Calendar.YEAR);
+			int trMonth = cal.get(Calendar.MONTH);
+			
+			if((year == trYear) && (month == trMonth) && tr.getBankAccountID() == bal.getId()) {
+				transactionDisplayer trDisplayer = new transactionDisplayer(tr);
+				setDataLineChart();
+				//TODO refreach du pieChart
+			}
 			
 		}
 	}
@@ -172,6 +183,7 @@ public class Controller_dashboard implements IController, Initializable {
 		setDataLineChart();
 		
 		// TODO pie chart : répartition des dépenses des 30 derniers jours par catégories
+		setDataPieChart();
 		
 		// TODO lister les 30 dernière transaction dans le paneList (juste créer les displayer)
 		Calendar c = Calendar.getInstance();
@@ -187,6 +199,7 @@ public class Controller_dashboard implements IController, Initializable {
 	
 	private void setDataLineChart() {
 		
+		chartLine.setTitle("Evolution du Solde");
 		chartLine.getData().clear();
 		
 		XYChart.Series series = new XYChart.Series();
@@ -228,6 +241,28 @@ public class Controller_dashboard implements IController, Initializable {
 		}
 		
 		chartLine.getData().addAll(series);
+		chartLine.setLegendVisible(false);
+	}
+	
+	private void setDataPieChart() {
+		chartPie.setTitle("Dépense par catégorie");
+		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+		pieChartData.add(new PieChart.Data("Cars",13));
+		pieChartData.add(new PieChart.Data("Bikes",25));
+		pieChartData.add(new PieChart.Data("Buses",10));
+		pieChartData.add(new PieChart.Data("Cycles",22));
+		
+		pieChartData.forEach(data ->
+				data.nameProperty().bind(
+						Bindings.concat(
+								data.getName(), " ", data.pieValueProperty(), " CHF"
+						)
+				)
+		);
+		
+		chartPie.setData(pieChartData);
+		chartPie.setLegendVisible(false);
+		
 	}
 	
 	private void initNodeListe() {

@@ -99,7 +99,7 @@ public class BudgetPgRepository implements IBudgetRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addBudget(IDALBudgetEntity budget) throws DALException {
+    public Integer addBudget(IDALBudgetEntity budget) throws DALException {
         BudgetPgEntity newBudget = null;
         if (newBudget.getClass() == BudgetPgEntity.class)
             newBudget = (BudgetPgEntity) budget;
@@ -107,7 +107,7 @@ public class BudgetPgRepository implements IBudgetRepository {
             throw new DALException();
 
         try {
-            session.save(newBudget);
+            return (Integer) session.save(newBudget);
         } catch (Exception e) {
             throw new DALException(e);
         }

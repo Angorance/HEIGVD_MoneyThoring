@@ -6,6 +6,8 @@ import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.PgORM;
 
+import java.util.HashMap;
+
 /**
  * TODO
  *
@@ -47,9 +49,34 @@ public class CategoryLogic extends CategoryModel {
 	    	orm.getCategoryRepository().delete(getId());
 	    	orm.commit();
 	    	
+	    	IOTransactionLogic.updateTransactionsOnCategoryDeletion(this);
+	    	ClientLogic.getInstance().removeCategory(this);
+	    	
 	    } catch (DALException e) {
 		    e.printStackTrace();
 	    }
+    }
+    
+    public static CategoryLogic getByID(int categoryID) {
+    	
+    	for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+    		if (cl.getId() == categoryID) {
+    			return cl;
+		    }
+	    }
+	    
+	    return null;
+    }
+    
+    public static CategoryLogic getDefaultCategory() {
+    	
+    	for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+    		if (cl.isDefault()) {
+    			return cl;
+		    }
+	    }
+	    
+	    return null;
     }
 	
 	@Override

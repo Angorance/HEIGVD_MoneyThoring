@@ -49,7 +49,7 @@ public class RecurrencePgRepository implements IRecurrenceRepository {
      * {@inheritDoc}
      */
     @Override
-    public void addRecurrence(IDALRecurrenceEntity recurrence) throws DALException {
+    public Integer addRecurrence(IDALRecurrenceEntity recurrence) throws DALException {
         
         RecurrencePgEntity newRecurrence = null;
         if (recurrence.getClass() == RecurrencePgEntity.class)
@@ -58,7 +58,7 @@ public class RecurrencePgRepository implements IRecurrenceRepository {
             throw new DALException();
 
         try {
-            session.save(newRecurrence);
+            return (Integer) session.save(newRecurrence);
         } catch (Exception e) {
             throw new DALException(e);
         }

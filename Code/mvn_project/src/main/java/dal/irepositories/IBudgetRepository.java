@@ -49,7 +49,7 @@ public interface IBudgetRepository {
      * @param budget would'you add
      * @throws DALException
      */
-    public void addBudget(IDALBudgetEntity budget) throws DALException;
+    public Integer addBudget(IDALBudgetEntity budget) throws DALException;
 
     /**
      * delete a budget by id

@@ -41,7 +41,7 @@ public interface IDebtRepository {
      * @param debt the debt would'you add
      * @throws DALException
      */
-    public void addDebt(IDALDebtEntity debt) throws DALException;
+    public Integer addDebt(IDALDebtEntity debt) throws DALException;
 
     /**
      * delete debt by id
