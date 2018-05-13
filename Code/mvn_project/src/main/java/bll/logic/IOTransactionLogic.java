@@ -20,6 +20,8 @@ import java.util.TreeSet;
  */
 public class IOTransactionLogic extends IOTransactionModel {
 	
+	private static ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
+	
 	private static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>>
 			transactionsByCategory = new HashMap<>();
 	
@@ -27,8 +29,11 @@ public class IOTransactionLogic extends IOTransactionModel {
 	
 	private CategoryLogic category;
 	private BankAccountLogic bank;
+	private RecurrenceLogic recurrence;
 	
-	public IOTransactionLogic() {}
+	public IOTransactionLogic() {
+		transactions.add(this);
+	}
 	
 	/**
 	 * TODO
@@ -54,6 +59,19 @@ public class IOTransactionLogic extends IOTransactionModel {
 		setBudgetID(null);
 		
 		createIOTransaction(new PgORM());
+		transactions.add(this);
+	}
+	
+	public static IOTransactionLogic getIOTransactionByID(int iotransactionId) {
+		
+		for (IOTransactionLogic tl : transactions) {
+			
+			if (tl.getId() == iotransactionId) {
+				return tl;
+			}
+		}
+		
+		return null;
 	}
 	
 	public HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
@@ -115,6 +133,11 @@ public class IOTransactionLogic extends IOTransactionModel {
 		setBank(newBank);
 	}
 	
+	public void setRecurrence(RecurrenceLogic recurrence) {
+		
+		this.recurrence = recurrence;
+	}
+	
 	/**
 	 * TODO
 	 */
@@ -164,6 +187,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 			
 			transactionsByCategory.get(this.category).remove(this);
 			bank.removeTransaction(this);
+			recurrence.supp();
 			
 		} catch (DALException e) {
 			e.printStackTrace();
