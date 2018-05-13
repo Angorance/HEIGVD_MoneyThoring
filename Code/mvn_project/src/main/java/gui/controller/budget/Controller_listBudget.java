@@ -102,11 +102,13 @@ public class Controller_listBudget implements IController, Initializable {
 	 */
 	@Override
 	public void deleteItem(Object toDelete) {
+		
 		unloadform();
-		BudgetLogic b = (BudgetLogic) toDelete;
-		paneList.getChildren().remove(displayerList.get(b.getId()));
-		b.supp();
-
+		if (toDelete != null) {
+			BudgetLogic b = (BudgetLogic) toDelete;
+			paneList.getChildren().remove(displayerList.get(b.getId()));
+			b.supp();
+		}
 	}
 
 	/**

@@ -51,8 +51,8 @@
                                     <Label text="Valeur du plafond [CHF]" GridPane.rowIndex="1" />
                                     <Label fx:id="label_beginDate" text="Date début" GridPane.rowIndex="3" />
                                     <Label fx:id="label_endDate" text="Date fin" GridPane.rowIndex="4" />
-                                    <JFXDatePicker fx:id="beginDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <JFXDatePicker fx:id="lastDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <JFXDatePicker fx:id="beginDate" prefHeight="28.0" prefWidth="192.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <JFXDatePicker fx:id="lastDate" prefHeight="28.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <JFXCheckBox fx:id="checkShare" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Label text="Budget partagé" GridPane.rowIndex="5" />
                                  </children>
