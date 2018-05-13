@@ -1,5 +1,6 @@
 .create_button{
     -fx-background-color: #1ab21d;
+    -fx-background-radius: 50;
 }
 
 .create_button:hover{

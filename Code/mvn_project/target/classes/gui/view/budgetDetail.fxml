@@ -30,7 +30,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
-            <JFXButton fx:id="btnRetour" layoutX="14.0" layoutY="20.0" text="retour" />
+            <JFXButton fx:id="btnRetour" layoutX="14.0" layoutY="20.0" text="Retour" />
          </children>
       </AnchorPane>
       <GridPane hgap="20.0" layoutX="20.0" layoutY="195.0" prefHeight="90.0" prefWidth="703.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
