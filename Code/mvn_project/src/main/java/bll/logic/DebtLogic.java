@@ -14,5 +14,5 @@ import java.sql.Date;
 public class DebtLogic extends DebtModel {
 	
 	public DebtLogic() {}
-	public DebtLogic(String description, int creditorID, int debitorID, double amount, Date limitDate) {}
+	public DebtLogic(String nom, int creatorID, int otherUserID, boolean isIncome, double amount, Date limitDate) {}
 }
