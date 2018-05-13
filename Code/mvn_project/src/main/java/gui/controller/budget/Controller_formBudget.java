@@ -161,7 +161,6 @@ public class Controller_formBudget implements IForm, Initializable {
 			last = lastDate.getValue();
 		}
 		if (budget == null) {
-			
 			budget = new BudgetLogic(name, amount,share,rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last),gap);
 			parent.createItem(budget);
 		} else {

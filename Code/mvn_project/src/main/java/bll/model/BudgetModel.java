@@ -1,10 +1,8 @@
 package bll.model;
 
-import bll.logic.ClientLogic;
 import bll.mappers.DAL.DALBudgetMapper;
 import dal.irepositories.IBudgetRepository;
 import dal.orm.IORM;
-import dal.orm.PgORM;
 
 import java.sql.Date;
 
@@ -42,6 +40,7 @@ public class BudgetModel {
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
 		setGap(gap);
+		
 	}
 	
 	/**

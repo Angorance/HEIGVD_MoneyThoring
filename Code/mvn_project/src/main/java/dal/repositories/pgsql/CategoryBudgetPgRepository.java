@@ -115,7 +115,25 @@ public class CategoryBudgetPgRepository implements ICategoriesBudgetRepository {
             throw new DALException(e);
         }
     }
-
+    
+    @Override
+    public void delete(int budget_id) throws DALException {
+        List<IDALCategoriesbudgetEntity> categoriesbudget = null;
+        try {
+            
+            categoriesbudget = session.createCriteria(CategoriesbudgetPgEntity.class)
+                    .add(Restrictions.eq("budget_id", budget_id))
+                    .list();
+        
+            for(IDALCategoriesbudgetEntity cat : categoriesbudget) {
+                session.delete(cat);
+            }
+            
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -123,24 +141,10 @@ public class CategoryBudgetPgRepository implements ICategoriesBudgetRepository {
     public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByBudget(int budget_id) throws DALException {
         List<IDALCategoriesbudgetEntity> categroriesBudgets = null;
         try {
-            categroriesBudgets = session.createQuery("from CategoriesbudgetPgEntity where clientId = :budgetid").setParameter("budgetid",budget_id).list();
+            categroriesBudgets = session.createQuery("from CategoriesbudgetPgEntity where budgetId = :budgetid").setParameter("budgetid",budget_id).list();
         } catch (Exception e) {
             throw new DALException(e);
         }
         return categroriesBudgets;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByCategory(int category_id) throws DALException {
-        List<IDALCategoriesbudgetEntity> categoriesbudgets = null;
-        try {
-            categoriesbudgets = session.createQuery("from BudgetPgEntity where CategoryId = :categoryid").setParameter("categoryid",category_id).list();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-        return categoriesbudgets;
     }
 }

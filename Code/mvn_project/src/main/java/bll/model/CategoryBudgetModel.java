@@ -22,7 +22,7 @@ public class CategoryBudgetModel {
 	 * @param category_id ID of the category.
 	 * @param budget_id ID of the budget.
 	 */
-	protected CategoryBudgetModel(int category_id, int budget_id) {
+	public CategoryBudgetModel(int category_id, int budget_id) {
 		
 		this.category_id = category_id;
 		this.budget_id = budget_id;

@@ -14,7 +14,7 @@ public class SharedBudgetModel {
 	private int budget_id;
 	
 	// Protected default constructor. Avoid instances creation outside package.
-	protected SharedBudgetModel() {}
+	public SharedBudgetModel() {}
 	
 	/**
 	 * Construct an instance of SharedBudgetModel with the given parameters.
@@ -40,7 +40,7 @@ public class SharedBudgetModel {
 			orm.beginTransaction();
 			
 			ISharedBudgetRepository repo = orm.getSharedBudgetRepository();
-			//repo.addSharedbudget(DALSharedBudgetMapper.toDboPG(this));
+			repo.addSharedbudget(DALSharedBudgetMapper.toDboPG(this));
 			
 			orm.commit();
 			
