@@ -150,9 +150,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		LocalDate last;
 		boolean rec = chbIsRegular.isSelected();
 		boolean share = checkShare.isSelected();
+		int gap = 0;
 		if (chbIsRegular.isSelected()) {
 			begin = LocalDate.now();
 			last = LocalDate.now().plusDays(cmbPeriode.getValue().getPeriode());
+			gap = cmbPeriode.getValue().getPeriode();
 			
 		} else {
 			begin = beginDate.getValue();
@@ -160,9 +162,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		if (budget == null) {
 			
-			budget = new BudgetLogic(name, amount, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last));
-			budget.setRecurrent(rec);
-			budget.setShared(share);
+			budget = new BudgetLogic(name, amount,share,rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last),gap);
 			parent.createItem(budget);
 		} else {
 			// TODO édition du budget
