@@ -64,6 +64,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		/*Retrieving text input*/
 		String email = login_email.getText();
 		String password = login_password.getText();
+		boolean online = !offline_checkLogin.isSelected();
 		
 		// TODO lancer le connect dans un thread, faire apparaitre le paneSpinner en attendant, un fois le thread terminé on fait disparaire paneSpinner
 		/*// WHAT THE FUCK
@@ -81,7 +82,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		
 		paneSpinner.setVisible(false);
 		/*Retrieving the status of the login method*/
-		boolean status = connect(email, password);
+		boolean status = connect(email, password, online);
 		
 		/*if the status is false, it means that one of the fields is incorrect (email or password)*/
 		if (!status) {
@@ -123,6 +124,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		String email = register_email.getText();
 		String password = register_password.getText();
 		String confirmPassword = register_confirmPassword.getText();
+		boolean online = !offline_checkRegister.isSelected();
 		
 		register_username.setStyle("-fx-text-fill: black;");
 		register_email.setStyle("-fx-text-fill: black;");
@@ -131,7 +133,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		
 		//Check if passord, email and username is correct
 		boolean check = true;
-		boolean[] checkRegistration = checkRegistration(username, email, password, confirmPassword);
+		boolean[] checkRegistration = checkRegistration(username, email, password, confirmPassword, online);
 		
 		/*Verify if username is already used*/
 		if (!checkRegistration[0]) {
