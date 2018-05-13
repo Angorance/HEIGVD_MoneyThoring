@@ -2,12 +2,16 @@ package gui.controller;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.ClientLogic;
+import com.jfoenix.effects.JFXDepthManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -37,29 +41,47 @@ public class Controller_listBankAccount implements Initializable, IController {
 	private class AccountDisplayer extends GridPane {
 		
 		/*Default size*/
-		private final int WIDTH = 100;
-		private final int HEIGHT = 50;
+		private final int WIDTH = 200;
+		private final int HEIGHT = 100;
 		
 		private Label nameAccount;
 		private Label amountAccount;
+		//private Label lastTransactionDate;
 		private BankAccountLogic bankAccount;
 		
 		/**
 		 * Constructor of the class
 		 *
-		 * @param bankAccount bank account we want to display
+		 * @param bc bank account we want to display
 		 */
-		public AccountDisplayer(BankAccountLogic bankAccount) {
+		public AccountDisplayer(BankAccountLogic bc) {
 			
-			this.bankAccount = bankAccount;
+			this.bankAccount = bc;
 			nameAccount = new Label(bankAccount.getName());
-			amountAccount = new Label("" + bankAccount.getAmount() + " CHF");
+			amountAccount = new Label(bankAccount.getAmount() + " CHF");
 			
-			this.add(nameAccount, 0, 0);
-			this.add(amountAccount, 0, 1);
+			String color;
+			if(bankAccount.getAmount() > 0){
+				color = "lightgreen";
+			} else{
+				color = "#E38F8F";
+			}
+			amountAccount.setStyle("-fx-font-size: 24;-fx-text-fill: " + color);
+			
+			this.getChildren().add(nameAccount);
+			this.getChildren().add(amountAccount);
+			this.setAlignment(Pos.CENTER);
+			this.setHgap(10);
+			this.setVgap(10);
+			this.setConstraints(nameAccount, 0,0, 1,1, HPos.LEFT, VPos.TOP);
+			this.setConstraints(amountAccount, 0,1, 1,1, HPos.CENTER, VPos.CENTER);
+			this.setPadding(new Insets(10));
+			this.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 10");
+			
 			
 			this.getStyleClass().add("AccountDisplay");
 			this.setPrefSize(WIDTH, HEIGHT);
+			JFXDepthManager.setDepth(this, 1);
 			
 			/**
 			 * Click event who load the detail bank account frame
@@ -232,5 +254,7 @@ public class Controller_listBankAccount implements Initializable, IController {
 				callform();
 			}
 		});
+		
+		JFXDepthManager.setDepth(create_button, 2);
 	}
 }

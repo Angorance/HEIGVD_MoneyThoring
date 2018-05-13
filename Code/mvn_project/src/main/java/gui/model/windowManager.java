@@ -1,5 +1,6 @@
 package gui.model;
 
+import bll.logic.Authentication;
 import gui.controller.Controller_loginRegister;
 import gui.controller.IWindow;
 import javafx.stage.Stage;
@@ -50,6 +51,7 @@ public class windowManager {
 		if(mainFrame!= null && connectionFrame != null){
 			connectionFrame.show();
 			mainFrame.hide();
+			Authentication.disconnect();
 		}
 	}
 }
