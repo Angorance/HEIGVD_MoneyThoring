@@ -94,14 +94,6 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	/**
-	 * Methode to say to our controller to remove the bank account
-	 */
-	private void removeBankAccount() {
-		
-		cba.deleteItem(bal);
-	}
-	
-	/**
 	 * Load the form to modify the bank account
 	 */
 	private void modifyBankAccount() {
@@ -146,7 +138,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
-		/*Do nothing*/
+		cba.deleteItem(bal);
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
@@ -269,7 +261,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 			
 			@Override public void handle(ActionEvent event) {
 				
-				removeBankAccount();
+				deleteItem(bal);
 			}
 		});
 		

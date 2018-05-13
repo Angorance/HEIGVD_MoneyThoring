@@ -32,13 +32,16 @@ public class BudgetLogic extends BudgetModel {
 	/**
 	 * TODO
 	 */
-	public void update(String name, double amount, Date startingDate,
-			Date endingDate) {
+	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
+			Date startingDate, Date endingDate, int gap) {
 		
 		setName(name);
 		setAmount(amount);
+		setShared(isShared);
+		setRecurrent(isRecurrent);
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
+		setGap(gap);
 		
 		updateBudget(MasterORM.getInstance().getPgORM());
 	}
