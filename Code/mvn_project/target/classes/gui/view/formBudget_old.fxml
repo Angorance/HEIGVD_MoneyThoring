@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="855.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" layoutX="100.0" prefHeight="400.0" prefWidth="855.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="672.0">
+               <children>
+                  <AnchorPane prefHeight="291.0" prefWidth="556.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;">
+                     <children>
+                        <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="133.0" style="-fx-background-color: #cecece;" text="Retour" AnchorPane.leftAnchor="15.0" />
+                        <JFXButton fx:id="btnValidation" layoutX="604.0" layoutY="133.0" style="-fx-background-color: lightgreen;" text="Valider" AnchorPane.rightAnchor="15.0" />
+                        <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="78.0" prefHeight="291.0" prefWidth="517.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="77.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <JFXTextField fx:id="txtName" alignment="CENTER" prefHeight="25.0" prefWidth="164.0" promptText="Nom du budget" />
+                              <HBox alignment="CENTER" prefHeight="25.0" prefWidth="161.0" spacing="10.0">
+                                 <children>
+                                    <JFXTextField fx:id="txtCeiling" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="116.0" promptText="Valeur plafond" />
+                                    <Label text="CHF" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="61.0" prefWidth="274.0" spacing="10.0">
+                                 <children>
+                                    <JFXCheckBox fx:id="chbIsRegular" text="Périodique" />
+                                    <JFXComboBox fx:id="cmbPeriode" prefHeight="25.0" prefWidth="108.0" promptText="Période" />
+                                 </children>
+                              </HBox>
+                              <BorderPane prefHeight="150.0" prefWidth="540.0">
+                                 <top>
+                                    <FlowPane alignment="CENTER" hgap="10.0" minHeight="25.0" prefHeight="30.0" prefWidth="200.0" vgap="10.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Catégorie concernées : " />
+                                          <JFXComboBox fx:id="cmbCategorySelect" prefHeight="25.0" prefWidth="137.0" promptText="catégorie...." />
+                                       </children>
+                                    </FlowPane>
+                                 </top>
+                                 <center>
+                                    <FlowPane fx:id="paneCategoryList" alignment="TOP_CENTER" hgap="10.0" minHeight="100.0" prefHeight="100.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" vgap="10.0" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets top="10.0" />
+                                       </BorderPane.margin>
+                                    </FlowPane>
+                                 </center>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </BorderPane>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <JFXButton fx:id="btnDelete" layoutX="568.0" layoutY="181.0" text="Supprimer" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
