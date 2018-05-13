@@ -231,11 +231,11 @@ public class ClientLogic extends ClientModel {
 			DALBudgetMapper.toBos(bu);
 			
 			for (BankAccountLogic b : getBankAccounts()) {
-				b.setDataFromDB();
+				b.setDataFromDB(orm);
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

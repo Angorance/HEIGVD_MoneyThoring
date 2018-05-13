@@ -131,13 +131,6 @@ public class BankAccountLogic extends BankAccountModel {
 		addToHashMap(transaction);
 	}
 	
-	private void addAllTransactions(List<IOTransactionLogic> ls) {
-		
-		for (IOTransactionLogic tl : ls) {
-			addTransaction(tl);
-		}
-	}
-	
 	/**
 	 * Get the list of transactions for this bank account.
 	 *
@@ -218,17 +211,14 @@ public class BankAccountLogic extends BankAccountModel {
 	/**
 	 * TODO
 	 */
-	public void setDataFromDB() {
+	public void setDataFromDB(IORM orm) {
 		
 		try {
-			IORM orm = new PgORM();
-			
-			orm.beginTransaction();
 			
 			List<IDALIotransactionEntity> ba = orm.getIotransactionRepository()
 					.getIotransactionsByBankaccount(getId());
 			
-			addAllTransactions(DALIOTransactionMapper.toBos(ba));
+			DALIOTransactionMapper.toBos(ba);
 			
 		} catch (DALException e) {
 			e.printStackTrace();

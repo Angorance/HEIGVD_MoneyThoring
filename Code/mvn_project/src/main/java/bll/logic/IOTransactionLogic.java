@@ -14,7 +14,8 @@ import java.util.TreeSet;
 /**
  * TODO
  *
- * @author Daniel Gonzalez Lopez, Héléna Line Reymond
+ * @author Daniel Gonzalez Lopez
+ * @author Héléna Line Reymond
  * @version 1.2
  */
 public class IOTransactionLogic extends IOTransactionModel {
