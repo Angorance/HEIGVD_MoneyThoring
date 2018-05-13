@@ -102,6 +102,7 @@ public class Controller_listBudget implements IController, Initializable {
 	 */
 	@Override
 	public void deleteItem(Object toDelete) {
+		unloadform();
 		BudgetLogic b = (BudgetLogic) toDelete;
 		paneList.getChildren().remove(displayerList.get(b.getId()));
 		b.supp();
@@ -113,14 +114,14 @@ public class Controller_listBudget implements IController, Initializable {
 	 * @param updated
 	 */
 	@Override public void modifyItem(Object updated) {
+		unloadform();
 		BudgetLogic b = (BudgetLogic)updated;
 		displayerList.get(b.getId()).redraw();
 	}
 	
 	@Override public void createItem(Object result) {
-		paneForm.setVisible(false);
-		paneForm.setMouseTransparent(true);
-
+		unloadform();
+		
 		if(result != null) {
 			BudgetLogic b = (BudgetLogic) result;
 
@@ -132,6 +133,13 @@ public class Controller_listBudget implements IController, Initializable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void unloadform() {
+		
+		paneForm.getChildren().clear();
+		paneForm.setMouseTransparent(true);
+		paneForm.setVisible(false);
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
