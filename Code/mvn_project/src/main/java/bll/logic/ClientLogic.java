@@ -183,6 +183,11 @@ public class ClientLogic extends ClientModel {
 		ca.setClientId(getId());
 	}
 	
+	public void removeCategory(CategoryLogic ca) {
+		
+		categories.remove(ca);
+	}
+	
 	/**
 	 * TODO
 	 *

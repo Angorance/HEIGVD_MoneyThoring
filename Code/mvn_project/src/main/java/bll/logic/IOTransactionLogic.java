@@ -6,6 +6,8 @@ import dal.orm.IORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,10 +19,13 @@ import java.util.TreeSet;
  */
 public class IOTransactionLogic extends IOTransactionModel {
 	
-	private CategoryLogic category;
+	private static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>>
+			transactionsByCategory = new HashMap<>();
 	
 	private static Set<Integer> yearsWithTransactions = new TreeSet<>();
 	
+	private CategoryLogic category;
+	private BankAccountLogic bank;
 	
 	public IOTransactionLogic() {}
 	
@@ -42,15 +47,32 @@ public class IOTransactionLogic extends IOTransactionModel {
 		super(amount, name, description, currency, (amount >= 0));
 		
 		setDate(date);
-		
-		this.category = category;
-		setCategoryID(category.getId());
+		setCategory(category);
+		setBank(bankAccount);
 		
 		setBudgetID(null);
 		
-		bankAccount.addNewTransaction(this);
-		
 		createIOTransaction(new PgORM());
+	}
+	
+	public HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
+		
+		return transactionsByCategory;
+	}
+	
+	private void addToHashMap() {
+		
+		if (transactionsByCategory.containsKey(this.category)) {
+			
+			transactionsByCategory.get(this.category).add(this);
+		} else {
+			
+			ArrayList<IOTransactionLogic> tr = new ArrayList<>();
+			
+			transactionsByCategory.put(this.category, tr);
+			
+			tr.add(this);
+		}
 	}
 	
 	@Override
@@ -66,11 +88,38 @@ public class IOTransactionLogic extends IOTransactionModel {
 		return yearsWithTransactions;
 	}
 	
+	public void setCategory(CategoryLogic cl) {
+		
+		this.category = cl;
+		
+		setCategoryID(cl.getId());
+		addToHashMap();
+	}
+	
+	private void updateCategory(CategoryLogic newCat) {
+		
+		transactionsByCategory.get(this.category).remove(this);
+		setCategory(newCat);
+	}
+	
+	public void setBank(BankAccountLogic bankAccount) {
+		
+		this.bank = bankAccount;
+		bankAccount.addNewTransaction(this);
+	}
+	
+	private void updateBank(BankAccountLogic newBank) {
+		
+		bank.removeTransaction(this);
+		setBank(newBank);
+	}
+	
 	/**
 	 * TODO
 	 */
 	public void update(double amount, String name, String description,
-			Date date, String currency, CategoryLogic category) {
+			Date date, String currency, CategoryLogic category,
+			BankAccountLogic bankAccount) {
 		
 		setAmount(amount);
 		setName(name);
@@ -80,10 +129,26 @@ public class IOTransactionLogic extends IOTransactionModel {
 		
 		setBudgetID(null);
 		
-		this.category = category;
-		setCategoryID(category.getId());
+		if (this.category != category) {
+			updateCategory(category);
+		}
+		
+		if (this.bank != bankAccount) {
+			updateBank(bankAccount);
+		}
 		
 		updateIOTransaction(new PgORM());
+	}
+	
+	public static void updateTransactionsOnCategoryDeletion(
+			CategoryLogic deleted) {
+		
+		for (IOTransactionLogic old : transactionsByCategory.get(deleted)) {
+			
+			old.setCategory(CategoryLogic.getDefaultCategory());
+		}
+		
+		transactionsByCategory.remove(deleted);
 	}
 	
 	public void supp() {
@@ -95,6 +160,9 @@ public class IOTransactionLogic extends IOTransactionModel {
 			
 			orm.getIotransactionRepository().delete(getId());
 			orm.commit();
+			
+			transactionsByCategory.get(this.category).remove(this);
+			bank.removeTransaction(this);
 			
 		} catch (DALException e) {
 			e.printStackTrace();

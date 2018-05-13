@@ -8,6 +8,7 @@ import dal.orm.IORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	private ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
 	
-	private HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsMap
+	private HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsByDate
 			= new HashMap<>();
 	
 	
@@ -62,9 +63,9 @@ public class BankAccountLogic extends BankAccountModel {
 		int year = date.toLocalDate().getYear();
 		int month = date.toLocalDate().getMonthValue() - 1;
 		
-		if (transactionsMap.containsKey(year)) {
+		if (transactionsByDate.containsKey(year)) {
 			
-			transactionsMap.get(year)[month].add(tl);
+			transactionsByDate.get(year)[month].add(tl);
 		} else {
 			
 			ArrayList<IOTransactionLogic>[] tab = new ArrayList[12];
@@ -73,7 +74,7 @@ public class BankAccountLogic extends BankAccountModel {
 				tab[i] = new ArrayList<>();
 			}
 			
-			transactionsMap.put(year, tab);
+			transactionsByDate.put(year, tab);
 			
 			tab[month].add(tl);
 		}
@@ -107,6 +108,18 @@ public class BankAccountLogic extends BankAccountModel {
 		updateAmount(transaction.getAmount());
 	}
 	
+	public void removeTransaction(IOTransactionLogic transaction) {
+		
+		LocalDate date = transaction.getDate().toLocalDate();
+		int year = date.getYear();
+		int month = date.getMonthValue();
+		
+		transactions.remove(transaction);
+		transactionsByDate.get(year)[month].remove(transaction);
+		
+		updateAmount(transaction.getAmount() * -1);
+	}
+	
 	/**
 	 * Add the transaction to the transaction list of the bank account.
 	 *
@@ -132,7 +145,19 @@ public class BankAccountLogic extends BankAccountModel {
 	 */
 	public HashMap<Integer, ArrayList<IOTransactionLogic>[]> getTransactions() {
 		
-		return transactionsMap;
+		return transactionsByDate;
+	}
+	
+	public static BankAccountLogic getBankAccountByID(int bankAccountID) {
+		
+		for (BankAccountLogic ba : ClientLogic.getInstance().getBankAccounts()) {
+			
+			if (ba.getId() == bankAccountID) {
+				return ba;
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

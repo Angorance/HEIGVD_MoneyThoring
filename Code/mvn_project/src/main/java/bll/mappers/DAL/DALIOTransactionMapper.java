@@ -1,5 +1,7 @@
 package bll.mappers.DAL;
 
+import bll.logic.BankAccountLogic;
+import bll.logic.CategoryLogic;
 import bll.logic.IOTransactionLogic;
 import bll.model.IOTransactionModel;
 import dal.entities.derby.IotransactionDeEntity;
@@ -87,8 +89,8 @@ public class DALIOTransactionMapper {
 		object.setAmount(entity.getAmount());
 		object.setCurrency(entity.getCurrency());
 		object.setIncome(entity.isIsincome());
-		object.setCategoryID(entity.getCategoryId());
-		object.setBankAccountID(entity.getBankaccountId());
+		object.setCategory(CategoryLogic.getByID(entity.getCategoryId()));
+		object.setBank(BankAccountLogic.getBankAccountByID(entity.getBankaccountId()));
 		object.setBudgetID(entity.getBudgetId());
 		
 		return object;
