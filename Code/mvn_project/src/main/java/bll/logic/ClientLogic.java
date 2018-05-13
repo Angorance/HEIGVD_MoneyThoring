@@ -8,6 +8,7 @@ import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALBudgetEntity;
 import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
+import dal.orm.MasterORM;
 import dal.orm.PgORM;
 
 import java.util.ArrayList;
@@ -68,13 +69,13 @@ public class ClientLogic extends ClientModel {
 		try {
 			setPassword(Authentication.hash(password));
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		setKey(KeyGenerator.generateKey(12));
 		
 		// TODO - Manage if connected and use Derby if necessary.
-		createUser(new PgORM());
+		createUser(MasterORM.getInstance().getPgORM());
 	}
 	
 	// GETTERS
@@ -213,7 +214,7 @@ public class ClientLogic extends ClientModel {
 	protected void setDataFromDB() {
 		
 		try {
-			IORM orm = new PgORM();
+			IORM orm = MasterORM.getInstance().getPgORM();
 			
 			orm.beginTransaction();
 			

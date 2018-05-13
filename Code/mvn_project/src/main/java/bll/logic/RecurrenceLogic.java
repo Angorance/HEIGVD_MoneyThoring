@@ -2,6 +2,7 @@ package bll.logic;
 
 import bll.model.RecurrenceModel;
 import dal.orm.IORM;
+import dal.orm.MasterORM;
 import dal.orm.PgORM;
 
 /**
@@ -21,7 +22,7 @@ public class RecurrenceLogic extends RecurrenceModel {
 		setTransaction(transaction);
 		setGap(gap);
 		
-		createRecurrence(new PgORM());
+		createRecurrence(MasterORM.getInstance().getPgORM());
 	}
 	
 	public void setTransaction(IOTransactionLogic transaction) {
@@ -34,7 +35,7 @@ public class RecurrenceLogic extends RecurrenceModel {
 	public void supp() {
 		
 		try {
-			IORM orm = new PgORM();
+			IORM orm = MasterORM.getInstance().getPgORM();
 			
 			orm.beginTransaction();
 			

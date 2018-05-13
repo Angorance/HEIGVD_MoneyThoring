@@ -90,7 +90,7 @@ public class DALIOTransactionMapper {
 		object.setCurrency(entity.getCurrency());
 		object.setIncome(entity.isIsincome());
 		object.setCategory(CategoryLogic.getByID(entity.getCategoryId()));
-		object.setBank(BankAccountLogic.getBankAccountByID(entity.getBankaccountId()));
+		object.setBankAccount(BankAccountLogic.getBankAccountByID(entity.getBankaccountId()));
 		object.setBudgetID(entity.getBudgetId());
 		
 		return object;
@@ -102,7 +102,7 @@ public class DALIOTransactionMapper {
 	public static List<IOTransactionLogic> toBos(List<IDALIotransactionEntity> entities) {
 		
 		// Create the list of transactions
-		List<IOTransactionLogic> objects = new ArrayList<IOTransactionLogic>();
+		List<IOTransactionLogic> objects = new ArrayList<>();
 		
 		for(IDALIotransactionEntity entity : entities){
 			objects.add(toBo(entity));

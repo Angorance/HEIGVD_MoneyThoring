@@ -5,6 +5,7 @@ import bll.model.BankAccountModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
 import dal.orm.IORM;
+import dal.orm.MasterORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
@@ -54,7 +55,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		ClientLogic.getInstance().addBankAccount(this);
 		
-		createBankAccount(new PgORM());
+		createBankAccount(MasterORM.getInstance().getPgORM());
 	}
 	
 	private void addToHashMap(IOTransactionLogic tl) {
@@ -93,7 +94,7 @@ public class BankAccountLogic extends BankAccountModel {
 	private void updateAmount(double io) {
 		
 		setAmount(getAmount() + io);
-		updateBankAccount(new PgORM());
+		updateBankAccount(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
@@ -125,7 +126,7 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @param transaction New transaction to createItem to the list.
 	 */
-	private void addTransaction(IOTransactionLogic transaction) {
+	public void addTransaction(IOTransactionLogic transaction) {
 		
 		transactions.add(transaction);
 		addToHashMap(transaction);
@@ -160,7 +161,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		setVisible(false);
 		setDefault(false);
-		updateBankAccount(new PgORM());
+		updateBankAccount(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
@@ -178,7 +179,7 @@ public class BankAccountLogic extends BankAccountModel {
 			for (BankAccountLogic ba : list) {
 				if (ba.isDefault()) {
 					ba.setDefault(false);
-					ba.updateBankAccount(new PgORM());
+					ba.updateBankAccount(MasterORM.getInstance().getPgORM());
 					break;
 				}
 			}
@@ -205,7 +206,7 @@ public class BankAccountLogic extends BankAccountModel {
 		setAmount(amount);
 		changeDefault(isDefault);
 		
-		updateBankAccount(new PgORM());
+		updateBankAccount(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**

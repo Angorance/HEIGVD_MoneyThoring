@@ -3,6 +3,7 @@ package bll.logic;
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
 import dal.orm.IORM;
+import dal.orm.MasterORM;
 import dal.orm.PgORM;
 
 import java.sql.Date;
@@ -58,7 +59,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 		
 		setBudgetID(null);
 		
-		createIOTransaction(new PgORM());
+		createIOTransaction(MasterORM.getInstance().getPgORM());
 		transactions.add(this);
 	}
 	
@@ -121,10 +122,16 @@ public class IOTransactionLogic extends IOTransactionModel {
 		setCategory(newCat);
 	}
 	
-	public void setBank(BankAccountLogic bankAccount) {
+	private void setBank(BankAccountLogic bankAccount) {
 		
 		this.bank = bankAccount;
 		bankAccount.addNewTransaction(this);
+	}
+	
+	public void setBankAccount(BankAccountLogic bankAccount) {
+		
+		this.bank = bankAccount;
+		bankAccount.addTransaction(this);
 	}
 	
 	private void updateBank(BankAccountLogic newBank) {
@@ -161,7 +168,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 			updateBank(bankAccount);
 		}
 		
-		updateIOTransaction(new PgORM());
+		updateIOTransaction(MasterORM.getInstance().getPgORM());
 	}
 	
 	public static void updateTransactionsOnCategoryDeletion(
@@ -178,7 +185,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 	public void supp() {
 		
 		try {
-			IORM orm = new PgORM();
+			IORM orm = MasterORM.getInstance().getPgORM();
 			
 			orm.beginTransaction();
 			
