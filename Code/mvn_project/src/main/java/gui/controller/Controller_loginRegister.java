@@ -3,6 +3,7 @@ package gui.controller;
 import bll.logic.Authentication;
 import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.model.windowManager;
@@ -45,6 +46,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 	@FXML private GridPane register_GridPane;
 	@FXML private JFXButton btnConfirmRetour;
 	@FXML private Hyperlink hplSendCode;
+	@FXML private JFXCheckBox offline_checkLogin;
+	@FXML private JFXCheckBox offline_checkRegister;
 	
 	private Stage thisStage;
 	
@@ -166,9 +169,9 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		}
 	}
 	
-	@FXML
-	public void confirmButton() {
-		if(Authentication.checkActivationCode(confirm_textField.getText())){
+	@FXML public void confirmButton() {
+		
+		if (Authentication.checkActivationCode(confirm_textField.getText())) {
 			loadMainFrame();
 		} else {
 			confirm_incorrect.setText("Code invalide\nVeuillez réessayer");
@@ -181,9 +184,10 @@ public class Controller_loginRegister implements Initializable, IWindow {
 	 * Loading the main window
 	 */
 	private void loadMainFrame() {
+		
 		windowManager wm = windowManager.getInstance();
 		
-		if(!wm.hasMainframe()) {
+		if (!wm.hasMainframe()) {
 			new mainFrame();
 		}
 		
@@ -229,13 +233,14 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		});
 		
 		hplSendCode.setOnMouseClicked(event -> {
-			Mail.sendMail(ClientLogic.getInstance().getUsername(), ClientLogic.getInstance().getEmail(), ClientLogic.getInstance().getKey());
+			Mail.sendMail(ClientLogic.getInstance().getUsername(), ClientLogic.getInstance().getEmail(),
+					ClientLogic.getInstance().getKey());
 			confirm_incorrect.setVisible(true);
 			confirm_incorrect.setText("Le code a été ré-envoyé");
 			confirm_incorrect.setStyle("-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
 		});
 		
-//		thisStage = (Stage)hplSendCode.getScene().getWindow();
+		//		thisStage = (Stage)hplSendCode.getScene().getWindow();
 		windowManager.getInstance().setConnectionFrame(this);
 		
 		/*
@@ -253,26 +258,28 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		register_password.setText("");
 		register_confirmPassword.setText("");
 		register_username.setText("");
-	
+		
 	}
 	
-	@FXML
-	public void resetConfirmErrorMessage() {
+	@FXML public void resetConfirmErrorMessage() {
+		
 		confirm_incorrect.setVisible(false);
 	}
 	
 	@Override public void hide() {
-		if(thisStage == null){
-			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		
+		if (thisStage == null) {
+			thisStage = (Stage) hplSendCode.getScene().getWindow();
 		}
-			thisStage.hide();
+		thisStage.hide();
 	}
 	
 	@Override public void show() {
+		
 		clearFields();
 		
-		if(thisStage == null){
-			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		if (thisStage == null) {
+			thisStage = (Stage) hplSendCode.getScene().getWindow();
 		}
 		thisStage.show();
 	}
