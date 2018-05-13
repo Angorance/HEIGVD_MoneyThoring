@@ -31,8 +31,14 @@ public class ClientLogic extends ClientModel {
 	private ArrayList<CategoryLogic> categories = new ArrayList<>();
 	private ArrayList<BudgetLogic> budgets = new ArrayList<>();
 	
+	private boolean online;
 	
 	private ClientLogic() {}
+	
+	public void setOnline(boolean online) {
+		
+		this.online = online;
+	}
 	
 	
 	/**
