@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import static java.lang.System.exit;
 
 public class startFrame extends Application {
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/gui/view/loginRegister.fxml"));
@@ -20,7 +20,8 @@ public class startFrame extends Application {
         primaryStage.setOnCloseRequest(event -> exit(0));
     }
 
-    public static void main(String...args) {
+    public static void launcher(String...args) {
+        
         launch(args);
     }
 }

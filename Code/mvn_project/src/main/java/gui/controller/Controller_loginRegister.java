@@ -5,11 +5,11 @@ import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.model.windowManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -17,8 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import gui.model.mainFrame;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import smtp.Mail;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ import static bll.logic.Authentication.*;
 /**
  * Controller of the view loginRegister
  */
-public class Controller_loginRegister implements Initializable {
+public class Controller_loginRegister implements Initializable, IWindow {
 	
 	@FXML private TextField login_email;
 	@FXML private PasswordField login_password;
@@ -44,6 +45,8 @@ public class Controller_loginRegister implements Initializable {
 	@FXML private GridPane register_GridPane;
 	@FXML private JFXButton btnConfirmRetour;
 	@FXML private Hyperlink hplSendCode;
+	
+	private Stage thisStage;
 	
 	
 	/**
@@ -60,6 +63,20 @@ public class Controller_loginRegister implements Initializable {
 		String password = login_password.getText();
 		
 		// TODO lancer le connect dans un thread, faire apparaitre le paneSpinner en attendant, un fois le thread terminé on fait disparaire paneSpinner
+		/*// WHAT THE FUCK
+		AtomicBoolean status = new AtomicBoolean(false);
+		Thread connect = new Thread(() -> {status.set(connect(email, password));});
+		
+		paneSpinner.setVisible(true);
+		
+		try {
+			connect.start();
+			connect.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		paneSpinner.setVisible(false);
 		/*Retrieving the status of the login method*/
 		boolean status = connect(email, password);
 		
@@ -149,31 +166,28 @@ public class Controller_loginRegister implements Initializable {
 		}
 	}
 	
-	private void confirmButton() {
+	@FXML
+	public void confirmButton() {
 		if(Authentication.checkActivationCode(confirm_textField.getText())){
 			loadMainFrame();
 		} else {
-			confirm_incorrect.setText("Code invalide\nVeuillezr réessayer");
+			confirm_incorrect.setText("Code invalide\nVeuillez réessayer");
 			confirm_incorrect.setStyle("-fx-text-fill: red;-fx-border-color: red;-fx-border-width: 2px");
 			confirm_incorrect.setVisible(true);
 		}
 	}
 	
 	/**
-	 * Closing the window
-	 */
-	public void closeStage() {
-		
-		((Stage) login_email.getScene().getWindow()).close();
-	}
-	
-	/**
 	 * Loading the main window
 	 */
-	public void loadMainFrame() {
+	private void loadMainFrame() {
+		windowManager wm = windowManager.getInstance();
 		
-		closeStage();
-		mainFrame mf = new mainFrame();
+		if(!wm.hasMainframe()) {
+			new mainFrame();
+		}
+		
+		wm.displayMainFrame();
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -220,9 +234,46 @@ public class Controller_loginRegister implements Initializable {
 			confirm_incorrect.setText("Le code a été ré-envoyé");
 			confirm_incorrect.setStyle("-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
 		});
+		
+//		thisStage = (Stage)hplSendCode.getScene().getWindow();
+		windowManager.getInstance().setConnectionFrame(this);
+		
+		/*
+		btnConfirmRetour.getScene().getWindow().setOnShowing(event -> {
+			clearFields();
+		});*/
 	}
 	
+	private void clearFields() {
+		
+		login_password.setText("");
+		login_email.setText("");
+		confirm_textField.setText("");
+		register_email.setText("");
+		register_password.setText("");
+		register_confirmPassword.setText("");
+		register_username.setText("");
+	
+	}
+	
+	@FXML
 	public void resetConfirmErrorMessage() {
 		confirm_incorrect.setVisible(false);
+	}
+	
+	@Override public void hide() {
+		if(thisStage == null){
+			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		}
+			thisStage.hide();
+	}
+	
+	@Override public void show() {
+		clearFields();
+		
+		if(thisStage == null){
+			thisStage = (Stage)hplSendCode.getScene().getWindow();
+		}
+		thisStage.show();
 	}
 }

@@ -11,9 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class Controller_formTransaction implements Initializable, IForm {
@@ -26,15 +31,18 @@ public class Controller_formTransaction implements Initializable, IForm {
 	@FXML private JFXComboBox<CategoryLogic> category;
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
+	@FXML private JFXButton deleteButton;
 	@FXML private JFXDatePicker datePicker;
 	
-	IController controller;
-	boolean isIncome;
+	private IController controller;
+	private boolean isIncome;
+	private IOTransactionLogic tr;
 	
-	public Controller_formTransaction(IController controller, boolean isIncome) {
+	public Controller_formTransaction(IController controller, boolean isIncome, IOTransactionLogic tr) {
 		
 		this.controller = controller;
 		this.isIncome = isIncome;
+		this.tr = tr;
 	}
 	
 	/**
@@ -57,6 +65,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 		if (checkValidInput()) {
 			/*name of transaction*/
 			String nameText = name.getText();
+			
 			/*transaction amount*/
 			double amountDouble = Math.abs(Double.parseDouble(amount.getText()));
 			amountDouble = isIncome ? amountDouble : amountDouble * (-1);
@@ -72,38 +81,78 @@ public class Controller_formTransaction implements Initializable, IForm {
 				String recurrenceText = time.getValue();
 			}
 			
-			//Date actuelle
+			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
 			
-			/*String format = "dd/MM/yyyy";
-			java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-			java.util.Date date = new java.util.Date();*/
-			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());/*new java.sql.Date(date.getTime());*/
-			
-			IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF", cl,
-					bal);
-			controller.createItem(transaction);
+			if(tr == null) {
+				IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF",
+						cl, bal);
+				
+				controller.createItem(transaction);
+			}else{
+				tr.update(amountDouble,nameText,"toto",sqlDate,"CHF",cl);
+				controller.modifyItem(tr);
+			}
 		}
+	}
+	
+	private void delete() {
+		controller.deleteItem(tr);
 	}
 	
 	private void checkRecurrence() {
 		
 		if (recurrence.isSelected()) {
-			
 			time.setVisible(true);
 		} else {
-			
 			time.setVisible(false);
 		}
 	}
 	
 	/**
-	 * TODO
+	 * Method to check if our field is correct
 	 *
-	 * @return
+	 * @return true if all is correct otherwise false
 	 */
 	private boolean checkValidInput() {
 		
-		return true;
+		String nameText = name.getText();
+		String amountDouble = amount.getText();
+		boolean check = true;
+		
+		/*Check if the bankName is empty*/
+		if (nameText.isEmpty()) {
+			name.setStyle("-jfx-unfocus-color: red;");
+			check = false;
+		}
+		
+		/*Check if the amount is empty and it's not a double*/
+		if (amountDouble.isEmpty() || !isDouble(amountDouble)) {
+			amount.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
+			check = false;
+		}
+		
+		if (datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())) {
+			datePicker.setStyle("-jfx-default-color: red;");
+		}
+		
+		return check;
+	}
+	
+	/**
+	 * Check if a string is a double
+	 *
+	 * @param str string to check
+	 *
+	 * @return true if is a double otherwise false
+	 */
+	private boolean isDouble(String str) {
+		
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	private void generateComboBox() {
@@ -141,13 +190,45 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		
 		generateComboBox();
+		deleteButton.setVisible(false);
+
+		if(tr != null){
+			
+			deleteButton.setVisible(true);
+			
+			name.setText(tr.getName());
+			amount.setText(String.valueOf(tr.getAmount()));
+			for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
+				if(bal.getId() == tr.getBankAccountID()){
+					bankAccount.getSelectionModel().select(bal);
+					break;
+				}
+			}
+			
+			for(CategoryLogic cl : ClientLogic.getInstance().getCategories()){
+				if(cl.getId() == tr.getCategoryID()){
+					category.getSelectionModel().select(cl);
+					break;
+				}
+			}
+			
+			datePicker.setValue(tr.getDate().toLocalDate());
+		}
 		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
 				
 				formValidation(event);
+			}
+		});
+		
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				delete();
 			}
 		});
 		
@@ -164,6 +245,30 @@ public class Controller_formTransaction implements Initializable, IForm {
 			@Override public void handle(ActionEvent event) {
 				
 				checkRecurrence();
+			}
+		});
+		
+		name.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				name.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		amount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				amount.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+			}
+		});
+		
+		datePicker.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				datePicker.setStyle("-jfx-default-color: green;");
 			}
 		});
 	}

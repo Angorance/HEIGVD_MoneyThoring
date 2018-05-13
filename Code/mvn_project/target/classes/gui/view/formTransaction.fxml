@@ -13,9 +13,9 @@
 
 <AnchorPane fx:id="paneFond" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" styleClass="transaction-button" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="110.0" layoutY="124.0" prefHeight="297.0" prefWidth="607.0" styleClass="anchor-pane" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="134.0">
+      <AnchorPane layoutX="110.0" layoutY="152.0" prefHeight="262.0" prefWidth="607.0" styleClass="anchor-pane" stylesheets="@../css/general.css" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
          <children>
-            <GridPane layoutX="154.0" layoutY="45.0" prefHeight="188.0" prefWidth="299.0">
+            <GridPane layoutX="154.0" layoutY="37.0" prefHeight="188.0" prefWidth="299.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,7 +35,7 @@
                   <Label text="Montant" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="name" prefWidth="110.0" promptText="nom de la transaction" GridPane.columnIndex="1" />
                   <JFXTextField fx:id="amount" prefHeight="25.0" prefWidth="61.0" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <JFXCheckBox fx:id="recurrence" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label prefHeight="17.0" prefWidth="155.0" text="Compte bancaire" GridPane.rowIndex="2" />
                   <JFXComboBox fx:id="bankAccount" prefHeight="25.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -47,6 +47,7 @@
             </GridPane>
             <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="139.0" styleClass="return" stylesheets="@../css/general.css" text="retour" AnchorPane.leftAnchor="14.0" />
             <JFXButton fx:id="accepteButton" layoutX="534.0" layoutY="139.0" styleClass="accept" stylesheets="@../css/general.css" text="Accepte" AnchorPane.rightAnchor="14.0" />
+            <JFXButton fx:id="deleteButton" layoutX="278.0" layoutY="225.0" style="-fx-background-color: RED;" text="Supprimer" visible="false" />
          </children>
       </AnchorPane>
    </children>

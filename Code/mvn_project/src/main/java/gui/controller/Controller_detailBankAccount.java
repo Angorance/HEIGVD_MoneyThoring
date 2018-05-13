@@ -1,7 +1,6 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
-import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
@@ -14,7 +13,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,10 +22,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller_detailBankAccount implements Initializable, IController {
 	
@@ -49,26 +44,32 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	private JFXButton modifyButton;
 	private JFXButton removeButton;
 	
-	private Controller_bankAccount cba;
+	private Controller_listBankAccount cba;
 	private BankAccountLogic bal;
 	
 	/**
 	 * Constructor of our controller
 	 *
-	 * @param cba TODO
-	 * @param bal TODO
+	 * @param cba The controller bank account
+	 * @param bal The bank account
 	 */
-	public Controller_detailBankAccount(Controller_bankAccount cba, BankAccountLogic bal) {
+	public Controller_detailBankAccount(Controller_listBankAccount cba, BankAccountLogic bal) {
 		
 		this.bal = bal;
 		this.cba = cba;
 	}
 	
+	/**
+	 * Method that returns us to the main bank accounts page
+	 */
 	private void returnFrame() {
 		
 		cba.modifyItem(bal);
 	}
 	
+	/**
+	 * Generate the the node list with our button
+	 */
 	private void generateNodeList() {
 		
 		preferenceButton = new JFXButton();
@@ -91,12 +92,17 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		preferenceButton.setGraphic(image);
 	}
 	
+	/**
+	 * Methode to say to our controller to remove the bank account
+	 */
 	private void removeBankAccount() {
 		
-		bal.supp();
 		cba.deleteItem(bal);
 	}
 	
+	/**
+	 * Load the form to modify the bank account
+	 */
 	private void modifyBankAccount() {
 		
 		/* we load the form fxml*/
@@ -118,15 +124,31 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		}
 	}
 	
-	@Override public void createItem(Object result) {
+	/**
+	 * Unload the form bank account
+	 */
+	private void unloadform() {
 		
 		paneform.getChildren().clear();
 		paneform.setMouseTransparent(true);
 		paneform.setVisible(false);
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
+	/**
+	 * Do nothing
+	 *
+	 * @param result the bank account
+	 */
+	@Override public void createItem(Object result) {
+		
+		/*we don't create an item on detail bank account*/
+		/*We just unload the form*/
+		unloadform();
+	}
 	
+	@Override public void deleteItem(Object toDelete) {
+		/*Do nothing*/
+		/*We don't delete an item directly in this controller*/
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
@@ -137,6 +159,48 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		this.typeBankAccount.setText(bal.getType());
 		this.amountBankAccount.setText(String.valueOf(bal.getAmount()));
 		chkDefaultAccount.setSelected(bal.isDefault());
+	}
+	
+	private void setDataToChart() {
+		
+		lineChart.setTitle("Evolution du Solde");
+		XYChart.Series series = new XYChart.Series();
+		
+		double solde = bal.getAmount();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		// Create a calendar object and set year and month
+		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
+		
+		// Get the number of days in that month
+		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		if (!bal.getTransactions().isEmpty()) {
+			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+				solde -= transaction.getAmount();
+			}
+		}
+		
+		for (int i = 0; i < currentDay; ++i) {
+			if (!bal.getTransactions().isEmpty()) {
+				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+					java.sql.Date dat = transaction.getDate();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(dat);
+					if (cal.get(Calendar.DAY_OF_MONTH) - 1 == i) {
+						solde += transaction.getAmount();
+					}
+				}
+			}
+			
+			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+		}
+		
+		lineChart.getData().addAll(series);
+		lineChart.setLegendVisible(false);
+		
 	}
 	
 	/**
@@ -168,8 +232,17 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		//if the list of transaction is not empty, we get the last transaction date
 		if (!bal.getTransactions().isEmpty()) {
-			//dateLastTransaction
-			//.setText(bal.getTransactions().get(bal.getTransactions().size() - 1).getDate().toString());
+			/*int year = Calendar.getInstance().get(Calendar.YEAR);
+			if(bal.getTransactions().containsKey(year)) {
+				int cnt = 0;
+				while (!bal.getTransactions().get(year)[cnt].isEmpty()) {
+					cnt++;
+				}
+				int size =  bal.getTransactions().get(year)[cnt].size();
+				Date date = bal.getTransactions().get(year)[cnt].get(size -1).getDate();
+				dateLastTransaction.setText(date.toString());
+			}
+			dateLastTransaction.setText("-");*/
 		}
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
@@ -184,43 +257,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		chkDefaultAccount.setSelected(bal.isDefault());
 		chkDefaultAccount.setMouseTransparent(true);
 		
-		/*TODO mettre les données dans le graphique*/
-		/*TODO max min des valeur de l'axe Y*/
-		XYChart.Series series = new XYChart.Series();
-		series.setName("Evolution du solde");
-		Random random = new Random();
-		
-		double solde = bal.getAmount();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		
-		// Create a calendar object and set year and month
-		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
-		
-		// Get the number of days in that month
-		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		
-		if (!bal.getTransactions().isEmpty()) {
-			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-				solde -= transaction.getAmount();
-			}
-		}
-		
-		for (int i = 0; i < currentDay; ++i) {
-			if (!bal.getTransactions().isEmpty()) {
-				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
-					if (transaction.getDate().getDay() - 1 == i) {
-						solde += transaction.getAmount();
-					}
-				}
-			}
-			/*if (i < currentDay) {
-				series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
-			}*/
-		}
-		
-		lineChart.getData().addAll(series);
+		setDataToChart();
 		
 		modifyButton.setOnAction(new EventHandler<ActionEvent>() {
 			

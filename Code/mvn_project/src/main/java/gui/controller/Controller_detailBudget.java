@@ -67,13 +67,13 @@ public class Controller_detailBudget implements Initializable, IController {
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(15);
-		nodeModifDelete.setRotate(180);
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
-		
+
+		lblTitre.setText(budget.getName());
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses

@@ -12,8 +12,6 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +24,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -35,7 +34,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.*;
 
-public class Controller_transactionList implements Initializable, IController {
+public class Controller_listTransaction implements Initializable, IController {
 	
 	@FXML private AnchorPane parent;
 	@FXML private AnchorPane paneform;
@@ -52,21 +51,24 @@ public class Controller_transactionList implements Initializable, IController {
 	private JFXButton outGoButton;
 	private JFXButton incomeButton;
 	
-	
 	private ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
 	private ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
 	
 	private BankAccountLogic bal;
 	
+	
 	/**
-	 * Event on the create button that will load the transaction creation page
+	 * Load the fom
+	 *
+	 * @param isIncome
 	 */
-	public void callform(boolean isIncome) {
+	public void callform(boolean isIncome, IOTransactionLogic tr) {
+		
 		/* we load the form fxml*/
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome);
+		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome, tr);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(controller);
@@ -75,44 +77,72 @@ public class Controller_transactionList implements Initializable, IController {
 		paneform.setMouseTransparent(false);
 		
 		try {
+			
 			AnchorPane pane = loader.load();
 			paneform.getChildren().add(pane);
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Methode to create the item in the TreeTableView
+	 *
+	 * @param result the transaction to insert in the TreeTableView
+	 */
 	@Override public void createItem(Object result) {
 		
-		paneform.getChildren().clear();
-		paneform.setVisible(false);
-		paneform.setMouseTransparent(true);
+		unloadform();
 		
-		IOTransactionLogic tr = (IOTransactionLogic)result;
-		for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
-			if(bal.getId() == tr.getBankAccountID()){
-				accountSelect.getSelectionModel().select(bal);
-				break;
+		if (result != null) {
+			IOTransactionLogic tr = (IOTransactionLogic) result;
+			for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+				if (bal.getId() == tr.getBankAccountID()) {
+					accountSelect.getSelectionModel().select(bal);
+					break;
+				}
 			}
+			
+			
+			periodSelect.getSelectionModel().select("Annuel");
+			Date date = tr.getDate();
+			int year = date.toLocalDate().getYear();
+			monthSelect.getSelectionModel().select(year);
+			
+			setData();
 		}
+	}
+	
+	/**
+	 * Unload the form bank account
+	 */
+	private void unloadform() {
 		
-		periodSelect.getSelectionModel().select("Mensuel");
-		
-		Date date = tr.getDate();
-		int month = date.toLocalDate().getMonthValue() - 1;
-		
-		monthSelect.getSelectionModel().select(month);
-		
-		setData();
+		paneform.getChildren().clear();
+		paneform.setMouseTransparent(true);
+		paneform.setVisible(false);
 	}
 	
 	/**
 	 * Delete the displayer and the data in the DB
 	 *
-	 * @param toDelete
+	 * @param toDelete transaction to delete
 	 */
 	@Override public void deleteItem(Object toDelete) {
-	
+		
+		unloadform();
+		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
+		
+		periodSelect.getSelectionModel().select("Annuel");
+		Date date = tr.getDate();
+		int year = date.toLocalDate().getYear();
+		monthSelect.getSelectionModel().select(year);
+		
+		tr.supp();
+		
+		setData();
+		
 	}
 	
 	/**
@@ -121,9 +151,20 @@ public class Controller_transactionList implements Initializable, IController {
 	 * @param updated
 	 */
 	@Override public void modifyItem(Object updated) {
-	
+		unloadform();
+		IOTransactionLogic tr = (IOTransactionLogic) updated;
+		
+		periodSelect.getSelectionModel().select("Annuel");
+		Date date = tr.getDate();
+		int year = date.toLocalDate().getYear();
+		monthSelect.getSelectionModel().select(year);
+		
+		setData();
 	}
 	
+	/**
+	 * Set the data in the TreeTableView
+	 */
 	private void setData() {
 		
 		bal = accountSelect.getValue();
@@ -132,7 +173,6 @@ public class Controller_transactionList implements Initializable, IController {
 		boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
 		
 		JFXTreeTableColumn<WrapperTransaction, String> dateIncome = new JFXTreeTableColumn<>("Date");
-		dateIncome.setMinWidth(150);
 		dateIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -144,7 +184,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> nameIncome = new JFXTreeTableColumn<>("nom");
-		nameIncome.setMinWidth(150);
 		nameIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -156,7 +195,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> amountIncome = new JFXTreeTableColumn<>("montant");
-		amountIncome.setMinWidth(150);
 		amountIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -168,7 +206,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo = new JFXTreeTableColumn<>("Date");
-		dateOutgo.setMinWidth(150);
 		dateOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -180,7 +217,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo = new JFXTreeTableColumn<>("nom");
-		nameOutgo.setMinWidth(150);
 		nameOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -192,7 +228,6 @@ public class Controller_transactionList implements Initializable, IController {
 				});
 		
 		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo = new JFXTreeTableColumn<>("montant");
-		amoutOutgo.setMinWidth(150);
 		amoutOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
@@ -234,7 +269,9 @@ public class Controller_transactionList implements Initializable, IController {
 		setTotal();
 	}
 	
-	
+	/**
+	 * Set the total amount of outgo and income
+	 */
 	private void setTotal() {
 		
 		double totalIncome = 0;
@@ -322,11 +359,10 @@ public class Controller_transactionList implements Initializable, IController {
 	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		paneform.setVisible(false);
-		paneform.setMouseTransparent(true);
-		
+		unloadform();
 		generateNodeList();
 		generateComboBoxItem();
+		setTotal();
 		
 		accountSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -357,7 +393,7 @@ public class Controller_transactionList implements Initializable, IController {
 			
 			@Override public void handle(ActionEvent event) {
 				
-				callform(false);
+				callform(false, null);
 			}
 		});
 		
@@ -365,9 +401,43 @@ public class Controller_transactionList implements Initializable, IController {
 			
 			@Override public void handle(ActionEvent event) {
 				
-				callform(true);
+				callform(true, null);
 			}
 		});
+		
+		incomeTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
+						int t = incomeTreeTableView.getSelectionModel().getFocusedIndex();
+						if (t >= 0) {
+							IOTransactionLogic tr = incomeTreeTableView.getTreeItem(t).getValue().getTransaction();
+							callform(true, tr);
+						}
+					}
+				}
+			}
+		});
+		
+		
+		outGoTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
+						int t = outGoTreeTableView.getSelectionModel().getFocusedIndex();
+						if (t >= 0) {
+							IOTransactionLogic tr = outGoTreeTableView.getTreeItem(t).getValue().getTransaction();
+							callform(false, tr);
+						}
+					}
+				}
+			}
+		});
+		
 	}
 	
 }

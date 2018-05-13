@@ -10,10 +10,27 @@ SELECT cron.schedule('0 0 * * *', $$$$);
 
 /******* Trigger category (OK) *******/
 CREATE OR REPLACE FUNCTION moneythoring.set_uncategorized_category() RETURNS TRIGGER AS $before_category_deleted$
-    BEGIN
-        UPDATE iOTransaction
-		SET Category_id = 1 /* id de la catégorie non-catégorisé */
+   DECLARE 
+   		client INT;
+		default_category INT;
+   BEGIN
+		/* Récupérer l'id du client possèdant la catégorie à supprimer */
+		SELECT C.client_id INTO client
+		FROM moneythoring.category C
+		WHERE id = OLD.id;
+		
+		/* Récupérer l'id de la catégorie par défaut du client */		
+		SELECT C1.id INTO default_category
+		FROM moneythoring.category C1
+		WHERE client_id = client
+		AND isDefault = true;
+		
+		/* Remplacer la catégorie par celle par défaut */
+        UPDATE moneythoring.iOTransaction
+		SET Category_id = default_category
 		WHERE Category_id = OLD.id;
+		
+		RETURN OLD;
     END
 $before_category_deleted$ LANGUAGE plpgsql;
 
