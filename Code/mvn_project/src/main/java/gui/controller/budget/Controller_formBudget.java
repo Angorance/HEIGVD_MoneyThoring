@@ -161,10 +161,14 @@ public class Controller_formBudget implements IForm, Initializable {
 			last = lastDate.getValue();
 		}
 		if (budget == null) {
-			budget = new BudgetLogic(name, amount,share,rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last),gap);
+			
+			budget = new BudgetLogic(name, amount, share, rec, java.sql.Date.valueOf(begin),
+					java.sql.Date.valueOf(last), gap);
 			parent.createItem(budget);
 		} else {
 			
+			budget.update(name,amount,share,rec,java.sql.Date.valueOf(begin),
+					java.sql.Date.valueOf(last),gap);
 			parent.modifyItem(budget);
 		}
 		
@@ -178,8 +182,21 @@ public class Controller_formBudget implements IForm, Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		if (budget != null) {
-			btnDelete.setVisible(true);
-			//TODO remplir les champs
+			
+			txtName.setText(budget.getName());
+			txtCeiling.setText(String.valueOf(budget.getAmount()));
+			chbIsRegular.setSelected(budget.isRecurrent());
+			if (budget.isRecurrent()) {
+				int index = budget.getGap() == 30 ? 0 : 1;
+				cmbPeriode.getSelectionModel().select(index);
+			} else {
+				beginDate.setValue(budget.getStartingDate().toLocalDate());
+				lastDate.setValue(budget.getEndingDate().toLocalDate());
+			}
+			
+			checkShare.setSelected(budget.isShared());
+			
+			//TODO liste catégorie
 		}
 		
 		// set the available category in the comboBox

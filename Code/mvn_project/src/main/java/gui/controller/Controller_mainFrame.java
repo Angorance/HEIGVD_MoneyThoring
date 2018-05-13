@@ -5,6 +5,7 @@ import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.bankAccount.Controller_listBankAccount;
 import gui.controller.budget.Controller_listBudget;
@@ -42,19 +43,22 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	@FXML private JFXDrawer drawer;
 	@FXML private Label lblInfo;
 	@FXML private JFXButton disconnect_button;
+	@FXML private AnchorPane parameterPane;
 	
 	private Stage thisStage = null;
 	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
 			"Catégories" };
 	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
 			"/gui/view/transactionList.fxml", "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml",
-			"/gui/view/categoryList.fxml" };
+			"/gui/view/categoryList.fxml", "/gui/view/userParam.fxml" };
 	
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		drawer.setMouseTransparent(true);
 		drawer.setVisible(true);
+		parameterPane.setVisible(false);
+		parameterPane.setMouseTransparent(true);
 		VBox box = null;
 		JFXDepthManager.setDepth(paneHeader, 3);
 		lblInfo.setText(ClientLogic.getInstance().toString());
@@ -67,14 +71,23 @@ public class Controller_mainFrame implements Initializable, IWindow {
 
 			// setting the lateral menu's button behavior
 			for (Node node : box.getChildren()) {
-				node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-					try {
-						loadContent(Integer.valueOf(node.getAccessibleText()));
-						drawer.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				});
+				String at = node.getAccessibleText();
+				if(!at.equals("6")) {
+					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+						try {
+							loadContent(Integer.valueOf(node.getAccessibleText()));
+							drawer.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					});
+				} else {
+					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+							drawer.close();
+							loadParameter();
+							
+					});
+				}
 			}
 			
 			//HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
@@ -114,7 +127,31 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		resetDisplay();
 	}
 	
+	private void loadParameter() {
+		
+		burgerBtn.setMouseTransparent(true);
+		parameterPane.setVisible(true);
+		parameterPane.setMouseTransparent(false);
+		parameterPane.getChildren().clear();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(tabViewFile[6]));
+		loader.setController(new ControllerParam());
+		try {
+			parameterPane.getChildren().add(loader.load());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void unloadParameter(){
+		burgerBtn.setMouseTransparent(false);
+		parameterPane.getChildren().clear();
+		parameterPane.setMouseTransparent(true);
+		parameterPane.setVisible(false);
+	}
+	
 	private void disconnect() {
+		
 		windowManager.getInstance().displayConnectionFrame();
 		Authentication.disconnect();
 	}
@@ -161,8 +198,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 				break;
 		}
 		AnchorPane pane = loader.load();
-        /*pane.prefWidthProperty().bind(mainContent.widthProperty());
-        pane.prefHeightProperty().bind(mainContent.heightProperty());*/
+		
 		mainContent.getChildren().add(pane);
 		
 	}
@@ -180,5 +216,25 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		}
 		resetDisplay();
 		thisStage.show();
+	}
+	
+	private class ControllerParam implements Initializable {
+		@FXML JFXButton btnDeleteAccount;
+		@FXML JFXTextField txtMail;
+		@FXML JFXTextField txtUsername;
+		@FXML JFXButton btnRetour;
+		
+		@Override public void initialize(URL location, ResourceBundle resources) {
+			btnDeleteAccount.setOnAction(event -> {
+				unloadParameter();
+				ClientLogic.getInstance().supp();
+				disconnect();
+			});
+			
+			btnRetour.setOnAction(event -> unloadParameter());
+			
+			txtMail.setText(ClientLogic.getInstance().getEmail());
+			txtUsername.setText(ClientLogic.getInstance().getUsername());
+		}
 	}
 }

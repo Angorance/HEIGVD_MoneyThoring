@@ -170,7 +170,6 @@ public class Controller_listBankAccount implements Initializable, IController {
 		unloadform();
 		if (toDelete != null) {
 			BankAccountLogic bal = (BankAccountLogic) toDelete;
-			System.out.println("Suppression du compte id : " + bal.getId());
 			frame_bankAccount.getChildren()
 					.removeAll(displayerList.get(bal.getId()));
 			bal.supp();
