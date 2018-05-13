@@ -20,10 +20,11 @@ public class BudgetLogic extends BudgetModel {
 		ClientLogic.getInstance().addBudget(this);
 	}
 	
-	public BudgetLogic(String name, double amount, Date startingDate,
-			Date endingDate) {
+	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
+			Date endingDate, int gap) {
 		
-		super(name, amount, startingDate, endingDate);
+		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
+		ClientLogic.getInstance().addBudget(this);
 		
 		createBudget(MasterORM.getInstance().getPgORM());
 	}

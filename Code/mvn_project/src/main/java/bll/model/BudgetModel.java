@@ -1,5 +1,6 @@
 package bll.model;
 
+import bll.logic.ClientLogic;
 import bll.mappers.DAL.DALBudgetMapper;
 import dal.irepositories.IBudgetRepository;
 import dal.orm.IORM;
@@ -32,12 +33,15 @@ public class BudgetModel {
 	
 	protected BudgetModel() {}
 	
-	protected BudgetModel(String name, double amount, Date startingDate, Date endingDate) {
+	protected BudgetModel(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate, Date endingDate, int gap) {
 		
 		setName(name);
 		setAmount(amount);
+		setShared(isShared);
+		setRecurrent(isRecurrent);
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
+		setGap(gap);
 	}
 	
 	/**
