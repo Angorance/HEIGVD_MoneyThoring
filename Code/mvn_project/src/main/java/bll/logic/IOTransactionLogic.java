@@ -4,7 +4,6 @@ import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 		
 		setBudgetID(null);
 		
-		createIOTransaction(MasterORM.getInstance().getPgORM());
+		createIOTransaction(MasterORM.getInstance().getORM());
 		transactions.add(this);
 	}
 	
@@ -168,7 +167,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 			updateBank(bankAccount);
 		}
 		
-		updateIOTransaction(MasterORM.getInstance().getPgORM());
+		updateIOTransaction(MasterORM.getInstance().getORM());
 	}
 	
 	public static void updateTransactionsOnCategoryDeletion(
@@ -185,7 +184,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 	public void supp() {
 		
 		try {
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			
 			orm.beginTransaction();
 			

@@ -1,5 +1,7 @@
 package dal.orm;
 
+import bll.logic.ClientLogic;
+
 /**
  * TODO
  *
@@ -26,11 +28,12 @@ public class MasterORM {
 		return Instance.instance;
 	}
 	
-	public IORM getPgORM() {
-		return postgre;
-	}
-	
-	public IORM getDeORM() {
-		return derby;
+	public IORM getORM() {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return postgre;
+		} else {
+			return derby;
+		}
 	}
 }

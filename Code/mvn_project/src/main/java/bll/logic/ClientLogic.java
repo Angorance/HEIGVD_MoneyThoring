@@ -10,6 +10,7 @@ import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 import dal.orm.PgORM;
+import smtp.Mail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,10 @@ public class ClientLogic extends ClientModel {
 		this.online = online;
 	}
 	
+	public boolean isOnline() {
+		
+		return online;
+	}
 	
 	/**
 	 * TODO
@@ -78,10 +83,17 @@ public class ClientLogic extends ClientModel {
 			e.printStackTrace();
 		}
 		
-		setKey(KeyGenerator.generateKey(12));
+		if (isOnline()) {
+			setKey(KeyGenerator.generateKey(12));
+			
+			/*Send the key*/
+			Mail.sendMail(username, email, getKey());
+		} else {
+			
+			setActivated(true);
+		}
 		
-		// TODO - Manage if connected and use Derby if necessary.
-		createUser(MasterORM.getInstance().getPgORM());
+		createUser(MasterORM.getInstance().getORM());
 	}
 	
 	// GETTERS
@@ -220,7 +232,7 @@ public class ClientLogic extends ClientModel {
 	protected void setDataFromDB() {
 		
 		try {
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			
 			orm.beginTransaction();
 			

@@ -2,12 +2,8 @@ package bll.logic;
 
 import bll.model.CategoryModel;
 import dal.dalexception.DALException;
-import dal.ientites.IDALCategoryEntity;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
-
-import java.util.HashMap;
 
 /**
  * TODO
@@ -26,7 +22,7 @@ public class CategoryLogic extends CategoryModel {
 	
 	    ClientLogic.getInstance().addCategory(this);
         
-        createCategory(MasterORM.getInstance().getPgORM());
+        createCategory(MasterORM.getInstance().getORM());
     }
     
     /**
@@ -37,13 +33,13 @@ public class CategoryLogic extends CategoryModel {
     	setName(name);
     	setColor(color);
     
-    	updateCategory(MasterORM.getInstance().getPgORM());
+    	updateCategory(MasterORM.getInstance().getORM());
     }
     
     public void supp() {
 	
 	    try {
-	    	IORM orm = MasterORM.getInstance().getPgORM();
+	    	IORM orm = MasterORM.getInstance().getORM();
 	    	
 	    	orm.beginTransaction();
 	    	

@@ -1,12 +1,10 @@
 package bll.logic;
 
 import bll.mappers.DAL.DALClientMapper;
-import bll.model.ClientModel;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -51,7 +49,7 @@ public class Authentication {
 		
 		ClientLogic.getInstance().setOnline(online);
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		boolean usernameIsCorrect = false;
 		boolean emailIsCorrect = false;
@@ -79,7 +77,7 @@ public class Authentication {
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		// Create the result
@@ -123,7 +121,7 @@ public class Authentication {
 		
 		if (!password.isEmpty()) {
 			
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			String salt;
 			
 			try {
@@ -148,7 +146,7 @@ public class Authentication {
 				}
 				
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		}
 		

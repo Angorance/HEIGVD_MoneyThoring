@@ -3,7 +3,6 @@ package bll.logic;
 import bll.model.BudgetModel;
 import dal.dalexception.DALException;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 
 import java.sql.Date;
 
@@ -25,7 +24,7 @@ public class BudgetLogic extends BudgetModel {
 		
 		super(name, amount, startingDate, endingDate);
 		
-		createBudget(MasterORM.getInstance().getPgORM());
+		createBudget(MasterORM.getInstance().getORM());
 	}
 	
 	/**
@@ -39,7 +38,7 @@ public class BudgetLogic extends BudgetModel {
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
 		
-		updateBudget(MasterORM.getInstance().getPgORM());
+		updateBudget(MasterORM.getInstance().getORM());
 	}
 	
 	/**
@@ -48,7 +47,7 @@ public class BudgetLogic extends BudgetModel {
 	public void supp() {
 		
 		try {
-			MasterORM.getInstance().getPgORM().getBudgetRepository()
+			MasterORM.getInstance().getORM().getBudgetRepository()
 					.delete(getId());
 		} catch (DALException e) {
 			e.printStackTrace();

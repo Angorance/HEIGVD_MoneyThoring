@@ -165,9 +165,6 @@ public class Controller_loginRegister implements Initializable, IWindow {
 			register_email.clear();
 			register_password.clear();
 			register_confirmPassword.clear();
-			
-			/*Send the key*/
-			Mail.sendMail(username, email, ClientLogic.getInstance().getKey());
 		}
 	}
 	
