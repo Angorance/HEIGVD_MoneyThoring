@@ -1,5 +1,6 @@
 package gui.controller.debt;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
@@ -10,11 +11,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -30,6 +33,7 @@ public class Controller_listDebt implements IController, Initializable {
 	@FXML private JFXNodesList ndlAdd;
 	@FXML private AnchorPane paneForm;
 	
+	private HashMap<Integer, debtDisplayer> debtList;
 	/**
 	 * Display a debt's information
 	 * TODO mettre en forme
@@ -45,37 +49,57 @@ public class Controller_listDebt implements IController, Initializable {
 		JFXButton btnValidation; // Button to confirm the payment
 		
 		DebtLogic debt;
+		boolean isClaim;
 		
 		/**
 		 * default constructor, once the tests are finished ==> delete and create a constructor with a debt
 		 */
-		debtDisplayer(){
+		debtDisplayer(DebtLogic d){
+			debt = d;
+			isClaim = (debt != null && debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.isIncome());
 			btnValidation = new JFXButton("Payer");
 			lblState = new Label("un état");
 			lblPerson = new Label("Jean-Henri");
 			lblAmount = new Label("1234.56 CHF");
+			lblAmount.setStyle("-fx-font-size: 24");
 			lblExpirationDate = new Label("01.01.2019");
 			contentPane = new Pane();
 			
-			contentPane.setPadding(new Insets(10));
-			contentPane.getChildren().add(lblExpirationDate);
-			contentPane.getChildren().add(lblPerson);
-			contentPane.getChildren().add(lblAmount);
-			contentPane.getChildren().add(lblState);
-			contentPane.getChildren().add(btnValidation);
-			contentPane.setMinWidth(250);
-			contentPane.setMinHeight(250);
-
-			contentPane.setOnMouseClicked(event -> callForm(debt, debt.isIncome()));
+			this.setPadding(new Insets(10));
+			this.getChildren().add(lblExpirationDate);
+			this.getChildren().add(lblPerson);
+			this.getChildren().add(lblAmount);
+			this.getChildren().add(lblState);
+			this.getChildren().add(btnValidation);
+			this.setSpacing(10);
+			this.setAlignment(Pos.CENTER_LEFT);
+			this.setMinWidth(80);
+			this.setMinHeight(80);
 			
+			this.setOnMouseClicked(event -> callForm(debt, isClaim));
+			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			JFXDepthManager.setDepth(contentPane, 1);
-			this.getChildren().add(contentPane);
+			
+			if(isClaim){
+				paneClaimList.getChildren().add(this);
+			} else {
+				paneDebtList.getChildren().add(this);
+				
+			}
 		}
 		
 		public void redraw(){
 			// TODO mettre à jour les informations
 		}
 		
+		public void remove(){
+			
+			if(isClaim){
+				paneClaimList.getChildren().remove(this);
+			} else {
+				paneDebtList.getChildren().remove(this);
+			}
+		}
 		
 	}
 	
@@ -87,18 +111,27 @@ public class Controller_listDebt implements IController, Initializable {
 		if(d != null){
 		
 		} else { // TODO supprimer le else une fois les tests terminés
-			paneDebtList.getChildren().add(new debtDisplayer());
+			paneDebtList.getChildren().add(new debtDisplayer(null));
 		}
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
+		DebtLogic debt = (DebtLogic) toDelete;
 		unloadForm();
-		// TODO créer une ou deux hashmap (dette et créance) pour les displayer, et les retirer de leur conteneur
+		if(debt != null) {
+			debtList.get(debt.getId()).remove();
+			debtList.remove(debt.getId());
+			//TODO debt.supp()
+		}
+		
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
+		DebtLogic debt = (DebtLogic) toUpdated;
 		unloadForm();
-		// TODO mettre à jour le bon displayer (hashmap)
+		if(debt != null) {
+			debtList.get(debt.getId()).redraw();
+		}
 	}
 	
 	private void unloadForm(){
@@ -155,7 +188,11 @@ public class Controller_listDebt implements IController, Initializable {
 		ndlAdd.addAnimatedNode(btnDebt);
 		ndlAdd.setSpacing(5);
 		ndlAdd.setRotate(180);
-
-		// TODO lister les dettes et les mettres dans le bon conteneur
+		
+		debtList = new HashMap<>();
+		/*
+		for(DebtLogic d : ClientLogic.getInstance().getDebts()){
+			debtList.put(d.getId(), new debtDisplayer(d));
+		}*/
 	}
 }
