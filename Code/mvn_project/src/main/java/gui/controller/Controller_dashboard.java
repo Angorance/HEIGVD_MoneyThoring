@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
@@ -135,7 +136,7 @@ public class Controller_dashboard implements IController, Initializable {
 			if((year == trYear) && (month == trMonth) && tr.getBankAccountID() == bal.getId()) {
 				transactionDisplayer trDisplayer = new transactionDisplayer(tr);
 				setDataLineChart();
-				//TODO refreach du pieChart
+				setDataPieChart();
 			}
 			
 		}
@@ -246,10 +247,18 @@ public class Controller_dashboard implements IController, Initializable {
 	private void setDataPieChart() {
 		chartPie.setTitle("Dépense par catégorie");
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-		pieChartData.add(new PieChart.Data("Cars",13));
-		pieChartData.add(new PieChart.Data("Bikes",25));
-		pieChartData.add(new PieChart.Data("Buses",10));
-		pieChartData.add(new PieChart.Data("Cycles",22));
+		
+		for(CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+			int outgo = 0;
+			if(IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					if (!tr.isIncome()) {
+						outgo += tr.getAmount() * (-1);
+					}
+				}
+				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
+			}
+		}
 		
 		pieChartData.forEach(data ->
 				data.nameProperty().bind(
