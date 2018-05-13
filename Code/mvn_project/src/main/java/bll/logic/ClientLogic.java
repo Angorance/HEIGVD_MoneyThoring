@@ -3,10 +3,14 @@ package bll.logic;
 import bll.mappers.DAL.DALBankaccountMapper;
 import bll.mappers.DAL.DALBudgetMapper;
 import bll.mappers.DAL.DALCategoryMapper;
+import bll.mappers.DAL.DALClientMapper;
 import bll.model.ClientModel;
+import dal.dalexception.DALException;
 import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALBudgetEntity;
 import dal.ientites.IDALCategoryEntity;
+import dal.ientites.IDALClientEntity;
+import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 import dal.orm.PgORM;
@@ -110,61 +114,25 @@ public class ClientLogic extends ClientModel {
 		return budgets;
 	}
 	
+	public List<ClientModel> getAllUsers() {
+		
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		try {
+			orm.beginTransaction();
+			
+			IClientRepository repo = orm.getClientRepository();
+			
+			return DALClientMapper.toBos(repo.getClients());
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	// SETTERS
-	
-	/**
-	 * Change the email of the client by the new one given in parameter.
-	 * Before setting the new email, setEmail() verifies its format and sends
-	 * a validation key to verify the email. For this purpose, it changes the
-	 * flag isValidated.
-	 *
-	 * @param email New email to set.
-	 *
-	 * @see ClientModel#setEmail(String)
-	 * @see ClientModel#setActivated(boolean)
-	 */
-	@Override
-	public void setEmail(String email) {
-		// TODO - check email format
-		// TODO - send validation key
-		
-		super.setEmail(email);
-	}
-	
-	/**
-	 * Change the username of the client by the new one given in parameter.
-	 * Before setting the new username, setUsername() verifies it is not
-	 * already
-	 * being used by another client.
-	 *
-	 * TODO - Logic works if online. If not, when synchronising, createItem
-	 * random number ?
-	 *
-	 * @param username New username to set.
-	 *
-	 * @see ClientModel#setUsername(String)
-	 */
-	@Override
-	public void setUsername(String username) {
-		// TODO - Check if not already used.
-		
-		super.setUsername(username);
-	}
-	
-	/**
-	 * Change the password of the client by the new one given in parameter.
-	 * Before setting, it hashes the password with the client salt.
-	 *
-	 * @param password New password to set.
-	 *
-	 * @see ClientModel#setPassword(String)
-	 */
-	@Override
-	public void setPassword(String password) {
-		
-		super.setPassword(password);
-	}
 	
 	/**
 	 * Link a bank account to its client.
@@ -211,7 +179,20 @@ public class ClientLogic extends ClientModel {
 	 * Suppress the client's account and his data.
 	 */
 	public void supp() {
-		// TODO - Suppress the account !
+	
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		try {
+			orm.beginTransaction();
+			
+			IClientRepository repo = orm.getClientRepository();
+			repo.delete(getId());
+			
+			orm.commit();
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -260,8 +241,11 @@ public class ClientLogic extends ClientModel {
 	/**
 	 * Update the client into the database.
 	 */
-	public void updateClientToDB() {
-		updateUser(new PgORM());
+	public void update(boolean isActivated) {
+		
+		setActivated(isActivated);
+		
+		updateUser(MasterORM.getInstance().getPgORM());
 	}
 	
 	public void wipe() {

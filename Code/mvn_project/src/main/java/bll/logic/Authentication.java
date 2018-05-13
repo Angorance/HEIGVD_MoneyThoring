@@ -1,12 +1,10 @@
 package bll.logic;
 
 import bll.mappers.DAL.DALClientMapper;
-import bll.model.ClientModel;
 import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -160,11 +158,8 @@ public class Authentication {
 			
 			isCorrect = true;
 			
-			// Activate the client
-			ClientLogic.getInstance().setActivated(true);
-			
-			// Update the database
-			ClientLogic.getInstance().updateClientToDB();
+			// Activate the client and update the database
+			ClientLogic.getInstance().update(true);
 		}
 		
 		return isCorrect;

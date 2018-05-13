@@ -67,7 +67,6 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			} else {
 				bal.update(name, bankName, type, amountDouble, isDefault);
 				cba.modifyItem(bal);
-				cba.createItem(null);
 			}
 		}
 	}

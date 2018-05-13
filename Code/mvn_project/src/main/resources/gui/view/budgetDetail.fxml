@@ -18,19 +18,28 @@
    <children>
       <AnchorPane layoutX="28.0" layoutY="22.0" prefHeight="160.0" prefWidth="703.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label fx:id="lblTitre" layoutX="91.0" layoutY="15.0" text="Nom du Budget" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="15.0">
+            <Label fx:id="lblTitre" layoutX="13.0" layoutY="28.0" text="Nom du Budget" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="28.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblSolde" layoutX="14.0" layoutY="63.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
-            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="614.0" layoutY="60.0" text="Plafond : " AnchorPane.rightAnchor="20.0" />
+            <Label layoutX="15.0" layoutY="80.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="80.0" />
+            <Label contentDisplay="RIGHT" layoutX="521.0" layoutY="16.0" text="Plafond" AnchorPane.rightAnchor="107.0">
+               <font>
+                  <Font size="22.0" />
+               </font></Label>
             <JFXProgressBar fx:id="progessBar" layoutX="161.0" layoutY="127.0" prefHeight="17.0" prefWidth="673.0" progress="0.22" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
-            <JFXButton fx:id="btnRetour" layoutX="14.0" layoutY="20.0" text="Retour" />
+            <JFXButton fx:id="btnRetour" layoutY="3.0" text="Retour" />
+            <Label fx:id="lblSolde" layoutX="190.0" layoutY="80.0" text="-" />
+            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="526.0" layoutY="63.0" text="00000000">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <GridPane hgap="20.0" layoutX="20.0" layoutY="195.0" prefHeight="90.0" prefWidth="703.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
