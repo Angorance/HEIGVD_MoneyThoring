@@ -75,6 +75,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 
 		lblTitre.setText(budget.getName());
+		lblPlafond.setText(String.valueOf(budget.getAmount()));
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
@@ -98,10 +99,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void createItem(Object result) {
-		
-		if (result != null) {
-			// TODO pas normal, on lance une erreur ?
-		}
+		unloadform();
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
@@ -110,6 +108,19 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
-		// TODO mettre à jour les informations
+		unloadform();
+		BudgetLogic bl = (BudgetLogic)toUpdated;
+		lblTitre.setText(bl.getName());
+		lblPlafond.setText(String.valueOf(bl.getAmount()));
+		//TODO progresse bar
+		//TODO Dépense
+		//TODO Refresh les graphique
+	}
+	
+	private void unloadform() {
+		
+		paneForm.getChildren().clear();
+		paneForm.setMouseTransparent(true);
+		paneForm.setVisible(false);
 	}
 }

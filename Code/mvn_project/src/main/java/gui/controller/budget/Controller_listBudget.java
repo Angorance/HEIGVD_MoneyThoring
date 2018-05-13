@@ -123,15 +123,9 @@ public class Controller_listBudget implements IController, Initializable {
 		unloadform();
 		
 		if(result != null) {
+			
 			BudgetLogic b = (BudgetLogic) result;
-
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
-			loader.setController(new budgetDisplayer(b));
-			try {
-				paneList.getChildren().add(loader.load());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			add(b);
 		}
 	}
 	
@@ -142,6 +136,18 @@ public class Controller_listBudget implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
+	private void add(BudgetLogic b){
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
+		budgetDisplayer bd = new budgetDisplayer(b);
+		loader.setController(bd);
+		try {
+			paneList.getChildren().add(loader.load());
+			displayerList.put(b.getId(), bd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		btnAdd.setOnAction(event -> callform(null));
 		paneForm.setVisible(false);
@@ -149,13 +155,11 @@ public class Controller_listBudget implements IController, Initializable {
 
 		// event on the click of the button
 		scrollPane.setStyle("-fx-background-color:transparent;");
-
+		
+		displayerList = new HashMap<>();
 		// we set the basics data
 		for(BudgetLogic b: ClientLogic.getInstance().getBudgets()){
-			// creating budgetDisplayer for existing budgets
-			budgetDisplayer bd = new budgetDisplayer(b);
-			displayerList.put(b.getId(), bd);
-			paneList.getChildren().add(bd);
+			add(b);
 		}
 	}
 }

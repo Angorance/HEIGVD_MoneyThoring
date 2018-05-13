@@ -142,18 +142,15 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	 */
 	@Override public void createItem(Object result) {
 		
-		/*we don't create an item on detail bank account*/
-		/*We just unload the form*/
 		unloadform();
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
 		/*Do nothing*/
-		/*We don't delete an item directly in this controller*/
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
-		
+		unloadform();
 		BankAccountLogic bal = (BankAccountLogic) toUpdated;
 		this.name.setText(bal.getName());
 		this.nameBankAccount.setText(bal.getBankName());

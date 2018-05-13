@@ -165,8 +165,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			budget = new BudgetLogic(name, amount,share,rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last),gap);
 			parent.createItem(budget);
 		} else {
-			// TODO édition du budget
-			// retour au parent
+			
 			parent.modifyItem(budget);
 		}
 		
