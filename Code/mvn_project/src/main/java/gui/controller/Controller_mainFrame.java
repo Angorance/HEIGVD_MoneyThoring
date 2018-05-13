@@ -1,5 +1,6 @@
 package gui.controller;
 
+import bll.logic.Authentication;
 import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
@@ -110,6 +111,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	
 	private void disconnect() {
 		windowManager.getInstance().displayConnectionFrame();
+		Authentication.disconnect();
 	}
 	
 	public void resetDisplay(){
