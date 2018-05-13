@@ -2,6 +2,8 @@ package bll.logic;
 
 import bll.model.DebtModel;
 
+import java.util.Date; // TODO vérifier que ce soit la classe Date
+
 /**
  * TODO
  *
@@ -10,5 +12,5 @@ import bll.model.DebtModel;
  */
 public class DebtLogic extends DebtModel {
 	
-	public DebtLogic() {}
+	public DebtLogic(String description, int creditorID, int debitorID, double amount, Date limitDate) {}
 }
