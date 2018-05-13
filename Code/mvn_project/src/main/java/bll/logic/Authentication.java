@@ -198,4 +198,9 @@ public class Authentication {
 		
 		return hash(password, salt);
 	}
+	
+	public static void disconnect() {
+		
+		ClientLogic.getInstance().wipe();
+	}
 }

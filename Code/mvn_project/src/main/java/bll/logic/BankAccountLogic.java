@@ -234,4 +234,10 @@ public class BankAccountLogic extends BankAccountModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void wipe() {
+		
+		transactions = new ArrayList<>();
+		transactionsByDate = new HashMap<>();
+	}
 }

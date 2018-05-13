@@ -258,4 +258,25 @@ public class ClientLogic extends ClientModel {
 	public void updateClientToDB() {
 		updateUser(new PgORM());
 	}
+	
+	public void wipe() {
+		
+		for (BankAccountLogic ba : bankAccounts) {
+			ba.wipe();
+		}
+		
+		bankAccounts.clear();
+		categories.clear();
+		budgets.clear();
+		
+		setUsername(null);
+		setEmail(null);
+		setPassword(null);
+		setSalt(null);
+		setKey(null);
+		setActivated(false);
+		setId(0);
+		
+		System.gc();
+	}
 }
