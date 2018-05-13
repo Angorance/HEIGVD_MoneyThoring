@@ -162,8 +162,9 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	private void setDataToChart() {
+		
+		lineChart.setTitle("Evolution du Solde");
 		XYChart.Series series = new XYChart.Series();
-		series.setName("Evolution du solde");
 		
 		double solde = bal.getAmount();
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -198,6 +199,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		}
 		
 		lineChart.getData().addAll(series);
+		lineChart.setLegendVisible(false);
 		
 	}
 	
