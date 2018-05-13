@@ -1,5 +1,6 @@
 package bll.mappers.DAL;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import bll.model.DebtModel;
 import dal.entities.derby.DebtDeEntity;
@@ -67,6 +68,36 @@ public class DALDebtMapper {
 	}
 	
 	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALDebtEntity toDbo(DebtModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
+	 * DebtModel -> Derby Entities
+	 */
+	public static List<IDALDebtEntity> toDbos(List<DebtModel> models) {
+		
+		// Create the list of entities
+		List<IDALDebtEntity> entities = new ArrayList<>();
+		
+		for(DebtModel model : models){
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
+	
+	/**
 	 * Entity -> DebtLogic
 	 */
 	public static DebtLogic toBo(IDALDebtEntity entity) {
@@ -103,35 +134,5 @@ public class DALDebtMapper {
 		}
 		
 		return objects;
-	}
-	
-	/**
-	 * DebtsModel -> PostgreSQL Entities
-	 */
-	public static List<IDALDebtEntity> toDbosPG(List<DebtModel> models) {
-		
-		// Create the list of entities
-		List<IDALDebtEntity> entities = new ArrayList<IDALDebtEntity>();
-		
-		for(DebtModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * DebtsModel -> Derby Entities
-	 */
-	public static List<IDALDebtEntity> toDbosDe(List<DebtModel> models) {
-		
-		// Create the list of entities
-		List<IDALDebtEntity> entities = new ArrayList<IDALDebtEntity>();
-		
-		for(DebtModel model : models){
-			entities.add(toDboDe(model));
-		}
-		
-		return entities;
 	}
 }

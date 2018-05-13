@@ -1,6 +1,7 @@
 package bll.mappers.DAL;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.ClientLogic;
 import bll.model.BankAccountModel;
 import dal.entities.derby.BankaccountDeEntity;
 import dal.entities.pgsql.BankaccountPgEntity;
@@ -63,6 +64,21 @@ public class DALBankaccountMapper {
     
         return derbyEntity;
     }
+	
+	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALBankaccountEntity toDbo(BankAccountModel model) {
+        
+        if (ClientLogic.getInstance().isOnline()) {
+            return toDboPG(model);
+        } else {
+        	return toDboDe(model);
+        }
+    }
     
     /**
      * Entity -> BankAccountLogic
@@ -102,34 +118,22 @@ public class DALBankaccountMapper {
     
         return objects;
     }
-    
-    /**
-     * BankAccountsModel -> PostgreSQL Entities
-     */
-    public static List<IDALBankaccountEntity> toDbosPG(List<BankAccountModel> models) {
-        
-        // Create the list of entities
-        List<IDALBankaccountEntity> entities = new ArrayList<IDALBankaccountEntity>();
-    
-        for(BankAccountModel model : models){
-            entities.add(toDboPG(model));
-        }
-    
-        return entities;
-    }
-    
-    /**
-     * BankAccountsModel -> Derby Entities
-     */
-    public static List<IDALBankaccountEntity> toDbosDe(List<BankAccountModel> models) {
-    
-        // Create the list of entities
-        List<IDALBankaccountEntity> entities = new ArrayList<IDALBankaccountEntity>();
-    
-        for(BankAccountModel model : models){
-            entities.add(toDboDe(model));
-        }
-    
-        return entities;
-    }
+	
+	/**
+	 * TODO
+	 *
+	 * @param models
+	 * @return
+	 */
+	public static List<IDALBankaccountEntity> toDbos(List<BankAccountModel> models) {
+		
+		// Create the list of entities
+		List<IDALBankaccountEntity> entities = new ArrayList<IDALBankaccountEntity>();
+		
+		for(BankAccountModel model : models){
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
 }

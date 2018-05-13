@@ -19,7 +19,7 @@ public class DALClientMapper {
 	/**
 	 * ClientModel -> PostgreSQL entity
 	 */
-    public static IDALClientEntity toDboPG(ClientModel model) {
+    private static IDALClientEntity toDboPG(ClientModel model) {
     	
         if (model == null) {
             return null;
@@ -42,7 +42,7 @@ public class DALClientMapper {
 	/**
 	 * ClientModel -> Derby entity
 	 */
-    public static IDALClientEntity toDboDe(ClientModel model) {
+    private static IDALClientEntity toDboDe(ClientModel model) {
      
     	if (model == null) {
             return null;
@@ -60,6 +60,21 @@ public class DALClientMapper {
         derbyEntity.setSalt(model.getSalt());
         
         return derbyEntity;
+    }
+	
+	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALClientEntity toDbo(ClientModel model) {
+    	
+    	if (ClientLogic.getInstance().isOnline()) {
+    		return toDboPG(model);
+	    } else {
+    		return toDboDe(model);
+	    }
     }
 	
 	/**
@@ -121,32 +136,20 @@ public class DALClientMapper {
     }
 	
 	/**
-	 * ClientsModel -> PostgreSQL Entities
+	 * TODO
+	 *
+	 * @param models
+	 * @return
 	 */
-    public static List<IDALClientEntity> toDbosPG(List<ClientModel> models) {
+	public static List<IDALClientEntity> toDbos(List<ClientModel> models) {
 	
 	    // Create the list of entities
-	    List<IDALClientEntity> entities = new ArrayList<IDALClientEntity>();
+	    List<IDALClientEntity> entities = new ArrayList<>();
 	
 	    for(ClientModel model : models){
-		    entities.add(toDboPG(model));
+		    entities.add(toDbo(model));
 	    }
-	
-	    return entities;
-    }
-	
-	/**
-	 * ClientsModel -> Derby Entities
-	 */
-    public static List<IDALClientEntity> toDbosDe(List<ClientModel> models) {
-	
-	    // Create the list of entities
-	    List<IDALClientEntity> entities = new ArrayList<IDALClientEntity>();
-	
-	    for(ClientModel model : models){
-		    entities.add(toDboDe(model));
-	    }
-	
+	    
 	    return entities;
     }
 }
