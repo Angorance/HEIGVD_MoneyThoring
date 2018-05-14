@@ -212,11 +212,16 @@ public class ClientLogic extends ClientModel {
 			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
 					.getBudgetsByClient(getId());
 			
-			DALBankaccountMapper.toBos(ba);
-			DALCategoryMapper.toBos(cat);
-			DALBudgetMapper.toBos(bu);
+			// Get the bank accounts
+			for (BankAccountLogic b : DALBankaccountMapper.toBos(ba)) {
+				b.setDataFromDB(orm);
+			}
 			
-			for (BankAccountLogic b : getBankAccounts()) {
+			// Get the categories
+			DALCategoryMapper.toBos(cat);
+			
+			// Get the categories of the budgets
+			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {
 				b.setDataFromDB(orm);
 			}
 			

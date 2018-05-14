@@ -5,6 +5,7 @@ import bll.mappers.DAL.DALCategoryBudgetMapper;
 import bll.model.BudgetModel;
 import bll.model.CategoryBudgetModel;
 import dal.dalexception.DALException;
+import dal.ientites.IDALCategoriesbudgetEntity;
 import dal.irepositories.ICategoriesBudgetRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -85,7 +86,7 @@ public class BudgetLogic extends BudgetModel {
 	 *
 	 * @param categories Categories of the budget.
 	 */
-	public void setCategoriesBudget(ArrayList<CategoryLogic> categories) {
+	private void setCategoriesBudget(ArrayList<CategoryLogic> categories) {
 		
 		categories.addAll(categories);
 	}
@@ -93,7 +94,7 @@ public class BudgetLogic extends BudgetModel {
 	/**
 	 * Update the categories of the budget.
 	 */
-	public void updateCategoriesBudget(IORM orm) {
+	private void updateCategoriesBudget(IORM orm) {
 		
 		try {
 			orm.beginTransaction();
@@ -114,6 +115,25 @@ public class BudgetLogic extends BudgetModel {
 			
 		} catch (Exception e) {
 			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * Update the categories of the budget from the DB.
+	 */
+	protected void setDataFromDB(IORM orm) {
+		
+		try {
+			
+			List<IDALCategoriesbudgetEntity> cb = orm.getCategoriesBudgetRepository()
+					.getCategoriesBudgetByBudget(getId());
+			
+			for (CategoryBudgetModel b : DALCategoryBudgetMapper.toBos(cb)) {
+				categories.add(CategoryLogic.getByID(b.getCategoryID()));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
