@@ -75,12 +75,13 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		preferenceButton = new JFXButton();
 		preferenceButton.setButtonType(JFXButton.ButtonType.RAISED);
-		modifyButton = new JFXButton("M");
+		preferenceButton.getStyleClass().addAll("setting-button");
+		modifyButton = new JFXButton();
 		modifyButton.setButtonType(JFXButton.ButtonType.RAISED);
-		modifyButton.getStyleClass().addAll("preference-button", "preference-button-sub");
-		removeButton = new JFXButton("X");
+		modifyButton.getStyleClass().addAll("setting-button");
+		removeButton = new JFXButton();
 		removeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		removeButton.getStyleClass().addAll("preference-button", "preference-button-sub");
+		removeButton.getStyleClass().addAll("setting-button");
 		
 		nodelist.addAnimatedNode(preferenceButton);
 		nodelist.addAnimatedNode(modifyButton);
@@ -88,9 +89,19 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		nodelist.setSpacing(5d);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(30);
+		image.setFitHeight(30);
 		preferenceButton.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		modifyButton.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		removeButton.setGraphic(image);
 	}
 	
 	/**

@@ -39,6 +39,7 @@
             <AnchorPane fx:id="paneGraphe2" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <PieChart fx:id="chartPie" layoutX="18.0" layoutY="18.0" prefHeight="289.0" prefWidth="376.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXNodesList fx:id="nodeAjout" layoutX="408.0" layoutY="272.0" prefHeight="36.0" prefWidth="0.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.rightAnchor="-12.0" />
                </children></AnchorPane>
             <AnchorPane GridPane.rowIndex="1">
                <children>
@@ -51,7 +52,6 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <JFXNodesList fx:id="nodeAjout" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
          </children>
