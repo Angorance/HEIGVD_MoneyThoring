@@ -9,12 +9,15 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
+import gui.controller.dashboard.Controller_dashboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -22,6 +25,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +53,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	@FXML private AnchorPane paneTop;
 	@FXML private GridPane paneBottom;
 	@FXML private PieChart pieChart;
+	@FXML private VBox transactionList;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -57,6 +63,41 @@ public class Controller_detailBudget implements Initializable, IController {
 	IController parent;
 	
 	double outgo;
+	
+	private class transactionDisplayer {
+		
+		private Label lblDate;
+		private Label lblCaption;
+		private Label lblPrix;
+		private GridPane paneDisplay;
+		
+		private IOTransactionLogic transaction;
+		private final String outgoColor = "#f2a7a8";
+		
+		transactionDisplayer(IOTransactionLogic t) {
+			
+			transaction = t;
+			lblDate = new Label(transaction.getDate().toString());
+			lblCaption = new Label(transaction.getName());
+			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
+			paneDisplay = new GridPane();
+			
+			paneDisplay.getChildren().add(lblDate);
+			paneDisplay.getChildren().add(lblCaption);
+			paneDisplay.getChildren().add(lblPrix);
+			
+			paneDisplay
+					.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
+			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,
+					Priority.ALWAYS);
+			paneDisplay
+					.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
+			
+			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
+			
+			transactionList.getChildren().add(paneDisplay);
+		}
+	}
 	
 	public Controller_detailBudget(IController p, BudgetLogic b, double outgo) {
 		
@@ -119,8 +160,9 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
+		
 		setDataPieChart();
-		// TODO lister les dépenses
+		setListTransaction();
 		
 	}
 	
@@ -163,6 +205,20 @@ public class Controller_detailBudget implements Initializable, IController {
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
 		setDataPieChart();
+		setListTransaction();
+	}
+	
+	private void setListTransaction() {
+		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
+		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
+		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					transactionDisplayer td = new transactionDisplayer(tr);
+				}
+			}
+		}
 	}
 	
 	private void setDataPieChart() {
