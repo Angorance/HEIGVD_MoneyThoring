@@ -151,12 +151,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 		
 		lblTitre.setText(budget.getName());
-		lblPlafond.setText(String.valueOf(budget.getAmount()));
+		lblPlafond.setText(String.valueOf(budget.getAmount()) + " CHF");
 		
 		JFXDepthManager.setDepth(paneTop, 1);
 		JFXDepthManager.setDepth(paneBottom, 1);
 		
-		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
+		lblSolde.setText(Double.toString(budget.getAmount() + outgo) + " CHF");
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
@@ -197,10 +197,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		unloadform();
 		BudgetLogic bl = (BudgetLogic) toUpdated;
 		lblTitre.setText(bl.getName());
-		lblPlafond.setText(String.valueOf(bl.getAmount()));
+		lblPlafond.setText(String.valueOf(bl.getAmount()) + " CHF");
 		
 		outgo = totalAmountCategories(bl);
-		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
+		lblSolde.setText(Double.toString(budget.getAmount() + outgo) + " CHF");
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
