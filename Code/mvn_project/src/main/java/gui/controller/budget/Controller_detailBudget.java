@@ -2,15 +2,20 @@ package gui.controller.budget;
 
 import bll.logic.BudgetLogic;
 import bll.logic.CategoryLogic;
+import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -42,6 +47,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	@FXML private JFXButton btnRetour;
 	@FXML private AnchorPane paneTop;
 	@FXML private GridPane paneBottom;
+	@FXML private PieChart pieChart;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -52,7 +58,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	
 	double outgo;
 	
-	public Controller_detailBudget(IController p, BudgetLogic b,double outgo) {
+	public Controller_detailBudget(IController p, BudgetLogic b, double outgo) {
 		
 		parent = p;
 		budget = b;
@@ -106,14 +112,14 @@ public class Controller_detailBudget implements Initializable, IController {
 		lblTitre.setText(budget.getName());
 		lblPlafond.setText(String.valueOf(budget.getAmount()));
 		
-		JFXDepthManager.setDepth(paneTop,1);
+		JFXDepthManager.setDepth(paneTop, 1);
 		JFXDepthManager.setDepth(paneBottom, 1);
 		
-		totalAmountCxategories();
+		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
 		
-		double pourcentage = Math.abs(outgo/budget.getAmount());
+		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
-		// TODO ajouter le graphique (barre ? circulaire ?)
+		setDataPieChart();
 		// TODO lister les dépenses
 		
 	}
@@ -154,31 +160,38 @@ public class Controller_detailBudget implements Initializable, IController {
 		outgo = totalAmountCategories(bl);
 		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
 		
-		double pourcentage = Math.abs(outgo/budget.getAmount());
+		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
-		
-		//TODO Refresh les graphique
+		setDataPieChart();
 	}
 	
-	private void totalAmountCxategories() {
+	private void setDataPieChart() {
+		
+		pieChart.setTitle("Dépense par catégorie");
+		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
-		double amount = budget.getAmount();
-		
 		
 		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+			double outgo = 0;
 			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
 				LocalDate currentDate = tr.getDate().toLocalDate();
 				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
 					if (!tr.isIncome()) {
-						amount += tr.getAmount();
+						outgo += tr.getAmount() * (-1);
 					}
 				}
 			}
+			pieChartData.add(new PieChart.Data(cl.getName(), outgo));
 		}
 		
-		lblSolde.setText(Double.toString(amount));
+		pieChartData.forEach(data -> data.nameProperty()
+				.bind(Bindings.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
+		
+		pieChart.setData(pieChartData);
+		pieChart.setLegendVisible(false);
+		
 	}
 	
 	private void unloadform() {

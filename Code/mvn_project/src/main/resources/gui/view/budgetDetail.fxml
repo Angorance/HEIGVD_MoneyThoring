@@ -6,6 +6,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,7 +37,7 @@
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
             <JFXButton fx:id="btnRetour" layoutY="3.0" text="Retour" />
             <Label fx:id="lblSolde" layoutX="190.0" layoutY="80.0" text="-" />
-            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="526.0" layoutY="63.0" text="00000000">
+            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="526.0" layoutY="63.0" text="00000000" AnchorPane.rightAnchor="112.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -52,7 +53,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <AnchorPane fx:id="graphPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 10;" GridPane.columnIndex="1" />
+            <AnchorPane fx:id="graphPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee; -fx-background-radius: 10;" GridPane.columnIndex="1">
+               <children>
+                  <PieChart fx:id="pieChart" prefHeight="236.0" prefWidth="342.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
             <ScrollPane fx:id="scrollpane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 10; -fx-border-width: 0;">
                <content>
                   <VBox fx:id="transactionList" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: transparent;">
