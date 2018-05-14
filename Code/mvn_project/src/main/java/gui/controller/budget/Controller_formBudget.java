@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -54,7 +55,7 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	private BudgetLogic budget;
 	private IController parent;
-	private Set<CategoryLogic> listCategorie;
+	private ArrayList<CategoryLogic> listCategorie;
 	
 	private class Periode {
 		
@@ -139,7 +140,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 		this.parent = parent;
 		this.budget = budget;
-		listCategorie = new HashSet<>();
+		listCategorie = new ArrayList<>();
 	}
 	
 	@Override public void formValidation(ActionEvent event) {
@@ -150,6 +151,8 @@ public class Controller_formBudget implements IForm, Initializable {
 		LocalDate last;
 		boolean rec = chbIsRegular.isSelected();
 		boolean share = checkShare.isSelected();
+		
+		
 		int gap = 0;
 		if (chbIsRegular.isSelected()) {
 			begin = LocalDate.now();
@@ -163,16 +166,17 @@ public class Controller_formBudget implements IForm, Initializable {
 		if (budget == null) {
 			
 			budget = new BudgetLogic(name, amount, share, rec, java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last), gap);
+					java.sql.Date.valueOf(last), gap,listCategorie);
 			parent.createItem(budget);
 		} else {
 			
 			budget.update(name,amount,share,rec,java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last),gap);
+					java.sql.Date.valueOf(last),gap,listCategorie);
 			parent.modifyItem(budget);
 		}
 		
 	}
+	
 	
 	@Override public void formCancel(ActionEvent event) {
 		
@@ -181,8 +185,9 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		
 		if (budget != null) {
-			
+			listCategorie.clear();
 			txtName.setText(budget.getName());
 			txtCeiling.setText(String.valueOf(budget.getAmount()));
 			chbIsRegular.setSelected(budget.isRecurrent());
@@ -195,8 +200,10 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 			
 			checkShare.setSelected(budget.isShared());
-			
-			//TODO liste catégorie
+			for(CategoryLogic cl : budget.getCategoriesBudget()){
+				paneCategoryList.getChildren().add(new CategoryDisplayer(cl));
+				listCategorie.add(cl);
+			}
 		}
 		
 		// set the available category in the comboBox
