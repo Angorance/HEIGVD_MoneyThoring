@@ -143,7 +143,8 @@ public class Controller_listBudget implements IController, Initializable {
 		budgetDisplayer bd = new budgetDisplayer(b);
 		loader.setController(bd);
 		try {
-			paneList.getChildren().add(loader.load());
+			bd = loader.load();
+			paneList.getChildren().add(bd);
 			displayerList.put(b.getId(), bd);
 		} catch (IOException e) {
 			e.printStackTrace();

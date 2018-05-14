@@ -21,6 +21,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -276,21 +278,26 @@ public class Controller_dashboard implements IController, Initializable {
 	
 	private void initNodeListe() {
 		
-		btnAddTransaction = new JFXButton("+");
+		btnAddTransaction = new JFXButton();
 		btnAddTransaction.setButtonType(JFXButton.ButtonType.RAISED);
-		btnAddTransaction.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub");
-		btnOutgo = new JFXButton("Dep");
+		btnAddTransaction.getStyleClass().addAll("add-button");
+		btnOutgo = new JFXButton("D");
 		btnOutgo.setButtonType(JFXButton.ButtonType.RAISED);
-		btnOutgo.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub-2");
-		btnIncome = new JFXButton("Rev");
+		btnOutgo.getStyleClass().addAll("add-button", "add-button-2");
+		btnIncome = new JFXButton("R");
 		btnIncome.setButtonType(JFXButton.ButtonType.RAISED);
-		btnIncome.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub-2");
+		btnIncome.getStyleClass().addAll("add-button", "add-button-2");
 		
 		nodeAjout.addAnimatedNode(btnAddTransaction);
 		nodeAjout.addAnimatedNode(btnOutgo);
 		nodeAjout.addAnimatedNode(btnIncome);
 		nodeAjout.setSpacing(5d);
 		nodeAjout.setRotate(180);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnAddTransaction.setGraphic(image);
 		
 	}
 }

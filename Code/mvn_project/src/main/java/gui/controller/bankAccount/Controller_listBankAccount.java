@@ -17,6 +17,8 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -270,6 +272,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 			displayerList.put(bankAccount.getId(), accountDisplayer);
 			addToFrame(accountDisplayer);
 		}
+		
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		create_button.setGraphic(image);
 		
 		/*Add event at our button*/
 		create_button.setOnAction(new EventHandler<ActionEvent>() {
