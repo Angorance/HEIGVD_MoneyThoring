@@ -4,6 +4,7 @@ import bll.logic.BankAccountLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	@FXML private JFXNodesList nodelist;
 	@FXML private AnchorPane paneform;
 	@FXML private CheckBox chkDefaultAccount;
+	@FXML private GridPane paneTop;
 	
 	private JFXButton preferenceButton;
 	private JFXButton modifyButton;
@@ -75,13 +78,13 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		
 		preferenceButton = new JFXButton();
 		preferenceButton.setButtonType(JFXButton.ButtonType.RAISED);
-		preferenceButton.getStyleClass().addAll("setting-button");
+		preferenceButton.getStyleClass().addAll("RoundButton", "NeutralButton");
 		modifyButton = new JFXButton();
 		modifyButton.setButtonType(JFXButton.ButtonType.RAISED);
-		modifyButton.getStyleClass().addAll("setting-button");
+		modifyButton.getStyleClass().addAll("RoundButton", "GreenButton");
 		removeButton = new JFXButton();
 		removeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		removeButton.getStyleClass().addAll("setting-button");
+		removeButton.getStyleClass().addAll("RoundButton", "RedButton");
 		
 		nodelist.addAnimatedNode(preferenceButton);
 		nodelist.addAnimatedNode(modifyButton);
@@ -102,6 +105,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		image.setFitWidth(30);
 		image.setFitHeight(30);
 		removeButton.setGraphic(image);
+		
+		JFXDepthManager.setDepth(nodelist, 1);
 	}
 	
 	/**
@@ -283,6 +288,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 				returnFrame();
 			}
 		});
+		
+		JFXDepthManager.setDepth(paneTop, 1);
 		
 	}
 }

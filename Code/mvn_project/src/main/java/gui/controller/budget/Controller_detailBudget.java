@@ -4,6 +4,7 @@ import bll.logic.BudgetLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
+import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +35,8 @@ public class Controller_detailBudget implements Initializable, IController {
 	@FXML private ScrollPane scrollpane;
 	@FXML private AnchorPane paneForm;
 	@FXML private JFXButton btnRetour;
+	@FXML private AnchorPane paneTop;
+	@FXML private GridPane paneBottom;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -54,17 +58,17 @@ public class Controller_detailBudget implements Initializable, IController {
 		// nodelist initialisation
 		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
-		btnEdit.getStyleClass().addAll("setting-button");
+		btnEdit.getStyleClass().addAll("setting-button", "RoundButton", "GreenButton");
 		btnEdit.setOnAction(event -> callForm(budget));
 		
 		btnDelete = new JFXButton();
 		btnDelete.setButtonType(JFXButton.ButtonType.FLAT);
-		btnDelete.getStyleClass().addAll("setting-button");
+		btnDelete.getStyleClass().addAll("setting-button", "RoundButton", "RedButton");
 		btnDelete.setOnAction(event -> deleteItem(budget));
 		
 		btnMenu = new JFXButton();
 		btnMenu.setButtonType(JFXButton.ButtonType.FLAT);
-		btnMenu.getStyleClass().addAll("setting-button");
+		btnMenu.getStyleClass().addAll("setting-button", "RoundButton", "NeutralButton");
 		
 		nodeModifDelete.addAnimatedNode(btnMenu);
 		nodeModifDelete.addAnimatedNode(btnEdit);
@@ -93,6 +97,9 @@ public class Controller_detailBudget implements Initializable, IController {
 
 		lblTitre.setText(budget.getName());
 		lblPlafond.setText(String.valueOf(budget.getAmount()));
+		
+		JFXDepthManager.setDepth(paneTop,1);
+		JFXDepthManager.setDepth(paneBottom, 1);
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
@@ -121,7 +128,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	
 	@Override public void deleteItem(Object toDelete) {
 		
-		parent.deleteItem(budget);
+		parent.deleteItem(toDelete);
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {

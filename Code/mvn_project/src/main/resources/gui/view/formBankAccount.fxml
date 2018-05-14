@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="paneFond" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneFond" prefHeight="565.0" prefWidth="827.0" style="-fx-background-color: #00000080;" stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" layoutX="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -49,8 +49,8 @@
                               </GridPane>
                            </children>
                         </HBox>
-                        <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="88.0" styleClass="return" stylesheets="@../css/general.css" text="Retour" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0" />
-                        <JFXButton fx:id="accepteButton" layoutX="428.0" layoutY="88.0" styleClass="accept" stylesheets="@../css/general.css" text="Valider" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
+                        <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="88.0" styleClass="NeutralButton" text="Retour" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="95.0" />
+                        <JFXButton fx:id="accepteButton" layoutX="428.0" layoutY="88.0" styleClass="GreenButton" text="Valider" AnchorPane.bottomAnchor="95.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="95.0" />
                      </children>
                   </AnchorPane>
                </children>

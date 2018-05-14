@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="222.0" prefWidth="697.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="222.0" prefWidth="697.0" style="-fx-background-color: #00000080;" stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" layoutX="49.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,9 +21,9 @@
                               <JFXTextField fx:id="txtLabel" promptText="Nom de la catégorie" />
                            </children>
                         </HBox>
-                        <JFXButton fx:id="btnCancel" layoutX="28.0" layoutY="54.0" styleClass="return" text="Retour" AnchorPane.leftAnchor="20.0" />
-                        <JFXButton fx:id="btnConfirm" layoutX="520.0" layoutY="54.0" styleClass="accept" text="Valider" AnchorPane.rightAnchor="20.0" />
-                        <JFXButton fx:id="btnDelete" layoutX="525.0" layoutY="93.0" text="Supprimer" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                        <JFXButton fx:id="btnCancel" layoutX="28.0" layoutY="54.0" styleClass="NeutralButton" text="Retour" AnchorPane.leftAnchor="20.0" />
+                        <JFXButton fx:id="btnConfirm" layoutX="520.0" layoutY="54.0" styleClass="GreenButton" text="Valider" AnchorPane.rightAnchor="20.0" />
+                        <JFXButton fx:id="btnDelete" layoutX="508.0" layoutY="93.0" styleClass="RedButton" text="Supprimer" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
                      </children>
                   </AnchorPane>
                </children>

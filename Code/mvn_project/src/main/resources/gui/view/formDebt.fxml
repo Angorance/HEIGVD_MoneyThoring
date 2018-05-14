@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="773.0" style="-fx-background-color: #00000080;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="773.0" style="-fx-background-color: #00000080;" stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" layoutX="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -19,8 +19,8 @@
                <children>
                   <AnchorPane prefHeight="249.0" prefWidth="573.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 15;" stylesheets="@../css/general.css">
                      <children>
-                        <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="117.0" styleClass="return" text="Retour" AnchorPane.leftAnchor="14.0" />
-                        <JFXButton fx:id="btnValider" layoutX="506.0" layoutY="117.0" styleClass="accept" text="Valider" AnchorPane.rightAnchor="14.0" />
+                        <JFXButton fx:id="btnCancel" layoutX="14.0" layoutY="117.0" styleClass="NeutralButton" text="Retour" AnchorPane.leftAnchor="14.0" />
+                        <JFXButton fx:id="btnValider" layoutX="506.0" layoutY="117.0" styleClass="GreenButton" text="Valider" AnchorPane.rightAnchor="14.0" />
                         <VBox alignment="CENTER" layoutX="140.0" layoutY="7.0" prefHeight="269.0" prefWidth="275.0" spacing="15.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="7.0">
                            <children>
                               <JFXTextField fx:id="txtDescription" alignment="CENTER" prefHeight="30.0" prefWidth="303.0" promptText="Description" />

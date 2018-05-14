@@ -237,5 +237,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		btnValidation.setOnAction(this::formValidation);
 		btnDelete.setOnAction(event -> parent.deleteItem(budget));
 		
+		// TODO désactiver les budget partagé si on est hors ligne
+		
 	}
 }

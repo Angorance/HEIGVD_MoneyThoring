@@ -164,23 +164,17 @@ public class Controller_listDebt implements IController, Initializable {
 		unloadForm();
 
 		JFXButton btnMenu = new JFXButton("V");
-		btnMenu.setStyle("-fx-background-radius: 50; -fx-background-color: #e8e8e8");
-		btnMenu.setPrefHeight(50);
-		btnMenu.setPrefWidth(50);
+		btnMenu.getStyleClass().addAll("RoundButton", "NeutralButton");
 		btnMenu.setOnAction(event -> {
 			btnMenu.setRotate((btnMenu.getRotate() + 180)%360);
 		});
 
 		JFXButton btnClaim= new JFXButton("C");
-		btnClaim.setPrefHeight(50);
-		btnClaim.setPrefWidth(50);
-		btnClaim.setStyle("-fx-background-radius: 50; -fx-background-color: lightgreen");
+		btnClaim.getStyleClass().addAll("RoundButton", "GreenButton");
 		btnClaim.setOnAction(event -> callForm(null, true));
 
 		JFXButton btnDebt = new JFXButton("D");
-		btnDebt.setPrefHeight(50);
-		btnDebt.setPrefWidth(50);
-		btnDebt.setStyle("-fx-background-radius: 50; -fx-background-color: #E38F8F");
+		btnDebt.getStyleClass().addAll("RoundButton", "RedButton");
 		btnDebt.setOnAction(event -> callForm(null, false));
 
 		ndlAdd.addAnimatedNode(btnMenu);
@@ -188,9 +182,10 @@ public class Controller_listDebt implements IController, Initializable {
 		ndlAdd.addAnimatedNode(btnDebt);
 		ndlAdd.setSpacing(5);
 		ndlAdd.setRotate(180);
+		JFXDepthManager.setDepth(ndlAdd,1);
 		
 		debtList = new HashMap<>();
-		/*
+		/* TODO ajouter les dettes existantes
 		for(DebtLogic d : ClientLogic.getInstance().getDebts()){
 			debtList.put(d.getId(), new debtDisplayer(d));
 		}*/
