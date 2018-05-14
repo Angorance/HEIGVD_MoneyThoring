@@ -44,6 +44,8 @@ public class Controller_formDebt implements Initializable, IForm {
 			// TODO remplir les champs avec les informations de la dette
 		}
 		
+		
+		// TODO désactiver le champ du choix de l'utilisateur et de la récurrence si on est déconnecté
 		btnCancel.setOnAction(this::formCancel);
 		btnValider.setOnAction(this::formValidation);
 	}

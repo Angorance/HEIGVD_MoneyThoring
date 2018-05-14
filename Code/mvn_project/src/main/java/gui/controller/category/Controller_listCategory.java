@@ -167,6 +167,8 @@ public class Controller_listCategory implements Initializable, IController {
         btnAdd.setOnAction(event -> callform(null));
         displayerList = new HashMap<>();
         listContainer.setPadding(new Insets(20, 5,5,5));
+        
+        JFXDepthManager.setDepth(btnAdd,1);
 
         // list the existing categories
         for(CategoryLogic c : ClientLogic.getInstance().getCategories()){

@@ -12,6 +12,7 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -49,6 +51,7 @@ public class Controller_listTransaction implements Initializable, IController {
 	@FXML private Label lblTotalRevenu;
 	@FXML private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
 	@FXML private JFXNodesList nodeList;
+	@FXML private GridPane transactionPane;
 	
 	private JFXButton transactionButton;
 	private JFXButton outGoButton;
@@ -323,13 +326,13 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		transactionButton = new JFXButton();
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		transactionButton.getStyleClass().addAll("add-button");
+		transactionButton.getStyleClass().addAll("RoundButton", "NeutralButton");
 		outGoButton = new JFXButton("D");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
-		outGoButton.getStyleClass().addAll("add-button", "add-button-2");
+		outGoButton.getStyleClass().addAll("RoundButton", "RedButton");
 		incomeButton = new JFXButton("R");
 		incomeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		incomeButton.getStyleClass().addAll("add-button", "add-button-2");
+		incomeButton.getStyleClass().addAll("RoundButton", "GreenButton");
 		
 		nodeList.addAnimatedNode(transactionButton);
 		nodeList.addAnimatedNode(outGoButton);
@@ -338,8 +341,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		nodeList.setRotate(180);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
-		image.setFitWidth(30);
-		image.setFitHeight(30);
+		image.setFitHeight(40);
+		image.setFitHeight(40);
 		transactionButton.setGraphic(image);
 	}
 	
@@ -373,6 +376,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		generateNodeList();
 		generateComboBoxItem();
 		setTotal();
+		
+		JFXDepthManager.setDepth(transactionPane, 1);
 		
 		accountSelect.setOnAction(new EventHandler<ActionEvent>() {
 			

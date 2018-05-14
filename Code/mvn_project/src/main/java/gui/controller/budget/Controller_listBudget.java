@@ -1,7 +1,6 @@
 package gui.controller.budget;
 
-import bll.logic.BudgetLogic;
-import bll.logic.ClientLogic;
+import bll.logic.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
@@ -15,8 +14,10 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 
 /**
  * @author Bryan Curchod
@@ -32,14 +33,17 @@ public class Controller_listBudget implements IController, Initializable {
 	HashMap<Integer, budgetDisplayer> displayerList;
 	
 	private class budgetDisplayer extends AnchorPane implements Initializable {
+		
 		@FXML private AnchorPane budgetPane;
 		@FXML private Label lbltitre;
 		@FXML private Label lblcurrentExpense;
 		@FXML private Label lblmaxExpense;
 		@FXML private JFXProgressBar expenseProgress;
 		private BudgetLogic budget;
+		double outgo;
 		
-		budgetDisplayer(BudgetLogic budget){
+		budgetDisplayer(BudgetLogic budget) {
+			
 			JFXDepthManager.setDepth(this, 1);
 			this.budget = budget;
 			
@@ -53,12 +57,12 @@ public class Controller_listBudget implements IController, Initializable {
 			
 		}
 		
-		private void openDetail() {
-
+		private void openDetail(double outgo) {
+			
 			paneForm.setVisible(true);
 			paneForm.setMouseTransparent(false);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDetail.fxml"));
-			loader.setController(new Controller_detailBudget(Controller_listBudget.this, budget));
+			loader.setController(new Controller_detailBudget(Controller_listBudget.this, budget, outgo));
 			
 			paneForm.getChildren().clear();
 			try {
@@ -69,27 +73,52 @@ public class Controller_listBudget implements IController, Initializable {
 		}
 		
 		@Override public void initialize(URL location, ResourceBundle resources) {
+			
 			redraw();
-
 			budgetPane.setMinHeight(130);
 			JFXDepthManager.setDepth(budgetPane, 1);
-			budgetPane.setOnMouseClicked(event -> openDetail());
+			budgetPane.setOnMouseClicked(event -> openDetail(outgo));
 			
 		}
-
+		
 		public void redraw() {
+			
+			outgo = totalAmountCategories(budget);
 			lbltitre.setText(budget.getName());
 			lbltitre.setStyle("-fx-font-size: 24");
-			lblcurrentExpense.setText("Dépenses actuelles : 999.99 CHF"); // TODO calculer les dépenses totales du budget
-			lblmaxExpense.setText("Plafond : "+ Double.toString(budget.getAmount()) +"CHF");
-			expenseProgress.setProgress(0.5); // TODO Dépensé/plafond
+			lblcurrentExpense.setText(
+					"Dépenses actuelles :" + (outgo * (-1)) + " CHF"); // TODO calculer les dépenses totales du budget
+			lblmaxExpense.setText("Plafond : " + Double.toString(budget.getAmount()) + "CHF");
+			
+			double pourcentage = Math.abs(outgo/budget.getAmount());
+			expenseProgress.setProgress(pourcentage);
 		}
 	}
-
+	
+	
+	public static double totalAmountCategories(BudgetLogic budget) {
+		
+		double outgo = 0;
+		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
+		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
+		
+		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
+					if (!tr.isIncome()) {
+						outgo += tr.getAmount();
+					}
+				}
+			}
+		}
+		return outgo;
+	}
+	
 	/**
 	 * load the form to create a new Budget
 	 */
-	 public void callform(BudgetLogic budget) {
+	public void callform(BudgetLogic budget) {
 		
 		paneForm.setVisible(true);
 		paneForm.setMouseTransparent(false);
@@ -103,13 +132,13 @@ public class Controller_listBudget implements IController, Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Delete the displayer and the data in the DB
+	 *
 	 * @param toDelete
 	 */
-	@Override
-	public void deleteItem(Object toDelete) {
+	@Override public void deleteItem(Object toDelete) {
 		
 		unloadform();
 		if (toDelete != null) {
@@ -118,21 +147,24 @@ public class Controller_listBudget implements IController, Initializable {
 			b.supp();
 		}
 	}
-
+	
 	/**
 	 * update the datas in the DB and refresh
+	 *
 	 * @param updated
 	 */
 	@Override public void modifyItem(Object updated) {
+		
 		unloadform();
-		BudgetLogic b = (BudgetLogic)updated;
+		BudgetLogic b = (BudgetLogic) updated;
 		displayerList.get(b.getId()).redraw();
 	}
 	
 	@Override public void createItem(Object result) {
+		
 		unloadform();
 		
-		if(result != null) {
+		if (result != null) {
 			
 			BudgetLogic b = (BudgetLogic) result;
 			add(b);
@@ -146,15 +178,16 @@ public class Controller_listBudget implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
-	private void add(BudgetLogic b){
+	private void add(BudgetLogic b) {
+		
 		budgetDisplayer db = new budgetDisplayer(b);
 		paneList.getChildren().add(db);
 		displayerList.put(b.getId(), db);
 	}
 	
 	
-	
 	@Override public void initialize(URL location, ResourceBundle resources) {
+		
 		btnAdd.setOnAction(event -> callform(null));
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
@@ -163,7 +196,7 @@ public class Controller_listBudget implements IController, Initializable {
 		
 		displayerList = new HashMap<>();
 		// we set the basics data
-		for(BudgetLogic b: ClientLogic.getInstance().getBudgets()){
+		for (BudgetLogic b : ClientLogic.getInstance().getBudgets()) {
 			add(b);
 		}
 	}
