@@ -153,6 +153,8 @@ public class Controller_listBudget implements IController, Initializable {
 		displayerList.put(b.getId(), db);
 	}
 	
+	
+	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		btnAdd.setOnAction(event -> callform(null));
 		paneForm.setVisible(false);

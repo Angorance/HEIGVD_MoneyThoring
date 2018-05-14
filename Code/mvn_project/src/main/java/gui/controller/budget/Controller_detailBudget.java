@@ -1,6 +1,8 @@
 package gui.controller.budget;
 
 import bll.logic.BudgetLogic;
+import bll.logic.CategoryLogic;
+import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
@@ -18,6 +20,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -94,12 +97,14 @@ public class Controller_detailBudget implements Initializable, IController {
 		paneForm.setMouseTransparent(true);
 		
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
-
+		
 		lblTitre.setText(budget.getName());
 		lblPlafond.setText(String.valueOf(budget.getAmount()));
 		
 		JFXDepthManager.setDepth(paneTop,1);
 		JFXDepthManager.setDepth(paneBottom, 1);
+		
+		totalAmountCxategories();
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
@@ -123,6 +128,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void createItem(Object result) {
+		
 		unloadform();
 	}
 	
@@ -132,13 +138,35 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
+		
 		unloadform();
-		BudgetLogic bl = (BudgetLogic)toUpdated;
+		BudgetLogic bl = (BudgetLogic) toUpdated;
 		lblTitre.setText(bl.getName());
 		lblPlafond.setText(String.valueOf(bl.getAmount()));
 		//TODO progresse bar
 		//TODO Dépense
 		//TODO Refresh les graphique
+	}
+	
+	private void totalAmountCxategories() {
+		
+		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
+		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
+		double amount = budget.getAmount();
+		
+		
+		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
+					if (!tr.isIncome()) {
+						amount += tr.getAmount();
+					}
+				}
+			}
+		}
+		
+		lblSolde.setText(Double.toString(amount));
 	}
 	
 	private void unloadform() {
