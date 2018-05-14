@@ -6,6 +6,7 @@ import bll.model.BudgetModel;
 import bll.model.CategoryBudgetModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoriesbudgetEntity;
+import dal.irepositories.IBudgetRepository;
 import dal.irepositories.ICategoriesBudgetRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -29,21 +30,23 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
-			Date endingDate, int gap, ArrayList<CategoryLogic> categories) {
+			Date endingDate, int gap, ArrayList<CategoryLogic> cats) {
 		
 		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
-		setCategoriesBudget(categories);
+		setCategoriesBudget(cats);
 		ClientLogic.getInstance().addBudget(this);
 		
-		createBudget(MasterORM.getInstance().getPgORM());
-		updateCategoriesBudget(MasterORM.getInstance().getPgORM());
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		createBudget(orm);
+		updateCategoriesBudget(orm);
 	}
 	
 	/**
 	 * TODO
 	 */
 	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
-			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> categories) {
+			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> cats) {
 		
 		setName(name);
 		setAmount(amount);
@@ -52,20 +55,30 @@ public class BudgetLogic extends BudgetModel {
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
 		setGap(gap);
-		setCategoriesBudget(categories);
+		setCategoriesBudget(cats);
 		
 		updateBudget(MasterORM.getInstance().getPgORM());
 		updateCategoriesBudget(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
-	 * TODO
+	 * Remove the budget from the database.
 	 */
 	public void supp() {
 		
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
 		try {
-			MasterORM.getInstance().getPgORM().getBudgetRepository()
-					.delete(getId());
+			orm.beginTransaction();
+			
+			IBudgetRepository repo = orm.getBudgetRepository();
+			repo.delete(getId());
+			
+			orm.commit();
+			
+			// Delete the budget from the client
+			ClientLogic.getInstance().removeBudget(this);
+			
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -84,11 +97,15 @@ public class BudgetLogic extends BudgetModel {
 	/**
 	 * Set the categories of the budget.
 	 *
-	 * @param categories Categories of the budget.
+	 * @param cats Categories of the budget.
 	 */
-	private void setCategoriesBudget(ArrayList<CategoryLogic> categories) {
+	private void setCategoriesBudget(ArrayList<CategoryLogic> cats) {
 		
-		categories.addAll(categories);
+		categories.clear();
+		
+		for(CategoryLogic cat : cats) {
+			categories.add(cat);
+		}
 	}
 	
 	/**

@@ -162,9 +162,9 @@ public class ClientLogic extends ClientModel {
 	}
 	
 	/**
-	 * TODO
+	 * Add a budget to the client.
 	 *
-	 * @param bu
+	 * @param bu    budget to add.
 	 */
 	public void addBudget(BudgetLogic bu) {
 		
@@ -172,6 +172,15 @@ public class ClientLogic extends ClientModel {
 		bu.setClientID(getId());
 	}
 	
+	/**
+	 * Remove a budget from the client.
+	 *
+	 * @param bu    budget to remove.
+	 */
+	public void removeBudget(BudgetLogic bu) {
+		
+		budgets.remove(bu);
+	}
 	
 	// SUPPRESSORS
 	

@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -50,24 +52,39 @@ public class Controller_detailBudget implements Initializable, IController {
 		scrollpane.setStyle("-fx-background-color: transparent");
 		
 		// nodelist initialisation
-		btnEdit = new JFXButton("e");
+		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
-		btnEdit.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		btnEdit.getStyleClass().addAll("setting-button");
 		btnEdit.setOnAction(event -> callForm(budget));
 		
-		btnDelete = new JFXButton("d");
+		btnDelete = new JFXButton();
 		btnDelete.setButtonType(JFXButton.ButtonType.FLAT);
-		btnDelete.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		btnDelete.getStyleClass().addAll("setting-button");
 		btnDelete.setOnAction(event -> deleteItem(budget));
 		
-		btnMenu = new JFXButton("v");
+		btnMenu = new JFXButton();
 		btnMenu.setButtonType(JFXButton.ButtonType.FLAT);
-		btnMenu.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub");
+		btnMenu.getStyleClass().addAll("setting-button");
 		
 		nodeModifDelete.addAnimatedNode(btnMenu);
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(5d);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnMenu.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnEdit.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnDelete.setGraphic(image);
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
