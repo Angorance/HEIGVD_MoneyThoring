@@ -136,13 +136,9 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </BorderPane>
-            <JFXNodesList fx:id="nodeList" prefHeight="35.0" prefWidth="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BASELINE">
-               <GridPane.margin>
-                  <Insets top="5.0" />
-               </GridPane.margin>
-            </JFXNodesList>
          </children>
       </GridPane>
+      <JFXNodesList fx:id="nodeList" prefHeight="35.0" prefWidth="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <AnchorPane fx:id="paneform" prefHeight="453.0" prefWidth="750.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="31.0" layoutY="389.0" text="* Pour modifier ou supprimer une transaction veuillez double cliquer sur une de vos transactions" />

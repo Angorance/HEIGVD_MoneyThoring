@@ -130,19 +130,21 @@ public class Controller_detailBudget implements Initializable, IController {
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(5d);
 		
+		JFXDepthManager.setDepth(nodeModifDelete,1);
+		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		btnMenu.setGraphic(image);
 		
 		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		btnEdit.setGraphic(image);
 		
 		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		btnDelete.setGraphic(image);
 		
 		paneForm.setVisible(false);

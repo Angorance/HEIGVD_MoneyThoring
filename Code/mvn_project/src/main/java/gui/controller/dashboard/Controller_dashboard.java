@@ -6,6 +6,7 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.transaction.Controller_formTransaction;
 import gui.controller.IController;
 import javafx.collections.FXCollections;
@@ -198,6 +199,10 @@ public class Controller_dashboard implements IController, Initializable {
 			}
 		}
 		
+/*		JFXDepthManager.setDepth(paneGraph2, 1);
+		JFXDepthManager.setDepth(paneGraphe1, 1);
+		JFXDepthManager.setDepth(paneList, 1);*/
+		
 	}
 	
 	private void setDataLineChart() {
@@ -280,13 +285,13 @@ public class Controller_dashboard implements IController, Initializable {
 		
 		btnAddTransaction = new JFXButton();
 		btnAddTransaction.setButtonType(JFXButton.ButtonType.RAISED);
-		btnAddTransaction.getStyleClass().addAll("add-button");
+		btnAddTransaction.getStyleClass().addAll("RoundButton", "NeutralButton");
 		btnOutgo = new JFXButton("D");
 		btnOutgo.setButtonType(JFXButton.ButtonType.RAISED);
-		btnOutgo.getStyleClass().addAll("add-button", "add-button-2");
+		btnOutgo.getStyleClass().addAll("RoundButton", "RedButton");
 		btnIncome = new JFXButton("R");
 		btnIncome.setButtonType(JFXButton.ButtonType.RAISED);
-		btnIncome.getStyleClass().addAll("add-button", "add-button-2");
+		btnIncome.getStyleClass().addAll("RoundButton", "GreenButton");
 		
 		nodeAjout.addAnimatedNode(btnAddTransaction);
 		nodeAjout.addAnimatedNode(btnOutgo);
@@ -295,8 +300,8 @@ public class Controller_dashboard implements IController, Initializable {
 		nodeAjout.setRotate(180);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		btnAddTransaction.setGraphic(image);
 		
 	}

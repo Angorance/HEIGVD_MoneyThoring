@@ -92,18 +92,18 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		nodelist.setSpacing(5d);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
-		image.setFitWidth(30);
-		image.setFitHeight(30);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		preferenceButton.setGraphic(image);
 		
 		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
-		image.setFitWidth(30);
-		image.setFitHeight(30);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		modifyButton.setGraphic(image);
 		
 		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
-		image.setFitWidth(30);
-		image.setFitHeight(30);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		removeButton.setGraphic(image);
 		
 		JFXDepthManager.setDepth(nodelist, 1);

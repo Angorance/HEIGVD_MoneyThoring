@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
@@ -163,11 +165,12 @@ public class Controller_listDebt implements IController, Initializable {
 		//btnAdd.setOnAction(event -> callForm());
 		unloadForm();
 
-		JFXButton btnMenu = new JFXButton("V");
+		JFXButton btnMenu = new JFXButton("");
 		btnMenu.getStyleClass().addAll("RoundButton", "NeutralButton");
-		btnMenu.setOnAction(event -> {
-			btnMenu.setRotate((btnMenu.getRotate() + 180)%360);
-		});
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(20);
+		image.setFitHeight(20);
+		btnMenu.setGraphic(image);
 
 		JFXButton btnClaim= new JFXButton("C");
 		btnClaim.getStyleClass().addAll("RoundButton", "GreenButton");

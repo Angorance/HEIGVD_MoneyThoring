@@ -1,10 +1,10 @@
 .GreenButton{
-    -fx-background-color: #4dc44d;
+    -fx-background-color: #73c470;
     -fx-background-radius: 5;
 }
 
 .GreenButton:hover{
-    -fx-background-color: #2a8c1e;
+    -fx-background-color: #3eb244;
 }
 
 .NeutralButton {
@@ -13,21 +13,22 @@
 }
 
 .NeutralButton:hover{
-    -fx-background-color: #767676;
+    -fx-background-color: #9a9a9a;
 }
 
 .RedButton{
-    -fx-background-color: #c45550;
+    -fx-background-color: #e27575;
     -fx-text-fill: white;
     -fx-background-radius: 5;
 }
 
 .RedButton:hover{
-    -fx-background-color: #7e1317;
+    -fx-background-color: #a34b4a;
 }
 
 .RoundButton{
     -fx-background-radius: 100;
+    -fx-alignment: center center;
     -fx-pref-width: 40px;
     -fx-pref-height: 40px;
 }

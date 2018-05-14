@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
@@ -46,6 +48,7 @@ public class Controller_listBudget implements IController, Initializable {
 			
 			JFXDepthManager.setDepth(this, 1);
 			this.budget = budget;
+			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
 			loader.setController(this);
@@ -189,6 +192,12 @@ public class Controller_listBudget implements IController, Initializable {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		btnAdd.setOnAction(event -> callform(null));
+		btnAdd.setText("");
+		JFXDepthManager.setDepth(btnAdd, 1);
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(20);
+		image.setFitHeight(20);
+		btnAdd.setGraphic(image);
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		

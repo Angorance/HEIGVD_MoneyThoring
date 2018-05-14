@@ -34,7 +34,7 @@
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
-            <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+            <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
             <JFXButton fx:id="btnRetour" layoutY="3.0" text="Retour" />
             <Label fx:id="lblSolde" layoutX="190.0" layoutY="80.0" text="-" />
             <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="526.0" layoutY="63.0" text="00000000" AnchorPane.rightAnchor="112.0">

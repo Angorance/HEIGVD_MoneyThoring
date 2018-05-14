@@ -341,8 +341,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		nodeList.setRotate(180);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
-		image.setFitHeight(40);
-		image.setFitHeight(40);
+		image.setFitHeight(20);
+		image.setFitWidth(20);
 		transactionButton.setGraphic(image);
 	}
 	
