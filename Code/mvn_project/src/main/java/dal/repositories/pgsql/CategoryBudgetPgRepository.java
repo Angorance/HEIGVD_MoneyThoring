@@ -122,7 +122,7 @@ public class CategoryBudgetPgRepository implements ICategoriesBudgetRepository {
         try {
             
             categoriesbudget = session.createCriteria(CategoriesbudgetPgEntity.class)
-                    .add(Restrictions.eq("budget_id", budget_id))
+                    .add(Restrictions.eq("budgetId", budget_id))
                     .list();
         
             for(IDALCategoriesbudgetEntity cat : categoriesbudget) {
