@@ -1,15 +1,18 @@
-package gui.controller;
+package gui.controller.debt;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
+import bll.model.ClientModel;
+import com.jfoenix.controls.*;
+import gui.controller.IController;
+import gui.controller.IForm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -22,7 +25,9 @@ public class Controller_formDebt implements Initializable, IForm {
 	@FXML private JFXButton btnValider;
 	@FXML private JFXTextField txtAmount;
 	@FXML private JFXDatePicker dateLimite;
-	@FXML private JFXComboBox<?> cbbDebtor;
+	@FXML private JFXComboBox<ClientModel> cbbOtherUser;
+	@FXML private JFXTextField txtDescription;
+	@FXML private JFXToggleButton tglDebitor;
 	
 	DebtLogic debt;
 	IController parent;
@@ -45,9 +50,15 @@ public class Controller_formDebt implements Initializable, IForm {
 	
 	@Override public void formValidation(ActionEvent event) {
 		if(debt == null){
-			// TODO créer la dette
+			int idCreator = ClientLogic.getInstance().getId();
+			int idOtherUser = cbbOtherUser.getValue().getId();
+			
+			
+			debt = new DebtLogic(txtDescription.getText(), idCreator, idOtherUser, isIncome, Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
+			parent.createItem(debt);
 		} else {
 			// TODO modier la dette
+			parent.modifyItem(parent);
 		}
 	}
 	

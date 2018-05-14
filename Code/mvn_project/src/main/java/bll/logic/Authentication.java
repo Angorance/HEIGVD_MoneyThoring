@@ -169,11 +169,8 @@ public class Authentication {
 			
 			isCorrect = true;
 			
-			// Activate the client
-			ClientLogic.getInstance().setActivated(true);
-			
-			// Update the database
-			ClientLogic.getInstance().updateClientToDB();
+			// Activate the client and update the database
+			ClientLogic.getInstance().update(true);
 		}
 		
 		return isCorrect;

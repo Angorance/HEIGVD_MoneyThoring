@@ -68,7 +68,7 @@ public class ClientModel {
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

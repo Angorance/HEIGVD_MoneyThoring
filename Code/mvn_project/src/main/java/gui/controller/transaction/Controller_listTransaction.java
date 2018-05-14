@@ -1,4 +1,4 @@
-package gui.controller;/* ***********************************************
+package gui.controller.transaction;/* ***********************************************
     HEIG-VD
     Date : 12.04.2018
     Nom du fichier : 
@@ -12,6 +12,7 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import gui.controller.IController;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -106,9 +109,11 @@ public class Controller_listTransaction implements Initializable, IController {
 			
 			
 			periodSelect.getSelectionModel().select("Annuel");
-			Date date = tr.getDate();
-			int year = date.toLocalDate().getYear();
-			monthSelect.getSelectionModel().select(year);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(tr.getDate());
+			int year = cal.get(Calendar.YEAR);
+			monthSelect.getSelectionModel().select(String.valueOf(year));
 			
 			setData();
 		}
@@ -316,21 +321,26 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void generateNodeList() {
 		
-		transactionButton = new JFXButton("+");
+		transactionButton = new JFXButton();
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		transactionButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub");
-		outGoButton = new JFXButton("Dep");
+		transactionButton.getStyleClass().addAll("add-button");
+		outGoButton = new JFXButton("D");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
-		outGoButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
-		incomeButton = new JFXButton("Rev");
+		outGoButton.getStyleClass().addAll("add-button", "add-button-2");
+		incomeButton = new JFXButton("R");
 		incomeButton.setButtonType(JFXButton.ButtonType.RAISED);
-		incomeButton.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		incomeButton.getStyleClass().addAll("add-button", "add-button-2");
 		
 		nodeList.addAnimatedNode(transactionButton);
 		nodeList.addAnimatedNode(outGoButton);
 		nodeList.addAnimatedNode(incomeButton);
 		nodeList.setSpacing(5d);
 		nodeList.setRotate(180);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		transactionButton.setGraphic(image);
 	}
 	
 	private void generateComboBoxItem() {

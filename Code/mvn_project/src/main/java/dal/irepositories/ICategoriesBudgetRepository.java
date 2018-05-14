@@ -49,24 +49,20 @@ public interface ICategoriesBudgetRepository {
      * @throws DALException
      */
     public void delete(IDALCategoriesbudgetEntity categoriesBudget) throws DALException;
-
+    
+    /**
+     * delete all CategoriesBudget
+     * @param budget_id  ID of the budget.
+     * @throws DALException
+     */
+    public void delete(int budget_id) throws DALException;
 
     /**
-     * Retreave the CategoriesBudget by client id
+     * Retreave the CategoriesBudget by budget id
      *
-     * @param client_id id of the client
+     * @param budget_id id of the budget
      * @return IDALCategoriesBudgetEntity the CategoriesBudget
      * @throws DALException
      */
     public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByBudget(int budget_id) throws DALException;
-
-    /**
-     * Retreave a CategoriesBudget by budget id
-     *
-     * @param category_id id of the budget
-     * @return IDALCategoriesBudgetEntity the CategoriesBudget
-     * @throws DALException
-     */
-    public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByCategory(int category_id) throws DALException;
-
 }

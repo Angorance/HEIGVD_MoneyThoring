@@ -1,8 +1,11 @@
-package gui.controller;
+package gui.controller.bankAccount;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.ClientLogic;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.IController;
+import gui.controller.bankAccount.Controller_detailBankAccount;
+import gui.controller.bankAccount.Controller_formBankAccount;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +17,8 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -61,11 +66,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 			amountAccount = new Label(bankAccount.getAmount() + " CHF");
 			
 			String color;
-			if(bankAccount.getAmount() > 0){
-				color = "lightgreen";
-			} else{
+			if (bankAccount.getAmount() > 0) {
+				color = "#0A7729";
+			} else {
 				color = "#E38F8F";
 			}
+			
 			amountAccount.setStyle("-fx-font-size: 24;-fx-text-fill: " + color);
 			
 			this.getChildren().add(nameAccount);
@@ -73,10 +79,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 			this.setAlignment(Pos.CENTER);
 			this.setHgap(10);
 			this.setVgap(10);
-			this.setConstraints(nameAccount, 0,0, 1,1, HPos.LEFT, VPos.TOP);
-			this.setConstraints(amountAccount, 0,1, 1,1, HPos.CENTER, VPos.CENTER);
+			this.setConstraints(nameAccount, 0, 0, 1, 1, HPos.LEFT, VPos.TOP);
+			this.setConstraints(amountAccount, 0, 1, 1, 1, HPos.CENTER,
+					VPos.CENTER);
 			this.setPadding(new Insets(10));
-			this.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 10");
+			this.setStyle(
+					"-fx-background-color: #f0f0f0; -fx-border-radius: 10");
 			
 			
 			this.getStyleClass().add("AccountDisplay");
@@ -88,7 +96,8 @@ public class Controller_listBankAccount implements Initializable, IController {
 			 */
 			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				
-				@Override public void handle(MouseEvent event) {
+				@Override
+				public void handle(MouseEvent event) {
 					
 					detailBankAccount(bankAccount);
 				}
@@ -103,9 +112,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 	}
 	
 	
-	@FXML private FlowPane frame_bankAccount;
-	@FXML private Button create_button;
-	@FXML private AnchorPane paneform;
+	@FXML
+	private FlowPane frame_bankAccount;
+	@FXML
+	private Button create_button;
+	@FXML
+	private AnchorPane paneform;
 	
 	/**
 	 * Event on the create button that will load the account creation page
@@ -113,10 +125,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 	public void callform() {
 		
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBankAccount.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formBankAccount.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formBankAccount cba = new Controller_formBankAccount(this, null);
+		Controller_formBankAccount cba = new Controller_formBankAccount(this,
+				null);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cba);
@@ -139,9 +153,11 @@ public class Controller_listBankAccount implements Initializable, IController {
 		
 		unloadform();
 		if (bal != null) {
-			AccountDisplayer accountDisplayer = new AccountDisplayer((BankAccountLogic) bal);
+			AccountDisplayer accountDisplayer = new AccountDisplayer(
+					(BankAccountLogic) bal);
 			addToFrame(accountDisplayer);
-			displayerList.put(((BankAccountLogic) bal).getId(), accountDisplayer);
+			displayerList
+					.put(((BankAccountLogic) bal).getId(), accountDisplayer);
 		}
 	}
 	
@@ -150,13 +166,14 @@ public class Controller_listBankAccount implements Initializable, IController {
 	 *
 	 * @param toDelete
 	 */
-	@Override public void deleteItem(Object toDelete) {
+	@Override
+	public void deleteItem(Object toDelete) {
 		
 		unloadform();
 		if (toDelete != null) {
 			BankAccountLogic bal = (BankAccountLogic) toDelete;
-			System.out.println("Suppression du compte id : " + bal.getId());
-			frame_bankAccount.getChildren().removeAll(displayerList.get(bal.getId()));
+			frame_bankAccount.getChildren()
+					.removeAll(displayerList.get(bal.getId()));
 			bal.supp();
 		}
 		
@@ -177,7 +194,8 @@ public class Controller_listBankAccount implements Initializable, IController {
 	 *
 	 * @param updated
 	 */
-	@Override public void modifyItem(Object updated) {
+	@Override
+	public void modifyItem(Object updated) {
 		
 		unloadform();
 		BankAccountLogic bal = (BankAccountLogic) updated;
@@ -197,17 +215,20 @@ public class Controller_listBankAccount implements Initializable, IController {
 	
 	
 	/**
-	 * Event on the create bankAccountDisplayer that will load the detail bank account page
+	 * Event on the create bankAccountDisplayer that will load the detail bank
+	 * account page
 	 *
 	 * @param bal the bank account to show the detail
 	 */
 	private void detailBankAccount(BankAccountLogic bal) {
 		
 		/* we load the detailBankAccount fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/detailBankAccount.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/detailBankAccount.fxml"));
 		
 		/*Create a instance of the controller detailBankAccount*/
-		Controller_detailBankAccount cdba = new Controller_detailBankAccount(this, bal);
+		Controller_detailBankAccount cdba = new Controller_detailBankAccount(
+				this, bal);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(cdba);
@@ -224,13 +245,17 @@ public class Controller_listBankAccount implements Initializable, IController {
 	
 	
 	/**
-	 * Called to initialize a controller after its root element has been completely processed.
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
 	 *
-	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
 	 * 		known.
-	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		displayerList = new HashMap<>();
 		
@@ -240,16 +265,25 @@ public class Controller_listBankAccount implements Initializable, IController {
 		paneform.setMouseTransparent(true);
 		
 		//Go through the list of bank accounts and createItem it to our frame
-		for (BankAccountLogic bankAccount : ClientLogic.getInstance().getBankAccounts()) {
-			AccountDisplayer accountDisplayer = new AccountDisplayer(bankAccount);
+		for (BankAccountLogic bankAccount : ClientLogic.getInstance()
+				.getBankAccounts()) {
+			AccountDisplayer accountDisplayer = new AccountDisplayer(
+					bankAccount);
 			displayerList.put(bankAccount.getId(), accountDisplayer);
 			addToFrame(accountDisplayer);
 		}
 		
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		create_button.setGraphic(image);
+		
 		/*Add event at our button*/
 		create_button.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callform();
 			}

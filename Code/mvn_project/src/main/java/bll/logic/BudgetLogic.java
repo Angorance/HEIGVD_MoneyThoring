@@ -1,10 +1,18 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALBudgetMapper;
+import bll.mappers.DAL.DALCategoryBudgetMapper;
 import bll.model.BudgetModel;
+import bll.model.CategoryBudgetModel;
 import dal.dalexception.DALException;
+import dal.ientites.IDALCategoriesbudgetEntity;
+import dal.irepositories.IBudgetRepository;
+import dal.irepositories.ICategoriesBudgetRepository;
+import dal.orm.IORM;
 import dal.orm.MasterORM;
 
 import java.sql.Date;
+import java.util.*;
 
 /**
  * TODO
@@ -14,42 +22,134 @@ import java.sql.Date;
  */
 public class BudgetLogic extends BudgetModel {
 	
+	private ArrayList<CategoryLogic> categories = new ArrayList<>();
+	
 	public BudgetLogic() {
 		
 		ClientLogic.getInstance().addBudget(this);
 	}
 	
-	public BudgetLogic(String name, double amount, Date startingDate,
-			Date endingDate) {
+	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
+			Date endingDate, int gap, ArrayList<CategoryLogic> cats) {
 		
-		super(name, amount, startingDate, endingDate);
+		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
+		setCategoriesBudget(cats);
+		ClientLogic.getInstance().addBudget(this);
 		
-		createBudget(MasterORM.getInstance().getORM());
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		createBudget(orm);
+		updateCategoriesBudget(orm);
 	}
 	
 	/**
 	 * TODO
 	 */
-	public void update(String name, double amount, Date startingDate,
-			Date endingDate) {
+	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
+			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> cats) {
 		
 		setName(name);
 		setAmount(amount);
+		setShared(isShared);
+		setRecurrent(isRecurrent);
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
+		setGap(gap);
+		setCategoriesBudget(cats);
 		
-		updateBudget(MasterORM.getInstance().getORM());
+		updateBudget(MasterORM.getInstance().getPgORM());
+		updateCategoriesBudget(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
-	 * TODO
+	 * Remove the budget from the database.
 	 */
 	public void supp() {
 		
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
 		try {
-			MasterORM.getInstance().getORM().getBudgetRepository()
-					.delete(getId());
+			orm.beginTransaction();
+			
+			IBudgetRepository repo = orm.getBudgetRepository();
+			repo.delete(getId());
+			
+			orm.commit();
+			
+			// Delete the budget from the client
+			ClientLogic.getInstance().removeBudget(this);
+			
 		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Get the categories of the budget.
+	 *
+	 * @return categories of the budget.
+	 */
+	public ArrayList<CategoryLogic> getCategoriesBudget() {
+		
+		return categories;
+	}
+	
+	/**
+	 * Set the categories of the budget.
+	 *
+	 * @param cats Categories of the budget.
+	 */
+	private void setCategoriesBudget(ArrayList<CategoryLogic> cats) {
+		
+		categories.clear();
+		
+		for(CategoryLogic cat : cats) {
+			categories.add(cat);
+		}
+	}
+	
+	/**
+	 * Update the categories of the budget.
+	 */
+	private void updateCategoriesBudget(IORM orm) {
+		
+		try {
+			orm.beginTransaction();
+			
+			ICategoriesBudgetRepository repo = orm.getCategoriesBudgetRepository();
+			
+			// Delete CategoriesBudget for the id of the budget
+			repo.delete(getId());
+			
+			// Add the new CategoriesBudget list
+			for(CategoryLogic category : categories) {
+				
+				CategoryBudgetModel cat = new CategoryBudgetModel(category.getId(), getId());
+				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDboPG(cat));
+			}
+			
+			orm.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * Update the categories of the budget from the DB.
+	 */
+	protected void setDataFromDB(IORM orm) {
+		
+		try {
+			
+			List<IDALCategoriesbudgetEntity> cb = orm.getCategoriesBudgetRepository()
+					.getCategoriesBudgetByBudget(getId());
+			
+			for (CategoryBudgetModel b : DALCategoryBudgetMapper.toBos(cb)) {
+				categories.add(CategoryLogic.getByID(b.getCategoryID()));
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

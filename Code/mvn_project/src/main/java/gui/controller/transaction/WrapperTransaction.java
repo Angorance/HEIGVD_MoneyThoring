@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controller.transaction;
 
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;

@@ -29,15 +29,14 @@ public class DALDebtMapper {
 		// Create the PostgreSQL debt
 		DebtPgEntity pgEntity = new DebtPgEntity();
 		
-		//TODO - fix
 		pgEntity.setId(model.getId());
 		pgEntity.setName(model.getName());
 		pgEntity.setDescription(model.getDescription());
 		pgEntity.setAmount(model.getAmount());
 		pgEntity.setIsincome(model.isIncome());
 		pgEntity.setExpirationdate(model.getExpirationDate());
-		pgEntity.setClientId(model.getCreatorID());             //TODO - INT?
-		pgEntity.setClientId1(model.getContributorID());        //TODO - INTEGER??
+		pgEntity.setClientId(model.getCreatorID());
+		pgEntity.setClientId1(model.getContributorID());
 		
 		return pgEntity;
 	}

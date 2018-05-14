@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="budgetPane" prefHeight="130.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="budgetPane" prefHeight="130.0" style="-fx-background-color: #efefef; -fx-background-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="lbltitre" text="TITRE DU BUDGET" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="13.0">
+      <Label fx:id="lbltitre" alignment="CENTER" text="TITRE DU BUDGET" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0">
          <font>
             <Font size="24.0" />
          </font>

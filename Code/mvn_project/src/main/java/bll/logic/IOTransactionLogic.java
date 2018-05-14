@@ -20,7 +20,8 @@ import java.util.TreeSet;
  */
 public class IOTransactionLogic extends IOTransactionModel {
 	
-	private static ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
+	private static ArrayList<IOTransactionLogic> transactions
+			= new ArrayList<>();
 	
 	private static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>>
 			transactionsByCategory = new HashMap<>();
@@ -32,6 +33,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 	private RecurrenceLogic recurrence;
 	
 	public IOTransactionLogic() {
+		
 		transactions.add(this);
 	}
 	
@@ -74,7 +76,7 @@ public class IOTransactionLogic extends IOTransactionModel {
 		return null;
 	}
 	
-	public HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
+	public static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
 		
 		return transactionsByCategory;
 	}

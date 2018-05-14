@@ -1,9 +1,11 @@
-package gui.controller;
+package gui.controller.category;
 
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.IController;
+import gui.controller.category.Controller_formCategory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

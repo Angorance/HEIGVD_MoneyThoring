@@ -1,14 +1,17 @@
-package gui.controller;
+package gui.controller.budget;
 
 import bll.logic.BudgetLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
+import gui.controller.IController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -49,24 +52,39 @@ public class Controller_detailBudget implements Initializable, IController {
 		scrollpane.setStyle("-fx-background-color: transparent");
 		
 		// nodelist initialisation
-		btnEdit = new JFXButton("e");
+		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
-		btnEdit.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		btnEdit.getStyleClass().addAll("setting-button");
 		btnEdit.setOnAction(event -> callForm(budget));
 		
-		btnDelete = new JFXButton("d");
+		btnDelete = new JFXButton();
 		btnDelete.setButtonType(JFXButton.ButtonType.FLAT);
-		btnDelete.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub-2");
+		btnDelete.getStyleClass().addAll("setting-button");
 		btnDelete.setOnAction(event -> deleteItem(budget));
 		
-		btnMenu = new JFXButton("v");
+		btnMenu = new JFXButton();
 		btnMenu.setButtonType(JFXButton.ButtonType.FLAT);
-		btnMenu.getStyleClass().addAll("transaction-animate-button", "transaction-animate-button-sub");
+		btnMenu.getStyleClass().addAll("setting-button");
 		
 		nodeModifDelete.addAnimatedNode(btnMenu);
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
-		nodeModifDelete.setSpacing(15);
+		nodeModifDelete.setSpacing(5d);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnMenu.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnEdit.setGraphic(image);
+		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnDelete.setGraphic(image);
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
@@ -74,6 +92,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 
 		lblTitre.setText(budget.getName());
+		lblPlafond.setText(String.valueOf(budget.getAmount()));
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
@@ -97,10 +116,7 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void createItem(Object result) {
-		
-		if (result != null) {
-			// TODO pas normal, on lance une erreur ?
-		}
+		unloadform();
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
@@ -109,6 +125,19 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
-		// TODO mettre à jour les informations
+		unloadform();
+		BudgetLogic bl = (BudgetLogic)toUpdated;
+		lblTitre.setText(bl.getName());
+		lblPlafond.setText(String.valueOf(bl.getAmount()));
+		//TODO progresse bar
+		//TODO Dépense
+		//TODO Refresh les graphique
+	}
+	
+	private void unloadform() {
+		
+		paneForm.getChildren().clear();
+		paneForm.setMouseTransparent(true);
+		paneForm.setVisible(false);
 	}
 }

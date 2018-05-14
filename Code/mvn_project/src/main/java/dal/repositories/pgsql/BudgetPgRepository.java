@@ -101,7 +101,8 @@ public class BudgetPgRepository implements IBudgetRepository {
     @Override
     public Integer addBudget(IDALBudgetEntity budget) throws DALException {
         BudgetPgEntity newBudget = null;
-        if (newBudget.getClass() == BudgetPgEntity.class)
+        
+        if (budget.getClass() == BudgetPgEntity.class)
             newBudget = (BudgetPgEntity) budget;
         else
             throw new DALException();

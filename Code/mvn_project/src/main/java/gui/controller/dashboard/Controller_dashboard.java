@@ -1,10 +1,13 @@
-package gui.controller;
+package gui.controller.dashboard;
 
 import bll.logic.BankAccountLogic;
+import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import gui.controller.transaction.Controller_formTransaction;
+import gui.controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,8 +20,9 @@ import javafx.geometry.VPos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -135,7 +139,7 @@ public class Controller_dashboard implements IController, Initializable {
 			if((year == trYear) && (month == trMonth) && tr.getBankAccountID() == bal.getId()) {
 				transactionDisplayer trDisplayer = new transactionDisplayer(tr);
 				setDataLineChart();
-				//TODO refreach du pieChart
+				setDataPieChart();
 			}
 			
 		}
@@ -246,10 +250,18 @@ public class Controller_dashboard implements IController, Initializable {
 	private void setDataPieChart() {
 		chartPie.setTitle("Dépense par catégorie");
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-		pieChartData.add(new PieChart.Data("Cars",13));
-		pieChartData.add(new PieChart.Data("Bikes",25));
-		pieChartData.add(new PieChart.Data("Buses",10));
-		pieChartData.add(new PieChart.Data("Cycles",22));
+		
+		for(CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+			int outgo = 0;
+			if(IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					if (!tr.isIncome()) {
+						outgo += tr.getAmount() * (-1);
+					}
+				}
+				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
+			}
+		}
 		
 		pieChartData.forEach(data ->
 				data.nameProperty().bind(
@@ -266,21 +278,26 @@ public class Controller_dashboard implements IController, Initializable {
 	
 	private void initNodeListe() {
 		
-		btnAddTransaction = new JFXButton("+");
+		btnAddTransaction = new JFXButton();
 		btnAddTransaction.setButtonType(JFXButton.ButtonType.RAISED);
-		btnAddTransaction.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub");
-		btnOutgo = new JFXButton("Dep");
+		btnAddTransaction.getStyleClass().addAll("add-button");
+		btnOutgo = new JFXButton("D");
 		btnOutgo.setButtonType(JFXButton.ButtonType.RAISED);
-		btnOutgo.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub-2");
-		btnIncome = new JFXButton("Rev");
+		btnOutgo.getStyleClass().addAll("add-button", "add-button-2");
+		btnIncome = new JFXButton("R");
 		btnIncome.setButtonType(JFXButton.ButtonType.RAISED);
-		btnIncome.getStyleClass().addAll("dashboard-animate-button", "dashboard-animate-button-sub-2");
+		btnIncome.getStyleClass().addAll("add-button", "add-button-2");
 		
 		nodeAjout.addAnimatedNode(btnAddTransaction);
 		nodeAjout.addAnimatedNode(btnOutgo);
 		nodeAjout.addAnimatedNode(btnIncome);
 		nodeAjout.setSpacing(5d);
 		nodeAjout.setRotate(180);
+		
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(25);
+		image.setFitHeight(25);
+		btnAddTransaction.setGraphic(image);
 		
 	}
 }
