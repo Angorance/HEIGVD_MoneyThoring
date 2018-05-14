@@ -42,6 +42,15 @@ public class Controller_listBudget implements IController, Initializable {
 		budgetDisplayer(BudgetLogic budget){
 			JFXDepthManager.setDepth(this, 1);
 			this.budget = budget;
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
+			loader.setController(this);
+			try {
+				this.getChildren().add(loader.load());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		private void openDetail() {
@@ -65,7 +74,6 @@ public class Controller_listBudget implements IController, Initializable {
 			budgetPane.setMinHeight(130);
 			JFXDepthManager.setDepth(budgetPane, 1);
 			budgetPane.setOnMouseClicked(event -> openDetail());
-			
 			
 		}
 
@@ -139,23 +147,16 @@ public class Controller_listBudget implements IController, Initializable {
 	}
 	
 	private void add(BudgetLogic b){
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
-		budgetDisplayer bd = new budgetDisplayer(b);
-		loader.setController(bd);
-		try {
-			paneList.getChildren().add(loader.load());
-			displayerList.put(b.getId(), bd);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		budgetDisplayer db = new budgetDisplayer(b);
+		paneList.getChildren().add(db);
+		displayerList.put(b.getId(), db);
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		btnAdd.setOnAction(event -> callform(null));
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
-
-		// event on the click of the button
+		
 		scrollPane.setStyle("-fx-background-color:transparent;");
 		
 		displayerList = new HashMap<>();
