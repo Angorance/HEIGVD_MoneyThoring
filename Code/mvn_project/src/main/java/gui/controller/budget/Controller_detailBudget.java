@@ -21,6 +21,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import static gui.controller.budget.Controller_listBudget.totalAmountCategories;
+
 /**
  * @author Bryan Curchod
  * @version 1.0
@@ -44,10 +46,13 @@ public class Controller_detailBudget implements Initializable, IController {
 	BudgetLogic budget;
 	IController parent;
 	
-	public Controller_detailBudget(IController p, BudgetLogic b) {
+	double outgo;
+	
+	public Controller_detailBudget(IController p, BudgetLogic b,double outgo) {
 		
 		parent = p;
 		budget = b;
+		this.outgo = outgo;
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
@@ -96,8 +101,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		lblTitre.setText(budget.getName());
 		lblPlafond.setText(String.valueOf(budget.getAmount()));
-		
-		totalAmountCxategories();
+		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
 		// TODO initialiser les champs
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
@@ -136,30 +140,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		BudgetLogic bl = (BudgetLogic) toUpdated;
 		lblTitre.setText(bl.getName());
 		lblPlafond.setText(String.valueOf(bl.getAmount()));
+		
+		outgo = totalAmountCategories(bl);
+		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
 		//TODO progresse bar
 		//TODO Dépense
 		//TODO Refresh les graphique
-	}
-	
-	private void totalAmountCxategories() {
-		
-		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
-		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
-		double amount = budget.getAmount();
-		
-		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
-				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
-					if (!tr.isIncome()) {
-						amount += tr.getAmount();
-					}
-				}
-			}
-		}
-		
-		lblSolde.setText(Double.toString(amount));
 	}
 	
 	private void unloadform() {
