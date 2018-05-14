@@ -6,6 +6,7 @@ import bll.model.BudgetModel;
 import bll.model.CategoryBudgetModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoriesbudgetEntity;
+import dal.irepositories.IBudgetRepository;
 import dal.irepositories.ICategoriesBudgetRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -59,13 +60,23 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Remove the budget from the database.
 	 */
 	public void supp() {
 		
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
 		try {
-			MasterORM.getInstance().getPgORM().getBudgetRepository()
-					.delete(getId());
+			orm.beginTransaction();
+			
+			IBudgetRepository repo = orm.getBudgetRepository();
+			repo.delete(getId());
+			
+			orm.commit();
+			
+			// Delete the budget from the client
+			ClientLogic.getInstance().removeBudget(this);
+			
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
