@@ -12,109 +12,117 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * DebtDeRepository give the access methodes for handle the debt into derby persistence
+ * DebtDeRepository give the access methodes for handle the debt into derby
+ * persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class DebtDeRepository implements IDebtRepository {
-
-    private Session session;
-    private Transaction transaction;
-
-    /**
-     * Constructor of DebtDeRepository
-     * @param session current session used
-     * @param transaction current transaction used into the same session
-     */
-    public DebtDeRepository(Session session, Transaction transaction) {
-        this.session = session;
-        this.transaction = transaction;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public IDALDebtEntity getDebt(int id) throws DALException {
-        DebtDeEntity dbt = null;
-
-        try {
-            dbt = (DebtDeEntity) session.createCriteria(DebtDeEntity.class)
-                    .add(Restrictions.eq("id", id))
-                    .uniqueResult();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-
-        return dbt;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Integer addDebt(IDALDebtEntity debt) throws DALException {
-
-        DebtDeEntity newDebt = null;
-        if (debt.getClass() == DebtDeEntity.class)
-            newDebt = (DebtDeEntity) debt;
-        else
-            throw new DALException();
-
-        try {
-            return (Integer) session.save(newDebt);
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    }
-
-    public List<IDALDebtEntity> getDebts() throws DALException {
-        List<IDALDebtEntity> debts = null;
-        try {
-            debts = session.createQuery("from DebtDeEntity").list();
-
-
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-        return debts;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(IDALDebtEntity debt) throws DALException {
-
-        DebtDeEntity debtPg = null;
-        if (debt.getClass() == DebtDeEntity.class)
-            debtPg = (DebtDeEntity) debt;
-        else
-            throw new DALException();
-
-        try {
-            session.update(debtPg);
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(int id) throws DALException {
-        IDALDebtEntity debt = null;
-        try {
-            debt = (DebtDeEntity) session.createCriteria(DebtDeEntity.class)
-                    .add(Restrictions.eq("id", id))
-                    .uniqueResult();
-
-            session.delete(debt);
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-
-    }
+	
+	private Session session;
+	private Transaction transaction;
+	
+	/**
+	 * Constructor of DebtDeRepository
+	 *
+	 * @param session current session used
+	 * @param transaction current transaction used into the same session
+	 */
+	public DebtDeRepository(Session session, Transaction transaction) {
+		
+		this.session = session;
+		this.transaction = transaction;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public IDALDebtEntity getDebt(int id) throws DALException {
+		
+		DebtDeEntity dbt = null;
+		
+		try {
+			dbt = (DebtDeEntity) session.createCriteria(DebtDeEntity.class)
+					.add(Restrictions.eq("id", id)).uniqueResult();
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		
+		return dbt;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer addDebt(IDALDebtEntity debt) throws DALException {
+		
+		DebtDeEntity newDebt = null;
+		if (debt.getClass() == DebtDeEntity.class) {
+			newDebt = (DebtDeEntity) debt;
+		} else {
+			throw new DALException();
+		}
+		
+		try {
+			return (Integer) session.save(newDebt);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
+	
+	public List<IDALDebtEntity> getDebts() throws DALException {
+		
+		List<IDALDebtEntity> debts = null;
+		try {
+			debts = session.createQuery("from DebtDeEntity").list();
+			
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		return debts;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void update(IDALDebtEntity debt) throws DALException {
+		
+		DebtDeEntity debtPg = null;
+		if (debt.getClass() == DebtDeEntity.class) {
+			debtPg = (DebtDeEntity) debt;
+		} else {
+			throw new DALException();
+		}
+		
+		try {
+			session.update(debtPg);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(int id) throws DALException {
+		
+		IDALDebtEntity debt = null;
+		try {
+			debt = (DebtDeEntity) session.createCriteria(DebtDeEntity.class)
+					.add(Restrictions.eq("id", id)).uniqueResult();
+			
+			session.delete(debt);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		
+	}
 }

@@ -4,8 +4,6 @@ import dal.dalexception.DALException;
 import dal.entities.derby.BankaccountDeEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.irepositories.IBankaccountRepository;
-import dal.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -15,6 +13,9 @@ import java.util.List;
 /**
  * BankaccountDeRepository give the access methodes for handle the bank account
  * into derby persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class BankaccountDeRepository implements IBankaccountRepository {
 	
