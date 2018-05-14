@@ -29,21 +29,21 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
-			Date endingDate, int gap/*, ArrayList<Integer> categories*/) {
+			Date endingDate, int gap, ArrayList<CategoryLogic> categories) {
 		
 		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
-		//setCategoriesBudget(categories);
+		setCategoriesBudget(categories);
 		ClientLogic.getInstance().addBudget(this);
 		
 		createBudget(MasterORM.getInstance().getPgORM());
-		//updateCategoriesBudget(MasterORM.getInstance().getPgORM());
+		updateCategoriesBudget(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
 	 * TODO
 	 */
 	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
-			Date startingDate, Date endingDate, int gap/*, ArrayList<Integer> categories*/) {
+			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> categories) {
 		
 		setName(name);
 		setAmount(amount);
@@ -52,10 +52,10 @@ public class BudgetLogic extends BudgetModel {
 		setStartingDate(startingDate);
 		setEndingDate(endingDate);
 		setGap(gap);
-		//setCategoriesBudget(categories);
+		setCategoriesBudget(categories);
 		
 		updateBudget(MasterORM.getInstance().getPgORM());
-		//updateCategoriesBudget(MasterORM.getInstance().getPgORM());
+		updateCategoriesBudget(MasterORM.getInstance().getPgORM());
 	}
 	
 	/**
