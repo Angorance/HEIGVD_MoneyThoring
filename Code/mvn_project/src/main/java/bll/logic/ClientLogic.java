@@ -90,7 +90,7 @@ public class ClientLogic extends ClientModel {
 			Mail.sendMail(username, email, getKey());
 		} else {
 			
-			setKey("NotUsedWithDerby");
+			setKey(null);
 			setActivated(true);
 		}
 		

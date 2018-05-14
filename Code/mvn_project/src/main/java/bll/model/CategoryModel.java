@@ -54,7 +54,7 @@ public class CategoryModel {
 			orm.beginTransaction();
 			
 			ICategoryRepository repo = orm.getCategoryRepository();
-			setId(repo.addCategory(DALCategoryMapper.toDboPG(this)));
+			setId(repo.addCategory(DALCategoryMapper.toDbo(this)));
 			
 			orm.commit();
 			
@@ -75,7 +75,7 @@ public class CategoryModel {
 			orm.beginTransaction();
 			
 			ICategoryRepository repo = orm.getCategoryRepository();
-			repo.update(DALCategoryMapper.toDboPG(this));
+			repo.update(DALCategoryMapper.toDbo(this));
 			
 			orm.commit();
 			

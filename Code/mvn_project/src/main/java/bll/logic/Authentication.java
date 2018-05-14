@@ -194,7 +194,7 @@ public class Authentication {
 	public static String hash(String password, String salt)
 			throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		MessageDigest md = MessageDigest.getInstance("SHA-512");
 		md.update((password + salt).getBytes("UTF-8"));
 		
 		String hashed = Base64.encodeBase64URLSafeString(md.digest());

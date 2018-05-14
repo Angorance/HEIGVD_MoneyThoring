@@ -41,7 +41,7 @@ public class DebtModel {
 			orm.beginTransaction();
 			
 			IDebtRepository repo = orm.getDebtRepository();
-			setId(repo.addDebt(DALDebtMapper.toDboPG(this)));
+			setId(repo.addDebt(DALDebtMapper.toDbo(this)));
 			
 			orm.commit();
 			
@@ -62,7 +62,7 @@ public class DebtModel {
 			orm.beginTransaction();
 			
 			IDebtRepository repo = orm.getDebtRepository();
-			repo.update(DALDebtMapper.toDboPG(this));
+			repo.update(DALDebtMapper.toDbo(this));
 			
 			orm.commit();
 			

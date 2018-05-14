@@ -53,7 +53,7 @@
             <column name="ISACTIVATED" sql-type="boolean(1)"/>
         </property>
         <property name="activationkey">
-            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="true"/>
+            <column name="ACTIVATIONKEY" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
         <property name="salt">
             <column name="SALT" sql-type="varchar(50)" length="50"/>

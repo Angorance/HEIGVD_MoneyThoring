@@ -69,7 +69,7 @@ public class IOTransactionModel {
 			orm.beginTransaction();
 			
 			IIotransactionRepository repo = orm.getIotransactionRepository();
-			setId(repo.addIotransaction(DALIOTransactionMapper.toDboPG(this)));
+			setId(repo.addIotransaction(DALIOTransactionMapper.toDbo(this)));
 			
 			orm.commit();
 			
@@ -90,12 +90,12 @@ public class IOTransactionModel {
 			orm.beginTransaction();
 			
 			IIotransactionRepository repo = orm.getIotransactionRepository();
-			repo.update(DALIOTransactionMapper.toDboPG(this));
+			repo.update(DALIOTransactionMapper.toDbo(this));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
