@@ -89,7 +89,9 @@ public class Controller_listBudget implements IController, Initializable {
 			lblcurrentExpense.setText(
 					"Dépenses actuelles :" + (outgo * (-1)) + " CHF"); // TODO calculer les dépenses totales du budget
 			lblmaxExpense.setText("Plafond : " + Double.toString(budget.getAmount()) + "CHF");
-			expenseProgress.setProgress(0.5); // TODO Dépensé/plafond
+			
+			double pourcentage = Math.abs(outgo/budget.getAmount());
+			expenseProgress.setProgress(pourcentage);
 		}
 	}
 	

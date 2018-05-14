@@ -110,8 +110,9 @@ public class Controller_detailBudget implements Initializable, IController {
 		JFXDepthManager.setDepth(paneBottom, 1);
 		
 		totalAmountCxategories();
-		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
-		// TODO initialiser les champs
+		
+		double pourcentage = Math.abs(outgo/budget.getAmount());
+		progessBar.setProgress(pourcentage);
 		// TODO ajouter le graphique (barre ? circulaire ?)
 		// TODO lister les dépenses
 		
@@ -152,8 +153,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		outgo = totalAmountCategories(bl);
 		lblSolde.setText(Double.toString(budget.getAmount() + outgo));
-		//TODO progresse bar
-		//TODO Dépense
+		
+		double pourcentage = Math.abs(outgo/budget.getAmount());
+		progessBar.setProgress(pourcentage);
+		
 		//TODO Refresh les graphique
 	}
 	
