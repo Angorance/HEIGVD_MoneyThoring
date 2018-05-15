@@ -52,7 +52,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		super(name, bankName, type, amount, clientID);
 		
-		setDefault(isDefault);
+		changeDefault(isDefault);
 		
 		ClientLogic.getInstance().addBankAccount(this);
 		
@@ -150,7 +150,8 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public static BankAccountLogic getBankAccountByID(int bankAccountID) {
 		
-		for (BankAccountLogic ba : ClientLogic.getInstance().getBankAccounts()) {
+		for (BankAccountLogic ba : ClientLogic.getInstance()
+				.getBankAccounts()) {
 			
 			if (ba.getId() == bankAccountID) {
 				return ba;
@@ -175,7 +176,7 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @param isDefault
 	 */
-	public void setDefault(boolean isDefault) {
+	public void changeDefault(boolean isDefault) {
 		
 		ClientLogic cl = ClientLogic.getInstance();
 		
@@ -190,10 +191,15 @@ public class BankAccountLogic extends BankAccountModel {
 				}
 			}
 			
-			defaultBankAccount = this;
+			saveDefault();
 		}
 		
 		super.setDefault(isDefault);
+	}
+	
+	public void saveDefault() {
+		
+		defaultBankAccount = this;
 	}
 	
 	/**
@@ -212,7 +218,7 @@ public class BankAccountLogic extends BankAccountModel {
 		setType(type);
 		setBankName(bankName);
 		setAmount(amount);
-		setDefault(isDefault);
+		changeDefault(isDefault);
 		
 		updateBankAccount(MasterORM.getInstance().getPgORM());
 	}
