@@ -22,7 +22,7 @@ public class SharedBudgetModel {
 	 * @param client_id ID of the client.
 	 * @param budget_id ID of the budget.
 	 */
-	protected SharedBudgetModel(int client_id, int budget_id) {
+	public SharedBudgetModel(int client_id, int budget_id) {
 		
 		this.client_id = client_id;
 		this.budget_id = budget_id;

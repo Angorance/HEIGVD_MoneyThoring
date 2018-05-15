@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * ISharedbudgetRepository give the access methodes for handle the Sharedbudget into persistence
+ *
+ * @autor Héléna Line Reymond
  */
 public interface ISharedBudgetRepository {
     /**
@@ -49,8 +51,14 @@ public interface ISharedBudgetRepository {
      * @throws DALException
      */
     public void delete(IDALSharedbudgetEntity sharedBudget) throws DALException;
-
-
+    
+    /**
+     * delete all SharedBudget
+     * @param budget_id  ID of the budget.
+     * @throws DALException
+     */
+    public void delete(int budget_id) throws DALException;
+    
     /**
      * Retreave the Sharedbudget by client id
      *
