@@ -33,7 +33,7 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
-			Date endingDate, int gap, ArrayList<CategoryLogic> categoryList, ArrayList<ClientLogic> clientList) {
+			Date endingDate, int gap, ArrayList<CategoryLogic> categoryList, ArrayList<ClientModel> clientList) {
 		
 		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
 		setCategoriesBudget(categoryList);
@@ -56,7 +56,7 @@ public class BudgetLogic extends BudgetModel {
 	 */
 	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
 			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> categoryList
-			, ArrayList<ClientLogic> clientList) {
+			, ArrayList<ClientModel> clientList) {
 		
 		setName(name);
 		setAmount(amount);
@@ -163,11 +163,11 @@ public class BudgetLogic extends BudgetModel {
 	 *
 	 * @param clientList Clients of the budget.
 	 */
-	private void setClientsBudget(ArrayList<ClientLogic> clientList) {
+	private void setClientsBudget(ArrayList<ClientModel> clientList) {
 		
 		clients.clear();
 		
-		for(ClientLogic client : clientList) {
+		for(ClientModel client : clientList) {
 			clients.add(client);
 		}
 	}
