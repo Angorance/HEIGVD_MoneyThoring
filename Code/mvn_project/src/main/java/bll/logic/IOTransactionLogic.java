@@ -194,6 +194,11 @@ public class IOTransactionLogic extends IOTransactionModel {
 			orm.commit();
 			
 			transactionsByCategory.get(this.category).remove(this);
+			
+			if (transactionsByCategory.get(this.category).isEmpty()) {
+				transactionsByCategory.remove(this.category);
+			}
+			
 			bank.removeTransaction(this);
 			recurrence.supp();
 			

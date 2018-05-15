@@ -11,7 +11,7 @@ import java.sql.Date;
  * @version 1.0
  */
 public class DebtModel {
-
+	
 	private int id;
 	private int creatorID;
 	private int contributorID;
@@ -28,13 +28,23 @@ public class DebtModel {
 	
 	protected DebtModel() {}
 	
+	protected DebtModel(String name, String description, double amount,
+			boolean isIncome, Date expirationDate) {
+		
+		this.name = name;
+		this.description = description;
+		this.amount = amount;
+		this.isIncome = isIncome;
+		this.expirationDate = expirationDate;
+	}
+	
 	
 	/**
 	 * Create a transaction entry for the user into the database.
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void createIOTransaction(IORM orm) {
+	protected void createDebt(IORM orm) {
 		
 		try {
 			
@@ -55,7 +65,7 @@ public class DebtModel {
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void updateIOTransaction(IORM orm) {
+	protected void updateDebt(IORM orm) {
 		
 		try {
 			
