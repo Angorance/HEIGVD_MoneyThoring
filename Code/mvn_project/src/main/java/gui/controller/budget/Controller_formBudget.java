@@ -3,34 +3,25 @@ package gui.controller.budget;
 import bll.logic.BudgetLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
+import bll.model.ClientModel;
 import com.jfoenix.controls.*;
-import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
 import gui.controller.IForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
-import jdk.jfr.Category;
-
-import java.time.temporal.ChronoUnit;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author Bryan Curchod
@@ -43,7 +34,9 @@ public class Controller_formBudget implements IForm, Initializable {
 	@FXML private JFXComboBox<CategoryLogic> cmbCategorySelect;
 	@FXML private JFXCheckBox chbIsRegular;
 	@FXML private JFXComboBox<Periode> cmbPeriode;
+	@FXML private JFXComboBox<ClientModel> cbbUser;
 	@FXML private FlowPane paneCategoryList;
+	@FXML private FlowPane paneUserList;
 	@FXML private JFXButton btnCancel;
 	@FXML private JFXButton btnValidation;
 	@FXML private JFXButton btnDelete;
@@ -56,6 +49,9 @@ public class Controller_formBudget implements IForm, Initializable {
 	private BudgetLogic budget;
 	private IController parent;
 	private ArrayList<CategoryLogic> listCategorie;
+	private ArrayList<ClientModel> listUser;
+	
+	private static final int DISPLAYER_HEIGHT = 15;
 	
 	private class Periode {
 		
@@ -81,11 +77,10 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	private class CategoryDisplayer extends HBox {
 		
-		private final int HEIGHT = 15;
+		
 		CategoryLogic cat;
 		Label lblCategorie = new Label();
 		JFXButton btnDelete = new JFXButton("X");
-		
 		
 		/**
 		 * set the label and the style of the HBox according to a CategoryLogic Object
@@ -99,7 +94,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			String catColor = toRGBCode(Color.valueOf(cat.getColor()));
 			// formatting the graphic elements
 			lblCategorie.setStyle("-fx-text-fill: " + catColor);
-			lblCategorie.setPrefHeight(HEIGHT);
+			lblCategorie.setPrefHeight(DISPLAYER_HEIGHT);
 			//lblCategorie.setPadding(new Insets(0,10,2,0));
 			lblCategorie.setAlignment(Pos.CENTER_LEFT);
 			//lblCategorie.setTextAlignment(TextAlignment.LEFT);
@@ -113,13 +108,16 @@ public class Controller_formBudget implements IForm, Initializable {
 			this.setPadding(new Insets(0, 0, 0, 10));
 			this.getChildren().add(lblCategorie);
 			this.getChildren().add(btnDelete);
-			this.setHeight(HEIGHT);
+			this.setHeight(DISPLAYER_HEIGHT);
 			this.setAlignment(Pos.CENTER);
 			//JFXDepthManager.setDepth(this, 1); // shadow manager
 			lblCategorie.setText(cat.getName());
 			this.setStyle(
 					"-fx-background-color: white; -fx-background-radius: 20; -fx-border-width: 2px; -fx-border-radius: 20; -fx-border-color: "
 							+ catColor);
+			
+			listCategorie.add(cat);
+			paneCategoryList.getChildren().add(this);
 		}
 		
 		/**
@@ -133,6 +131,31 @@ public class Controller_formBudget implements IForm, Initializable {
 			
 			return String.format("#%02X%02X%02X", (int) (color.getRed() * 255), (int) (color.getGreen() * 255),
 					(int) (color.getBlue() * 255));
+		}
+	}
+	
+	private class UserDisplayer extends  HBox{
+		ClientModel user;
+		JFXButton btnRemove = new JFXButton("X");
+		Label lblUsername;
+		
+		UserDisplayer(ClientModel c){
+			user = c;
+			
+			lblUsername = new Label(user.getUsername());
+			lblUsername.setAlignment(Pos.CENTER_LEFT);
+			lblUsername.setPrefHeight(DISPLAYER_HEIGHT);
+			// styling
+			this.getChildren().addAll(btnRemove, lblUsername);
+			this.setPadding(new Insets(5));
+			this.setStyle("-fx-background-color: #d2e8d4");
+			this.setAlignment(Pos.CENTER);
+			setMargin(btnRemove, new Insets(0,20,0,0));
+			
+			btnRemove.setOnAction(event -> {
+				paneUserList.getChildren().remove(this);
+				listUser.remove(user);
+			});
 		}
 	}
 	
@@ -150,8 +173,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		LocalDate begin;
 		LocalDate last;
 		boolean rec = chbIsRegular.isSelected();
-		boolean share = checkShare.isSelected();
+		boolean shared = checkShare.isSelected();
 		
+		if(!shared){
+			listUser.clear();
+		}
 		
 		int gap = 0;
 		if (chbIsRegular.isSelected()) {
@@ -165,13 +191,13 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		if (budget == null) {
 			
-			budget = new BudgetLogic(name, amount, share, rec, java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last), gap,listCategorie, null);  //TODO - set clients
+			budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin),
+					java.sql.Date.valueOf(last), gap,listCategorie, listUser);  //TODO - set clients
 			parent.createItem(budget);
 		} else {
 			
-			budget.update(name,amount,share,rec,java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last),gap,listCategorie, null);  //TODO - set clients
+			budget.update(name,amount,shared,rec,java.sql.Date.valueOf(begin),
+					java.sql.Date.valueOf(last),gap,listCategorie, listUser);  //TODO - set clients
 			parent.modifyItem(budget);
 		}
 		
@@ -200,6 +226,9 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 			
 			checkShare.setSelected(budget.isShared());
+			if(budget.isShared()){
+				checkShare.setDisable(true);
+			}
 			for(CategoryLogic cl : budget.getCategoriesBudget()){
 				paneCategoryList.getChildren().add(new CategoryDisplayer(cl));
 				listCategorie.add(cl);
@@ -207,16 +236,37 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		
 		// set the available category in the comboBox
-		ObservableList<CategoryLogic> items = FXCollections.observableArrayList();
-		items.addAll(ClientLogic.getInstance().getCategories());
+		ObservableList<CategoryLogic> CatItems = FXCollections.observableArrayList();
+		CatItems.addAll(ClientLogic.getInstance().getCategories());
 		
-		cmbCategorySelect.setItems(items);
+		// gather every client except the current user
+		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
+		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
+			if(u.getId() != ClientLogic.getInstance().getId()){
+				UserItem.add(u);
+			}
+		}
+		
+		cbbUser.setItems(UserItem);
+		cbbUser.setOnAction(event -> {
+			ClientModel selected = cbbUser.getValue();
+			if(selected != null && !listUser.contains(selected)){
+				listUser.add(selected);
+				paneUserList.getChildren().add(new UserDisplayer(selected));
+			}
+		});
+		
+		cmbCategorySelect.setItems(CatItems);
 		cmbCategorySelect.setOnAction(event -> {
-			CategoryLogic selected = cmbCategorySelect.getSelectionModel().getSelectedItem();
+			CategoryLogic selected = cmbCategorySelect.getValue();
 			if (selected != null && !listCategorie.contains(selected)) {
 				paneCategoryList.getChildren().add(new CategoryDisplayer(selected));
 				listCategorie.add(selected);
 			}
+		});
+		
+		checkShare.setOnAction(event -> {
+				cbbUser.setDisable(checkShare.isSelected());
 		});
 		
 		// Period selection management
