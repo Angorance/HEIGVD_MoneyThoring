@@ -85,7 +85,7 @@ public class DALClientMapper {
 	/**
 	 * Entity -> ClientModel
 	 */
-    private static ClientModel toClientModel(IDALClientEntity entity) {
+    public static ClientModel toClientModel(IDALClientEntity entity) {
     	
         if (entity == null) {
             return null;
