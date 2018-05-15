@@ -75,6 +75,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 	}
 	
+	/**
+	 * Inner class used to display a category
+	 * @author Bryan Curchod
+	 * @version 1.2
+	 */
 	private class CategoryDisplayer extends HBox {
 		
 		
@@ -115,9 +120,6 @@ public class Controller_formBudget implements IForm, Initializable {
 			this.setStyle(
 					"-fx-background-color: white; -fx-background-radius: 20; -fx-border-width: 2px; -fx-border-radius: 20; -fx-border-color: "
 							+ catColor);
-			
-			listCategorie.add(cat);
-			paneCategoryList.getChildren().add(this);
 		}
 		
 		/**
@@ -134,6 +136,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 	}
 	
+	/**
+	 * Inner class used to display a user
+	 * @author Bryan Curchod
+	 * @version 1.1
+	 */
 	private class UserDisplayer extends  HBox{
 		ClientModel user;
 		JFXButton btnRemove = new JFXButton("X");
@@ -146,11 +153,11 @@ public class Controller_formBudget implements IForm, Initializable {
 			lblUsername.setAlignment(Pos.CENTER_LEFT);
 			lblUsername.setPrefHeight(DISPLAYER_HEIGHT);
 			// styling
-			this.getChildren().addAll(btnRemove, lblUsername);
+			this.getChildren().addAll(lblUsername, btnRemove);
 			this.setPadding(new Insets(5));
-			this.setStyle("-fx-background-color: #d2e8d4");
+			this.setStyle("-fx-background-color: #e2e2e2; -fx-background-radius: 20");
 			this.setAlignment(Pos.CENTER);
-			setMargin(btnRemove, new Insets(0,20,0,0));
+			setMargin(btnRemove, new Insets(0,0,0,15));
 			
 			btnRemove.setOnAction(event -> {
 				paneUserList.getChildren().remove(this);
@@ -164,6 +171,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		this.parent = parent;
 		this.budget = budget;
 		listCategorie = new ArrayList<>();
+		listUser = new ArrayList<>();
 	}
 	
 	@Override public void formValidation(ActionEvent event) {
@@ -192,12 +200,12 @@ public class Controller_formBudget implements IForm, Initializable {
 		if (budget == null) {
 			
 			budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last), gap,listCategorie, listUser);  //TODO - set clients
+					java.sql.Date.valueOf(last), gap,listCategorie,  listUser);
 			parent.createItem(budget);
 		} else {
 			
 			budget.update(name,amount,shared,rec,java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last),gap,listCategorie, listUser);  //TODO - set clients
+					java.sql.Date.valueOf(last),gap,listCategorie,  listUser);
 			parent.modifyItem(budget);
 		}
 		
@@ -253,6 +261,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			if(selected != null && !listUser.contains(selected)){
 				listUser.add(selected);
 				paneUserList.getChildren().add(new UserDisplayer(selected));
+				cbbUser.valueProperty().setValue(null);
 			}
 		});
 		
@@ -262,12 +271,16 @@ public class Controller_formBudget implements IForm, Initializable {
 			if (selected != null && !listCategorie.contains(selected)) {
 				paneCategoryList.getChildren().add(new CategoryDisplayer(selected));
 				listCategorie.add(selected);
+				cmbCategorySelect.valueProperty().setValue(null);
 			}
 		});
 		
 		checkShare.setOnAction(event -> {
-				cbbUser.setDisable(checkShare.isSelected());
+				cbbUser.setDisable(!checkShare.isSelected());
 		});
+		
+		cbbUser.setDisable(true);
+		checkShare.setSelected(false);
 		
 		// Period selection management
 		cmbPeriode.getItems().add(new Periode("Mensuelle", 30));

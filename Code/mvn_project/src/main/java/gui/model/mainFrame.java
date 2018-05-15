@@ -11,6 +11,8 @@ import static java.lang.System.exit;
 
 public class mainFrame {
 
+    private final int MIN_HEIGHT = 750;
+    private final int MIN_WIDTH = 1000;
     public mainFrame(){
         Parent root = null;
         try {
@@ -18,9 +20,9 @@ public class mainFrame {
 
             Stage primaryStage = new Stage();
             primaryStage.setTitle("Main Frame");
-            primaryStage.setScene(new Scene(root, 750, 500));
-            primaryStage.setMinHeight(500);
-            primaryStage.setMinWidth(850);
+            primaryStage.setScene(new Scene(root, MIN_WIDTH, MIN_HEIGHT));
+            primaryStage.setMinHeight(MIN_HEIGHT);
+            primaryStage.setMinWidth(MIN_WIDTH);
             primaryStage.show();
             primaryStage.setOnCloseRequest(event -> exit(0));
         } catch (IOException e) {
