@@ -173,7 +173,6 @@ public class Controller_listBudget implements IController, Initializable {
 		unloadform();
 		
 		if (result != null) {
-			
 			BudgetLogic b = (BudgetLogic) result;
 			add(b);
 		}

@@ -1,16 +1,21 @@
 package gui.controller.debt;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import bll.model.ClientModel;
 import com.jfoenix.controls.*;
 import gui.controller.IController;
 import gui.controller.IForm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javax.ejb.Local;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -19,20 +24,15 @@ import java.util.ResourceBundle;
  */
 public class Controller_formDebt implements Initializable, IForm {
 	
-	@FXML
-	private JFXButton btnCancel;
-	@FXML
-	private JFXButton btnValider;
-	@FXML
-	private JFXTextField txtAmount;
-	@FXML
-	private JFXDatePicker dateLimite;
-	@FXML
-	private JFXComboBox<ClientModel> cbbOtherUser;
-	@FXML
-	private JFXTextField txtDescription;
-	@FXML
-	private JFXToggleButton tglDebitor;
+	@FXML private JFXButton btnCancel;
+	@FXML private JFXButton btnValider;
+	@FXML private JFXButton btnDelete;
+	@FXML private JFXTextField txtAmount;
+	@FXML private JFXDatePicker dateLimite;
+	@FXML private JFXComboBox<ClientModel> cbbOtherUser;
+	@FXML private JFXTextField txtNom;
+	@FXML private JFXTextArea txtDescription;
+	@FXML private JFXToggleButton tglDebitor;
 	
 	DebtLogic debt;
 	IController parent;
@@ -45,39 +45,55 @@ public class Controller_formDebt implements Initializable, IForm {
 		isIncome = isClaim;
 	}
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		if (debt != null) {
-			// TODO remplir les champs avec les informations de la dette
+			txtAmount.setText(Double.toString(debt.getAmount()));
+			txtNom.setText(debt.getName());
+			txtDescription.setText(debt.getDescription());
+			dateLimite.setValue(LocalDate.parse(debt.getExpirationDate().toString()));
+			cbbOtherUser.setValue(getUserConcerned(debt.getContributorID()));
+			btnDelete.setVisible(true);
 		}
 		
+		// gather every client except the current user
+		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
+		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
+			if(u.getId() != ClientLogic.getInstance().getId()){
+				UserItem.add(u);
+			}
+		}
 		
-		// TODO désactiver le champ du choix de l'utilisateur et de la récurrence si on est déconnecté
+		cbbOtherUser.setItems(UserItem);
 		btnCancel.setOnAction(this::formCancel);
 		btnValider.setOnAction(this::formValidation);
+		btnDelete.setOnAction(event -> parent.deleteItem(debt));
 	}
 	
-	@Override
-	public void formValidation(ActionEvent event) {
+	private ClientModel getUserConcerned(int id) {
+		
+		for(ClientModel c : ClientLogic.getInstance().getAllUsers()){
+			if(c.getId() == id){
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	@Override public void formValidation(ActionEvent event) {
 		
 		if (debt == null) {
-			
-			// TODO - Gérer le cas d'une dette simple (sans deuxième utilisateur !)
-			debt = new DebtLogic("debt", txtDescription.getText(),
-					Double.parseDouble(txtAmount.getText()), isIncome,
-					Date.valueOf(dateLimite.getValue()),
-					cbbOtherUser.getValue());
+			ClientModel uConcerned = cbbOtherUser.getSelectionModel().getSelectedItem();
+			debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), isIncome,
+					Date.valueOf(dateLimite.getValue()),uConcerned);
 			parent.createItem(debt);
 		} else {
-			// TODO modier la dette
+			debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
 			parent.modifyItem(parent);
 		}
 	}
 	
-	@Override
-	public void formCancel(ActionEvent event) {
-		
+	@Override public void formCancel(ActionEvent event) {
 		parent.createItem(null);
 	}
 }
