@@ -93,6 +93,13 @@ public class Controller_detailBudget implements Initializable, IController {
 			paneDisplay
 					.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
 			
+			/*for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+				if(cl.getId() == transaction.getCategoryID()) {
+					outgoColor = cl.getColor();
+					break;
+				}
+			}*/
+			
 			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
 			
 			transactionList.getChildren().add(paneDisplay);
@@ -130,7 +137,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(5d);
 		
-		JFXDepthManager.setDepth(nodeModifDelete,1);
+		JFXDepthManager.setDepth(nodeModifDelete, 1);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
 		image.setFitWidth(20);
@@ -211,13 +218,22 @@ public class Controller_detailBudget implements Initializable, IController {
 	}
 	
 	private void setListTransaction() {
+		
+		transactionList.getChildren().clear();
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
+		
 		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
-				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
-					transactionDisplayer td = new transactionDisplayer(tr);
+			
+			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+				
+				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					
+					LocalDate currentDate = tr.getDate().toLocalDate();
+					if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+						
+						transactionDisplayer td = new transactionDisplayer(tr);
+					}
 				}
 			}
 		}
@@ -233,15 +249,22 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		for (CategoryLogic cl : budget.getCategoriesBudget()) {
 			double outgo = 0;
-			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
-				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
-					if (!tr.isIncome()) {
-						outgo += tr.getAmount() * (-1);
+			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+				
+				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					
+					LocalDate currentDate = tr.getDate().toLocalDate();
+					if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
+						
+						if (!tr.isIncome()) {
+							
+							outgo += tr.getAmount() * (-1);
+						}
 					}
 				}
+				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
 			}
-			pieChartData.add(new PieChart.Data(cl.getName(), outgo));
+			
 		}
 		
 		pieChartData.forEach(data -> data.nameProperty()

@@ -93,7 +93,7 @@ public class Controller_listBudget implements IController, Initializable {
 					"Dépenses actuelles :" + (outgo * (-1)) + " CHF"); // TODO calculer les dépenses totales du budget
 			lblmaxExpense.setText("Plafond : " + Double.toString(budget.getAmount()) + "CHF");
 			
-			double pourcentage = Math.abs(outgo/budget.getAmount());
+			double pourcentage = Math.abs(outgo / budget.getAmount());
 			expenseProgress.setProgress(pourcentage);
 		}
 	}
@@ -106,10 +106,14 @@ public class Controller_listBudget implements IController, Initializable {
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
 		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
-				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
-					if (!tr.isIncome()) {
+			
+			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+				
+				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					
+					LocalDate currentDate = tr.getDate().toLocalDate();
+					if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+						
 						outgo += tr.getAmount();
 					}
 				}
@@ -145,6 +149,7 @@ public class Controller_listBudget implements IController, Initializable {
 		
 		unloadform();
 		if (toDelete != null) {
+			
 			BudgetLogic b = (BudgetLogic) toDelete;
 			paneList.getChildren().remove(displayerList.get(b.getId()));
 			b.supp();
