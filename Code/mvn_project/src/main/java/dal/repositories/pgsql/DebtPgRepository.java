@@ -134,7 +134,7 @@ public class DebtPgRepository implements IDebtRepository {
 		
 		try {
 			debtEntities = session.createQuery(
-					"from DebtDeEntity where clientId = :clientid or clientId1 = :contributorid")
+					"from DebtPgEntity where clientId = :clientid or clientId1 = :contributorid")
 					.setParameter("clientid", clientID)
 					.setParameter("contributorid", clientID).list();
 			

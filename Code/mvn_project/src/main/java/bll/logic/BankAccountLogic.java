@@ -193,7 +193,7 @@ public class BankAccountLogic extends BankAccountModel {
 			defaultBankAccount = this;
 		}
 		
-		setDefault(isDefault);
+		super.setDefault(isDefault);
 	}
 	
 	/**
