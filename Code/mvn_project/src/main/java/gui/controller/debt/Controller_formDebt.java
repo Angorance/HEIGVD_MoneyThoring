@@ -1,6 +1,5 @@
 package gui.controller.debt;
 
-import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import bll.model.ClientModel;
 import com.jfoenix.controls.*;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -21,26 +19,36 @@ import java.util.ResourceBundle;
  */
 public class Controller_formDebt implements Initializable, IForm {
 	
-	@FXML private JFXButton btnCancel;
-	@FXML private JFXButton btnValider;
-	@FXML private JFXTextField txtAmount;
-	@FXML private JFXDatePicker dateLimite;
-	@FXML private JFXComboBox<ClientModel> cbbOtherUser;
-	@FXML private JFXTextField txtDescription;
-	@FXML private JFXToggleButton tglDebitor;
+	@FXML
+	private JFXButton btnCancel;
+	@FXML
+	private JFXButton btnValider;
+	@FXML
+	private JFXTextField txtAmount;
+	@FXML
+	private JFXDatePicker dateLimite;
+	@FXML
+	private JFXComboBox<ClientModel> cbbOtherUser;
+	@FXML
+	private JFXTextField txtDescription;
+	@FXML
+	private JFXToggleButton tglDebitor;
 	
 	DebtLogic debt;
 	IController parent;
 	boolean isIncome;
 	
-	Controller_formDebt(IController caller, DebtLogic d, boolean isClaim){
+	Controller_formDebt(IController caller, DebtLogic d, boolean isClaim) {
+		
 		parent = caller;
 		debt = d;
 		isIncome = isClaim;
 	}
 	
-	@Override public void initialize(URL location, ResourceBundle resources) {
-		if(debt != null){
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		if (debt != null) {
 			// TODO remplir les champs avec les informations de la dette
 		}
 		
@@ -50,13 +58,16 @@ public class Controller_formDebt implements Initializable, IForm {
 		btnValider.setOnAction(this::formValidation);
 	}
 	
-	@Override public void formValidation(ActionEvent event) {
-		if(debt == null){
-			int idCreator = ClientLogic.getInstance().getId();
-			int idOtherUser = cbbOtherUser.getValue().getId();
+	@Override
+	public void formValidation(ActionEvent event) {
+		
+		if (debt == null) {
 			
-			
-			debt = new DebtLogic(txtDescription.getText(), idCreator, idOtherUser, isIncome, Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
+			// TODO - Gérer le cas d'une dette simple (sans deuxième utilisateur !)
+			debt = new DebtLogic("debt", txtDescription.getText(),
+					Double.parseDouble(txtAmount.getText()), isIncome,
+					Date.valueOf(dateLimite.getValue()),
+					cbbOtherUser.getValue());
 			parent.createItem(debt);
 		} else {
 			// TODO modier la dette
@@ -64,7 +75,9 @@ public class Controller_formDebt implements Initializable, IForm {
 		}
 	}
 	
-	@Override public void formCancel(ActionEvent event) {
+	@Override
+	public void formCancel(ActionEvent event) {
+		
 		parent.createItem(null);
 	}
 }

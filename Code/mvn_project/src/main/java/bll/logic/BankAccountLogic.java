@@ -6,7 +6,6 @@ import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -25,6 +24,8 @@ import java.util.List;
  * @version 1.5
  */
 public class BankAccountLogic extends BankAccountModel {
+	
+	private static BankAccountLogic defaultBankAccount;
 	
 	private ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
 	
@@ -51,7 +52,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		super(name, bankName, type, amount, clientID);
 		
-		changeDefault(isDefault);
+		setDefault(isDefault);
 		
 		ClientLogic.getInstance().addBankAccount(this);
 		
@@ -84,6 +85,11 @@ public class BankAccountLogic extends BankAccountModel {
 	public String toString() {
 		
 		return getName();
+	}
+	
+	public static BankAccountLogic getDefaultBankAccount() {
+		
+		return defaultBankAccount;
 	}
 	
 	/**
@@ -169,7 +175,7 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @param isDefault
 	 */
-	private void changeDefault(boolean isDefault) {
+	public void setDefault(boolean isDefault) {
 		
 		ClientLogic cl = ClientLogic.getInstance();
 		
@@ -183,6 +189,8 @@ public class BankAccountLogic extends BankAccountModel {
 					break;
 				}
 			}
+			
+			defaultBankAccount = this;
 		}
 		
 		setDefault(isDefault);
@@ -204,7 +212,7 @@ public class BankAccountLogic extends BankAccountModel {
 		setType(type);
 		setBankName(bankName);
 		setAmount(amount);
-		changeDefault(isDefault);
+		setDefault(isDefault);
 		
 		updateBankAccount(MasterORM.getInstance().getPgORM());
 	}
