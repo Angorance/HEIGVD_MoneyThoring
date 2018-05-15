@@ -99,16 +99,22 @@ public class BudgetLogic extends BudgetModel {
 			}
 			else {
 				
+				ISharedBudgetRepository repoS = orm.getSharedBudgetRepository();
+				
 				// If the client is the creator
 				// Change the creator
 				if(getClientID() == ClientLogic.getInstance().getId()) {
 					
-					setClientID(clients.get(0).getId());
+					ClientModel newCreator = clients.get(0);
+					setClientID(newCreator.getId());
+					
+					// Remove the link between the new creator and the budget
+					IDALSharedbudgetEntity sb = repoS.getSharedbudget(newCreator.getId(), getId());
+					repoS.delete(sb);
 				}
 				else {
 					
 					// Remove the link between the client and the budget
-					ISharedBudgetRepository repoS = orm.getSharedBudgetRepository();
 					IDALSharedbudgetEntity sb = repoS.getSharedbudget(ClientLogic.getInstance().getId(), getId());
 					repoS.delete(sb);
 				}
