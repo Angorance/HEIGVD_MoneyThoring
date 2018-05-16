@@ -82,7 +82,7 @@
             <RowConstraints minHeight="10.0" prefHeight="100.0" />
          </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="277.0" text="Register" GridPane.columnSpan="2">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="277.0" text="Enregistrement" GridPane.columnSpan="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -136,7 +136,7 @@
             <RowConstraints minHeight="10.0" prefHeight="100.0" />
          </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="270.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="270.0" text="Connexion" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
