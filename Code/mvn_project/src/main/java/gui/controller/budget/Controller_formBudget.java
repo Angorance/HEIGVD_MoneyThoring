@@ -77,6 +77,7 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Inner class used to display a category
+	 *
 	 * @author Bryan Curchod
 	 * @version 1.2
 	 */
@@ -138,15 +139,18 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Inner class used to display a user
+	 *
 	 * @author Bryan Curchod
 	 * @version 1.1
 	 */
-	private class UserDisplayer extends  HBox{
+	private class UserDisplayer extends HBox {
+		
 		ClientModel user;
 		JFXButton btnRemove = new JFXButton("X");
 		Label lblUsername;
 		
-		UserDisplayer(ClientModel c){
+		UserDisplayer(ClientModel c) {
+			
 			user = c;
 			
 			lblUsername = new Label(user.getUsername());
@@ -157,7 +161,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			this.setPadding(new Insets(5));
 			this.setStyle("-fx-background-color: #e2e2e2; -fx-background-radius: 20");
 			this.setAlignment(Pos.CENTER);
-			setMargin(btnRemove, new Insets(0,0,0,15));
+			setMargin(btnRemove, new Insets(0, 0, 0, 15));
 			
 			btnRemove.setOnAction(event -> {
 				paneUserList.getChildren().remove(this);
@@ -177,6 +181,7 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Validation of the form
+	 *
 	 * @param event
 	 */
 	@Override public void formValidation(ActionEvent event) {
@@ -190,7 +195,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		boolean shared = checkShare.isSelected();
 		
 		// clearing the userlist in case of non-shared budget
-		if(!shared){
+		if (!shared) {
 			listUser.clear();
 		}
 		
@@ -210,12 +215,12 @@ public class Controller_formBudget implements IForm, Initializable {
 		if (budget == null) {
 			
 			budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last), gap,listCategorie,  listUser);
+					java.sql.Date.valueOf(last), gap, listCategorie, listUser);
 			parent.createItem(budget);
 		} else {
 			
-			budget.update(name,amount,shared,rec,java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last),gap,listCategorie,  listUser);
+			budget.update(name, amount, shared, rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last), gap,
+					listCategorie, listUser);
 			parent.modifyItem(budget);
 		}
 		
@@ -244,25 +249,26 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 			
 			checkShare.setSelected(budget.isShared());
-			if(budget.isShared()){
+			cmbCategorySelect.setDisable(budget.isShared());
+			
+			if (budget.isShared()) {
 				checkShare.setDisable(true);
-				for(ClientModel c : budget.getClientsBudget()){
+				for (ClientModel c : budget.getClientsBudget()) {
 					listUser.add(c);
 					paneUserList.getChildren().add(new UserDisplayer(c));
 				}
 			}
-			for(CategoryLogic cl : budget.getCategoriesBudget()){
+			for (CategoryLogic cl : budget.getCategoriesBudget()) {
 				paneCategoryList.getChildren().add(new CategoryDisplayer(cl));
 				listCategorie.add(cl);
 			}
 		}
 		
 		
-		
 		// gather every client except the current user for the combo box
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
-		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
-			if(u.getId() != ClientLogic.getInstance().getId()){
+		for (ClientModel u : ClientLogic.getInstance().getAllUsers()) {
+			if (u.getId() != ClientLogic.getInstance().getId()) {
 				UserItem.add(u);
 			}
 		}
@@ -270,7 +276,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		cbbUser.setItems(UserItem);
 		cbbUser.setOnAction(event -> {
 			ClientModel selected = cbbUser.getValue();
-			if(selected != null && !listUser.contains(selected)){
+			if (selected != null && !listUser.contains(selected)) {
 				listUser.add(selected);
 				paneUserList.getChildren().add(new UserDisplayer(selected));
 			}
@@ -291,7 +297,10 @@ public class Controller_formBudget implements IForm, Initializable {
 		});
 		
 		checkShare.setOnAction(event -> {
-				cbbUser.setDisable(!checkShare.isSelected());
+			cbbUser.setDisable(!checkShare.isSelected());
+			paneCategoryList.getChildren().clear();
+			cmbCategorySelect.setDisable(checkShare.isSelected());
+			listCategorie.clear();
 		});
 		
 		cbbUser.setDisable(!checkShare.isSelected());
