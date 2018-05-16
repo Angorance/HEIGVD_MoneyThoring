@@ -261,7 +261,6 @@ public class Controller_formBudget implements IForm, Initializable {
 			if(selected != null && !listUser.contains(selected)){
 				listUser.add(selected);
 				paneUserList.getChildren().add(new UserDisplayer(selected));
-				cbbUser.valueProperty().setValue(null);
 			}
 		});
 		
@@ -271,7 +270,6 @@ public class Controller_formBudget implements IForm, Initializable {
 			if (selected != null && !listCategorie.contains(selected)) {
 				paneCategoryList.getChildren().add(new CategoryDisplayer(selected));
 				listCategorie.add(selected);
-				cmbCategorySelect.valueProperty().setValue(null);
 			}
 		});
 		

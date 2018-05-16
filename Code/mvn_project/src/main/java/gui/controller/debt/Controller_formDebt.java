@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import javax.ejb.Local;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
