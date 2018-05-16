@@ -6,6 +6,7 @@ import bll.mappers.DAL.DALSharedBudgetMapper;
 import bll.model.*;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoriesbudgetEntity;
+import dal.ientites.IDALClientEntity;
 import dal.ientites.IDALSharedbudgetEntity;
 import dal.irepositories.*;
 import dal.orm.*;
@@ -134,6 +135,28 @@ public class BudgetLogic extends BudgetModel {
 		}
 	}
 	
+	/**
+	 * Get the creator of the budget.
+	 *
+	 * @return  creator of the budget.
+	 */
+	public ClientModel getCreator() {
+		
+		ClientModel creator = null;
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		try {
+			orm.beginTransaction();
+			
+			IDALClientEntity creatorEntity = orm.getClientRepository().getClient(getClientID());
+			creator = DALClientMapper.toClientModel(creatorEntity);
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		return creator;
+	}
 	/**
 	 * Get the categories of the budget.
 	 *
