@@ -97,12 +97,8 @@ public class DALDebtMapper {
 		ClientModel contributor = null;
 		
 		try {
-			orm.beginTransaction();
-			
 			IClientRepository repo = orm.getClientRepository();
 			contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
-			
-			orm.commit();
 			
 		} catch (DALException e) {
 			e.printStackTrace();
