@@ -3,6 +3,7 @@ package gui.model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class mainFrame {
             primaryStage.setMinWidth(MIN_WIDTH);
             primaryStage.show();
             primaryStage.setOnCloseRequest(event -> exit(0));
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/gui/Image/Logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

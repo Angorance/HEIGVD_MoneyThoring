@@ -110,7 +110,9 @@ public class Controller_listDebt implements IController, Initializable {
 			
 			lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
 			lblAmount.setText(Double.toString(debt.getAmount()));
-			lblPerson.setText(debt.getContributor().getUsername());
+			if(debt.getContributor() != null){
+				lblPerson.setText(debt.getContributor().getUsername());
+			}
 			lblNom.setText(debt.getName());
 			lblDescription.setText(debt.getDescription());
 		}
