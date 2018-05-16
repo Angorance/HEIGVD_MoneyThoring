@@ -57,4 +57,12 @@ public interface IIotransactionRepository {
      * @throws DALException
      */
     public List<IDALIotransactionEntity> getIotransactionsByBankaccount(int bankaccountId) throws DALException;
+    
+    /**
+     * Retreave all iotransactions by budget id
+     *
+     * @return List<IDALIotransactionEntity> the list of iotransaction by budget
+     * @throws DALException
+     */
+    public List<IDALIotransactionEntity> getIotransactionsByBudget(int budgetId) throws DALException;
 }

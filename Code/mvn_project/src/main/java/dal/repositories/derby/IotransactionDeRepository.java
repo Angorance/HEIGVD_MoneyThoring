@@ -121,8 +121,7 @@ public class IotransactionDeRepository implements IIotransactionRepository {
         }
 
     }
-
-
+    
     /**
      * {@inheritDoc}
      */
@@ -134,6 +133,22 @@ public class IotransactionDeRepository implements IIotransactionRepository {
         } catch (Exception e) {
             throw new DALException(e);
         }
+        return iotransaction;
+    }
+    
+    @Override
+    public List<IDALIotransactionEntity> getIotransactionsByBudget(int budgetId) throws DALException {
+        
+        List<IDALIotransactionEntity> iotransaction = null;
+        
+        try {
+            iotransaction = session.createQuery(
+                    "from IotransactionDeEntity where  budgetId = :budgetId")
+                    .setParameter("budgetId", budgetId).list();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        
         return iotransaction;
     }
 }

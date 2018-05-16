@@ -148,4 +148,19 @@ public class IotransactionPgRepository implements IIotransactionRepository {
 		}
 		return iotransaction;
 	}
+	
+	@Override
+	public List<IDALIotransactionEntity> getIotransactionsByBudget(int budgetId) throws DALException {
+		
+		List<IDALIotransactionEntity> iotransaction = null;
+		
+		try {
+			iotransaction = session.createQuery(
+					"from IotransactionPgEntity where  budgetId = :budgetId")
+					.setParameter("budgetId", budgetId).list();
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		return iotransaction;
+	}
 }
