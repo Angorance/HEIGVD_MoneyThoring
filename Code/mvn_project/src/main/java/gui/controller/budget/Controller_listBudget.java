@@ -106,27 +106,41 @@ public class Controller_listBudget implements IController, Initializable {
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		if(!budget.getCategoriesBudget().isEmpty()) {
-			for (CategoryLogic cl : budget.getCategoriesBudget()) {
-				
-				if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+		if (!budget.isShared()) {
+			if (!budget.getCategoriesBudget().isEmpty()) {
+				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 						
-						LocalDate currentDate = tr.getDate().toLocalDate();
-						if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
 							
-							outgo += tr.getAmount();
+							LocalDate currentDate = tr.getDate().toLocalDate();
+							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+								
+								outgo += tr.getAmount();
+							}
+						}
+					}
+				}
+			} else {
+				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+						for(int i = 0; i < 12; ++i) {
+							if(bal.getTransactions().containsKey(year)) {
+								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate().toLocalDate();
+									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+										
+										outgo += tr.getAmount();
+									}
+								}
+							}
 						}
 					}
 				}
 			}
-		}else{
-			/*for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
-				for(Integer year : IOTransactionLogic.getYearsWithTransactions()){
-				
-				}
-			}*/
+		} else {
+		
 		}
 		
 		return outgo;

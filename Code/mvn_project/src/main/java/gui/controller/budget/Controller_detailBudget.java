@@ -4,6 +4,7 @@ import bll.logic.BudgetLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
+import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
@@ -73,10 +74,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		private Label lblPrix;
 		private GridPane paneDisplay;
 		
-		private IOTransactionLogic transaction;
+		private IOTransactionModel transaction;
 		private final String outgoColor = "#f2a7a8";
 		
-		transactionDisplayer(IOTransactionLogic t) {
+		transactionDisplayer(IOTransactionModel t) {
 			
 			transaction = t;
 			lblDate = new Label(transaction.getDate().toString());
@@ -152,6 +153,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		btnRetour.setGraphic(image);
+		btnRetour.setText("");
+		btnRetour.getStyleClass().add("RoundButton");
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 		
 		lblTitre.setText(budget.getName());

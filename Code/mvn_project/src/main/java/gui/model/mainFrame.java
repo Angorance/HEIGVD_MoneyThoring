@@ -20,7 +20,7 @@ public class mainFrame {
             root = FXMLLoader.load(getClass().getResource("/gui/view/mainFrame.fxml"));
 
             Stage primaryStage = new Stage();
-            primaryStage.setTitle("Main Frame");
+            primaryStage.setTitle("MoneyThoring");
             primaryStage.setScene(new Scene(root, MIN_WIDTH, MIN_HEIGHT));
             primaryStage.setMinHeight(MIN_HEIGHT);
             primaryStage.setMinWidth(MIN_WIDTH);
