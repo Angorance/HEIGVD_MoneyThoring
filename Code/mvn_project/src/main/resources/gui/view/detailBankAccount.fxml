@@ -55,7 +55,7 @@
                   <Label text="Banque :" />
                   <Label fx:id="nameBankAccount" text="UBS" GridPane.columnIndex="1" />
                   <Label text="Type :" GridPane.rowIndex="1" />
-                  <Label text="Dernier transaction : " GridPane.rowIndex="3" />
+                  <Label text="Dernière transaction : " GridPane.rowIndex="3" />
                   <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Compte par défaut :" GridPane.rowIndex="2" />
