@@ -115,6 +115,9 @@ public class Controller_listDebt implements IController, Initializable {
 			lblAmount.setText(Double.toString(debt.getAmount()));
 			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.getContributor() != null){
 				lblPerson.setText(debt.getContributor().getUsername());
+				
+			} else {
+				lblPerson.setText(debt.getCreator().getUsername());
 			}
 			lblNom.setText(debt.getName());
 			lblDescription.setText(debt.getDescription());

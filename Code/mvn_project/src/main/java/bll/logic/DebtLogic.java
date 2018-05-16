@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class DebtLogic extends DebtModel {
 	
 	ClientModel contributor;
+	ClientModel creator;
 	
 	public DebtLogic() {
 		
@@ -31,6 +32,7 @@ public class DebtLogic extends DebtModel {
 		super(name, description, amount, isIncome, expirationDate);
 		
 		setContributor(contributor);
+		setCreator(ClientLogic.getInstance());
 		setCreatorID(ClientLogic.getInstance().getId());
 		
 		createDebt(MasterORM.getInstance().getPgORM());
@@ -46,6 +48,11 @@ public class DebtLogic extends DebtModel {
 		
 		createDebt(MasterORM.getInstance().getPgORM());
 		ClientLogic.getInstance().addDebt(this);
+	}
+	
+	public void setCreator(ClientModel creator) {
+		
+		this.creator = creator;
 	}
 	
 	public void setContributor(ClientModel contributor) {
@@ -82,6 +89,10 @@ public class DebtLogic extends DebtModel {
 	
 	public ClientModel getContributor() {
 		return contributor;
+	}
+	
+	public ClientModel getCreator() {
+		return creator;
 	}
 	
 	public void supp() {
