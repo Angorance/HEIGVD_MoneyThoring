@@ -64,7 +64,7 @@ public class DebtLogic extends DebtModel {
 		new IOTransactionLogic(this.getAmount(), this.getName(),
 				this.getDescription(), now, "CHF",
 				CategoryLogic.getDefaultCategory(),
-				BankAccountLogic.getDefaultBankAccount());
+				BankAccountLogic.getDefaultBankAccount(), null);
 		
 		supp();
 	}
