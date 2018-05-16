@@ -15,6 +15,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +43,6 @@ public class Controller_listDebt implements IController, Initializable {
 	private HashMap<Integer, debtDisplayer> debtList;
 	/**
 	 * Display a debt's information
-	 * TODO mettre en forme
 	 * @author Bryan Curchod
 	 * @version 1.0
 	 */
@@ -71,12 +71,14 @@ public class Controller_listDebt implements IController, Initializable {
 				btnValidation.setDisable(true);
 			}
 			btnValidation.getStyleClass().add("NeutralButton");
-			
+			lblDescription.setStyle("-fx-text-alignment: left");
+			lblNom.setStyle("-fx-font-size: 15");
+			lblPerson.setStyle("-fx-font-size: 15");
 			lblAmount.setStyle("-fx-font-size: 24");
 			
 			GridPane top = new GridPane();
 			
-			this.setPadding(new Insets(10));
+			this.setPadding(new Insets(15));
 			
 			top.getChildren().add(lblPerson);
 			top.getChildren().add(lblNom);
@@ -90,8 +92,9 @@ public class Controller_listDebt implements IController, Initializable {
 			this.setSpacing(10);
 			this.setAlignment(Pos.CENTER);
 			this.setFillWidth(true);
-			this.setMinWidth(140);
-			this.setMinHeight(100);
+			this.setMinHeight(170);
+			this.setPrefHeight(170);
+			this.setCursor(Cursor.HAND);
 			
 			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
@@ -145,7 +148,7 @@ public class Controller_listDebt implements IController, Initializable {
 		if(debt != null) {
 			debtList.get(debt.getId()).remove();
 			debtList.remove(debt.getId());
-			//TODO debt.supp()
+			debt.supp();
 		}
 		
 	}
