@@ -51,7 +51,6 @@ public class Controller_listBankAccount implements Initializable, IController {
 		
 		private Label nameAccount;
 		private Label amountAccount;
-		private Label lastTransactionDate;
 		private BankAccountLogic bankAccount;
 		
 		/**
@@ -64,7 +63,6 @@ public class Controller_listBankAccount implements Initializable, IController {
 			this.bankAccount = bc;
 			nameAccount = new Label(bankAccount.getName());
 			amountAccount = new Label(bankAccount.getAmount() + " CHF");
-			lastTransactionDate = new Label(bankAccount.getMostRecentTransaction().getDate().toString());
 			
 			String color;
 			if (bankAccount.getAmount() > 0) {
@@ -82,8 +80,6 @@ public class Controller_listBankAccount implements Initializable, IController {
 			this.setVgap(10);
 			this.setConstraints(nameAccount, 0, 0, 1, 1, HPos.LEFT, VPos.TOP);
 			this.setConstraints(amountAccount, 0, 1, 1, 1, HPos.CENTER,
-					VPos.CENTER);
-			this.setConstraints(lastTransactionDate, 0, 1, 1, 1, HPos.CENTER,
 					VPos.CENTER);
 			this.setPadding(new Insets(10));
 			this.setStyle(
@@ -111,7 +107,6 @@ public class Controller_listBankAccount implements Initializable, IController {
 			
 			nameAccount.setText(bankAccount.getName());
 			amountAccount.setText(String.valueOf(bankAccount.getAmount()));
-			lastTransactionDate.setText(bankAccount.getMostRecentTransaction().getDate().toString());
 			
 		}
 	}

@@ -1,6 +1,7 @@
 package gui.controller.budget;
 
 import bll.logic.*;
+import bll.model.ClientModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
@@ -86,7 +87,7 @@ public class Controller_listBudget implements IController, Initializable {
 		
 		public void redraw() {
 			
-			outgo = totalAmountCategories(budget);
+			outgo = totalAmount(budget);
 			lbltitre.setText(budget.getName());
 			lbltitre.setStyle("-fx-font-size: 24");
 			lblcurrentExpense.setText(
@@ -99,26 +100,49 @@ public class Controller_listBudget implements IController, Initializable {
 	}
 	
 	
-	public static double totalAmountCategories(BudgetLogic budget) {
+	public static double totalAmount(BudgetLogic budget) {
 		
 		double outgo = 0;
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			
-			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
-				
-				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+		if (!budget.isShared()) {
+			if (!budget.getCategoriesBudget().isEmpty()) {
+				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					LocalDate currentDate = tr.getDate().toLocalDate();
-					if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 						
-						outgo += tr.getAmount();
+						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+							
+							LocalDate currentDate = tr.getDate().toLocalDate();
+							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+								
+								outgo += tr.getAmount();
+							}
+						}
+					}
+				}
+			} else {
+				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+						for(int i = 0; i < 12; ++i) {
+							if(bal.getTransactions().containsKey(year)) {
+								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate().toLocalDate();
+									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+										
+										outgo += tr.getAmount();
+									}
+								}
+							}
+						}
 					}
 				}
 			}
+		} else {
+		
 		}
+		
 		return outgo;
 	}
 	

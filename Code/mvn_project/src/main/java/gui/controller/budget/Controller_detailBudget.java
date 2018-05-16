@@ -4,12 +4,12 @@ import bll.logic.BudgetLogic;
 import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
+import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
-import gui.controller.dashboard.Controller_dashboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +33,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import static gui.controller.budget.Controller_listBudget.totalAmountCategories;
+import static gui.controller.budget.Controller_listBudget.totalAmount;
 
 /**
  * @author Bryan Curchod
@@ -74,10 +74,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		private Label lblPrix;
 		private GridPane paneDisplay;
 		
-		private IOTransactionLogic transaction;
+		private IOTransactionModel transaction;
 		private final String outgoColor = "#f2a7a8";
 		
-		transactionDisplayer(IOTransactionLogic t) {
+		transactionDisplayer(IOTransactionModel t) {
 			
 			transaction = t;
 			lblDate = new Label(transaction.getDate().toString());
@@ -95,14 +95,7 @@ public class Controller_detailBudget implements Initializable, IController {
 					Priority.ALWAYS);
 			paneDisplay
 					.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
-			
-			/*for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
-				if(cl.getId() == transaction.getCategoryID()) {
-					outgoColor = cl.getColor();
-					break;
-				}
-			}*/
-			
+					
 			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
 			
 			transactionList.getChildren().add(paneDisplay);
@@ -224,7 +217,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		lblTitre.setText(bl.getName());
 		lblPlafond.setText(String.valueOf(bl.getAmount()) + " CHF");
 		
-		outgo = totalAmountCategories(bl);
+		outgo = totalAmount(bl);
 		lblSolde.setText(Double.toString(budget.getAmount() + outgo) + " CHF");
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());

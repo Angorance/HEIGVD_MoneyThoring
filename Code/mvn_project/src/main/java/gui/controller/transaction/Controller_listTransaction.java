@@ -288,11 +288,13 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void add(int year, int month) {
 		
-		for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
-			if (tr.isIncome()) {
-				income.add(new WrapperTransaction(tr));
-			} else {
-				outgo.add(new WrapperTransaction(tr));
+		if(bal.getTransactions().containsKey(year)) {
+			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+				if (tr.isIncome()) {
+					income.add(new WrapperTransaction(tr));
+				} else {
+					outgo.add(new WrapperTransaction(tr));
+				}
 			}
 		}
 	}
