@@ -217,21 +217,23 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public IOTransactionLogic getMostRecentTransaction() {
 		
-		Object[] years = IOTransactionLogic.getYearsWithTransactions()
-				.toArray();
-		
-		int lastYear = (Integer) years[years.length - 1];
-		
-		for (int i = 12; i > 0; --i) {
+		if (transactionsByDate != null) {
+			Object[] years = IOTransactionLogic.getYearsWithTransactions()
+					.toArray();
 			
-			ArrayList<IOTransactionLogic> tmp = transactionsByDate
-					.get(lastYear)[i - 1];
+			int lastYear = (Integer) years[years.length - 1];
 			
-			if (tmp != null && tmp.size() > 0) {
+			for (int i = 12; i > 0; --i) {
 				
-				Collections.sort(tmp);
+				ArrayList<IOTransactionLogic> tmp = transactionsByDate
+						.get(lastYear)[i - 1];
 				
-				return tmp.get(tmp.size() - 1);
+				if (tmp != null && tmp.size() > 0) {
+					
+					Collections.sort(tmp);
+					
+					return tmp.get(tmp.size() - 1);
+				}
 			}
 		}
 		
