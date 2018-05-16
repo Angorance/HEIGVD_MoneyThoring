@@ -36,3 +36,4 @@ hs_err_pid*
 *.gsheet
 /GZAtests/PGSQLite/PGSQLite/nbproject/private/
 Code/Code\.iml
+Code/mvn_project/target/
