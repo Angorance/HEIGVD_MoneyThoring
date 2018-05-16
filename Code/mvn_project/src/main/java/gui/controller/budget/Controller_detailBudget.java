@@ -28,6 +28,8 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static gui.controller.budget.Controller_listBudget.totalAmount;
@@ -277,12 +279,24 @@ public class Controller_detailBudget implements Initializable, IController {
 	private void setDataPieChart() {
 		
 		pieChart.setTitle("Dépense par catégorie");
+
+		
+		if(!budget.isShared()) {
+			if(!budget.getCategoriesBudget().isEmpty()) {
+				setData(budget.getCategoriesBudget());
+			}else{
+				setData(ClientLogic.getInstance().getCategories());
+			}
+		}
+	}
+	
+	private void setData(List<CategoryLogic> categories){
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+		for (CategoryLogic cl : categories) {
 			double outgo = 0;
 			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 				
@@ -299,15 +313,12 @@ public class Controller_detailBudget implements Initializable, IController {
 				}
 				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
 			}
-			
 		}
-		
 		pieChartData.forEach(data -> data.nameProperty()
 				.bind(Bindings.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
 		
 		pieChart.setData(pieChartData);
 		pieChart.setLegendVisible(false);
-		
 	}
 	
 	private void unloadform() {
