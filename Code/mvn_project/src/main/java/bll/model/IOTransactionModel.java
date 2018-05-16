@@ -32,9 +32,7 @@ public class IOTransactionModel {
 	
 	
 	// Protected default constructor. Avoid instances creation outside package.
-	protected IOTransactionModel() {
-	
-	}
+	protected IOTransactionModel() {}
 	
 	
 	/**

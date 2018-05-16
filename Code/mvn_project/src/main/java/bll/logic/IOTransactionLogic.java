@@ -2,6 +2,8 @@ package bll.logic;
 
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
+import dal.ientites.IDALIotransactionEntity;
+import dal.irepositories.IIotransactionRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 
@@ -78,6 +80,36 @@ public class IOTransactionLogic extends IOTransactionModel
 		return null;
 	}
 	
+	public static ArrayList<IOTransactionModel> getIOTransactionByBudget(
+			int budgetId) {
+		
+		ArrayList<IOTransactionModel> list = new ArrayList<>();
+		
+		// TODO - Change when adding derby
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		try {
+			orm.beginTransaction();
+			
+			IIotransactionRepository repo = orm.getIotransactionRepository();
+			
+			for (IDALIotransactionEntity te : repo
+					.getIotransactionsByBudget(budgetId)) {
+				
+				IOTransactionModel tm = new IOTransactionModel(te.getAmount(),
+						te.getName(), te.getDescription(), te.getCurrency(),
+						false);
+				
+				list.add(tm);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	public static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
 		
 		return transactionsByCategory;
@@ -106,7 +138,7 @@ public class IOTransactionLogic extends IOTransactionModel
 		yearsWithTransactions.add(date.toLocalDate().getYear());
 	}
 	
-	public static Set getYearsWithTransactions() {
+	public static Set<Integer> getYearsWithTransactions() {
 		
 		return yearsWithTransactions;
 	}
