@@ -93,7 +93,7 @@ public class DebtPgRepository implements IDebtRepository {
 	public Integer addDebt(IDALDebtEntity debt) throws DALException {
 		
 		DebtPgEntity newDebt = null;
-		if (newDebt.getClass() == DebtPgEntity.class) {
+		if (debt.getClass() == DebtPgEntity.class) {
 			newDebt = (DebtPgEntity) debt;
 		} else {
 			throw new DALException();
