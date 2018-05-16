@@ -60,7 +60,13 @@ public class Controller_listDebt implements IController, Initializable {
 		debtDisplayer(DebtLogic d){
 			debt = d;
 			
-			isClaim = (debt != null && debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.isIncome());
+			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt!= null) {
+				isClaim = debt.isIncome();
+			}
+			else {
+				isClaim = !debt.isIncome();
+			}
+			
 			if(ClientLogic.getInstance().getId() == debt.getCreatorID()){
 				btnValidation.setOnAction(event -> {
 					debt.confirmPayment();
