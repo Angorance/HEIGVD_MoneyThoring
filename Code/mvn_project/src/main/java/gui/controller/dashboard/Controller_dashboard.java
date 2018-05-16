@@ -191,6 +191,7 @@ public class Controller_dashboard implements IController, Initializable {
 			Calendar c = Calendar.getInstance();
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
+			
 			if(bal.getTransactions().containsKey(year)) {
 				for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
 					
@@ -219,7 +220,6 @@ public class Controller_dashboard implements IController, Initializable {
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
-		System.out.println(currentYear + "-" + currentMonth + "-" + currentDay);
 		
 		// Create a calendar object and set year and month
 		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);

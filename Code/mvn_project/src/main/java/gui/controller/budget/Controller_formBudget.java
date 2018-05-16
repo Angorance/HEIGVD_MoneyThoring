@@ -243,6 +243,7 @@ public class Controller_formBudget implements IForm, Initializable {
 				lastDate.setValue(budget.getEndingDate().toLocalDate());
 			}
 			
+			System.out.println(budget.isShared());
 			checkShare.setSelected(budget.isShared());
 			if(budget.isShared()){
 				checkShare.setDisable(true);
@@ -294,8 +295,8 @@ public class Controller_formBudget implements IForm, Initializable {
 				cbbUser.setDisable(!checkShare.isSelected());
 		});
 		
-		cbbUser.setDisable(true);
-		checkShare.setSelected(false);
+		cbbUser.setDisable(!checkShare.isSelected());
+		
 		
 		// Period selection management
 		cmbPeriode.getItems().add(new Periode("Mensuelle", 30));
