@@ -38,18 +38,21 @@
                           </rowConstraints>
                            <children>
                               <Label prefHeight="17.0" prefWidth="150.0" text="Nom" />
-                              <Label prefHeight="17.0" prefWidth="155.0" text="Récurrence" GridPane.rowIndex="5" />
+                              <!--<Label prefHeight="17.0" prefWidth="155.0" text="Récurrence" GridPane.rowIndex="5" />!-->
                               <Label text="Montant" GridPane.rowIndex="1" />
                               <JFXTextField fx:id="name" prefWidth="110.0" promptText="nom de la transaction" GridPane.columnIndex="1" />
                               <JFXTextField fx:id="amount" prefHeight="25.0" prefWidth="61.0" promptText="9999.99" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <JFXCheckBox fx:id="recurrence" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <!--<JFXComboBox fx:id="time" prefHeight="25.0" prefWidth="148.0" promptText="mensuel" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />!-->
+                              <!--<JFXCheckBox fx:id="recurrence" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />!-->
                               <Label prefHeight="17.0" prefWidth="155.0" text="Compte bancaire" GridPane.rowIndex="2" />
                               <JFXComboBox fx:id="bankAccount" prefHeight="25.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label prefHeight="17.0" prefWidth="155.0" text="Catégorie" GridPane.rowIndex="3" />
                               <JFXComboBox fx:id="category" prefHeight="17.0" prefWidth="155.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Date :" GridPane.rowIndex="4" />
                               <JFXDatePicker fx:id="datePicker" defaultColor="#008f53" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Budget partagé" GridPane.rowIndex="5" />
+                              <JFXCheckBox fx:id="checkSharedBudget" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <JFXComboBox fx:id="cbxBudgets" prefHeight="16.0" prefWidth="152.0" promptText="Budget partagé" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
                         <JFXButton fx:id="returnButton" layoutX="14.0" layoutY="119.0" styleClass="NeutralButton" text="Retour" AnchorPane.leftAnchor="14.0" />

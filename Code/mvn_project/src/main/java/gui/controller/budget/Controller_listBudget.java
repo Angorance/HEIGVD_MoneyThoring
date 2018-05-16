@@ -2,6 +2,7 @@ package gui.controller.budget;
 
 import bll.logic.*;
 import bll.model.ClientModel;
+import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
@@ -140,7 +141,13 @@ public class Controller_listBudget implements IController, Initializable {
 				}
 			}
 		} else {
-		
+			for(IOTransactionModel tr : IOTransactionLogic.getIOTransactionByBudget(budget.getId())){
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					
+					outgo += tr.getAmount();
+				}
+			}
 		}
 		
 		return outgo;
