@@ -1,5 +1,7 @@
 package dal.entities.pgsql;
 
+import dal.ientites.IDALCategoriesbudgetEntityPK;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;

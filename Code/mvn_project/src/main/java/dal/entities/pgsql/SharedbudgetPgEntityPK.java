@@ -1,5 +1,7 @@
 package dal.entities.pgsql;
 
+import dal.ientites.IDALSharedbudgetEntityPK;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.util.Objects;
 /**
  * @author Guillaume zaretti
  * @version 1.2
- * @see IDALSharedbudgetEntity
+ * @see IDALSharedbudgetEntityPK
  */
 public class SharedbudgetPgEntityPK implements Serializable, IDALSharedbudgetEntityPK {
 	

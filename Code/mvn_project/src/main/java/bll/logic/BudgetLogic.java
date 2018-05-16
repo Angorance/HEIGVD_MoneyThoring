@@ -44,7 +44,7 @@ public class BudgetLogic extends BudgetModel {
 		
 		ClientLogic.getInstance().addBudget(this);
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		createBudget(orm);
 		updateCategoriesBudget(orm);
@@ -71,7 +71,7 @@ public class BudgetLogic extends BudgetModel {
 			setClientsBudget(clientList);
 		}
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		updateBudget(orm);
 		updateCategoriesBudget(orm);
@@ -84,7 +84,7 @@ public class BudgetLogic extends BudgetModel {
 	 */
 	public void supp() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();

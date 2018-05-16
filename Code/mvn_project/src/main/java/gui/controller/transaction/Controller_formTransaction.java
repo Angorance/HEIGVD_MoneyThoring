@@ -273,5 +273,10 @@ public class Controller_formTransaction implements Initializable, IForm {
 				datePicker.setStyle("-jfx-default-color: green;");
 			}
 		});
+		
+		if(!ClientLogic.getInstance().isOnline()){
+			recurrence.setDisable(true);
+			recurrence.setSelected(false);
+		}
 	}
 }

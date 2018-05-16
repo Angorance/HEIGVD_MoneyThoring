@@ -33,7 +33,7 @@ public class DebtLogic extends DebtModel {
 		setContributor(contributor);
 		setCreatorID(ClientLogic.getInstance().getId());
 		
-		createDebt(MasterORM.getInstance().getPgORM());
+		createDebt(MasterORM.getInstance().getORM());
 		ClientLogic.getInstance().addDebt(this);
 	}
 	
@@ -44,7 +44,7 @@ public class DebtLogic extends DebtModel {
 		
 		setCreatorID(ClientLogic.getInstance().getId());
 		
-		createDebt(MasterORM.getInstance().getPgORM());
+		createDebt(MasterORM.getInstance().getORM());
 		ClientLogic.getInstance().addDebt(this);
 	}
 	
@@ -74,7 +74,7 @@ public class DebtLogic extends DebtModel {
 		setAmount(amount);
 		setExpirationDate(expirationDate);
 		
-		updateDebt(MasterORM.getInstance().getPgORM());
+		updateDebt(MasterORM.getInstance().getORM());
 	}
 	
 	public ClientModel getContributor() {
@@ -83,7 +83,7 @@ public class DebtLogic extends DebtModel {
 	
 	public void supp() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();

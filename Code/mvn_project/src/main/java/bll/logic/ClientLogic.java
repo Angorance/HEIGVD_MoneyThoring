@@ -132,7 +132,7 @@ public class ClientLogic extends ClientModel {
 	
 	public List<ClientModel> getAllUsers() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -230,7 +230,7 @@ public class ClientLogic extends ClientModel {
 	 */
 	public void supp() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -323,7 +323,7 @@ public class ClientLogic extends ClientModel {
 		
 		setActivated(isActivated);
 		
-		updateUser(MasterORM.getInstance().getPgORM());
+		updateUser(MasterORM.getInstance().getORM());
 	}
 	
 	public void wipe() {
