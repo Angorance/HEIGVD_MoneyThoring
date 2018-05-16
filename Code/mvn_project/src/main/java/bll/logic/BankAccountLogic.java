@@ -217,7 +217,7 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public IOTransactionLogic getMostRecentTransaction() {
 		
-		if (transactionsByDate != null) {
+		if (transactionsByDate != null && !transactionsByDate.isEmpty()) {
 			Object[] years = IOTransactionLogic.getYearsWithTransactions()
 					.toArray();
 			
