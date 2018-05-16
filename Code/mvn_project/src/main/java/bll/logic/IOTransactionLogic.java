@@ -200,7 +200,10 @@ public class IOTransactionLogic extends IOTransactionModel {
 			}
 			
 			bank.removeTransaction(this);
-			recurrence.supp();
+			
+			if(recurrence != null) {
+				recurrence.supp();
+			}
 			
 		} catch (DALException e) {
 			e.printStackTrace();
