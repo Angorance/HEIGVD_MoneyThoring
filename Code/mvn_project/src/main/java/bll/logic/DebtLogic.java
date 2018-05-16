@@ -51,7 +51,10 @@ public class DebtLogic extends DebtModel {
 	public void setContributor(ClientModel contributor) {
 		
 		this.contributor = contributor;
-		setContributorID(contributor.getId());
+		
+		if(contributor != null) {
+			setContributorID(contributor.getId());
+		}
 	}
 	
 	public void confirmPayment() {
