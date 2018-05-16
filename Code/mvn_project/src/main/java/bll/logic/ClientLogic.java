@@ -93,7 +93,6 @@ public class ClientLogic extends ClientModel {
 			setActivated(true);
 		}
 		
-		// TODO - Manage if connected and use Derby if necessary.
 		createUser(MasterORM.getInstance().getORM());
 	}
 	
@@ -254,41 +253,50 @@ public class ClientLogic extends ClientModel {
 			List<IDALBankaccountEntity> ba = orm.getBankaccountRepository()
 					.getBankAccoutsByClient(getId());
 			
+			// Get the bank accounts
+			DALBankaccountMapper.toBos(ba);
+			
+			
 			// Categories
 			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
 					.getCategoriesByClientId(getId());
+			
+			// Get the categories
+			DALCategoryMapper.toBos(cat);
+			
 			
 			// Budgets
 			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
 					.getBudgetsByClient(getId());
 			
-			// Shared budgets
-			List<IDALSharedbudgetEntity> sb = orm.getSharedBudgetRepository()
-					.getSharedbudgetByClient(getId());
+			// Get the categories of the budgets
+			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {
+				b.setDataFromDB(orm);
+			}
+			
+			
+			if (isOnline()) {
+				// Shared budgets
+				List<IDALSharedbudgetEntity> sb = orm
+						.getSharedBudgetRepository()
+						.getSharedbudgetByClient(getId());
+				
+				// Get the shared budgets
+				for (SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+					IDALBudgetEntity budget = orm.getBudgetRepository()
+							.getBudget(sbm.getBudgetID());
+					DALBudgetMapper.toBo(budget);
+				}
+			}
+			
 			
 			// Debts
 			List<IDALDebtEntity> de = orm.getDebtRepository()
 					.getDebtsByClient(getId());
 			
-			// Get the bank accounts
-			DALBankaccountMapper.toBos(ba);
-			
-			// Get the categories
-			DALCategoryMapper.toBos(cat);
-			
-			// Get the shared budgets
-			for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
-				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
-				DALBudgetMapper.toBo(budget);
-			}
-			
 			// Get the debts
 			DALDebtMapper.toBos(de);
 			
-			// Get the categories of the budgets
-			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {
-				b.setDataFromDB(orm);
-			}
 			
 			// Update the transactions
 			for (BankAccountLogic b : getBankAccounts()) {
