@@ -95,9 +95,6 @@ public class ClientLogic extends ClientModel {
 		
 		// TODO - Manage if connected and use Derby if necessary.
 		createUser(MasterORM.getInstance().getORM());
-		
-		/*Send the key*/
-		Mail.sendMail(username, email, getKey());
 	}
 	
 	// GETTERS

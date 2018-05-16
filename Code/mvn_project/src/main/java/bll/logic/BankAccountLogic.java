@@ -122,7 +122,7 @@ public class BankAccountLogic extends BankAccountModel {
 		int month = date.getMonthValue();
 		
 		transactions.remove(transaction);
-		transactionsByDate.get(year)[month].remove(transaction);
+		transactionsByDate.get(year)[month - 1].remove(transaction);
 		
 		updateAmount(transaction.getAmount() * -1);
 	}
