@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Controller_detailBankAccount implements Initializable, IController {
@@ -238,8 +239,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		/*Set the type of the account*/
 		typeBankAccount.setText(bal.getType());
 		
-		
-		dateLastTransaction.setText(bal.getMostRecentTransaction().getDate().toString());
+		 LocalDate ld = bal.getMostRecentTransaction().getDate().toLocalDate();
+		dateLastTransaction.setText(ld == null ? "-" : ld.toString());
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
 		if (bal.getAmount() >= 0) {
