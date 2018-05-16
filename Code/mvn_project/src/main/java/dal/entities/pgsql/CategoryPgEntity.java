@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALCategoryEntity
  */
 @Entity
 @Table(name = "category", schema = "moneythoring", catalog = "moneythoring")

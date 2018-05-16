@@ -10,7 +10,11 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 /**
- * TODO
+ * PgORM classe.
+ * the classe who use all repositories, handle the session andtransaction into each repositories
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class PgORM implements IORM {
 	

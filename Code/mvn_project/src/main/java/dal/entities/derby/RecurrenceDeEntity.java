@@ -7,7 +7,9 @@ import java.sql.Date;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALRecurrenceEntity
  */
 @Entity
 @Table(name = "RECURRENCE", schema = "MONEYTHORING", catalog = "")

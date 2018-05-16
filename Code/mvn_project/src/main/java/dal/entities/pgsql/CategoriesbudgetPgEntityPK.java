@@ -6,9 +6,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALCategoriesbudgetEntityPK
  */
-public class CategoriesbudgetPgEntityPK implements Serializable {
+public class CategoriesbudgetPgEntityPK implements Serializable, IDALCategoriesbudgetEntityPK {
 	
 	private int categoryId;
 	private int budgetId;

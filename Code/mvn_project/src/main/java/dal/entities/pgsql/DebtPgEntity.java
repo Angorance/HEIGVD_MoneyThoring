@@ -7,7 +7,9 @@ import java.sql.Date;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALDebtEntity
  */
 @Entity
 @Table(name = "debt", schema = "moneythoring", catalog = "moneythoring")

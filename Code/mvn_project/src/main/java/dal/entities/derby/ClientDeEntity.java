@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALClientEntity
  */
 @Entity
 @Table(name = "CLIENT", schema = "MONEYTHORING", catalog = "")

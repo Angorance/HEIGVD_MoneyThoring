@@ -6,7 +6,11 @@ import javax.persistence.Id;
 import java.sql.Date;
 
 /**
- * TODO
+ * IDALCategoriesbudgetEntityPK interface.
+ * interface who represent a category budget pk entity
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IDALIotransactionEntity {
 	

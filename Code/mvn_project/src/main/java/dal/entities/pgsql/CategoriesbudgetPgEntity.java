@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * TODO
+ * @author Guillaume zaretti
+ * @version 1.2
+ * @see IDALCategoriesbudgetEntity
  */
 @Entity
 @Table(name = "categoriesbudget", schema = "moneythoring",

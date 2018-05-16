@@ -4,7 +4,11 @@ import dal.dalexception.DALException;
 import dal.irepositories.*;
 
 /**
- * TODO
+ * IORM interface.
+ * the interface who use all repositories, handle the session andtransaction into each repositories
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IORM {
 	

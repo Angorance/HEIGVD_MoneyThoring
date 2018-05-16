@@ -6,7 +6,11 @@ import dal.ientites.IDALRecurrenceEntity;
 import java.util.List;
 
 /**
- * TODO
+ * IRecurrenceRepository give the access methodes for handle the
+ * recurrence into persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IRecurrenceRepository {
 	
