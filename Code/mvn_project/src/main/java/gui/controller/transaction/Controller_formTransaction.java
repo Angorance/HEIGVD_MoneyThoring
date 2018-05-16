@@ -38,6 +38,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 	private IController controller;
 	private boolean isIncome;
 	private IOTransactionLogic tr;
+	private BudgetLogic bl;
 	
 	public Controller_formTransaction(IController controller, boolean isIncome, IOTransactionLogic tr) {
 		
@@ -82,18 +83,17 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}*/
 			
 			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
-			BudgetLogic bl = null;
-			if(checkSharedBudget.isSelected()){
+			if (checkSharedBudget.isSelected()) {
 				bl = cbxBudgets.getSelectionModel().getSelectedItem();
 			}
 			
 			if (tr == null) {
 				IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF",
-						cl, bal,bl);
+						cl, bal, bl);
 				
 				controller.createItem(transaction);
 			} else {
-				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal,bl);
+				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal, bl);
 				controller.modifyItem(tr);
 			}
 		}
@@ -136,8 +136,18 @@ public class Controller_formTransaction implements Initializable, IForm {
 			check = false;
 		}
 		
-		if (datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())) {
+		if (!checkSharedBudget.isSelected() && (datePicker.getValue() == null || datePicker.getValue()
+				.isAfter(LocalDate.now()))) {
 			datePicker.setStyle("-jfx-default-color: red;");
+			check = false;
+		}
+		
+		BudgetLogic budgetLogic = cbxBudgets.getValue();
+		if (checkSharedBudget.isSelected() && (datePicker.getValue().isAfter(budgetLogic.getEndingDate().toLocalDate())
+				|| datePicker.getValue().isBefore(budgetLogic.getStartingDate().toLocalDate()))) {
+			datePicker.setStyle("-jfx-default-color: red;");
+			check = false;
+			
 		}
 		
 		return check;
@@ -186,14 +196,13 @@ public class Controller_formTransaction implements Initializable, IForm {
 		time.getSelectionModel().selectFirst();*/
 		
 		ObservableList<BudgetLogic> items3 = FXCollections.observableArrayList();
-		for(BudgetLogic bl : ClientLogic.getInstance().getBudgets()){
-			if(bl.isShared()){
+		for (BudgetLogic bl : ClientLogic.getInstance().getBudgets()) {
+			if (bl.isShared()) {
 				items3.add(bl);
 			}
 		}
 		cbxBudgets.setItems(items3);
 		cbxBudgets.getSelectionModel().selectFirst();
-		
 		
 	}
 	
@@ -296,6 +305,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 		checkSharedBudget.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				cbxBudgets.setVisible(checkSharedBudget.isSelected());
 			}
 		});
