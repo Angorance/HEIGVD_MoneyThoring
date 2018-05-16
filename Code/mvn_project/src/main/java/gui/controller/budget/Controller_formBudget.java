@@ -246,6 +246,10 @@ public class Controller_formBudget implements IForm, Initializable {
 			checkShare.setSelected(budget.isShared());
 			if(budget.isShared()){
 				checkShare.setDisable(true);
+				for(ClientModel c : budget.getClientsBudget()){
+					listUser.add(c);
+					paneUserList.getChildren().add(new UserDisplayer(c));
+				}
 			}
 			for(CategoryLogic cl : budget.getCategoriesBudget()){
 				paneCategoryList.getChildren().add(new CategoryDisplayer(cl));
