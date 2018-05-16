@@ -54,6 +54,9 @@ public class Controller_detailBudget implements Initializable, IController {
 	@FXML private GridPane paneBottom;
 	@FXML private PieChart pieChart;
 	@FXML private VBox transactionList;
+	@FXML private Label label_creator;
+	@FXML private Label startDate;
+	@FXML private Label endDate;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -169,7 +172,14 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
+		label_creator.setText(budget.getCreator().getUsername());
 		
+		if (ClientLogic.getInstance().getId() != budget.getCreator().getId()) {
+			btnEdit.setDisable(true);
+		}
+		
+		startDate.setText(budget.getStartingDate().toString());
+		endDate.setText(budget.getEndingDate().toString());
 		setDataPieChart();
 		setListTransaction();
 		

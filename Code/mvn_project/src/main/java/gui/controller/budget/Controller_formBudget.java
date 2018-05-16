@@ -10,11 +10,13 @@ import gui.controller.IForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -77,6 +79,7 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Inner class used to display a category
+	 *
 	 * @author Bryan Curchod
 	 * @version 1.2
 	 */
@@ -138,15 +141,18 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Inner class used to display a user
+	 *
 	 * @author Bryan Curchod
 	 * @version 1.1
 	 */
-	private class UserDisplayer extends  HBox{
+	private class UserDisplayer extends HBox {
+		
 		ClientModel user;
 		JFXButton btnRemove = new JFXButton("X");
 		Label lblUsername;
 		
-		UserDisplayer(ClientModel c){
+		UserDisplayer(ClientModel c) {
+			
 			user = c;
 			
 			lblUsername = new Label(user.getUsername());
@@ -157,7 +163,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			this.setPadding(new Insets(5));
 			this.setStyle("-fx-background-color: #e2e2e2; -fx-background-radius: 20");
 			this.setAlignment(Pos.CENTER);
-			setMargin(btnRemove, new Insets(0,0,0,15));
+			setMargin(btnRemove, new Insets(0, 0, 0, 15));
 			
 			btnRemove.setOnAction(event -> {
 				paneUserList.getChildren().remove(this);
@@ -177,50 +183,103 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * Validation of the form
+	 *
 	 * @param event
 	 */
 	@Override public void formValidation(ActionEvent event) {
 		
-		// we gather the user input
-		String name = txtName.getText();
-		double amount = Double.parseDouble(txtCeiling.getText());
-		LocalDate begin;
-		LocalDate last;
-		boolean rec = chbIsRegular.isSelected();
-		boolean shared = checkShare.isSelected();
 		
-		// clearing the userlist in case of non-shared budget
-		if(!shared){
-			listUser.clear();
-		}
-		
-		// we define the period, and the eventual repetition
-		int gap = 0;
-		if (chbIsRegular.isSelected()) {
-			begin = LocalDate.now();
-			last = LocalDate.now().plusDays(cmbPeriode.getValue().getPeriode());
-			gap = cmbPeriode.getValue().getPeriode();
+		if(checkValidInput()) {
 			
-		} else {
-			begin = beginDate.getValue();
-			last = lastDate.getValue();
-		}
-		
-		//
-		if (budget == null) {
+			// we gather the user input
+			String name = txtName.getText();
+			double amount = Double.parseDouble(txtCeiling.getText());
+			LocalDate begin;
+			LocalDate last;
+			boolean rec = chbIsRegular.isSelected();
+			boolean shared = checkShare.isSelected();
 			
-			budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last), gap,listCategorie,  listUser);
-			parent.createItem(budget);
-		} else {
+			// clearing the userlist in case of non-shared budget
+			if (!shared) {
+				listUser.clear();
+			}
 			
-			budget.update(name,amount,shared,rec,java.sql.Date.valueOf(begin),
-					java.sql.Date.valueOf(last),gap,listCategorie,  listUser);
-			parent.modifyItem(budget);
+			// we define the period, and the eventual repetition
+			int gap = 0;
+			if (chbIsRegular.isSelected()) {
+				begin = LocalDate.now();
+				last = LocalDate.now().plusDays(cmbPeriode.getValue().getPeriode());
+				gap = cmbPeriode.getValue().getPeriode();
+				
+			} else {
+				begin = beginDate.getValue();
+				last = lastDate.getValue();
+			}
+			
+			//
+			if (budget == null) {
+				
+				budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last), gap, listCategorie, listUser);
+				parent.createItem(budget);
+			} else {
+				
+				budget.update(name, amount, shared, rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last), gap,
+						listCategorie, listUser);
+				parent.modifyItem(budget);
+			}
 		}
 		
 	}
 	
+	private boolean checkValidInput(){
+		String name = txtName.getText();
+		String amount = txtCeiling.getText();
+		LocalDate begin = beginDate.getValue();
+		LocalDate last = lastDate.getValue();
+		boolean check = true;
+		if(name.isEmpty()){
+			check = false;
+			txtName.setStyle("-jfx-unfocus-color: red;");
+		}
+		
+		if(amount.isEmpty() && !isDouble(amount)){
+			check = false;
+			txtCeiling.setStyle("-jfx-unfocus-color: red;");
+			
+		}
+		
+		if(begin == null){
+			check = false;
+			beginDate.setStyle("-jfx-default-color: red;");
+		}
+		
+		if(last == null){
+			check = false;
+			lastDate.setStyle("-jfx-default-color: red;");
+		}
+		
+		if(( begin != null && begin.equals(last))|| ( last != null && last.isBefore(begin))){
+			check = false;
+			beginDate.setStyle("-jfx-default-color: red;");
+			lastDate.setStyle("-jfx-default-color: red;");
+		}
+		
+		if(checkShare.isSelected() && listUser.isEmpty()){
+			check = false;
+			paneUserList.setStyle("-fx-border-color: red");
+		}
+		
+		return check;
+	}
+	
+	private boolean isDouble(String str){
+		try {
+			Double.parseDouble(str);
+			return true;
+		}catch (Exception e){
+			return false;
+		}
+	}
 	
 	@Override public void formCancel(ActionEvent event) {
 		
@@ -229,6 +288,8 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
+		LocalDate begin = beginDate.getValue();
+		LocalDate last = lastDate.getValue();
 		
 		if (budget != null) {
 			listCategorie.clear();
@@ -243,25 +304,27 @@ public class Controller_formBudget implements IForm, Initializable {
 				lastDate.setValue(budget.getEndingDate().toLocalDate());
 			}
 			
-			System.out.println(budget.isShared());
 			checkShare.setSelected(budget.isShared());
-			if(budget.isShared()){
+			cmbCategorySelect.setDisable(budget.isShared());
+			
+			if (budget.isShared()) {
 				checkShare.setDisable(true);
-				for(ClientModel c : budget.getClientsBudget()){
+				for (ClientModel c : budget.getClientsBudget()) {
 					listUser.add(c);
 					paneUserList.getChildren().add(new UserDisplayer(c));
 				}
 			}
-			for(CategoryLogic cl : budget.getCategoriesBudget()){
+			for (CategoryLogic cl : budget.getCategoriesBudget()) {
 				paneCategoryList.getChildren().add(new CategoryDisplayer(cl));
 				listCategorie.add(cl);
 			}
 		}
 		
+		
 		// gather every client except the current user for the combo box
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
-		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
-			if(u.getId() != ClientLogic.getInstance().getId()){
+		for (ClientModel u : ClientLogic.getInstance().getAllUsers()) {
+			if (u.getId() != ClientLogic.getInstance().getId()) {
 				UserItem.add(u);
 			}
 		}
@@ -269,10 +332,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		cbbUser.setItems(UserItem);
 		cbbUser.setOnAction(event -> {
 			ClientModel selected = cbbUser.getValue();
-			if(selected != null && !listUser.contains(selected)){
+			if (selected != null && !listUser.contains(selected)) {
 				listUser.add(selected);
 				paneUserList.getChildren().add(new UserDisplayer(selected));
 			}
+			paneUserList.setStyle("-fx-border-color: white");
 		});
 		
 		
@@ -290,7 +354,10 @@ public class Controller_formBudget implements IForm, Initializable {
 		});
 		
 		checkShare.setOnAction(event -> {
-				cbbUser.setDisable(!checkShare.isSelected());
+			cbbUser.setDisable(!checkShare.isSelected());
+			paneCategoryList.getChildren().clear();
+			cmbCategorySelect.setDisable(checkShare.isSelected());
+			listCategorie.clear();
 		});
 		
 		cbbUser.setDisable(!checkShare.isSelected());
@@ -314,6 +381,37 @@ public class Controller_formBudget implements IForm, Initializable {
 		btnCancel.setOnAction(this::formCancel);
 		btnValidation.setOnAction(this::formValidation);
 		btnDelete.setOnAction(event -> parent.deleteItem(budget));
+		
+		txtName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				txtName.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		txtCeiling.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				txtCeiling.setStyle("-jfx-unfocus-color: black;");
+			}
+		});
+		
+		
+		beginDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				beginDate.setStyle("-jfx-default-color: green;");
+			}
+		});
+		
+		lastDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			@Override public void handle(MouseEvent event) {
+				
+				lastDate.setStyle("-jfx-default-color: green;");
+			}
+		});
 		
 		// TODO désactiver les budget partagé si on est hors ligne
 		

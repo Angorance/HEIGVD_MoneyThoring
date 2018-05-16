@@ -142,11 +142,6 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
 		
-		periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
-		
 		tr.supp();
 		
 		setData();
@@ -161,11 +156,6 @@ public class Controller_listTransaction implements Initializable, IController {
 	@Override public void modifyItem(Object updated) {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) updated;
-		
-		periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
 		
 		setData();
 	}
@@ -348,15 +338,26 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void generateComboBoxItem() {
 		
+		BankAccountLogic defautlt = new BankAccountLogic();
 		ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
 		for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
 			items.add(bal);
+			if(bal.isDefault()){
+				defautlt = bal;
+			}
 		}
 		accountSelect.setItems(items);
+		
+		if(defautlt != null) {
+			accountSelect.getSelectionModel().select(defautlt);
+		}else if (!ClientLogic.getInstance().getBankAccounts().isEmpty()){
+			accountSelect.getSelectionModel().selectFirst();
+		}
 		
 		ObservableList<String> items2 = FXCollections.observableArrayList();
 		items2.addAll("Mensuel", "Annuel");
 		periodSelect.setItems(items2);
+		
 	}
 	
 	
