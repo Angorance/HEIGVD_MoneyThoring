@@ -150,6 +150,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		btnRetour.setGraphic(image);
+		btnRetour.setText("");
+		btnRetour.getStyleClass().add("RoundButton");
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 		
 		lblTitre.setText(budget.getName());

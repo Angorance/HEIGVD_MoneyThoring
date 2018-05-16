@@ -75,7 +75,7 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <JFXButton fx:id="returnButton" layoutX="25.0" layoutY="17.0" prefHeight="36.0" prefWidth="48.0" text=" " AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="17.0" />
+      <JFXButton fx:id="returnButton" layoutX="25.0" layoutY="17.0" prefHeight="36.0" prefWidth="48.0" text=" " AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="40.0" />
       <LineChart fx:id="lineChart" layoutX="25.0" layoutY="239.0" prefHeight="400.0" prefWidth="680.0" title="Evolution du solde" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="240.0">
         <xAxis>
           <CategoryAxis fx:id="axeX" label="jour" side="BOTTOM" />

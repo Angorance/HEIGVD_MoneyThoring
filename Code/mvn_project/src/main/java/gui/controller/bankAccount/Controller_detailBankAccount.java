@@ -225,9 +225,10 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		paneform.setMouseTransparent(true);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
-		image.setFitWidth(48);
-		image.setFitHeight(36);
+		image.setFitWidth(30);
+		image.setFitHeight(30);
 		returnButton.setGraphic(image);
+		returnButton.getStyleClass().add("RoundButton");
 		
 		generateNodeList();
 		/*Set the name of the account*/

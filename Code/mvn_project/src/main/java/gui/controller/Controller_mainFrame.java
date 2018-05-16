@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -115,7 +116,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		image.setFitWidth(30);
 		image.setFitHeight(30);
 		disconnect_button.setGraphic(image);
-		
+		disconnect_button.setAlignment(Pos.CENTER);
+		disconnect_button.getStyleClass().add("RoundButton");
 		
 		disconnect_button.setOnAction(new EventHandler<ActionEvent>() {
 			
