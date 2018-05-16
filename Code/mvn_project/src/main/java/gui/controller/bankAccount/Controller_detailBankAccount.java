@@ -154,10 +154,12 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	@Override public void deleteItem(Object toDelete) {
+		
 		cba.deleteItem(bal);
 	}
 	
 	@Override public void modifyItem(Object toUpdated) {
+		
 		unloadform();
 		BankAccountLogic bal = (BankAccountLogic) toUpdated;
 		this.name.setText(bal.getName());
@@ -236,20 +238,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		/*Set the type of the account*/
 		typeBankAccount.setText(bal.getType());
 		
-		//if the list of transaction is not empty, we get the last transaction date
-		if (!bal.getTransactions().isEmpty()) {
-			/*int year = Calendar.getInstance().get(Calendar.YEAR);
-			if(bal.getTransactions().containsKey(year)) {
-				int cnt = 0;
-				while (!bal.getTransactions().get(year)[cnt].isEmpty()) {
-					cnt++;
-				}
-				int size =  bal.getTransactions().get(year)[cnt].size();
-				Date date = bal.getTransactions().get(year)[cnt].get(size -1).getDate();
-				dateLastTransaction.setText(date.toString());
-			}
-			dateLastTransaction.setText("-");*/
-		}
+		
+		dateLastTransaction.setText(bal.getMostRecentTransaction().getDate().toString());
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
 		if (bal.getAmount() >= 0) {
