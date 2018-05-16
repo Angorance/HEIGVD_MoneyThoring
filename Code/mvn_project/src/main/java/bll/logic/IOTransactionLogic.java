@@ -157,7 +157,6 @@ public class IOTransactionLogic extends IOTransactionModel
 		setAmount(amount);
 		setName(name);
 		setDescription(description);
-		setDate(date);
 		setCurrency(currency);
 		
 		setBudgetID(null);
@@ -168,6 +167,10 @@ public class IOTransactionLogic extends IOTransactionModel
 		
 		if (this.bank != bankAccount) {
 			updateBank(bankAccount);
+		}
+		
+		if (getDate() != date) {
+		
 		}
 		
 		updateIOTransaction(MasterORM.getInstance().getPgORM());
