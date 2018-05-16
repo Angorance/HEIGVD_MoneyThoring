@@ -10,6 +10,7 @@ import dal.orm.MasterORM;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -200,6 +201,26 @@ public class BankAccountLogic extends BankAccountModel {
 	public void saveDefault() {
 		
 		defaultBankAccount = this;
+	}
+	
+	
+	public IOTransactionLogic getMostRecentTransaction() {
+		
+		Integer[] years = (Integer[]) IOTransactionLogic.getYearsWithTransactions().toArray();
+		
+		int lastYear = years[years.length - 1];
+		
+		for (int i = 12; i > 0; --i) {
+			
+			if (transactionsByDate.get(lastYear)[i - 1] != null) {
+				ArrayList<IOTransactionLogic> tmp = transactionsByDate.get(lastYear)[i - 1];
+				Collections.sort(tmp);
+				
+				return tmp.get(tmp.size() - 1);
+			}
+		}
+		
+		return null;
 	}
 	
 	/**
