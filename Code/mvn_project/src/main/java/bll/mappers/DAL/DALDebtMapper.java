@@ -1,5 +1,6 @@
 package bll.mappers.DAL;
 
+import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
 import bll.model.ClientModel;
 import bll.model.DebtModel;
@@ -95,16 +96,20 @@ public class DALDebtMapper {
 		// Get the contributor
 		IORM orm = MasterORM.getInstance().getPgORM();
 		ClientModel contributor = null;
+		ClientModel creator = null;
 		
 		try {
 			IClientRepository repo = orm.getClientRepository();
 			contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			creator = ClientLogic.getInstance();
 			
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 		
 		object.setContributor(contributor);
+		object.setCreator(creator);
+		
 		return object;
 	}
 	
