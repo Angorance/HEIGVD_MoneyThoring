@@ -69,7 +69,7 @@ public class Controller_formDebt implements Initializable, IForm {
 		btnDelete.setOnAction(event -> parent.deleteItem(debt));
 		
 		// disable the user selection in offline mode
-		if(ClientLogic.getInstance().isOnline()){
+		if(!ClientLogic.getInstance().isOnline()){
 			cbbOtherUser.setDisable(true);
 		}
 	}
