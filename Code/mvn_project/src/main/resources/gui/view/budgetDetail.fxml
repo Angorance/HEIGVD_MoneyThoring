@@ -20,24 +20,23 @@
    <children>
       <AnchorPane fx:id="paneTop" layoutX="28.0" layoutY="22.0" prefHeight="189.0" prefWidth="703.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label fx:id="lblTitre" layoutX="13.0" layoutY="28.0" text="Nom du Budget" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="28.0">
+            <Label fx:id="lblTitre" alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="15.0" text="Nom du Budget" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <Label layoutX="15.0" layoutY="103.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="103.0" />
-            <Label contentDisplay="RIGHT" layoutX="521.0" layoutY="16.0" text="Plafond" AnchorPane.rightAnchor="107.0">
+            <Label contentDisplay="RIGHT" layoutX="578.0" layoutY="45.0" text="Plafond" AnchorPane.rightAnchor="64.0">
                <font>
-                  <Font size="22.0" />
+                  <Font size="18.0" />
                </font></Label>
             <JFXProgressBar fx:id="progessBar" layoutX="161.0" layoutY="127.0" prefHeight="17.0" prefWidth="673.0" progress="0.22" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-            <JFXButton fx:id="btnRetour" layoutY="3.0" text="Retour" />
             <Label fx:id="lblSolde" layoutX="193.0" layoutY="103.0" text="-" />
-            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="526.0" layoutY="63.0" text="00000000" AnchorPane.rightAnchor="112.0">
+            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="576.0" layoutY="85.0" text="00000000" AnchorPane.rightAnchor="60.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -48,6 +47,7 @@
             <Label fx:id="endDate" layoutX="655.0" layoutY="136.0" text="Label" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="20.0" />
             <Label layoutX="15.0" layoutY="136.0" text="Début : " />
             <Label layoutX="596.0" layoutY="136.0" text="Fin : " AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="82.0" />
+            <JFXButton fx:id="btnRetour" layoutX="31.0" layoutY="20.0" text="Retour" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
       <GridPane fx:id="paneBottom" hgap="20.0" layoutX="20.0" layoutY="227.0" prefHeight="209.0" prefWidth="703.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="227.0">

@@ -146,6 +146,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			nameAccount.setText(bal.getName());
 			nameBankAccount.setText(bal.getBankName());
 			amount.setText(String.valueOf(bal.getAmount()));
+			amount.setDisable(true);
 			typeAccount.getSelectionModel().select(bal.getType());
 			defaultAccount.setSelected(bal.isDefault());
 		}
