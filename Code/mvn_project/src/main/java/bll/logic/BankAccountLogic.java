@@ -139,6 +139,17 @@ public class BankAccountLogic extends BankAccountModel {
 		addToHashMap(transaction);
 	}
 	
+	public void updateTransaction(IOTransactionLogic transaction,
+			LocalDate previous) {
+		
+		int year = previous.getYear();
+		int month = previous.getMonthValue() - 1;
+		
+		transactionsByDate.get(year)[month].remove(transaction);
+		
+		addToHashMap(transaction);
+	}
+	
 	/**
 	 * Get the list of transactions for this bank account.
 	 *
@@ -206,13 +217,15 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public IOTransactionLogic getMostRecentTransaction() {
 		
-		Object[] years = IOTransactionLogic.getYearsWithTransactions().toArray();
+		Object[] years = IOTransactionLogic.getYearsWithTransactions()
+				.toArray();
 		
 		int lastYear = (Integer) years[years.length - 1];
 		
 		for (int i = 12; i > 0; --i) {
 			
-			ArrayList<IOTransactionLogic> tmp = transactionsByDate.get(lastYear)[i - 1];
+			ArrayList<IOTransactionLogic> tmp = transactionsByDate
+					.get(lastYear)[i - 1];
 			
 			if (tmp != null && tmp.size() > 0) {
 				
