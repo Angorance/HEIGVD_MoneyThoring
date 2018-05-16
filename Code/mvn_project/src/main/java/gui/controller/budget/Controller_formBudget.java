@@ -166,6 +166,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 	}
 	
+	
 	public Controller_formBudget(IController parent, BudgetLogic budget) {
 		
 		this.parent = parent;
@@ -174,8 +175,13 @@ public class Controller_formBudget implements IForm, Initializable {
 		listUser = new ArrayList<>();
 	}
 	
+	/**
+	 * Validation of the form
+	 * @param event
+	 */
 	@Override public void formValidation(ActionEvent event) {
 		
+		// we gather the user input
 		String name = txtName.getText();
 		double amount = Double.parseDouble(txtCeiling.getText());
 		LocalDate begin;
@@ -183,10 +189,12 @@ public class Controller_formBudget implements IForm, Initializable {
 		boolean rec = chbIsRegular.isSelected();
 		boolean shared = checkShare.isSelected();
 		
+		// clearing the userlist in case of non-shared budget
 		if(!shared){
 			listUser.clear();
 		}
 		
+		// we define the period, and the eventual repetition
 		int gap = 0;
 		if (chbIsRegular.isSelected()) {
 			begin = LocalDate.now();
@@ -197,6 +205,8 @@ public class Controller_formBudget implements IForm, Initializable {
 			begin = beginDate.getValue();
 			last = lastDate.getValue();
 		}
+		
+		//
 		if (budget == null) {
 			
 			budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin),
@@ -243,11 +253,9 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 		}
 		
-		// set the available category in the comboBox
-		ObservableList<CategoryLogic> CatItems = FXCollections.observableArrayList();
-		CatItems.addAll(ClientLogic.getInstance().getCategories());
 		
-		// gather every client except the current user
+		
+		// gather every client except the current user for the combo box
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
 		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
 			if(u.getId() != ClientLogic.getInstance().getId()){
@@ -263,6 +271,11 @@ public class Controller_formBudget implements IForm, Initializable {
 				paneUserList.getChildren().add(new UserDisplayer(selected));
 			}
 		});
+		
+		
+		// set the available category in the comboBox
+		ObservableList<CategoryLogic> CatItems = FXCollections.observableArrayList();
+		CatItems.addAll(ClientLogic.getInstance().getCategories());
 		
 		cmbCategorySelect.setItems(CatItems);
 		cmbCategorySelect.setOnAction(event -> {
@@ -294,6 +307,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		});
 		
 		
+		// button event
 		btnCancel.setOnAction(this::formCancel);
 		btnValidation.setOnAction(this::formValidation);
 		btnDelete.setOnAction(event -> parent.deleteItem(budget));

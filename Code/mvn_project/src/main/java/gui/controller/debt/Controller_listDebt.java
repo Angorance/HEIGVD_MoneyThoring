@@ -111,17 +111,8 @@ public class Controller_listDebt implements IController, Initializable {
 			
 			lblExpirationDate.setText(debt.getExpirationDate().toString());
 			lblAmount.setText(Double.toString(debt.getAmount()));
-			lblPerson.setText(getClientName(debt.getId()));
+			lblPerson.setText(debt.getContributor().getUsername());
 			lblNom.setText(debt.getName());
-		}
-		
-		private String getClientName(int id){
-			for(ClientModel c : ClientLogic.getInstance().getAllUsers()){
-				if(c.getId() == id){
-					return c.getUsername();
-				}
-			}
-			return "John Doe";
 		}
 		
 		public void remove(){
@@ -217,9 +208,9 @@ public class Controller_listDebt implements IController, Initializable {
 		JFXDepthManager.setDepth(ndlAdd,1);
 		
 		debtList = new HashMap<>();
-		/*
-		for(DebtLogic d : ClientLogic.getInstance().get()){
+		
+		for(DebtLogic d : ClientLogic.getInstance().getDebts()){
 			debtList.put(d.getId(), new debtDisplayer(d));
-		}*/
+		}
 	}
 }
