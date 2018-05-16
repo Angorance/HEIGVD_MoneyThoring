@@ -116,6 +116,7 @@ public class BudgetLogic extends BudgetModel {
 					
 					// Remove the link between the client and the budget
 					IDALSharedbudgetEntity sb = repoS.getSharedbudget(ClientLogic.getInstance().getId(), getId());
+					clients.remove(ClientLogic.getInstance());
 					repoS.delete(sb);
 				}
 			}
@@ -124,6 +125,9 @@ public class BudgetLogic extends BudgetModel {
 			
 			// Delete the budget from the client
 			ClientLogic.getInstance().removeBudget(this);
+			
+			// Update the database
+			updateBudget(orm);
 			
 		} catch (DALException e) {
 			e.printStackTrace();
