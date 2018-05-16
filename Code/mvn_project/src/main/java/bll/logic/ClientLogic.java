@@ -317,6 +317,7 @@ public class ClientLogic extends ClientModel {
 		bankAccounts.clear();
 		categories.clear();
 		budgets.clear();
+		debts.clear();
 		
 		setUsername(null);
 		setEmail(null);
