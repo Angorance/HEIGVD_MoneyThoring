@@ -263,7 +263,8 @@ public class ClientLogic extends ClientModel {
 			// Get the shared budgets
 			for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
 				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
-				DALBudgetMapper.toBo(budget);
+				BudgetLogic b = DALBudgetMapper.toBo(budget);
+				b.setDataFromDB(orm);
 			}
 			
 			// Get the debts
