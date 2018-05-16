@@ -46,15 +46,6 @@ public class Controller_formDebt implements Initializable, IForm {
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
-		if (debt != null) {
-			txtAmount.setText(Double.toString(debt.getAmount()));
-			txtNom.setText(debt.getName());
-			txtDescription.setText(debt.getDescription());
-			dateLimite.setValue(LocalDate.parse(debt.getExpirationDate().toString()));
-			cbbOtherUser.setValue(getUserConcerned(debt.getContributorID()));
-			btnDelete.setVisible(true);
-		}
-		
 		// gather every client except the current user
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
 		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
@@ -63,26 +54,25 @@ public class Controller_formDebt implements Initializable, IForm {
 			}
 		}
 		
+		if (debt != null) {
+			txtAmount.setText(Double.toString(debt.getAmount()));
+			txtNom.setText(debt.getName());
+			txtDescription.setText(debt.getDescription());
+			dateLimite.setValue(LocalDate.parse(debt.getExpirationDate().toString()));
+			cbbOtherUser.setValue(debt.getContributor());
+			btnDelete.setVisible(true);
+		}
+		
 		cbbOtherUser.setItems(UserItem);
 		btnCancel.setOnAction(this::formCancel);
 		btnValider.setOnAction(this::formValidation);
 		btnDelete.setOnAction(event -> parent.deleteItem(debt));
 	}
 	
-	private ClientModel getUserConcerned(int id) {
-		
-		for(ClientModel c : ClientLogic.getInstance().getAllUsers()){
-			if(c.getId() == id){
-				return c;
-			}
-		}
-		return null;
-	}
-	
 	@Override public void formValidation(ActionEvent event) {
 		
 		if (debt == null) {
-			ClientModel uConcerned = cbbOtherUser.getSelectionModel().getSelectedItem();
+			ClientModel uConcerned = cbbOtherUser.getValue();
 			debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), isIncome,
 					Date.valueOf(dateLimite.getValue()),uConcerned);
 			parent.createItem(debt);

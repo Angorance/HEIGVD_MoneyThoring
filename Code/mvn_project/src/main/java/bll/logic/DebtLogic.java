@@ -77,6 +77,10 @@ public class DebtLogic extends DebtModel {
 		updateDebt(MasterORM.getInstance().getPgORM());
 	}
 	
+	public ClientModel getContributor() {
+		return contributor;
+	}
+	
 	public void supp() {
 		
 		IORM orm = MasterORM.getInstance().getPgORM();

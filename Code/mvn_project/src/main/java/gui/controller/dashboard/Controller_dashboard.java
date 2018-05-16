@@ -171,7 +171,6 @@ public class Controller_dashboard implements IController, Initializable {
 		btnOutgo.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				
 				callForm(false);
 			}
 		});
@@ -192,10 +191,11 @@ public class Controller_dashboard implements IController, Initializable {
 			Calendar c = Calendar.getInstance();
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
-			
-			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
-				
-				transactionDisplayer trD = new transactionDisplayer(tr);
+			if(bal.getTransactions().containsKey(year)) {
+				for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+					
+					transactionDisplayer trD = new transactionDisplayer(tr);
+				}
 			}
 		}
 		

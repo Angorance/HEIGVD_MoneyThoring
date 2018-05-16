@@ -6,11 +6,11 @@
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="238.0" stylesheets="@/gui/css/lateralMenu.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="btnDashboard" accessibleText="0" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Tableau de bord" />
-      <Button fx:id="btnBudget" accessibleText="1" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Budget" />
+      <Button fx:id="btnBudget" accessibleText="1" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Budgets" />
       <Button fx:id="btnTransaction" accessibleText="2" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Transactions" />
       <Button fx:id="btnDept" accessibleText="3" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Dettes" />
       <Button fx:id="btnBankAccount" accessibleText="4" layoutX="10.0" layoutY="205.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Comptes bancaires" />
       <Button fx:id="btnCategory" accessibleText="5" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Catégories" />
-      <Button fx:id="btnCategory1" accessibleText="6" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Paramètres" />
+      <Button fx:id="btnCategory1" accessibleText="6" mnemonicParsing="false" prefHeight="65.0" prefWidth="238.0" text="Mon compte" />
    </children>
 </VBox>

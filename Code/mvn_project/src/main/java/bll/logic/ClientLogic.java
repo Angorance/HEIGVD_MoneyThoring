@@ -129,6 +129,11 @@ public class ClientLogic extends ClientModel {
 		return null;
 	}
 	
+	public ArrayList<DebtLogic> getDebts() {
+		
+		return debts;
+	}
+	
 	// SETTERS
 	
 	/**
