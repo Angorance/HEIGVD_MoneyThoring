@@ -6,6 +6,7 @@ import dal.orm.IORM;
 import dal.orm.MasterORM;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -170,7 +171,10 @@ public class IOTransactionLogic extends IOTransactionModel
 		}
 		
 		if (getDate() != date) {
-		
+			LocalDate previous = getDate().toLocalDate();
+			
+			setDate(date);
+			bank.updateTransaction(this, previous);
 		}
 		
 		updateIOTransaction(MasterORM.getInstance().getPgORM());
