@@ -243,7 +243,6 @@ public class Controller_formBudget implements IForm, Initializable {
 				lastDate.setValue(budget.getEndingDate().toLocalDate());
 			}
 			
-			System.out.println(budget.isShared());
 			checkShare.setSelected(budget.isShared());
 			if(budget.isShared()){
 				checkShare.setDisable(true);

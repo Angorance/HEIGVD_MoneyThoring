@@ -142,11 +142,6 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
 		
-		/*periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
-		yearOrMonth();*/
 		tr.supp();
 		
 		setData();
@@ -161,12 +156,6 @@ public class Controller_listTransaction implements Initializable, IController {
 	@Override public void modifyItem(Object updated) {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) updated;
-		
-		/*periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
-		yearOrMonth();*/
 		
 		setData();
 	}
