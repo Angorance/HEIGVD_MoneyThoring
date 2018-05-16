@@ -227,6 +227,10 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}
 			
 			datePicker.setValue(tr.getDate().toLocalDate());
+			
+			checkSharedBudget.setSelected(tr.getBudget().isShared());
+			cbxBudgets.getSelectionModel().select(tr.getBudget());
+			
 		}
 		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
