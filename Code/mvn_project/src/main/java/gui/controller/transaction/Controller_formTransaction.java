@@ -82,14 +82,18 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}*/
 			
 			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
+			BudgetLogic bl = null;
+			if(checkSharedBudget.isSelected()){
+				bl = cbxBudgets.getSelectionModel().getSelectedItem();
+			}
 			
 			if (tr == null) {
 				IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF",
-						cl, bal);
+						cl, bal,bl);
 				
 				controller.createItem(transaction);
 			} else {
-				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal);
+				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal,bl);
 				controller.modifyItem(tr);
 			}
 		}
@@ -228,8 +232,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 			
 			datePicker.setValue(tr.getDate().toLocalDate());
 			
-			/*checkSharedBudget.setSelected(tr.getBudget().isShared());
-			cbxBudgets.getSelectionModel().select(tr.getBudget());*/
+			checkSharedBudget.setSelected(tr.getBudget().isShared());
+			cbxBudgets.getSelectionModel().select(tr.getBudget());
 			
 		}
 		
