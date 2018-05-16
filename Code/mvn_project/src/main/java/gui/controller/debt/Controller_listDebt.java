@@ -64,7 +64,7 @@ public class Controller_listDebt implements IController, Initializable {
 			if(ClientLogic.getInstance().getId() == debt.getCreatorID()){
 				btnValidation.setOnAction(event -> {
 					debt.confirmPayment();
-					this.setDisable(true);
+					remove();
 				});
 				this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			} else {
@@ -113,7 +113,7 @@ public class Controller_listDebt implements IController, Initializable {
 			
 			lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
 			lblAmount.setText(Double.toString(debt.getAmount()));
-			if(debt.getContributor() != null){
+			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.getContributor() != null){
 				lblPerson.setText(debt.getContributor().getUsername());
 			}
 			lblNom.setText(debt.getName());
