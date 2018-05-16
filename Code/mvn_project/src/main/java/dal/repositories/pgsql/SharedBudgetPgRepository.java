@@ -39,8 +39,8 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
 
         try {
             sharedbudgetEntity = (SharedbudgetPgEntity) session.createCriteria(SharedbudgetPgEntity.class)
-                    .add(Restrictions.and(Restrictions.eq("client_id", client_id),
-                            Restrictions.eq("budget_id",budget_id)))
+                    .add(Restrictions.and(Restrictions.eq("clientId", client_id),
+                            Restrictions.eq("budgetId",budget_id)))
                     .uniqueResult();
         } catch (Exception e) {
             throw new DALException(e);
@@ -114,8 +114,8 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
         IDALSharedbudgetEntity budget = null;
         try {
             budget = (SharedbudgetPgEntity) session.createCriteria(SharedbudgetPgEntity.class)
-                    .add(Restrictions.and(Restrictions.eq("client_id", sharedBudget.getClientId()),
-                            Restrictions.eq("budget_id",sharedBudget.getBudgetId())))
+                    .add(Restrictions.and(Restrictions.eq("clientId", sharedBudget.getClientId()),
+                            Restrictions.eq("budgetId",sharedBudget.getBudgetId())))
                     .uniqueResult();
 
             session.delete(budget);
@@ -151,7 +151,7 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
     public List<IDALSharedbudgetEntity> getSharedbudgetByClient(int client_id) throws DALException {
         List<IDALSharedbudgetEntity> budgetsharedEntities = null;
         try {
-            budgetsharedEntities = session.createQuery("from SharedbudgetPgEntity where clientId = :clientid").setParameter("clientid",client_id).list();
+            budgetsharedEntities = session.createQuery("from SharedbudgetPgEntity where clientId = :clientid").setParameter("clientid", client_id).list();
         } catch (Exception e) {
             throw new DALException(e);
         }
