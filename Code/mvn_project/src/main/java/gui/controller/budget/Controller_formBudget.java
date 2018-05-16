@@ -258,8 +258,6 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 		}
 		
-		
-		
 		// gather every client except the current user for the combo box
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
 		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){

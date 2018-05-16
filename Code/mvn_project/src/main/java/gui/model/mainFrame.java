@@ -12,7 +12,7 @@ import static java.lang.System.exit;
 public class mainFrame {
 
     private final int MIN_HEIGHT = 750;
-    private final int MIN_WIDTH = 1000;
+    private final int MIN_WIDTH = 1200;
     public mainFrame(){
         Parent root = null;
         try {

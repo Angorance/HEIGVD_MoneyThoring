@@ -22,6 +22,7 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -32,9 +33,9 @@ import java.util.ResourceBundle;
 public class Controller_listDebt implements IController, Initializable {
 	
 	@FXML private BorderPane paneDebt;
-	@FXML private FlowPane paneDebtList; // list the debts
+	@FXML private VBox paneDebtList; // list the debts
 	@FXML private BorderPane paneClaim;
-	@FXML private FlowPane paneClaimList; // list the claims
+	@FXML private VBox paneClaimList; // list the claims
 	@FXML private JFXNodesList ndlAdd;
 	@FXML private AnchorPane paneForm;
 	
@@ -50,20 +51,21 @@ public class Controller_listDebt implements IController, Initializable {
 		Label lblAmount = new Label();
 		Label lblExpirationDate = new Label();
 		Label lblNom = new Label();
+		Label lblDescription = new Label();
 		JFXButton btnValidation = new JFXButton("Valider"); // Button to confirm the payment
 		
 		DebtLogic debt;
 		boolean isClaim;
 		
-		/**
-		 * default constructor, once the tests are finished ==> delete and create a constructor with a debt
-		 */
 		debtDisplayer(DebtLogic d){
 			debt = d;
 			
 			isClaim = (debt != null && debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.isIncome());
 			if(ClientLogic.getInstance().getId() == debt.getCreatorID()){
-				btnValidation.setOnAction(event -> debt.confirmPayment());
+				btnValidation.setOnAction(event -> {
+					debt.confirmPayment();
+					this.setDisable(true);
+				});
 				this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			} else {
 				btnValidation.setDisable(true);
@@ -73,7 +75,6 @@ public class Controller_listDebt implements IController, Initializable {
 			lblAmount.setStyle("-fx-font-size: 24");
 			
 			GridPane top = new GridPane();
-			GridPane bottom = new GridPane();
 			
 			this.setPadding(new Insets(10));
 			
@@ -82,17 +83,15 @@ public class Controller_listDebt implements IController, Initializable {
 			GridPane.setConstraints(lblNom,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
 			GridPane.setConstraints(lblPerson,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
 			this.getChildren().add(top);
+			this.getChildren().add(lblDescription);
 			this.getChildren().add(lblAmount);
-			bottom.getChildren().add(lblExpirationDate);
-			bottom.getChildren().add(btnValidation);
-			GridPane.setConstraints(lblExpirationDate,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
-			GridPane.setConstraints(btnValidation,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
-			this.getChildren().add(bottom);
+			this.getChildren().add(lblExpirationDate);
+			this.getChildren().add(btnValidation);
 			this.setSpacing(10);
-			this.setAlignment(Pos.CENTER_LEFT);
+			this.setAlignment(Pos.CENTER);
 			this.setFillWidth(true);
-			this.setMinWidth(80);
-			this.setMinHeight(80);
+			this.setMinWidth(140);
+			this.setMinHeight(100);
 			
 			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
@@ -109,10 +108,11 @@ public class Controller_listDebt implements IController, Initializable {
 		
 		public void redraw(){
 			
-			lblExpirationDate.setText(debt.getExpirationDate().toString());
+			lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
 			lblAmount.setText(Double.toString(debt.getAmount()));
 			lblPerson.setText(debt.getContributor().getUsername());
 			lblNom.setText(debt.getName());
+			lblDescription.setText(debt.getDescription());
 		}
 		
 		public void remove(){
