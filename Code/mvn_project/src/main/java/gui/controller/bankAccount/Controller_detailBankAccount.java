@@ -239,8 +239,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		/*Set the type of the account*/
 		typeBankAccount.setText(bal.getType());
 		
-		 LocalDate ld = bal.getMostRecentTransaction().getDate().toLocalDate();
-		dateLastTransaction.setText(ld == null ? "-" : ld.toString());
+		IOTransactionLogic tr = bal.getMostRecentTransaction();
+		dateLastTransaction.setText(tr == null ? "-" : tr.getDate().toString());
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
 		if (bal.getAmount() >= 0) {
