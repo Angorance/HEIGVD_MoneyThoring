@@ -1,9 +1,6 @@
 package gui.controller.budget;
 
-import bll.logic.BudgetLogic;
-import bll.logic.CategoryLogic;
-import bll.logic.ClientLogic;
-import bll.logic.IOTransactionLogic;
+import bll.logic.*;
 import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
@@ -232,17 +229,46 @@ public class Controller_detailBudget implements Initializable, IController {
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			
-			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+		if(!budget.isShared()) {
+			if (!budget.getCategoriesBudget().isEmpty()) {
 				
-				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					LocalDate currentDate = tr.getDate().toLocalDate();
-					if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 						
-						transactionDisplayer td = new transactionDisplayer(tr);
+						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+							
+							LocalDate currentDate = tr.getDate().toLocalDate();
+							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+								
+								transactionDisplayer td = new transactionDisplayer(tr);
+							}
+						}
 					}
+				}
+			} else {
+				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+						for (int i = 0; i < 12; ++i) {
+							if (bal.getTransactions().containsKey(year)) {
+								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate().toLocalDate();
+									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+										
+										transactionDisplayer td = new transactionDisplayer(tr);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}else{
+			for(IOTransactionModel tr : IOTransactionLogic.getIOTransactionByBudget(budget.getId())){
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					
+					transactionDisplayer td = new transactionDisplayer(tr);
 				}
 			}
 		}

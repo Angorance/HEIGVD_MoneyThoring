@@ -33,6 +33,11 @@ public class BudgetLogic extends BudgetModel {
 		ClientLogic.getInstance().addBudget(this);
 	}
 	
+	@Override
+	public String toString(){
+		return this.getName();
+	}
+	
 	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
 			Date endingDate, int gap, ArrayList<CategoryLogic> categoryList, ArrayList<ClientModel> clientList) {
 		

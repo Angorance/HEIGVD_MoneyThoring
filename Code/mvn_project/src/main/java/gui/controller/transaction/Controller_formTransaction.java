@@ -1,9 +1,6 @@
 package gui.controller.transaction;
 
-import bll.logic.BankAccountLogic;
-import bll.logic.CategoryLogic;
-import bll.logic.ClientLogic;
-import bll.logic.IOTransactionLogic;
+import bll.logic.*;
 import com.jfoenix.controls.*;
 import gui.controller.IController;
 import gui.controller.IForm;
@@ -27,14 +24,16 @@ public class Controller_formTransaction implements Initializable, IForm {
 	
 	@FXML private JFXTextField name;
 	@FXML private JFXTextField amount;
-	@FXML private JFXComboBox<String> time;
-	@FXML private JFXCheckBox recurrence;
+	//@FXML private JFXComboBox<String> time;
+	//@FXML private JFXCheckBox recurrence;
 	@FXML private JFXComboBox<BankAccountLogic> bankAccount;
 	@FXML private JFXComboBox<CategoryLogic> category;
 	@FXML private JFXButton returnButton;
 	@FXML private JFXButton accepteButton;
 	@FXML private JFXButton deleteButton;
 	@FXML private JFXDatePicker datePicker;
+	@FXML private JFXCheckBox checkSharedBudget;
+	@FXML private JFXComboBox<BudgetLogic> cbxBudgets;
 	
 	private IController controller;
 	private boolean isIncome;
@@ -78,37 +77,37 @@ public class Controller_formTransaction implements Initializable, IForm {
 			/*Type of transaction*/
 			CategoryLogic cl = category.getValue();
 			
-			/*if recurrence*/
-			if (recurrence.isSelected()) {
+			/*if (recurrence.isSelected()) {
 				String recurrenceText = time.getValue();
-			}
+			}*/
 			
 			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
 			
-			if(tr == null) {
+			if (tr == null) {
 				IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF",
 						cl, bal);
 				
 				controller.createItem(transaction);
-			}else{
-				tr.update(amountDouble,nameText,"toto",sqlDate,"CHF",cl,bal);
+			} else {
+				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal);
 				controller.modifyItem(tr);
 			}
 		}
 	}
 	
 	private void delete() {
+		
 		controller.deleteItem(tr);
 	}
 	
-	private void checkRecurrence() {
+	/*private void checkRecurrence() {
 		
 		if (recurrence.isSelected()) {
 			time.setVisible(true);
 		} else {
 			time.setVisible(false);
 		}
-	}
+	}*/
 	
 	/**
 	 * Method to check if our field is correct
@@ -177,10 +176,21 @@ public class Controller_formTransaction implements Initializable, IForm {
 		category.setItems(items2);
 		category.getSelectionModel().selectFirst();
 		
-		ObservableList<String> items3 = FXCollections.observableArrayList();
+		/*ObservableList<String> items3 = FXCollections.observableArrayList();
 		items3.addAll("Mensuel", "Annuel");
 		time.setItems(items3);
-		time.getSelectionModel().selectFirst();
+		time.getSelectionModel().selectFirst();*/
+		
+		ObservableList<BudgetLogic> items3 = FXCollections.observableArrayList();
+		for(BudgetLogic bl : ClientLogic.getInstance().getBudgets()){
+			if(bl.isShared()){
+				items3.add(bl);
+			}
+		}
+		cbxBudgets.setItems(items3);
+		cbxBudgets.getSelectionModel().selectFirst();
+		
+		
 	}
 	
 	/**
@@ -195,22 +205,22 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		generateComboBox();
 		deleteButton.setVisible(false);
-
-		if(tr != null){
+		
+		if (tr != null) {
 			
 			deleteButton.setVisible(true);
 			
 			name.setText(tr.getName());
 			amount.setText(String.valueOf(tr.getAmount()));
-			for(BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()){
-				if(bal.getId() == tr.getBankAccountID()){
+			for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+				if (bal.getId() == tr.getBankAccountID()) {
 					bankAccount.getSelectionModel().select(bal);
 					break;
 				}
 			}
 			
-			for(CategoryLogic cl : ClientLogic.getInstance().getCategories()){
-				if(cl.getId() == tr.getCategoryID()){
+			for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+				if (cl.getId() == tr.getCategoryID()) {
 					category.getSelectionModel().select(cl);
 					break;
 				}
@@ -230,6 +240,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
+				
 				delete();
 			}
 		});
@@ -242,13 +253,13 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}
 		});
 		
-		recurrence.setOnAction(new EventHandler<ActionEvent>() {
+		/*recurrence.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
 				
 				checkRecurrence();
 			}
-		});
+		});*/
 		
 		name.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
@@ -271,6 +282,13 @@ public class Controller_formTransaction implements Initializable, IForm {
 			@Override public void handle(MouseEvent event) {
 				
 				datePicker.setStyle("-jfx-default-color: green;");
+			}
+		});
+		
+		checkSharedBudget.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent event) {
+				cbxBudgets.setVisible(checkSharedBudget.isSelected());
 			}
 		});
 	}
