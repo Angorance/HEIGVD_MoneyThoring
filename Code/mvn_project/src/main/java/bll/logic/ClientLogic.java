@@ -2,11 +2,9 @@ package bll.logic;
 
 import bll.mappers.DAL.*;
 import bll.model.ClientModel;
+import bll.model.SharedBudgetModel;
 import dal.dalexception.DALException;
-import dal.ientites.IDALBankaccountEntity;
-import dal.ientites.IDALBudgetEntity;
-import dal.ientites.IDALCategoryEntity;
-import dal.ientites.IDALDebtEntity;
+import dal.ientites.*;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -231,15 +229,23 @@ public class ClientLogic extends ClientModel {
 			
 			orm.beginTransaction();
 			
+			// Bank accounts
 			List<IDALBankaccountEntity> ba = orm.getBankaccountRepository()
 					.getBankAccoutsByClient(getId());
 			
+			// Categories
 			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
 					.getCategoriesByClientId(getId());
 			
+			// Budgets
 			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
 					.getBudgetsByClient(getId());
 			
+			// Shared budgets
+			List<IDALSharedbudgetEntity> sb = orm.getSharedBudgetRepository()
+					.getSharedbudgetByClient(getId());
+			
+			// Debts
 			List<IDALDebtEntity> de = orm.getDebtRepository()
 					.getDebtsByClient(getId());
 			
@@ -249,6 +255,13 @@ public class ClientLogic extends ClientModel {
 			// Get the categories
 			DALCategoryMapper.toBos(cat);
 			
+			// Get the shared budgets
+			for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
+				DALBudgetMapper.toBo(budget);
+			}
+			
+			// Get the debts
 			DALDebtMapper.toBos(de);
 			
 			// Get the categories of the budgets

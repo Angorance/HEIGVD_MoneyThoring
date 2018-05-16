@@ -151,7 +151,7 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
     public List<IDALSharedbudgetEntity> getSharedbudgetByClient(int client_id) throws DALException {
         List<IDALSharedbudgetEntity> budgetsharedEntities = null;
         try {
-            budgetsharedEntities = session.createQuery("from BudgetPgEntity where clientId = :clientid").setParameter("clientid",client_id).list();
+            budgetsharedEntities = session.createQuery("from SharedbudgetPgEntity where clientId = :clientid").setParameter("clientid",client_id).list();
         } catch (Exception e) {
             throw new DALException(e);
         }
