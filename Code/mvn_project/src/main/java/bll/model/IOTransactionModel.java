@@ -50,7 +50,6 @@ public class IOTransactionModel {
 		this.amount = amount;
 		this.name = name;
 		this.description = description;
-		this.date = date;
 		this.currency = currency;
 		this.isIncome = isIncome;
 	}

@@ -101,6 +101,8 @@ public class IOTransactionLogic extends IOTransactionModel
 						te.getName(), te.getDescription(), te.getCurrency(),
 						false);
 				
+				tm.setDate(te.getDatetransaction());
+				
 				list.add(tm);
 			}
 			
