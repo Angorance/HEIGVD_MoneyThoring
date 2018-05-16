@@ -54,9 +54,20 @@ public interface IDebtRepository {
 	/**
 	 * delete debt by id
 	 *
-	 * @param id of the debt
+	 * @param id ID of the debt
 	 *
 	 * @throws DALException
 	 */
 	public void delete(int id) throws DALException;
+	
+	/**
+	 * Get all debts linked to a client (as creator or contributor)
+	 *
+	 * @param clientID ID of the client.
+	 *
+	 * @return List of IDALDebtEntity.
+	 *
+	 * @throws DALException
+	 */
+	List<IDALDebtEntity> getDebtsByClient(int clientID) throws DALException;
 }

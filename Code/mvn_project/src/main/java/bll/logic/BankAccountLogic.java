@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class BankAccountLogic extends BankAccountModel {
 	
+	private static BankAccountLogic defaultBankAccount;
+	
 	private ArrayList<IOTransactionLogic> transactions = new ArrayList<>();
 	
 	private HashMap<Integer, ArrayList<IOTransactionLogic>[]> transactionsByDate
@@ -85,6 +87,11 @@ public class BankAccountLogic extends BankAccountModel {
 		return getName();
 	}
 	
+	public static BankAccountLogic getDefaultBankAccount() {
+		
+		return defaultBankAccount;
+	}
+	
 	/**
 	 * Increment the bank account by the value of the parameter.
 	 *
@@ -143,7 +150,8 @@ public class BankAccountLogic extends BankAccountModel {
 	
 	public static BankAccountLogic getBankAccountByID(int bankAccountID) {
 		
-		for (BankAccountLogic ba : ClientLogic.getInstance().getBankAccounts()) {
+		for (BankAccountLogic ba : ClientLogic.getInstance()
+				.getBankAccounts()) {
 			
 			if (ba.getId() == bankAccountID) {
 				return ba;
@@ -168,7 +176,7 @@ public class BankAccountLogic extends BankAccountModel {
 	 *
 	 * @param isDefault
 	 */
-	private void changeDefault(boolean isDefault) {
+	public void changeDefault(boolean isDefault) {
 		
 		ClientLogic cl = ClientLogic.getInstance();
 		
@@ -182,9 +190,16 @@ public class BankAccountLogic extends BankAccountModel {
 					break;
 				}
 			}
+			
+			saveDefault();
 		}
 		
-		setDefault(isDefault);
+		super.setDefault(isDefault);
+	}
+	
+	public void saveDefault() {
+		
+		defaultBankAccount = this;
 	}
 	
 	/**

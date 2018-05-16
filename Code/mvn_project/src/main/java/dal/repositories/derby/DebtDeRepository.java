@@ -125,4 +125,25 @@ public class DebtDeRepository implements IDebtRepository {
 		}
 		
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<IDALDebtEntity> getDebtsByClient(int clientID)
+			throws DALException {
+		
+		List<IDALDebtEntity> debtEntities = null;
+		
+		try {
+			debtEntities = session.createQuery(
+					"from DebtDeEntity where clientId = :clientid or clientId1 = :contributorid")
+					.setParameter("clientid", clientID)
+					.setParameter("contributorid", clientID).list();
+			
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		
+		return debtEntities;
+	}
 }

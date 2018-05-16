@@ -26,6 +26,11 @@ public class ClientModel {
 	private boolean isActivated;
 	
 	
+	@Override public String toString() {
+		
+		return username;
+	}
+	
 	public ClientModel() {}
 	
 	/**

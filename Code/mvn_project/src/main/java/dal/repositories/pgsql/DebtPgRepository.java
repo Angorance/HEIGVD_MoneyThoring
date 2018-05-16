@@ -96,7 +96,7 @@ public class DebtPgRepository implements IDebtRepository {
 	public Integer addDebt(IDALDebtEntity debt) throws DALException {
 		
 		DebtPgEntity newDebt = null;
-		if (newDebt.getClass() == DebtPgEntity.class) {
+		if (debt.getClass() == DebtPgEntity.class) {
 			newDebt = (DebtPgEntity) debt;
 		} else {
 			throw new DALException();
@@ -125,5 +125,26 @@ public class DebtPgRepository implements IDebtRepository {
 		} catch (Exception e) {
 			throw new DALException(e);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<IDALDebtEntity> getDebtsByClient(int clientID)
+			throws DALException {
+		
+		List<IDALDebtEntity> debtEntities = null;
+		
+		try {
+			debtEntities = session.createQuery(
+					"from DebtPgEntity where clientId = :clientid or clientId1 = :contributorid")
+					.setParameter("clientid", clientID)
+					.setParameter("contributorid", clientID).list();
+			
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		
+		return debtEntities;
 	}
 }

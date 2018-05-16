@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -164,9 +166,16 @@ public class Controller_listCategory implements Initializable, IController {
         // #5ACCF2
         formPane.setMouseTransparent(true);
         formPane.setVisible(false);
+        btnAdd.setText("");
         btnAdd.setOnAction(event -> callform(null));
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+        image.setFitWidth(20);
+        image.setFitHeight(20);
+        btnAdd.setGraphic(image);
         displayerList = new HashMap<>();
         listContainer.setPadding(new Insets(20, 5,5,5));
+        
+        JFXDepthManager.setDepth(btnAdd,1);
 
         // list the existing categories
         for(CategoryLogic c : ClientLogic.getInstance().getCategories()){

@@ -1,19 +1,13 @@
 package bll.logic;
 
-import bll.mappers.DAL.DALBankaccountMapper;
-import bll.mappers.DAL.DALBudgetMapper;
-import bll.mappers.DAL.DALCategoryMapper;
-import bll.mappers.DAL.DALClientMapper;
+import bll.mappers.DAL.*;
 import bll.model.ClientModel;
+import bll.model.SharedBudgetModel;
 import dal.dalexception.DALException;
-import dal.ientites.IDALBankaccountEntity;
-import dal.ientites.IDALBudgetEntity;
-import dal.ientites.IDALCategoryEntity;
-import dal.ientites.IDALClientEntity;
+import dal.ientites.*;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
-import dal.orm.PgORM;
 import smtp.Mail;
 
 import java.util.ArrayList;
@@ -35,6 +29,7 @@ public class ClientLogic extends ClientModel {
 	private ArrayList<BankAccountLogic> bankAccounts = new ArrayList<>();
 	private ArrayList<CategoryLogic> categories = new ArrayList<>();
 	private ArrayList<BudgetLogic> budgets = new ArrayList<>();
+	private ArrayList<DebtLogic> debts = new ArrayList<>();
 	
 	private boolean online;
 	
@@ -126,10 +121,12 @@ public class ClientLogic extends ClientModel {
 	}
 	
 	public List<CategoryLogic> getCategories() {
+		
 		return categories;
 	}
 	
 	public List<BudgetLogic> getBudgets() {
+		
 		return budgets;
 	}
 	
@@ -149,6 +146,11 @@ public class ClientLogic extends ClientModel {
 		}
 		
 		return null;
+	}
+	
+	public ArrayList<DebtLogic> getDebts() {
+		
+		return debts;
 	}
 	
 	// SETTERS
@@ -183,7 +185,7 @@ public class ClientLogic extends ClientModel {
 	/**
 	 * Add a budget to the client.
 	 *
-	 * @param bu    budget to add.
+	 * @param bu budget to add.
 	 */
 	public void addBudget(BudgetLogic bu) {
 		
@@ -194,11 +196,31 @@ public class ClientLogic extends ClientModel {
 	/**
 	 * Remove a budget from the client.
 	 *
-	 * @param bu    budget to remove.
+	 * @param bu budget to remove.
 	 */
 	public void removeBudget(BudgetLogic bu) {
 		
 		budgets.remove(bu);
+	}
+	
+	/**
+	 * Add a debt to the client.
+	 *
+	 * @param de Debt to add.
+	 */
+	public void addDebt(DebtLogic de) {
+		
+		debts.add(de);
+	}
+	
+	/**
+	 * Remove the debt from the client.
+	 *
+	 * @param de Debt to remove.
+	 */
+	public void removeDebt(DebtLogic de) {
+		
+		debts.remove(de);
 	}
 	
 	// SUPPRESSORS
@@ -207,7 +229,7 @@ public class ClientLogic extends ClientModel {
 	 * Suppress the client's account and his data.
 	 */
 	public void supp() {
-	
+		
 		IORM orm = MasterORM.getInstance().getPgORM();
 		
 		try {
@@ -231,20 +253,40 @@ public class ClientLogic extends ClientModel {
 			
 			orm.beginTransaction();
 			
+			// Bank accounts
 			List<IDALBankaccountEntity> ba = orm.getBankaccountRepository()
 					.getBankAccoutsByClient(getId());
 			
+			// Categories
 			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
 					.getCategoriesByClientId(getId());
 			
+			// Budgets
 			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
 					.getBudgetsByClient(getId());
+			
+			// Shared budgets
+			List<IDALSharedbudgetEntity> sb = orm.getSharedBudgetRepository()
+					.getSharedbudgetByClient(getId());
+			
+			// Debts
+			List<IDALDebtEntity> de = orm.getDebtRepository()
+					.getDebtsByClient(getId());
 			
 			// Get the bank accounts
 			DALBankaccountMapper.toBos(ba);
 			
 			// Get the categories
 			DALCategoryMapper.toBos(cat);
+			
+			// Get the shared budgets
+			for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
+				DALBudgetMapper.toBo(budget);
+			}
+			
+			// Get the debts
+			DALDebtMapper.toBos(de);
 			
 			// Get the categories of the budgets
 			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {

@@ -7,7 +7,8 @@ import dal.entities.derby.BankaccountDeEntity;
 import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a BankAccountModel to an IDALBankAccountEntity
@@ -101,6 +102,10 @@ public class DALBankaccountMapper {
         object.setVisible(entity.isIsvisible());
         object.setClientId(entity.getClientId());
     
+		if (entity.isIsdefault()) {
+			object.saveDefault();
+		}
+		
         return object;
     }
     

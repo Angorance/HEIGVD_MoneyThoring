@@ -273,11 +273,12 @@ public class Controller_listBankAccount implements Initializable, IController {
 			addToFrame(accountDisplayer);
 		}
 		
-		
+		create_button.setText("");
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
-		image.setFitWidth(30);
-		image.setFitHeight(30);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		create_button.setGraphic(image);
+		JFXDepthManager.setDepth(create_button,1);
 		
 		/*Add event at our button*/
 		create_button.setOnAction(new EventHandler<ActionEvent>() {

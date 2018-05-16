@@ -6,6 +6,7 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.transaction.Controller_formTransaction;
 import gui.controller.IController;
 import javafx.collections.FXCollections;
@@ -170,7 +171,6 @@ public class Controller_dashboard implements IController, Initializable {
 		btnOutgo.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
-				
 				callForm(false);
 			}
 		});
@@ -192,11 +192,17 @@ public class Controller_dashboard implements IController, Initializable {
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
 			
-			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
-				
-				transactionDisplayer trD = new transactionDisplayer(tr);
+			if(bal.getTransactions().containsKey(year)) {
+				for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+					
+					transactionDisplayer trD = new transactionDisplayer(tr);
+				}
 			}
 		}
+		
+/*		JFXDepthManager.setDepth(paneGraph2, 1);
+		JFXDepthManager.setDepth(paneGraphe1, 1);
+		JFXDepthManager.setDepth(paneList, 1);*/
 		
 	}
 	
@@ -214,7 +220,6 @@ public class Controller_dashboard implements IController, Initializable {
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
-		System.out.println(currentYear + "-" + currentMonth + "-" + currentDay);
 		
 		// Create a calendar object and set year and month
 		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
@@ -280,13 +285,13 @@ public class Controller_dashboard implements IController, Initializable {
 		
 		btnAddTransaction = new JFXButton();
 		btnAddTransaction.setButtonType(JFXButton.ButtonType.RAISED);
-		btnAddTransaction.getStyleClass().addAll("add-button");
+		btnAddTransaction.getStyleClass().addAll("RoundButton", "NeutralButton");
 		btnOutgo = new JFXButton("D");
 		btnOutgo.setButtonType(JFXButton.ButtonType.RAISED);
-		btnOutgo.getStyleClass().addAll("add-button", "add-button-2");
+		btnOutgo.getStyleClass().addAll("RoundButton", "RedButton");
 		btnIncome = new JFXButton("R");
 		btnIncome.setButtonType(JFXButton.ButtonType.RAISED);
-		btnIncome.getStyleClass().addAll("add-button", "add-button-2");
+		btnIncome.getStyleClass().addAll("RoundButton", "GreenButton");
 		
 		nodeAjout.addAnimatedNode(btnAddTransaction);
 		nodeAjout.addAnimatedNode(btnOutgo);
@@ -295,8 +300,8 @@ public class Controller_dashboard implements IController, Initializable {
 		nodeAjout.setRotate(180);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
-		image.setFitWidth(25);
-		image.setFitHeight(25);
+		image.setFitWidth(20);
+		image.setFitHeight(20);
 		btnAddTransaction.setGraphic(image);
 		
 	}

@@ -6,6 +6,8 @@ import bll.model.ClientModel;
 import com.jfoenix.controls.*;
 import gui.controller.IController;
 import gui.controller.IForm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,41 +25,59 @@ public class Controller_formDebt implements Initializable, IForm {
 	
 	@FXML private JFXButton btnCancel;
 	@FXML private JFXButton btnValider;
+	@FXML private JFXButton btnDelete;
 	@FXML private JFXTextField txtAmount;
 	@FXML private JFXDatePicker dateLimite;
 	@FXML private JFXComboBox<ClientModel> cbbOtherUser;
-	@FXML private JFXTextField txtDescription;
+	@FXML private JFXTextField txtNom;
+	@FXML private JFXTextArea txtDescription;
 	@FXML private JFXToggleButton tglDebitor;
 	
 	DebtLogic debt;
 	IController parent;
 	boolean isIncome;
 	
-	Controller_formDebt(IController caller, DebtLogic d, boolean isClaim){
+	Controller_formDebt(IController caller, DebtLogic d, boolean isClaim) {
+		
 		parent = caller;
 		debt = d;
 		isIncome = isClaim;
 	}
 	
 	@Override public void initialize(URL location, ResourceBundle resources) {
-		if(debt != null){
-			// TODO remplir les champs avec les informations de la dette
+		
+		// gather every client except the current user
+		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
+		for(ClientModel u : ClientLogic.getInstance().getAllUsers()){
+			if(u.getId() != ClientLogic.getInstance().getId()){
+				UserItem.add(u);
+			}
 		}
 		
+		if (debt != null) {
+			txtAmount.setText(Double.toString(debt.getAmount()));
+			txtNom.setText(debt.getName());
+			txtDescription.setText(debt.getDescription());
+			dateLimite.setValue(LocalDate.parse(debt.getExpirationDate().toString()));
+			cbbOtherUser.setValue(debt.getContributor());
+			btnDelete.setVisible(true);
+		}
+		
+		cbbOtherUser.setItems(UserItem);
 		btnCancel.setOnAction(this::formCancel);
 		btnValider.setOnAction(this::formValidation);
+		btnDelete.setOnAction(event -> parent.deleteItem(debt));
 	}
 	
 	@Override public void formValidation(ActionEvent event) {
-		if(debt == null){
-			int idCreator = ClientLogic.getInstance().getId();
-			int idOtherUser = cbbOtherUser.getValue().getId();
-			
-			
-			debt = new DebtLogic(txtDescription.getText(), idCreator, idOtherUser, isIncome, Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
+		
+		if (debt == null) {
+			ClientModel uConcerned = cbbOtherUser.getValue();
+			debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), isIncome,
+					Date.valueOf(dateLimite.getValue()),uConcerned);
 			parent.createItem(debt);
 		} else {
-			// TODO modier la dette
+			debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
 			parent.modifyItem(parent);
 		}
 	}

@@ -176,4 +176,24 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
 		return budgetsharedEntities;
 	}
 	
+    
+    @Override
+    public void delete(int budget_id) throws DALException {
+        
+        List<IDALSharedbudgetEntity> clientsbudget = null;
+        
+        try {
+    
+            clientsbudget = session.createCriteria(SharedbudgetPgEntity.class)
+                    .add(Restrictions.eq("budgetId", budget_id))
+                    .list();
+        
+            for(IDALSharedbudgetEntity sb : clientsbudget) {
+                session.delete(sb);
+            }
+        
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
 }

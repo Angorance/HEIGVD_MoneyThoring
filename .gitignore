@@ -28,7 +28,7 @@ hs_err_pid*
 *.iml
 
 #MAVEN
-traget/
+*/traget/
 
 #Autres
 ~$*.*
@@ -36,3 +36,4 @@ traget/
 *.gsheet
 /GZAtests/PGSQLite/PGSQLite/nbproject/private/
 Code/Code\.iml
+Code/mvn_project/target/

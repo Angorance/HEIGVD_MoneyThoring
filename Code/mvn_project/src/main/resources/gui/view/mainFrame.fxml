@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_mainFrame">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="@../css/button.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Controller_mainFrame">
    <center>
       <AnchorPane style="-fx-background-color: #efefef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,7 +34,7 @@
       </AnchorPane>
    </center>
    <top>
-      <AnchorPane fx:id="paneHeader" prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #0a7729;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="paneHeader" prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #3eb244;" BorderPane.alignment="CENTER">
          <children>
             <JFXHamburger id="burgerBtn" fx:id="burgerBtn" layoutX="28.0" layoutY="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0" />
             <Label fx:id="header_mainFrame" alignment="TOP_LEFT" layoutX="123.0" layoutY="3.0" prefHeight="43.0" prefWidth="627.0" text="Un titre des plus banal" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

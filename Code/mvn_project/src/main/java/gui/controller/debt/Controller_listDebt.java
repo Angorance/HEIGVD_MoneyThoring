@@ -2,6 +2,7 @@ package gui.controller.debt;
 
 import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
+import bll.model.ClientModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.effects.JFXDepthManager;
@@ -10,9 +11,13 @@ import gui.controller.debt.Controller_formDebt;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
@@ -41,12 +46,11 @@ public class Controller_listDebt implements IController, Initializable {
 	 * @version 1.0
 	 */
 	private class debtDisplayer extends VBox {
-		Pane contentPane;
-		Label lblState; // state of the debt (to pay, waiting for confirmation, waiting for payment ...)
-		Label lblPerson; // username of the debitor/creditor
-		Label lblAmount;
-		Label lblExpirationDate;
-		JFXButton btnValidation; // Button to confirm the payment
+		Label lblPerson = new Label(); // username of the debitor/creditor
+		Label lblAmount = new Label();
+		Label lblExpirationDate = new Label();
+		Label lblNom = new Label();
+		JFXButton btnValidation = new JFXButton("Valider"); // Button to confirm the payment
 		
 		DebtLogic debt;
 		boolean isClaim;
@@ -56,30 +60,45 @@ public class Controller_listDebt implements IController, Initializable {
 		 */
 		debtDisplayer(DebtLogic d){
 			debt = d;
+			
 			isClaim = (debt != null && debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.isIncome());
-			btnValidation = new JFXButton("Payer");
-			lblState = new Label("un état");
-			lblPerson = new Label("Jean-Henri");
-			lblAmount = new Label("1234.56 CHF");
+			if(ClientLogic.getInstance().getId() == debt.getCreatorID()){
+				btnValidation.setOnAction(event -> debt.confirmPayment());
+				this.setOnMouseClicked(event -> callForm(debt, isClaim));
+			} else {
+				btnValidation.setDisable(true);
+			}
+			btnValidation.getStyleClass().add("NeutralButton");
+			
 			lblAmount.setStyle("-fx-font-size: 24");
-			lblExpirationDate = new Label("01.01.2019");
-			contentPane = new Pane();
+			
+			GridPane top = new GridPane();
+			GridPane bottom = new GridPane();
 			
 			this.setPadding(new Insets(10));
-			this.getChildren().add(lblExpirationDate);
-			this.getChildren().add(lblPerson);
+			
+			top.getChildren().add(lblPerson);
+			top.getChildren().add(lblNom);
+			GridPane.setConstraints(lblNom,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
+			GridPane.setConstraints(lblPerson,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
+			this.getChildren().add(top);
 			this.getChildren().add(lblAmount);
-			this.getChildren().add(lblState);
-			this.getChildren().add(btnValidation);
+			bottom.getChildren().add(lblExpirationDate);
+			bottom.getChildren().add(btnValidation);
+			GridPane.setConstraints(lblExpirationDate,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
+			GridPane.setConstraints(btnValidation,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
+			this.getChildren().add(bottom);
 			this.setSpacing(10);
 			this.setAlignment(Pos.CENTER_LEFT);
+			this.setFillWidth(true);
 			this.setMinWidth(80);
 			this.setMinHeight(80);
 			
 			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
-			JFXDepthManager.setDepth(contentPane, 1);
+			JFXDepthManager.setDepth(this, 1);
 			
+			redraw();
 			if(isClaim){
 				paneClaimList.getChildren().add(this);
 			} else {
@@ -89,7 +108,11 @@ public class Controller_listDebt implements IController, Initializable {
 		}
 		
 		public void redraw(){
-			// TODO mettre à jour les informations
+			
+			lblExpirationDate.setText(debt.getExpirationDate().toString());
+			lblAmount.setText(Double.toString(debt.getAmount()));
+			lblPerson.setText(debt.getContributor().getUsername());
+			lblNom.setText(debt.getName());
 		}
 		
 		public void remove(){
@@ -109,9 +132,8 @@ public class Controller_listDebt implements IController, Initializable {
 		DebtLogic d = (DebtLogic) result;
 		
 		if(d != null){
-		
-		} else { // TODO supprimer le else une fois les tests terminés
-			paneDebtList.getChildren().add(new debtDisplayer(null));
+			debtDisplayer dd = new debtDisplayer(d);
+			debtList.put(d.getId(), dd);
 		}
 	}
 	
@@ -163,24 +185,19 @@ public class Controller_listDebt implements IController, Initializable {
 		//btnAdd.setOnAction(event -> callForm());
 		unloadForm();
 
-		JFXButton btnMenu = new JFXButton("V");
-		btnMenu.setStyle("-fx-background-radius: 50; -fx-background-color: #e8e8e8");
-		btnMenu.setPrefHeight(50);
-		btnMenu.setPrefWidth(50);
-		btnMenu.setOnAction(event -> {
-			btnMenu.setRotate((btnMenu.getRotate() + 180)%360);
-		});
+		JFXButton btnMenu = new JFXButton("");
+		btnMenu.getStyleClass().addAll("RoundButton", "NeutralButton");
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		image.setFitWidth(20);
+		image.setFitHeight(20);
+		btnMenu.setGraphic(image);
 
 		JFXButton btnClaim= new JFXButton("C");
-		btnClaim.setPrefHeight(50);
-		btnClaim.setPrefWidth(50);
-		btnClaim.setStyle("-fx-background-radius: 50; -fx-background-color: lightgreen");
+		btnClaim.getStyleClass().addAll("RoundButton", "GreenButton");
 		btnClaim.setOnAction(event -> callForm(null, true));
 
 		JFXButton btnDebt = new JFXButton("D");
-		btnDebt.setPrefHeight(50);
-		btnDebt.setPrefWidth(50);
-		btnDebt.setStyle("-fx-background-radius: 50; -fx-background-color: #E38F8F");
+		btnDebt.getStyleClass().addAll("RoundButton", "RedButton");
 		btnDebt.setOnAction(event -> callForm(null, false));
 
 		ndlAdd.addAnimatedNode(btnMenu);
@@ -188,11 +205,12 @@ public class Controller_listDebt implements IController, Initializable {
 		ndlAdd.addAnimatedNode(btnDebt);
 		ndlAdd.setSpacing(5);
 		ndlAdd.setRotate(180);
+		JFXDepthManager.setDepth(ndlAdd,1);
 		
 		debtList = new HashMap<>();
-		/*
+		
 		for(DebtLogic d : ClientLogic.getInstance().getDebts()){
 			debtList.put(d.getId(), new debtDisplayer(d));
-		}*/
+		}
 	}
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * CategoriesBudget into persistence
  *
  * @author Guillaume Zaretti
+ * @author Héléna Line Reymond
  * @version 1.2
  */
 public interface ICategoriesBudgetRepository {
