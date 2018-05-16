@@ -3,6 +3,7 @@ package bll.logic;
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
+import dal.irepositories.IBudgetRepository;
 import dal.irepositories.IIotransactionRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -35,6 +36,7 @@ public class IOTransactionLogic extends IOTransactionModel
 	private CategoryLogic category;
 	private BankAccountLogic bank;
 	private RecurrenceLogic recurrence;
+	private BudgetLogic sharedBudget;
 	
 	public IOTransactionLogic() {
 		
@@ -54,15 +56,14 @@ public class IOTransactionLogic extends IOTransactionModel
 	 */
 	public IOTransactionLogic(double amount, String name, String description,
 			Date date, String currency, CategoryLogic category,
-			BankAccountLogic bankAccount) {
+			BankAccountLogic bankAccount, BudgetLogic budget) {
 		
 		super(amount, name, description, currency, (amount >= 0));
 		
 		setDate(date);
 		setCategory(category);
 		setBank(bankAccount);
-		
-		setBudgetID(null);
+		setBudget(budget);
 		
 		createIOTransaction(MasterORM.getInstance().getPgORM());
 		transactions.add(this);
@@ -180,19 +181,42 @@ public class IOTransactionLogic extends IOTransactionModel
 		this.recurrence = recurrence;
 	}
 	
+	private void setBudget(BudgetLogic budget) {
+		
+		this.sharedBudget = budget;
+		
+		setBudgetID(budget.getId());
+	}
+	
+	public BudgetLogic getBudget() {
+		
+		if (sharedBudget == null) {
+			
+			for (BudgetLogic bu : ClientLogic.getInstance().getBudgets()) {
+				
+				if (bu.getId() == getBudgetID()) {
+					sharedBudget = bu;
+					break;
+				}
+			}
+		}
+		
+		return sharedBudget;
+	}
+	
 	/**
 	 * TODO
 	 */
 	public void update(double amount, String name, String description,
 			Date date, String currency, CategoryLogic category,
-			BankAccountLogic bankAccount) {
+			BankAccountLogic bankAccount, BudgetLogic budget) {
 		
 		setAmount(amount);
 		setName(name);
 		setDescription(description);
 		setCurrency(currency);
+		setBudget(budget);
 		
-		setBudgetID(null);
 		
 		if (this.category != category) {
 			updateCategory(category);
