@@ -26,7 +26,7 @@
                </font>
             </Label>
             <Label layoutX="15.0" layoutY="103.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="103.0" />
-            <Label contentDisplay="RIGHT" layoutX="578.0" layoutY="45.0" text="Plafond" AnchorPane.rightAnchor="64.0">
+            <Label contentDisplay="RIGHT" layoutX="527.0" layoutY="45.0" text="Plafond" AnchorPane.rightAnchor="115.0">
                <font>
                   <Font size="18.0" />
                </font></Label>
@@ -34,9 +34,9 @@
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
-            <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+            <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Label fx:id="lblSolde" layoutX="193.0" layoutY="103.0" text="-" />
-            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="576.0" layoutY="85.0" text="00000000" AnchorPane.rightAnchor="60.0">
+            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="525.0" layoutY="84.0" text="00000000" AnchorPane.rightAnchor="113.0">
                <font>
                   <Font size="15.0" />
                </font>
