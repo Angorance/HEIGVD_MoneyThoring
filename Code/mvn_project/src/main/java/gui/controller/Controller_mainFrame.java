@@ -242,6 +242,13 @@ public class Controller_mainFrame implements Initializable, IWindow {
 			
 			btnRetour.setOnAction(event -> unloadParameter());
 			
+			ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+			image.setFitWidth(20);
+			image.setFitHeight(20);
+			btnDeleteAccount.setGraphic(image);
+			btnDeleteAccount.setText("");
+			btnDeleteAccount.setPrefSize(40, 40);
+			
 			txtMail.setText(ClientLogic.getInstance().getEmail());
 			txtUsername.setText(ClientLogic.getInstance().getUsername());
 		}

@@ -35,7 +35,7 @@
                                     <Label text="CHF" />
                                  </children>
                               </HBox>
-                              <JFXTextArea fx:id="txtDescription" prefHeight="41.0" prefWidth="293.0" promptText="Description...">
+                              <JFXTextArea fx:id="txtDescription" prefHeight="92.0" prefWidth="353.0" promptText="Description..." style="-fx-background-color: #eaeaea;">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>

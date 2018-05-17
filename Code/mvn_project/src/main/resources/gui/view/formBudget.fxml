@@ -46,7 +46,7 @@
                            <children>
                               <JFXTextField fx:id="txtName" alignment="CENTER" prefHeight="25.0" prefWidth="164.0" promptText="Nom du budget" GridPane.columnIndex="1" />
                               <JFXTextField fx:id="txtCeiling" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="116.0" promptText="Valeur plafond" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <JFXCheckBox fx:id="chbIsRegular" text="Périodique" GridPane.rowIndex="2" />
+                              <JFXCheckBox fx:id="chbIsRegular" disable="true" text="Périodique" GridPane.rowIndex="2" />
                               <Label text="Nom du budget :" />
                               <Label text="Valeur du plafond [CHF]" GridPane.rowIndex="1" />
                               <Label fx:id="label_beginDate" text="Date début" GridPane.rowIndex="3" />
@@ -90,7 +90,7 @@
                                  </bottom>
                               </BorderPane>
                               <JFXComboBox fx:id="cbbUser" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <JFXComboBox fx:id="cmbPeriode" prefHeight="25.0" prefWidth="108.0" promptText="Période" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXComboBox fx:id="cmbPeriode" disable="true" prefHeight="25.0" prefWidth="108.0" promptText="Période" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
