@@ -60,4 +60,13 @@ public interface ICategoryRepository {
      * @throws DALException
      */
     public void delete(int id) throws DALException;
+    
+    /**
+     * Retreave the default category by client id
+     *
+     * @param id of the category
+     * @return default category of the client
+     * @throws DALException
+     */
+    public IDALCategoryEntity getDefaultCategoryByClientId(int id) throws DALException;
 }

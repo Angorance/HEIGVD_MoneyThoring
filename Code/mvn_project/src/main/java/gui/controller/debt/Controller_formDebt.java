@@ -78,7 +78,7 @@ public class Controller_formDebt implements Initializable, IForm {
 			parent.createItem(debt);
 		} else {
 			debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
-			parent.modifyItem(parent);
+			parent.modifyItem(debt);
 		}
 	}
 	

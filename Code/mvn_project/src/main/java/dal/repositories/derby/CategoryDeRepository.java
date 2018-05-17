@@ -140,4 +140,22 @@ public class CategoryDeRepository implements ICategoryRepository {
         }
 
     }
+    
+    @Override
+    public IDALCategoryEntity getDefaultCategoryByClientId(int id) throws DALException {
+    
+        CategoryDeEntity category = null;
+    
+        try {
+            category = (CategoryDeEntity) session.createCriteria(CategoryDeEntity.class)
+                    .add(Restrictions.and(
+                            Restrictions.eq("clientId", id),
+                            Restrictions.eq("isdefault", true)))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        return category;
+    }
 }

@@ -1,5 +1,6 @@
 package dal.repositories.pgsql;
 
+import bll.mappers.DAL.DALBankaccountMapper;
 import dal.dalexception.DALException;
 import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
@@ -136,5 +137,27 @@ public class BankaccountPgRepository implements IBankaccountRepository {
             throw new DALException(e);
         }
 
+    }
+    
+    @Override
+    public IDALBankaccountEntity getDefaultBankAccountByClient(int id) throws DALException {
+    
+        BankaccountPgEntity bankaccount = null;
+    
+        try {
+            bankaccount = (BankaccountPgEntity) session.createCriteria(BankaccountPgEntity.class)
+                    .add(Restrictions.and(
+                            Restrictions.eq("clientId", id),
+                            Restrictions.eq("isdefault", true)))
+                    .uniqueResult();
+            
+            if(bankaccount == null) {
+                bankaccount = (BankaccountPgEntity) getBankAccoutsByClient(id).get(0);
+            }
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        return bankaccount;
     }
 }

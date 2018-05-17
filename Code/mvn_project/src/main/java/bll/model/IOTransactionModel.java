@@ -59,7 +59,7 @@ public class IOTransactionModel {
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void createIOTransaction(IORM orm) {
+	public void createIOTransaction(IORM orm) {
 		
 		try {
 			
