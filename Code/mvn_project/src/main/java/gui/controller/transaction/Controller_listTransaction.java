@@ -37,6 +37,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Controller_listTransaction implements Initializable, IController {
@@ -360,6 +361,16 @@ public class Controller_listTransaction implements Initializable, IController {
 		items2.addAll("Mensuel", "Annuel");
 		periodSelect.setItems(items2);
 		
+		periodSelect.getSelectionModel().select("Annuel");
+		
+		yearOrMonth();
+		
+		
+		if(defautlt != null && defautlt.getMostRecentTransaction() != null) {
+			monthSelect.getSelectionModel().select(String.valueOf(defautlt.getMostRecentTransaction().getDate().toLocalDate().getYear()));
+		}
+		
+		
 	}
 	
 	
@@ -378,7 +389,7 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		generateNodeList();
 		generateComboBoxItem();
-		setTotal();
+		setData();
 		
 		JFXDepthManager.setDepth(transactionPane, 1);
 		
