@@ -25,8 +25,8 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="15.0" layoutY="103.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="103.0" />
-            <Label contentDisplay="RIGHT" layoutX="527.0" layoutY="45.0" text="Plafond" AnchorPane.rightAnchor="115.0">
+            <Label layoutX="15.0" layoutY="103.0" text="Vous pouvez encore dépenser :" AnchorPane.leftAnchor="15.0" />
+            <Label contentDisplay="RIGHT" layoutX="552.0" layoutY="45.0" text="Plafond" AnchorPane.rightAnchor="90.0">
                <font>
                   <Font size="18.0" />
                </font></Label>
@@ -35,18 +35,18 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor></JFXProgressBar>
             <JFXNodesList fx:id="nodeModifDelete" layoutX="683.0" layoutY="23.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="lblSolde" layoutX="193.0" layoutY="103.0" text="-" />
-            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="525.0" layoutY="84.0" text="00000000" AnchorPane.rightAnchor="113.0">
+            <Label fx:id="lblSolde" layoutX="189.0" layoutY="103.0" text="300000" AnchorPane.leftAnchor="185.0" />
+            <Label fx:id="lblPlafond" contentDisplay="RIGHT" layoutX="550.0" layoutY="84.0" text="00000000" AnchorPane.rightAnchor="88.0">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
             <Label layoutX="15.0" layoutY="72.0" text="Créateur :" />
             <Label fx:id="label_creator" layoutX="84.0" layoutY="72.0" text="Label" />
-            <Label fx:id="startDate" layoutX="67.0" layoutY="136.0" text="Label" />
-            <Label fx:id="endDate" layoutX="655.0" layoutY="136.0" text="Label" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="20.0" />
-            <Label layoutX="15.0" layoutY="136.0" text="Début : " />
-            <Label layoutX="596.0" layoutY="136.0" text="Fin : " AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="82.0" />
+            <Label fx:id="startDate" layoutX="57.0" layoutY="136.0" text="2018-04-19" AnchorPane.leftAnchor="60.0" />
+            <Label fx:id="endDate" layoutX="615.0" layoutY="136.0" text="2018-05-19" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="26.0" />
+            <Label layoutX="15.0" layoutY="136.0" text="Début : " AnchorPane.leftAnchor="15.0" />
+            <Label layoutX="590.0" layoutY="136.0" text="Fin : " AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="88.0" />
             <JFXButton fx:id="btnRetour" layoutX="31.0" layoutY="20.0" text="Retour" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
