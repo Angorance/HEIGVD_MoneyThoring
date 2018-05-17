@@ -74,24 +74,25 @@ public class Controller_listCategory implements Initializable, IController {
 	        redraw();
 
         }
-
-        /**
-         * convert a Color object into a HEX string
-         * @param color Color that we want the HEX code
-         * @return HEX code (web format)
-         */
-        public String toRGBCode( Color color )
-        {
-            return String.format( "#%02X%02X%02X",
-                    (int)( color.getRed() * 255 ),
-                    (int)( color.getGreen() * 255 ),
-                    (int)( color.getBlue() * 255 ) );
-        }
+        
 
         public void redraw(){
             lblCategorie.setText(cat.getName());
             this.setStyle("-fx-background-color: " + toRGBCode(Color.valueOf(cat.getColor())) + "; -fx-background-radius: 10");
         }
+    }
+    
+    /**
+     * convert a Color object into a HEX string
+     * @param color Color that we want the HEX code
+     * @return HEX code (web format)
+     */
+    static public String toRGBCode( Color color )
+    {
+        return String.format( "#%02X%02X%02X",
+                (int)( color.getRed() * 255 ),
+                (int)( color.getGreen() * 255 ),
+                (int)( color.getBlue() * 255 ) );
     }
 
     /**

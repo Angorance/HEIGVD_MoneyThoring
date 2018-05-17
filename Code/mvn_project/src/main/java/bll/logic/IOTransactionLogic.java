@@ -154,6 +154,11 @@ public class IOTransactionLogic extends IOTransactionModel
 		addToHashMap();
 	}
 	
+	public CategoryLogic getCategory() {
+		
+		return category;
+	}
+	
 	private void updateCategory(CategoryLogic newCat) {
 		
 		transactionsByCategory.get(this.category).remove(this);

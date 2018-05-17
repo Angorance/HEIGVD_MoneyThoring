@@ -7,6 +7,7 @@ import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.controller.category.Controller_listCategory;
 import gui.controller.transaction.Controller_formTransaction;
 import gui.controller.IController;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
@@ -29,6 +31,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
+import javafx.scene.paint.Color;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
@@ -78,16 +82,20 @@ public class Controller_dashboard implements IController, Initializable {
 			paneDisplay.getChildren().add(lblDate);
 			paneDisplay.getChildren().add(lblCaption);
 			paneDisplay.getChildren().add(lblPrix);
+			paneDisplay.setPadding(new Insets(10));
 			
 			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			
-			if (transaction.isIncome()) {
+			/*if (transaction.isIncome()) {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + incomeColor + ";");
 			} else {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
-			}
+			}*/
+			
+			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " +
+					Controller_listCategory.toRGBCode(Color.valueOf(t.getCategory().getColor())) + ";");
 			
 			Controller_dashboard.this.paneList.getChildren().add(paneDisplay);
 		}
