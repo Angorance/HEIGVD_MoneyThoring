@@ -70,6 +70,8 @@ public class Controller_lateralMenu implements Initializable{
                 setSelected((Button)event.getSource());
             }
         });
+        
+        setSelected(btnDashboard);
     }
 
     /**

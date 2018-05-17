@@ -73,8 +73,10 @@ public class Controller_listDebt implements IController, Initializable {
 					remove();
 				});
 				this.setOnMouseClicked(event -> callForm(debt, isClaim));
+				
+				this.setCursor(Cursor.HAND);
 			} else {
-				btnValidation.setDisable(true);
+				btnValidation.setVisible(false);
 			}
 			btnValidation.getStyleClass().add("NeutralButton");
 			lblDescription.setStyle("-fx-text-alignment: left");
@@ -100,9 +102,7 @@ public class Controller_listDebt implements IController, Initializable {
 			this.setFillWidth(true);
 			this.setMinHeight(170);
 			this.setPrefHeight(170);
-			this.setCursor(Cursor.HAND);
 			
-			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			JFXDepthManager.setDepth(this, 1);
 			

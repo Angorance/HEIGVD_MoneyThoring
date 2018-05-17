@@ -187,12 +187,15 @@ public class IOTransactionLogic extends IOTransactionModel
 		
 		this.sharedBudget = budget;
 		
-		setBudgetID(budget.getId());
+		if(sharedBudget != null){
+			setBudgetID(budget.getId());
+		}
+		
 	}
 	
 	public BudgetLogic getBudget() {
 		
-		if (sharedBudget == null) {
+		if (sharedBudget != null) {
 			
 			for (BudgetLogic bu : ClientLogic.getInstance().getBudgets()) {
 				
