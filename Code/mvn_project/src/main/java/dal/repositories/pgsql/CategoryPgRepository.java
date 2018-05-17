@@ -142,4 +142,22 @@ public class CategoryPgRepository implements ICategoryRepository {
             throw new DALException(e);
         }
     }
+    
+    @Override
+    public IDALCategoryEntity getDefaultCategoryByClientId(int id) throws DALException {
+    
+        CategoryPgEntity category = null;
+    
+        try {
+            category = (CategoryPgEntity) session.createCriteria(CategoryPgEntity.class)
+                    .add(Restrictions.and(
+                            Restrictions.eq("clientId", id),
+                            Restrictions.eq("isdefault", true)))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        return category;
+    }
 }

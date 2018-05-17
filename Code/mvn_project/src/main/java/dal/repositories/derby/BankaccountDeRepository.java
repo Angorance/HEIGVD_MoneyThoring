@@ -138,4 +138,26 @@ public class BankaccountDeRepository implements IBankaccountRepository {
         }
 
     }
+    
+    @Override
+    public IDALBankaccountEntity getDefaultBankAccountByClient(int id) throws DALException {
+    
+        BankaccountDeEntity bankaccount = null;
+    
+        try {
+            bankaccount = (BankaccountDeEntity) session.createCriteria(BankaccountDeEntity.class)
+                    .add(Restrictions.and(
+                            Restrictions.eq("clientId", id),
+                            Restrictions.eq("isdefault", true)))
+                    .uniqueResult();
+        
+            if(bankaccount == null) {
+                bankaccount = (BankaccountDeEntity) getBankAccoutsByClient(id).get(0);
+            }
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    
+        return bankaccount;
+    }
 }

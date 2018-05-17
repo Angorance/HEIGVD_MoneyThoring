@@ -1,5 +1,6 @@
 package bll.logic;
 
+import bll.model.ClientModel;
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
@@ -152,6 +153,11 @@ public class IOTransactionLogic extends IOTransactionModel
 		
 		setCategoryID(cl.getId());
 		addToHashMap();
+	}
+	
+	public CategoryLogic getCategory() {
+		
+		return category;
 	}
 	
 	private void updateCategory(CategoryLogic newCat) {

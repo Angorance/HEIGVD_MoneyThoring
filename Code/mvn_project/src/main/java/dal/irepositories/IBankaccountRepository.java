@@ -60,5 +60,13 @@ public interface IBankaccountRepository {
      * @throws DALException
      */
     public void delete(int id) throws DALException;
-
+    
+    /**
+     * Retreave the default bankaccount by client id
+     *
+     * @param id of the bankaccount
+     * @return IDALBankaccountEntity
+     * @throws DALException
+     */
+    public IDALBankaccountEntity getDefaultBankAccountByClient(int id) throws DALException;
 }

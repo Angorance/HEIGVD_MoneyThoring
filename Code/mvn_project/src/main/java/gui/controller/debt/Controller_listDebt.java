@@ -72,7 +72,6 @@ public class Controller_listDebt implements IController, Initializable {
 					debt.confirmPayment();
 					remove();
 				});
-				this.setOnMouseClicked(event -> callForm(debt, isClaim));
 				
 				this.setCursor(Cursor.HAND);
 			} else {
@@ -80,6 +79,8 @@ public class Controller_listDebt implements IController, Initializable {
 			}
 			btnValidation.getStyleClass().add("NeutralButton");
 			lblDescription.setStyle("-fx-text-alignment: left");
+			lblDescription.setWrapText(false);
+			lblDescription.setPrefHeight(100);
 			lblNom.setStyle("-fx-font-size: 15");
 			lblPerson.setStyle("-fx-font-size: 15");
 			lblAmount.setStyle("-fx-font-size: 24");
@@ -105,6 +106,7 @@ public class Controller_listDebt implements IController, Initializable {
 			
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			JFXDepthManager.setDepth(this, 1);
+			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			
 			redraw();
 			if(isClaim){

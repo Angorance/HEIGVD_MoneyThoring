@@ -1,7 +1,14 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALClientMapper;
 import bll.model.ClientModel;
 import bll.model.DebtModel;
+import bll.model.IOTransactionModel;
+import dal.dalexception.DALException;
+import dal.ientites.IDALBankaccountEntity;
+import dal.ientites.IDALCategoryEntity;
+import dal.irepositories.IBankaccountRepository;
+import dal.irepositories.ICategoryRepository;
 import dal.irepositories.IDebtRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -68,10 +75,46 @@ public class DebtLogic extends DebtModel {
 		
 		Date now = Date.valueOf(LocalDate.now());
 		
-		new IOTransactionLogic(this.getAmount(), this.getName(),
+		int facteur = isIncome() ? 1 : -1;
+		String type = isIncome() ? "Créance: " : "Dette: ";
+		
+		// Create transaction for the creator
+		new IOTransactionLogic(facteur * this.getAmount(), type + this.getName(),
 				this.getDescription(), now, "CHF",
 				CategoryLogic.getDefaultCategory(),
 				BankAccountLogic.getDefaultBankAccount(), null);
+		
+		// Create transaction for the contributor
+		if(contributor != null) {
+			facteur = !isIncome() ? 1 : -1;
+			type = !isIncome() ? "Créance: " : "Dette: ";
+			
+			IOTransactionModel tr = new IOTransactionModel(facteur * this.getAmount(), type + this.getName(), this.getDescription(), "CHF", !isIncome());
+			
+			tr.setDate(now);
+			
+			IORM orm = MasterORM.getInstance().getPgORM();
+			
+			try {
+				orm.beginTransaction();
+				
+				ICategoryRepository repoC = orm.getCategoryRepository();
+				IDALCategoryEntity cat = repoC.getDefaultCategoryByClientId(contributor.getId());
+				tr.setCategoryID(cat.getId());
+				
+				IBankaccountRepository repoB = orm.getBankaccountRepository();
+				IDALBankaccountEntity ba = repoB.getDefaultBankAccountByClient(contributor.getId());
+				tr.setBankAccountID(ba.getId());
+				
+				orm.commit();
+				
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+			
+			tr.setBudgetID(null);
+			tr.createIOTransaction(orm);
+		}
 		
 		supp();
 	}
