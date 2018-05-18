@@ -35,7 +35,7 @@ public class RecurrenceModel {
 			orm.beginTransaction();
 			
 			IRecurrenceRepository repo = orm.getRecurrenceRepository();
-			setId(repo.addRecurrence(DALRecurrenceMapper.toDboPG(this)));
+			setId(repo.addRecurrence(DALRecurrenceMapper.toDbo(this)));
 			
 			orm.commit();
 			
@@ -56,12 +56,12 @@ public class RecurrenceModel {
 			orm.beginTransaction();
 			
 			IRecurrenceRepository repo = orm.getRecurrenceRepository();
-			repo.update(DALRecurrenceMapper.toDboPG(this));
+			repo.update(DALRecurrenceMapper.toDbo(this));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

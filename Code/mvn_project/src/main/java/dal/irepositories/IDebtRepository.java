@@ -7,6 +7,9 @@ import java.util.List;
 
 /**
  * IDebtRepository give the access methodes for handle the debt into persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IDebtRepository {
 	

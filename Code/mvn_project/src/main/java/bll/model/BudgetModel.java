@@ -55,12 +55,12 @@ public class BudgetModel {
 			orm.beginTransaction();
 			
 			IBudgetRepository repo = orm.getBudgetRepository();
-			setId(repo.addBudget(DALBudgetMapper.toDboPG(this)));
+			setId(repo.addBudget(DALBudgetMapper.toDbo(this)));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -76,12 +76,12 @@ public class BudgetModel {
 			orm.beginTransaction();
 			
 			IBudgetRepository repo = orm.getBudgetRepository();
-			repo.update(DALBudgetMapper.toDboPG(this));
+			repo.update(DALBudgetMapper.toDbo(this));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

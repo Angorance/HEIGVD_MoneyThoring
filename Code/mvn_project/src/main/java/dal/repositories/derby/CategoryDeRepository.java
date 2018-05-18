@@ -9,11 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import javax.management.Query;
 import java.util.List;
 
 /**
- * CategoryDeRepository give the access methodes for handle the categories into derby persistence
+ * CategoryDeRepository give the access methodes for handle the categories into
+ * derby persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class CategoryDeRepository implements ICategoryRepository {
 

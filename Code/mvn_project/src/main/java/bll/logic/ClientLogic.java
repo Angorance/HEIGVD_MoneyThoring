@@ -31,9 +31,31 @@ public class ClientLogic extends ClientModel {
 	private ArrayList<BudgetLogic> budgets = new ArrayList<>();
 	private ArrayList<DebtLogic> debts = new ArrayList<>();
 	
+	private boolean online;
 	
 	private ClientLogic() {}
 	
+	public void setOnline(boolean online) {
+		
+		this.online = online;
+	}
+	
+	public boolean isOnline() {
+		
+		return online;
+	}
+	
+	public BudgetLogic getBudget(int budgetId) {
+		
+		for(BudgetLogic budget : budgets) {
+			
+			if(budget.getId() == budgetId) {
+				return budget;
+			}
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * TODO
@@ -72,13 +94,18 @@ public class ClientLogic extends ClientModel {
 			e.printStackTrace();
 		}
 		
-		setKey(KeyGenerator.generateKey(12));
+		if (isOnline()) {
+			setKey(KeyGenerator.generateKey(12));
+			
+			/*Send the key*/
+			Mail.sendMail(username, email, getKey());
+		} else {
+			
+			setKey(null);
+			setActivated(true);
+		}
 		
-		// TODO - Manage if connected and use Derby if necessary.
-		createUser(MasterORM.getInstance().getPgORM());
-		
-		/*Send the key*/
-		Mail.sendMail(username, email, getKey());
+		createUser(MasterORM.getInstance().getORM());
 	}
 	
 	// GETTERS
@@ -113,7 +140,7 @@ public class ClientLogic extends ClientModel {
 	
 	public List<ClientModel> getAllUsers() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -211,7 +238,7 @@ public class ClientLogic extends ClientModel {
 	 */
 	public void supp() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -230,7 +257,7 @@ public class ClientLogic extends ClientModel {
 	protected void setDataFromDB() {
 		
 		try {
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			
 			orm.beginTransaction();
 			
@@ -238,42 +265,49 @@ public class ClientLogic extends ClientModel {
 			List<IDALBankaccountEntity> ba = orm.getBankaccountRepository()
 					.getBankAccoutsByClient(getId());
 			
+			// Get the bank accounts
+			DALBankaccountMapper.toBos(ba);
+			
+			
 			// Categories
 			List<IDALCategoryEntity> cat = orm.getCategoryRepository()
 					.getCategoriesByClientId(getId());
+			
+			// Get the categories
+			DALCategoryMapper.toBos(cat);
+			
 			
 			// Budgets
 			List<IDALBudgetEntity> bu = orm.getBudgetRepository()
 					.getBudgetsByClient(getId());
 			
-			// Shared budgets
-			List<IDALSharedbudgetEntity> sb = orm.getSharedBudgetRepository()
-					.getSharedbudgetByClient(getId());
+			// Get the categories of the budgets
+			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {
+				b.setDataFromDB(orm);
+			}
+			
+			
+			if (isOnline()) {
+				// Shared budgets
+				List<IDALSharedbudgetEntity> sb = orm
+						.getSharedBudgetRepository()
+						.getSharedbudgetByClient(getId());
+				
+				// Get the shared budgets
+				for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
+				BudgetLogic b = DALBudgetMapper.toBo(budget);
+				b.setDataFromDB(orm);
+			}
+			}
 			
 			// Debts
 			List<IDALDebtEntity> de = orm.getDebtRepository()
 					.getDebtsByClient(getId());
 			
-			// Get the bank accounts
-			DALBankaccountMapper.toBos(ba);
-			
-			// Get the categories
-			DALCategoryMapper.toBos(cat);
-			
-			// Get the shared budgets
-			for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
-				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
-				BudgetLogic b = DALBudgetMapper.toBo(budget);
-				b.setDataFromDB(orm);
-			}
-			
 			// Get the debts
 			DALDebtMapper.toBos(de);
 			
-			// Get the categories of the budgets
-			for (BudgetLogic b : DALBudgetMapper.toBos(bu)) {
-				b.setDataFromDB(orm);
-			}
 			
 			// Update the transactions
 			for (BankAccountLogic b : getBankAccounts()) {
@@ -305,7 +339,7 @@ public class ClientLogic extends ClientModel {
 		
 		setActivated(isActivated);
 		
-		updateUser(MasterORM.getInstance().getPgORM());
+		updateUser(MasterORM.getInstance().getORM());
 	}
 	
 	public void wipe() {

@@ -6,7 +6,11 @@ import dal.ientites.IDALIotransactionEntity;
 import java.util.List;
 
 /**
- * IIotransactionRepository give the access methodes for handle the iotransaction into persistence
+ * IIotransactionRepository give the access methodes for handle the
+ * iotransaction into persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IIotransactionRepository {
     /**

@@ -3,11 +3,14 @@ package dal.irepositories;
 import dal.dalexception.DALException;
 import dal.ientites.IDALBankaccountEntity;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
- * BankaccountRepository give the access methodes for handle the bank account into persistence
+ * BankaccountRepository give the access methods for handle the bank account
+ * into persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface IBankaccountRepository {
 

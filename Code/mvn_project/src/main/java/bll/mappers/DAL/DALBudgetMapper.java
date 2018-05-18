@@ -1,6 +1,7 @@
 package bll.mappers.DAL;
 
 import bll.logic.BudgetLogic;
+import bll.logic.ClientLogic;
 import bll.model.BudgetModel;
 import dal.entities.derby.BudgetDeEntity;
 import dal.entities.pgsql.BudgetPgEntity;
@@ -67,6 +68,21 @@ public class DALBudgetMapper {
 	}
 	
 	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALBudgetEntity toDbo(BudgetModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
 	 * Entity -> BudgetLogic
 	 */
 	public static BudgetLogic toBo(IDALBudgetEntity entity) {
@@ -107,30 +123,18 @@ public class DALBudgetMapper {
 	}
 	
 	/**
-	 * BudgetsModel -> PostgreSQL Entities
+	 * TODO
+	 *
+	 * @param models
+	 * @return
 	 */
-	public static List<IDALBudgetEntity> toDbosPG(List<BudgetModel> models) {
+	public static List<IDALBudgetEntity> toDbos(List<BudgetModel> models) {
 		
 		// Create the list of entities
-		List<IDALBudgetEntity> entities = new ArrayList<IDALBudgetEntity>();
+		List<IDALBudgetEntity> entities = new ArrayList<>();
 		
 		for(BudgetModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * BudgetsModel -> Derby Entities
-	 */
-	public static List<IDALBudgetEntity> toDbosDe(List<BudgetModel> models) {
-		
-		// Create the list of entities
-		List<IDALBudgetEntity> entities = new ArrayList<IDALBudgetEntity>();
-		
-		for(BudgetModel model : models){
-			entities.add(toDboDe(model));
+			entities.add(toDbo(model));
 		}
 		
 		return entities;

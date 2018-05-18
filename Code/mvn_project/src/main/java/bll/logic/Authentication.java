@@ -13,10 +13,12 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.apache.commons.codec.binary.Base64;
 
 /**
  * TODO
+ *
  * @author Daniel Gonzalez Lopez
  * @version 2.0
  */
@@ -24,11 +26,11 @@ public class Authentication {
 	
 	private static final Random RANDOM = new SecureRandom();
 	
-    // Regex to check email format. Found on the internet
-    // stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]"
-            + "+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|"
-            + "(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+	// Regex to check email format. Found on the internet
+	// stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
+	private static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]"
+			+ "+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|"
+			+ "(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 	
 	/**
 	 * Check if the registration of the client is correct.
@@ -39,12 +41,15 @@ public class Authentication {
 	 * @param password2 Confirmation password.
 	 *
 	 * @return result[0] : true if the username is correct, false otherwise.
-	 *         result[1] : true if the email is correct, false otherwise.
-	 *         result[2] : true if the password is correct, false otherwise.
+	 * 		result[1] : true if the email is correct, false otherwise.
+	 * 		result[2] : true if the password is correct, false otherwise.
 	 */
-	public static boolean[] checkRegistration(String username, String email, String password1, String password2) {
+	public static boolean[] checkRegistration(String username, String email,
+			String password1, String password2, boolean online) {
 		
-		IORM orm = MasterORM.getInstance().getPgORM(); // TODO - Manage if connected to internet or not!
+		ClientLogic.getInstance().setOnline(online);
+		
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		boolean usernameIsCorrect = false;
 		boolean emailIsCorrect = false;
@@ -56,17 +61,18 @@ public class Authentication {
 			IClientRepository client = orm.getClientRepository();
 			
 			// Check if the username is available
-			if(!username.isEmpty()) {
+			if (!username.isEmpty()) {
 				usernameIsCorrect = !client.pseudoExist(username);
 			}
 			
 			// Check if the email is available and correct
-			if(!email.isEmpty()) {
-				emailIsCorrect = !client.mailExist(email) && checkEmailFormat(email);
+			if (!email.isEmpty()) {
+				emailIsCorrect = !client.mailExist(email) && checkEmailFormat(
+						email);
 			}
 			
 			// Check the password
-			if(!password1.isEmpty() & !password2.isEmpty()) {
+			if (!password1.isEmpty() & !password2.isEmpty()) {
 				passwordIsCorrect = password1.equals(password2);
 			}
 			
@@ -75,7 +81,8 @@ public class Authentication {
 		}
 		
 		// Create the result
-		boolean[] result = {usernameIsCorrect, emailIsCorrect, passwordIsCorrect};
+		boolean[] result = { usernameIsCorrect, emailIsCorrect,
+				passwordIsCorrect };
 		
 		return result;
 	}
@@ -100,52 +107,56 @@ public class Authentication {
 	/**
 	 * Try to connect the client to MoneyThoring.
 	 *
-	 * @param username  Username or email entered by the client.
-	 * @param password  Password entered by the client.
-	 * @return  true if the client is connected, false otherwise.
+	 * @param username Username or email entered by the client.
+	 * @param password Password entered by the client.
+	 *
+	 * @return true if the client is connected, false otherwise.
 	 */
-	public static boolean connect(String username, String password) {
-    	
-    	boolean success = false;
-    	
-    	if (!password.isEmpty()) {
+	public static boolean connect(String username, String password,
+			boolean online) {
 		
-		    IORM orm = MasterORM.getInstance().getPgORM();
-		    String salt;
+		boolean success = false;
 		
-		    try {
-			    orm.beginTransaction();
+		ClientLogic.getInstance().setOnline(online);
+		
+		if (!password.isEmpty()) {
 			
-			    IClientRepository client = orm.getClientRepository();
-			    
-			    // Get the salt of the client
-			    salt = client.retriveSaltByUserLogin(username);
+			IORM orm = MasterORM.getInstance().getORM();
+			String salt;
 			
-			    // Hash the password with the salt
-			    String hash = hash(password, salt);
-			
-			    // Check if the client exists
-			    IDALClientEntity ce = client
-					    .checkUserAndPassword(username, hash);
-			    
-			    if (ce != null) {
-				    DALClientMapper.toBo(ce);
-				    ClientLogic.getInstance().setDataFromDB();
-				    success = true;
-			    }
-			
-		    } catch (Exception e) {
-			    e.printStackTrace();
-		    }
-	    }
-	    
-	    return success;
+			try {
+				orm.beginTransaction();
+				
+				IClientRepository client = orm.getClientRepository();
+				
+				// Get the salt of the client
+				salt = client.retriveSaltByUserLogin(username);
+				
+				// Hash the password with the salt
+				String hash = hash(password, salt);
+				
+				// Check if the client exists
+				IDALClientEntity ce = client
+						.checkUserAndPassword(username, hash);
+				
+				if (ce != null) {
+					DALClientMapper.toBo(ce);
+					ClientLogic.getInstance().setDataFromDB();
+					success = true;
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
 	}
 	
 	/**
 	 * Check if the activation code entered by the client is the good one.
 	 *
-	 * @param activationCode    Code entered by the client.
+	 * @param activationCode Code entered by the client.
 	 *
 	 * @return True if the code is the good one, false otherwise.
 	 */
@@ -154,7 +165,7 @@ public class Authentication {
 		boolean isCorrect = false;
 		
 		// Check if the code is correct
-		if(ClientLogic.getInstance().getKey().equals(activationCode)) {
+		if (ClientLogic.getInstance().getKey().equals(activationCode)) {
 			
 			isCorrect = true;
 			
@@ -166,6 +177,7 @@ public class Authentication {
 	}
 	
 	private static String saltGenerator() {
+		
 		byte[] salt = new byte[16];
 		
 		RANDOM.nextBytes(salt);

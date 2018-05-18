@@ -1,6 +1,7 @@
 package bll.mappers.DAL;
 
 import bll.logic.CategoryLogic;
+import bll.logic.ClientLogic;
 import bll.model.CategoryModel;
 import dal.entities.derby.CategoryDeEntity;
 import dal.entities.pgsql.CategoryPgEntity;
@@ -59,6 +60,36 @@ public class DALCategoryMapper {
 	}
 	
 	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALCategoryEntity toDbo(CategoryModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
+	 * CategoriesModel -> Derby Entities
+	 */
+	public static List<IDALCategoryEntity> toDbos(List<CategoryModel> models) {
+		
+		// Create the list of entities
+		List<IDALCategoryEntity> entities = new ArrayList<IDALCategoryEntity>();
+		
+		for(CategoryModel model : models){
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
+	
+	/**
 	 * Entity -> CategoryLogic
 	 */
 	public static CategoryLogic toBo(IDALCategoryEntity entity) {
@@ -92,35 +123,5 @@ public class DALCategoryMapper {
 		}
 		
 		return objects;
-	}
-	
-	/**
-	 * CategoriesModel -> PostgreSQL Entities
-	 */
-	public static List<IDALCategoryEntity> toDbosPG(List<CategoryModel> models) {
-		
-		// Create the list of entities
-		List<IDALCategoryEntity> entities = new ArrayList<IDALCategoryEntity>();
-		
-		for(CategoryModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * CategoriesModel -> Derby Entities
-	 */
-	public static List<IDALCategoryEntity> toDbosDe(List<CategoryModel> models) {
-		
-		// Create the list of entities
-		List<IDALCategoryEntity> entities = new ArrayList<IDALCategoryEntity>();
-		
-		for(CategoryModel model : models){
-			entities.add(toDboDe(model));
-		}
-		
-		return entities;
 	}
 }

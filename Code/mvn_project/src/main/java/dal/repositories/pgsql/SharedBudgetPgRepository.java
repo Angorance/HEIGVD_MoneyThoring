@@ -1,11 +1,8 @@
 package dal.repositories.pgsql;
 
 import dal.dalexception.DALException;
-import dal.entities.pgsql.ClientPgEntity;
 import dal.entities.pgsql.SharedbudgetPgEntity;
-import dal.ientites.IDALClientEntity;
 import dal.ientites.IDALSharedbudgetEntity;
-import dal.irepositories.IClientRepository;
 import dal.irepositories.ISharedBudgetRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,7 +11,11 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * ClientPgRepository give the access methodes for handle the client into postgres persistence
+ * ClientPgRepository give the access methodes for handle the client into
+ * postgres persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class SharedBudgetPgRepository implements ISharedBudgetRepository {
     private Session session;

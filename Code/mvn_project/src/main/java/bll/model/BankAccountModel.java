@@ -66,12 +66,12 @@ public class BankAccountModel {
 			orm.beginTransaction();
 			
 			IBankaccountRepository repo = orm.getBankaccountRepository();
-			setId(repo.addBankaccount(DALBankaccountMapper.toDboPG(this)));
+			setId(repo.addBankaccount(DALBankaccountMapper.toDbo(this)));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -87,12 +87,12 @@ public class BankAccountModel {
 			orm.beginTransaction();
 			
 			IBankaccountRepository repo = orm.getBankaccountRepository();
-			repo.update(DALBankaccountMapper.toDboPG(this));
+			repo.update(DALBankaccountMapper.toDbo(this));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

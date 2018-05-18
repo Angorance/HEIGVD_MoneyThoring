@@ -57,7 +57,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		ClientLogic.getInstance().addBankAccount(this);
 		
-		createBankAccount(MasterORM.getInstance().getPgORM());
+		createBankAccount(MasterORM.getInstance().getORM());
 	}
 	
 	private void addToHashMap(IOTransactionLogic tl) {
@@ -101,7 +101,7 @@ public class BankAccountLogic extends BankAccountModel {
 	private void updateAmount(double io) {
 		
 		setAmount(getAmount() + io);
-		updateBankAccount(MasterORM.getInstance().getPgORM());
+		updateBankAccount(MasterORM.getInstance().getORM());
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class BankAccountLogic extends BankAccountModel {
 		
 		setVisible(false);
 		setDefault(false);
-		updateBankAccount(MasterORM.getInstance().getPgORM());
+		updateBankAccount(MasterORM.getInstance().getORM());
 	}
 	
 	/**
@@ -198,7 +198,7 @@ public class BankAccountLogic extends BankAccountModel {
 			for (BankAccountLogic ba : list) {
 				if (ba.isDefault()) {
 					ba.setDefault(false);
-					ba.updateBankAccount(MasterORM.getInstance().getPgORM());
+					ba.updateBankAccount(MasterORM.getInstance().getORM());
 					break;
 				}
 			}
@@ -258,7 +258,7 @@ public class BankAccountLogic extends BankAccountModel {
 		setAmount(amount);
 		changeDefault(isDefault);
 		
-		updateBankAccount(MasterORM.getInstance().getPgORM());
+		updateBankAccount(MasterORM.getInstance().getORM());
 	}
 	
 	/**

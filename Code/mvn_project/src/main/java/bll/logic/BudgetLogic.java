@@ -50,11 +50,14 @@ public class BudgetLogic extends BudgetModel {
 		
 		ClientLogic.getInstance().addBudget(this);
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		createBudget(orm);
 		updateCategoriesBudget(orm);
-		updateClientsBudget(orm);
+		
+		if (isShared()) {
+			updateClientsBudget(orm);
+		}
 	}
 	
 	/**
@@ -77,11 +80,14 @@ public class BudgetLogic extends BudgetModel {
 			setClientsBudget(clientList);
 		}
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		updateBudget(orm);
 		updateCategoriesBudget(orm);
-		updateClientsBudget(orm);
+		
+		if (isShared()) {
+			updateClientsBudget(orm);
+		}
 	}
 	
 	/**
@@ -90,7 +96,7 @@ public class BudgetLogic extends BudgetModel {
 	 */
 	public void supp() {
 		
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -148,7 +154,7 @@ public class BudgetLogic extends BudgetModel {
 	public ClientModel getCreator() {
 		
 		ClientModel creator = null;
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -211,6 +217,15 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	/**
+	 * Remove the given category from the list.
+	 *
+	 * @param category category to remove.
+	 */
+	public void removeCategory(CategoryLogic category) {
+		categories.remove(category);
+	}
+	
+	/**
 	 * Update the categories of the budget.
 	 */
 	private void updateCategoriesBudget(IORM orm) {
@@ -227,13 +242,13 @@ public class BudgetLogic extends BudgetModel {
 			for(CategoryLogic category : categories) {
 				
 				CategoryBudgetModel cat = new CategoryBudgetModel(category.getId(), getId());
-				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDboPG(cat));
+				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDbo(cat));
 			}
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -260,7 +275,7 @@ public class BudgetLogic extends BudgetModel {
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

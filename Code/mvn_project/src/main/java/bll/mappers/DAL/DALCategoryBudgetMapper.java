@@ -1,6 +1,8 @@
 package bll.mappers.DAL;
 
+import bll.logic.ClientLogic;
 import bll.model.CategoryBudgetModel;
+import dal.entities.derby.CategoriesbudgetDeEntity;
 import dal.entities.pgsql.CategoriesbudgetPgEntity;
 import dal.ientites.IDALCategoriesbudgetEntity;
 
@@ -30,6 +32,37 @@ public class DALCategoryBudgetMapper {
 		pgEntity.setBudgetId(model.getBudgetID());
 		
 		return pgEntity;
+	}
+	
+	/**
+	 * CategoryBudgetModel -> Derby entity
+	 */
+	public static IDALCategoriesbudgetEntity toDboDe(CategoryBudgetModel model) {
+		
+		if (model == null) {
+			return null;
+		}
+		
+		// Create the Derby entry
+		CategoriesbudgetDeEntity deEntity = new CategoriesbudgetDeEntity();
+		
+		deEntity.setCategoryId(model.getCategoryID());
+		deEntity.setBudgetId(model.getBudgetID());
+		
+		return deEntity;
+	}
+	
+	/**
+	 * CategoryBudgetModel -> Derby / PostgreSQL entity
+	 * Depending on if we are online or offline
+	 */
+	public static IDALCategoriesbudgetEntity toDbo(CategoryBudgetModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
 	}
 	
 	/**
