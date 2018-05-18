@@ -68,6 +68,8 @@ public class DebtLogic extends DebtModel {
 		
 		if(contributor != null) {
 			setContributorID(contributor.getId());
+		} else {
+			setContributorID(null);
 		}
 	}
 	

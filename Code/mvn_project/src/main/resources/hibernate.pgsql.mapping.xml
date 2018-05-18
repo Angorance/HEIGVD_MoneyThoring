@@ -127,7 +127,7 @@
             <column name="client_id" sql-type="integer"/>
         </property>
         <property name="clientId1">
-            <column name="client_id1" sql-type="integer" not-null="true"/>
+            <column name="client_id1" sql-type="integer" not-null="false"/>
         </property>
     </class>
     <class name="dal.entities.pgsql.IotransactionPgEntity" table="iotransaction" schema="moneythoring"
