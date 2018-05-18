@@ -29,6 +29,7 @@ public class DerbyORM implements IORM {
 	private IDebtRepository debtRepository;
 	private IotransactionDeRepository iotranscationRepository;
 	private IRecurrenceRepository recurrenceRepository;
+	private ICategoriesBudgetRepository categoriesBudgetReposisoty;
 	
 	/**
 	 * {@inheritDoc}
@@ -113,8 +114,9 @@ public class DerbyORM implements IORM {
 	 */
 	@Override
 	public ICategoriesBudgetRepository getCategoriesBudgetRepository() {
-		
-		return null;
+
+		categoriesBudgetReposisoty = new Categor(session, transaction);
+		return categoriesBudgetReposisoty;
 	}
 	
 	/**
