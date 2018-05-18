@@ -130,7 +130,11 @@ public class DALDebtMapper {
 		
 		try {
 			IClientRepository repo = orm.getClientRepository();
-			contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			
+			if (entity.getClientId1() != null) {
+				contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			}
+			
 			creator = DALClientMapper.toClientModel(repo.getClient(entity.getClientId()));
 			
 		} catch (DALException e) {
