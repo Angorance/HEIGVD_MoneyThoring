@@ -1,11 +1,16 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALBudgetMapper;
+import bll.mappers.DAL.DALCategoryBudgetMapper;
+import bll.model.CategoryBudgetModel;
 import bll.model.CategoryModel;
 import dal.dalexception.DALException;
+import dal.ientites.IDALCategoriesbudgetEntity;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO
@@ -56,7 +61,8 @@ public class CategoryLogic extends CategoryModel {
 						.getTransactionsByCategory().get(this);
 				
 				if (transactions != null) {
-					// Change the category be the default one
+					
+					// Change the category by the default one
 					for (IOTransactionLogic transaction : transactions) {
 						transaction.setCategory(getDefaultCategory());
 						
@@ -64,8 +70,26 @@ public class CategoryLogic extends CategoryModel {
 						transaction.updateIOTransaction(orm);
 					}
 				}
+			}
+			
+			// Get the budgets using this category
+			List<IDALCategoriesbudgetEntity> budgetLinks = orm.getCategoriesBudgetRepository()
+					.getCategoriesBudgetByCategory(getId());
+			
+			if (budgetLinks != null) {
 				
-				// TODO - Do the same for budgets !!!
+				// Change the category by the default one
+				for (IDALCategoriesbudgetEntity budgetLink : budgetLinks) {
+					
+					// Delete the link with the budget
+					orm.getCategoriesBudgetRepository().delete(budgetLink);
+					
+					// Update the budget
+					BudgetLogic budget = DALBudgetMapper.toBo(
+							orm.getBudgetRepository().getBudget(budgetLink.getBudgetId()));
+					
+					budget.removeCategory(this);
+				}
 			}
 			
 			orm.getCategoryRepository().delete(getId());

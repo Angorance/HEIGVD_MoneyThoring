@@ -88,4 +88,16 @@ public interface ICategoriesBudgetRepository {
 	 */
 	public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByBudget(
 			int budget_id) throws DALException;
+	
+	/**
+	 * Retreave the CategoriesBudget by category id
+	 *
+	 * @param category_id id of the category
+	 *
+	 * @return IDALCategoriesBudgetEntity the CategoriesBudget
+	 *
+	 * @throws DALException
+	 */
+	public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByCategory(
+			int category_id) throws DALException;
 }

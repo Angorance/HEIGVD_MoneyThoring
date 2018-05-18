@@ -174,4 +174,19 @@ public class CategoryBudgetPgRepository implements ICategoriesBudgetRepository {
 		}
 		return categroriesBudgets;
 	}
+	
+	@Override
+	public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByCategory(
+			int category_id) throws DALException {
+		
+		List<IDALCategoriesbudgetEntity> categroriesBudgets = null;
+		try {
+			categroriesBudgets = session.createQuery(
+					"from CategoriesbudgetPgEntity where categoryId = :categoryid")
+					.setParameter("categoryid", category_id).list();
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		return categroriesBudgets;
+	}
 }

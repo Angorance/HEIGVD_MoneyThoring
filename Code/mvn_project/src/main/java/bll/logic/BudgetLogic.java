@@ -217,6 +217,15 @@ public class BudgetLogic extends BudgetModel {
 	}
 	
 	/**
+	 * Remove the given category from the list.
+	 *
+	 * @param category category to remove.
+	 */
+	public void removeCategory(CategoryLogic category) {
+		categories.remove(category);
+	}
+	
+	/**
 	 * Update the categories of the budget.
 	 */
 	private void updateCategoriesBudget(IORM orm) {
