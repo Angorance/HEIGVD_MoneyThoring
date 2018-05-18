@@ -11,123 +11,137 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * BudgetDeRepository give the access methodes for handle the budget into postgres persistence
+ * BudgetDeRepository give the access methodes for handle the budget into
+ * postgres persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class BudgetPgRepository implements IBudgetRepository {
-    private Session session;
-    private Transaction transaction;
-
-    public BudgetPgRepository(Session session, Transaction transaction) {
-        this.session = session;
-        this.transaction = transaction;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public IDALBudgetEntity getBudget(int id) throws DALException {
-        BudgetPgEntity Budget = null;
-
-        try {
-            Budget = (BudgetPgEntity) session.createCriteria(BudgetPgEntity.class)
-                    .add(Restrictions.eq("id", id))
-                    .uniqueResult();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-
-        return Budget;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<IDALBudgetEntity> getBudgets() throws DALException {
-
-        List<IDALBudgetEntity> Budgets = null;
-        try {
-            Budgets = session.createQuery("from BudgetPgEntity").list();
-
-
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-        return Budgets;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<IDALBudgetEntity> getBudgetsByClient(int id) throws DALException {
-        List<IDALBudgetEntity> budgetEntities = null;
-        try {
-            budgetEntities = session.createQuery("from BudgetPgEntity where clientId = :clientid").setParameter("clientid", id).list();
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-        return budgetEntities;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(IDALBudgetEntity budget) throws DALException {
-        BudgetPgEntity BudgetPg = null;
-        if (budget.getClass() == BudgetPgEntity.class)
-            BudgetPg = (BudgetPgEntity) budget;
-        else
-            throw new DALException();
-
-        try {
-
-
-            session.update(BudgetPg);
-
-
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Integer addBudget(IDALBudgetEntity budget) throws DALException {
-        BudgetPgEntity newBudget = null;
-        
-        if (budget.getClass() == BudgetPgEntity.class)
-            newBudget = (BudgetPgEntity) budget;
-        else
-            throw new DALException();
-
-        try {
-            return (Integer) session.save(newBudget);
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(int id) throws DALException {
-        IDALBudgetEntity budget = null;
-        try {
-            budget = (BudgetPgEntity) session.createCriteria(BudgetPgEntity.class)
-                    .add(Restrictions.eq("id", id))
-                    .uniqueResult();
-
-            session.delete(budget);
-        } catch (Exception e) {
-            throw new DALException(e);
-        }
-    }
+	
+	private Session session;
+	private Transaction transaction;
+	
+	public BudgetPgRepository(Session session, Transaction transaction) {
+		
+		this.session = session;
+		this.transaction = transaction;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public IDALBudgetEntity getBudget(int id) throws DALException {
+		
+		BudgetPgEntity Budget = null;
+		
+		try {
+			Budget = (BudgetPgEntity) session
+					.createCriteria(BudgetPgEntity.class)
+					.add(Restrictions.eq("id", id)).uniqueResult();
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		
+		return Budget;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<IDALBudgetEntity> getBudgets() throws DALException {
+		
+		List<IDALBudgetEntity> Budgets = null;
+		try {
+			Budgets = session.createQuery("from BudgetPgEntity").list();
+			
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		return Budgets;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<IDALBudgetEntity> getBudgetsByClient(int id)
+			throws DALException {
+		
+		List<IDALBudgetEntity> budgetEntities = null;
+		try {
+			budgetEntities = session.createQuery(
+					"from BudgetPgEntity where clientId = :clientid")
+					.setParameter("clientid", id).list();
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+		return budgetEntities;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void update(IDALBudgetEntity budget) throws DALException {
+		
+		BudgetPgEntity BudgetPg = null;
+		if (budget.getClass() == BudgetPgEntity.class) {
+			BudgetPg = (BudgetPgEntity) budget;
+		} else {
+			throw new DALException();
+		}
+		
+		try {
+			
+			
+			session.update(BudgetPg);
+			
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer addBudget(IDALBudgetEntity budget) throws DALException {
+		
+		BudgetPgEntity newBudget = null;
+		
+		if (budget.getClass() == BudgetPgEntity.class) {
+			newBudget = (BudgetPgEntity) budget;
+		} else {
+			throw new DALException();
+		}
+		
+		try {
+			return (Integer) session.save(newBudget);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(int id) throws DALException {
+		
+		IDALBudgetEntity budget = null;
+		try {
+			budget = (BudgetPgEntity) session
+					.createCriteria(BudgetPgEntity.class)
+					.add(Restrictions.eq("id", id)).uniqueResult();
+			
+			session.delete(budget);
+		} catch (Exception e) {
+			throw new DALException(e);
+		}
+	}
 }

@@ -66,7 +66,7 @@ public class IOTransactionModel {
 			orm.beginTransaction();
 			
 			IIotransactionRepository repo = orm.getIotransactionRepository();
-			setId(repo.addIotransaction(DALIOTransactionMapper.toDboPG(this)));
+			setId(repo.addIotransaction(DALIOTransactionMapper.toDbo(this)));
 			
 			orm.commit();
 			
@@ -80,19 +80,17 @@ public class IOTransactionModel {
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void updateIOTransaction(IORM orm) {
+	public void updateIOTransaction(IORM orm) {
 		
 		try {
 			
 			orm.beginTransaction();
 			
 			IIotransactionRepository repo = orm.getIotransactionRepository();
-			repo.update(DALIOTransactionMapper.toDboPG(this));
-			
-			orm.commit();
+			repo.update(DALIOTransactionMapper.toDbo(this));
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

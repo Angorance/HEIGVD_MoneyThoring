@@ -45,13 +45,15 @@ public class ClientModel {
 			orm.beginTransaction();
 			
 			IClientRepository repo = orm.getClientRepository();
-			repo.addClient(DALClientMapper.toDboPG(this));
+			repo.addClient(DALClientMapper.toDbo(this));
 			
 			orm.commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		// TODO - Si exception, la création de l'user a foiré !!!
 	}
 	
 	/**
@@ -66,7 +68,7 @@ public class ClientModel {
 			orm.beginTransaction();
 			
 			IClientRepository repo = orm.getClientRepository();
-			repo.update(DALClientMapper.toDboPG(this));
+			repo.update(DALClientMapper.toDbo(this));
 			
 			orm.commit();
 			

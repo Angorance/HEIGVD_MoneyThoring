@@ -4,14 +4,15 @@ import dal.dalexception.DALException;
 import dal.entities.pgsql.IotransactionPgEntity;
 import dal.ientites.IDALIotransactionEntity;
 import dal.irepositories.IIotransactionRepository;
-import dal.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
+/**
+ * TODO
+ */
 public class IotransactionPgRepository implements IIotransactionRepository {
 	
 	private Session session;

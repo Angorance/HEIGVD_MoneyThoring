@@ -5,8 +5,6 @@ import dal.dalexception.DALException;
 import dal.entities.pgsql.BankaccountPgEntity;
 import dal.ientites.IDALBankaccountEntity;
 import dal.irepositories.IBankaccountRepository;
-import dal.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -14,7 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * BankaccountDeRepository give the access methodes for handle the bank account into postgres persistence
+ * BankaccountDeRepository give the access methodes for handle the bank account
+ * into postgres persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class BankaccountPgRepository implements IBankaccountRepository {
 

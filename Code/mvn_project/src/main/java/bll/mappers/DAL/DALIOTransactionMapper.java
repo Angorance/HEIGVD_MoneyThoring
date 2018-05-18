@@ -2,6 +2,7 @@ package bll.mappers.DAL;
 
 import bll.logic.BankAccountLogic;
 import bll.logic.CategoryLogic;
+import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import bll.model.IOTransactionModel;
 import dal.entities.derby.IotransactionDeEntity;
@@ -70,6 +71,39 @@ public class DALIOTransactionMapper {
 		return derbyEntity;
 	}
 	
+	
+	/**
+	 * TODO
+	 *
+	 * @param model
+	 *
+	 * @return
+	 */
+	public static IDALIotransactionEntity toDbo(IOTransactionModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
+	 * CategoriesModel -> Derby Entities
+	 */
+	public static List<IDALIotransactionEntity> toDbos(
+			List<IOTransactionModel> models) {
+		
+		// Create the list of entities
+		List<IDALIotransactionEntity> entities = new ArrayList<>();
+		
+		for (IOTransactionModel model : models) {
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
+	
 	/**
 	 * Entity -> IOTransactionLogic
 	 */
@@ -90,7 +124,8 @@ public class DALIOTransactionMapper {
 		object.setCurrency(entity.getCurrency());
 		object.setIncome(entity.isIsincome());
 		object.setCategory(CategoryLogic.getByID(entity.getCategoryId()));
-		object.setBankAccount(BankAccountLogic.getBankAccountByID(entity.getBankaccountId()));
+		object.setBankAccount(
+				BankAccountLogic.getBankAccountByID(entity.getBankaccountId()));
 		object.setBudgetID(entity.getBudgetId());
 		
 		return object;
@@ -99,45 +134,16 @@ public class DALIOTransactionMapper {
 	/**
 	 * Entities -> IOTransactionsLogic
 	 */
-	public static List<IOTransactionLogic> toBos(List<IDALIotransactionEntity> entities) {
+	public static List<IOTransactionLogic> toBos(
+			List<IDALIotransactionEntity> entities) {
 		
 		// Create the list of transactions
 		List<IOTransactionLogic> objects = new ArrayList<>();
 		
-		for(IDALIotransactionEntity entity : entities){
+		for (IDALIotransactionEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		
 		return objects;
-	}
-	
-	/**
-	 * IOTransactionsModel -> PostgreSQL Entities
-	 */
-	public static List<IDALIotransactionEntity> toDbosPG(List<IOTransactionModel> models) {
-		
-		// Create the list of entities
-		List<IDALIotransactionEntity> entities = new ArrayList<IDALIotransactionEntity>();
-		
-		for(IOTransactionModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * IOTransactionsModel -> Derby Entities
-	 */
-	public static List<IDALIotransactionEntity> toDbosDe(List<IOTransactionModel> models) {
-		
-		// Create the list of entities
-		List<IDALIotransactionEntity> entities = new ArrayList<IDALIotransactionEntity>();
-		
-		for(IOTransactionModel model : models){
-			entities.add(toDboDe(model));
-		}
-		
-		return entities;
 	}
 }

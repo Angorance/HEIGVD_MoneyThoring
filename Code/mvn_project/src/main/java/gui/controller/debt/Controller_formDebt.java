@@ -77,6 +77,11 @@ public class Controller_formDebt implements Initializable, IForm {
 		btnCancel.setOnAction(this::formCancel);
 		btnValider.setOnAction(this::formValidation);
 		btnDelete.setOnAction(event -> parent.deleteItem(debt));
+		
+		// disable the user selection in offline mode
+		if(!ClientLogic.getInstance().isOnline()){
+			cbbOtherUser.setDisable(true);
+		}
 	}
 	
 	@Override public void formValidation(ActionEvent event) {

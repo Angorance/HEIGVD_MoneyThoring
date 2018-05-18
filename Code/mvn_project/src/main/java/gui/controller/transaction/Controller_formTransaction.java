@@ -310,5 +310,10 @@ public class Controller_formTransaction implements Initializable, IForm {
 				cbxBudgets.setVisible(checkSharedBudget.isSelected());
 			}
 		});
+		
+		if(!ClientLogic.getInstance().isOnline()){
+			/*recurrence.setDisable(true);
+			recurrence.setSelected(false);*/
+		}
 	}
 }

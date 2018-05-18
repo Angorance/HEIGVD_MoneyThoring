@@ -1,13 +1,16 @@
 package dal.irepositories;
 
 import dal.dalexception.DALException;
-import dal.ientites.IDALBankaccountEntity;
 import dal.ientites.IDALCategoryEntity;
 
 import java.util.List;
 
 /**
- * ICategoryRepository give the access methodes for handle the category into persistence
+ * ICategoryRepository give the access methodes for handle the category into
+ * persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public interface ICategoryRepository {
 

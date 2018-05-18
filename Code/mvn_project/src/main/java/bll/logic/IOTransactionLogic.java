@@ -66,7 +66,7 @@ public class IOTransactionLogic extends IOTransactionModel
 		setBank(bankAccount);
 		setBudget(budget);
 		
-		createIOTransaction(MasterORM.getInstance().getPgORM());
+		createIOTransaction(MasterORM.getInstance().getORM());
 		transactions.add(this);
 	}
 	
@@ -88,7 +88,7 @@ public class IOTransactionLogic extends IOTransactionModel
 		ArrayList<IOTransactionModel> list = new ArrayList<>();
 		
 		// TODO - Change when adding derby
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
@@ -248,15 +248,17 @@ public class IOTransactionLogic extends IOTransactionModel
 			bank.updateTransaction(this, previous);
 		}
 		
-		updateIOTransaction(MasterORM.getInstance().getPgORM());
+		updateIOTransaction(MasterORM.getInstance().getORM());
 	}
 	
 	public static void updateTransactionsOnCategoryDeletion(
 			CategoryLogic deleted) {
 		
-		for (IOTransactionLogic old : transactionsByCategory.get(deleted)) {
-			
-			old.setCategory(CategoryLogic.getDefaultCategory());
+		if (transactionsByCategory.containsKey(deleted)) {
+			for (IOTransactionLogic old : transactionsByCategory.get(deleted)) {
+				
+				old.setCategory(CategoryLogic.getDefaultCategory());
+			}
 		}
 		
 		transactionsByCategory.remove(deleted);
@@ -265,7 +267,7 @@ public class IOTransactionLogic extends IOTransactionModel
 	public void supp() {
 		
 		try {
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			
 			orm.beginTransaction();
 			

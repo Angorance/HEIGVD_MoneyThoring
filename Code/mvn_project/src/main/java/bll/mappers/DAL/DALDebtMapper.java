@@ -73,6 +73,36 @@ public class DALDebtMapper {
 	}
 	
 	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALDebtEntity toDbo(DebtModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
+	 * DebtModel -> Derby Entities
+	 */
+	public static List<IDALDebtEntity> toDbos(List<DebtModel> models) {
+		
+		// Create the list of entities
+		List<IDALDebtEntity> entities = new ArrayList<>();
+		
+		for(DebtModel model : models){
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
+	
+	/**
 	 * Entity -> DebtLogic
 	 */
 	public static DebtLogic toBo(IDALDebtEntity entity) {
@@ -94,13 +124,17 @@ public class DALDebtMapper {
 		object.setContributorID(entity.getClientId1());
 		
 		// Get the contributor
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		ClientModel contributor = null;
 		ClientModel creator = null;
 		
 		try {
 			IClientRepository repo = orm.getClientRepository();
-			contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			
+			if (entity.getClientId1() != null) {
+				contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			}
+			
 			creator = DALClientMapper.toClientModel(repo.getClient(entity.getClientId()));
 			
 		} catch (DALException e) {
@@ -126,35 +160,5 @@ public class DALDebtMapper {
 		}
 		
 		return objects;
-	}
-	
-	/**
-	 * DebtsModel -> PostgreSQL Entities
-	 */
-	public static List<IDALDebtEntity> toDbosPG(List<DebtModel> models) {
-		
-		// Create the list of entities
-		List<IDALDebtEntity> entities = new ArrayList<IDALDebtEntity>();
-		
-		for(DebtModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * DebtsModel -> Derby Entities
-	 */
-	public static List<IDALDebtEntity> toDbosDe(List<DebtModel> models) {
-		
-		// Create the list of entities
-		List<IDALDebtEntity> entities = new ArrayList<IDALDebtEntity>();
-		
-		for(DebtModel model : models){
-			entities.add(toDboDe(model));
-		}
-		
-		return entities;
 	}
 }

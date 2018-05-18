@@ -1,5 +1,6 @@
 package bll.mappers.DAL;
 
+import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import bll.logic.RecurrenceLogic;
 import bll.model.RecurrenceModel;
@@ -58,6 +59,36 @@ public class DALRecurrenceMapper {
 	}
 	
 	/**
+	 * TODO
+	 *
+	 * @param model
+	 * @return
+	 */
+	public static IDALRecurrenceEntity toDbo(RecurrenceModel model) {
+		
+		if (ClientLogic.getInstance().isOnline()) {
+			return toDboPG(model);
+		} else {
+			return toDboDe(model);
+		}
+	}
+	
+	/**
+	 * CategoriesModel -> Derby Entities
+	 */
+	public static List<IDALRecurrenceEntity> toDbos(List<RecurrenceModel> models) {
+		
+		// Create the list of entities
+		List<IDALRecurrenceEntity> entities = new ArrayList<>();
+		
+		for(RecurrenceModel model : models){
+			entities.add(toDbo(model));
+		}
+		
+		return entities;
+	}
+	
+	/**
 	 * Entity -> RecurrenceLogic
 	 */
 	public static RecurrenceLogic toBo(IDALRecurrenceEntity entity) {
@@ -90,35 +121,5 @@ public class DALRecurrenceMapper {
 		}
 		
 		return objects;
-	}
-	
-	/**
-	 * RecurrencesLogic -> PostgreSQL Entities
-	 */
-	public static List<IDALRecurrenceEntity> toDbosPG(List<RecurrenceModel> models) {
-		
-		// Create the list of entities
-		List<IDALRecurrenceEntity> entities = new ArrayList<IDALRecurrenceEntity>();
-		
-		for(RecurrenceModel model : models){
-			entities.add(toDboPG(model));
-		}
-		
-		return entities;
-	}
-	
-	/**
-	 * RecurrencesLogic -> Derby Entities
-	 */
-	public static List<IDALRecurrenceEntity> toDbosDe(List<RecurrenceModel> models) {
-		
-		// Create the list of entities
-		List<IDALRecurrenceEntity> entities = new ArrayList<IDALRecurrenceEntity>();
-		
-		for(RecurrenceModel model : models){
-			entities.add(toDboDe(model));
-		}
-		
-		return entities;
 	}
 }

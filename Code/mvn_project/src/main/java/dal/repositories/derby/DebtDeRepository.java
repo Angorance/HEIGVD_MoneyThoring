@@ -14,6 +14,9 @@ import java.util.List;
 /**
  * DebtDeRepository give the access methodes for handle the debt into derby
  * persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class DebtDeRepository implements IDebtRepository {
 	

@@ -12,7 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * IotransactionDeRepository give the access methodes for handle the iotransaction into derby persistence
+ * IotransactionDeRepository give the access methodes for handle the
+ * iotransaction into derby persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class IotransactionDeRepository implements IIotransactionRepository {
 

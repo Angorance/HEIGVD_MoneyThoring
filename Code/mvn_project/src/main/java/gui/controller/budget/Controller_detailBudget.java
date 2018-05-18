@@ -111,7 +111,6 @@ public class Controller_detailBudget implements Initializable, IController {
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		scrollpane.setStyle("-fx-background-color: transparent");
-		
 		// nodelist initialisation
 		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
@@ -134,6 +133,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		JFXDepthManager.setDepth(nodeModifDelete, 1);
 		
+		
+		
+		
+		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
@@ -148,6 +151,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnDelete.setGraphic(image);
+		
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);

@@ -321,6 +321,7 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		
 		
+		
 		// gather every client except the current user for the combo box
 		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
 		for (ClientModel u : ClientLogic.getInstance().getAllUsers()) {
@@ -413,7 +414,13 @@ public class Controller_formBudget implements IForm, Initializable {
 			}
 		});
 		
-		// TODO désactiver les budget partagé si on est hors ligne
-		
+		// disable the shared budget in offline mode
+		if(!ClientLogic.getInstance().isOnline()){
+			checkShare.setDisable(true);
+			checkShare.setSelected(false);
+			cbbUser.setDisable(true);
+			chbIsRegular.setDisable(true);
+			chbIsRegular.setSelected(false);
+		}
 	}
 }

@@ -14,6 +14,9 @@ import java.util.List;
 /**
  * DebtPgRepository give the access methodes for handle the client into postgres
  * persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class DebtPgRepository implements IDebtRepository {
 	

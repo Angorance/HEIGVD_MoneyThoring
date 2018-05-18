@@ -2,10 +2,7 @@ package dal.repositories.pgsql;
 
 import dal.dalexception.DALException;
 import dal.entities.pgsql.CategoryPgEntity;
-import dal.entities.pgsql.CategoryPgEntity;
 import dal.ientites.IDALCategoryEntity;
-import dal.ientites.IDALCategoryEntity;
-import dal.irepositories.ICategoryRepository;
 import dal.irepositories.ICategoryRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,7 +11,11 @@ import org.hibernate.criterion.Restrictions;
 import java.util.List;
 
 /**
- * CategoryPgRepository give the access methodes for handle the category into postgres persistence
+ * CategoryPgRepository give the access methodes for handle the category into
+ * postgres persistence
+ *
+ * @author Guillaume Zaretti
+ * @version 1.2
  */
 public class CategoryPgRepository implements ICategoryRepository {
     private Session session;
