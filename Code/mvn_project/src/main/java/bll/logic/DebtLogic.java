@@ -95,7 +95,7 @@ public class DebtLogic extends DebtModel {
 			
 			tr.setDate(now);
 			
-			IORM orm = MasterORM.getInstance().getPgORM();
+			IORM orm = MasterORM.getInstance().getORM();
 			
 			try {
 				orm.beginTransaction();

@@ -64,6 +64,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		/*Retrieving text input*/
 		String email = login_email.getText();
 		String password = login_password.getText();
+		boolean online = !offline_checkLogin.isSelected();
 
 		/*Retrieving the status of the login method*/
 		boolean status = connect(email, password, online);
