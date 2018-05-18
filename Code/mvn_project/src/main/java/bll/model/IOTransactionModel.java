@@ -32,9 +32,7 @@ public class IOTransactionModel {
 	
 	
 	// Protected default constructor. Avoid instances creation outside package.
-	protected IOTransactionModel() {
-	
-	}
+	protected IOTransactionModel() {}
 	
 	
 	/**
@@ -52,7 +50,6 @@ public class IOTransactionModel {
 		this.amount = amount;
 		this.name = name;
 		this.description = description;
-		this.date = date;
 		this.currency = currency;
 		this.isIncome = isIncome;
 	}
@@ -62,7 +59,7 @@ public class IOTransactionModel {
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void createIOTransaction(IORM orm) {
+	public void createIOTransaction(IORM orm) {
 		
 		try {
 			

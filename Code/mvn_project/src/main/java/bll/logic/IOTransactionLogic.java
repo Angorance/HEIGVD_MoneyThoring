@@ -1,11 +1,16 @@
 package bll.logic;
 
+import bll.model.ClientModel;
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
+import dal.ientites.IDALIotransactionEntity;
+import dal.irepositories.IBudgetRepository;
+import dal.irepositories.IIotransactionRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -18,7 +23,8 @@ import java.util.TreeSet;
  * @author Héléna Line Reymond
  * @version 1.2
  */
-public class IOTransactionLogic extends IOTransactionModel implements Comparable<IOTransactionLogic> {
+public class IOTransactionLogic extends IOTransactionModel
+		implements Comparable<IOTransactionLogic> {
 	
 	private static ArrayList<IOTransactionLogic> transactions
 			= new ArrayList<>();
@@ -31,6 +37,7 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 	private CategoryLogic category;
 	private BankAccountLogic bank;
 	private RecurrenceLogic recurrence;
+	private BudgetLogic sharedBudget;
 	
 	public IOTransactionLogic() {
 		
@@ -50,15 +57,14 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 	 */
 	public IOTransactionLogic(double amount, String name, String description,
 			Date date, String currency, CategoryLogic category,
-			BankAccountLogic bankAccount) {
+			BankAccountLogic bankAccount, BudgetLogic budget) {
 		
 		super(amount, name, description, currency, (amount >= 0));
 		
 		setDate(date);
 		setCategory(category);
 		setBank(bankAccount);
-		
-		setBudgetID(null);
+		setBudget(budget);
 		
 		createIOTransaction(MasterORM.getInstance().getORM());
 		transactions.add(this);
@@ -74,6 +80,38 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 		}
 		
 		return null;
+	}
+	
+	public static ArrayList<IOTransactionModel> getIOTransactionByBudget(
+			int budgetId) {
+		
+		ArrayList<IOTransactionModel> list = new ArrayList<>();
+		
+		// TODO - Change when adding derby
+		IORM orm = MasterORM.getInstance().getPgORM();
+		
+		try {
+			orm.beginTransaction();
+			
+			IIotransactionRepository repo = orm.getIotransactionRepository();
+			
+			for (IDALIotransactionEntity te : repo
+					.getIotransactionsByBudget(budgetId)) {
+				
+				IOTransactionModel tm = new IOTransactionModel(te.getAmount(),
+						te.getName(), te.getDescription(), te.getCurrency(),
+						false);
+				
+				tm.setDate(te.getDatetransaction());
+				
+				list.add(tm);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	public static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
@@ -104,7 +142,7 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 		yearsWithTransactions.add(date.toLocalDate().getYear());
 	}
 	
-	public static Set getYearsWithTransactions() {
+	public static Set<Integer> getYearsWithTransactions() {
 		
 		return yearsWithTransactions;
 	}
@@ -115,6 +153,11 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 		
 		setCategoryID(cl.getId());
 		addToHashMap();
+	}
+	
+	public CategoryLogic getCategory() {
+		
+		return category;
 	}
 	
 	private void updateCategory(CategoryLogic newCat) {
@@ -146,20 +189,49 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 		this.recurrence = recurrence;
 	}
 	
+	private void setBudget(BudgetLogic budget) {
+		
+		this.sharedBudget = budget;
+		
+		if(budget != null) {
+		
+			setBudgetID(budget.getId());
+		} else {
+			
+			setBudgetID(null);
+		}
+		
+	}
+	
+	public BudgetLogic getBudget() {
+		
+		if (sharedBudget == null && getBudgetID() != null) {
+			
+			for (BudgetLogic bu : ClientLogic.getInstance().getBudgets()) {
+				
+				if (bu.getId() == getBudgetID()) {
+					sharedBudget = bu;
+					break;
+				}
+			}
+		}
+		
+		return sharedBudget;
+	}
+	
 	/**
 	 * TODO
 	 */
 	public void update(double amount, String name, String description,
 			Date date, String currency, CategoryLogic category,
-			BankAccountLogic bankAccount) {
+			BankAccountLogic bankAccount, BudgetLogic budget) {
 		
 		setAmount(amount);
 		setName(name);
 		setDescription(description);
-		setDate(date);
 		setCurrency(currency);
+		setBudget(budget);
 		
-		setBudgetID(null);
 		
 		if (this.category != category) {
 			updateCategory(category);
@@ -167,6 +239,13 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 		
 		if (this.bank != bankAccount) {
 			updateBank(bankAccount);
+		}
+		
+		if (getDate() != date) {
+			LocalDate previous = getDate().toLocalDate();
+			
+			setDate(date);
+			bank.updateTransaction(this, previous);
 		}
 		
 		updateIOTransaction(MasterORM.getInstance().getORM());
@@ -200,7 +279,10 @@ public class IOTransactionLogic extends IOTransactionModel implements Comparable
 			}
 			
 			bank.removeTransaction(this);
-			recurrence.supp();
+			
+			if (recurrence != null) {
+				recurrence.supp();
+			}
 			
 		} catch (DALException e) {
 			e.printStackTrace();

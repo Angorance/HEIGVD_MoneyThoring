@@ -55,7 +55,7 @@
                   <Label text="Banque :" />
                   <Label fx:id="nameBankAccount" text="UBS" GridPane.columnIndex="1" />
                   <Label text="Type :" GridPane.rowIndex="1" />
-                  <Label text="Dernier transaction : " GridPane.rowIndex="3" />
+                  <Label text="Dernière transaction : " GridPane.rowIndex="3" />
                   <Label fx:id="typeBankAccount" text="Compte courant" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="dateLastTransaction" text="date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Compte par défaut :" GridPane.rowIndex="2" />
@@ -75,7 +75,7 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <JFXButton fx:id="returnButton" layoutX="25.0" layoutY="17.0" prefHeight="36.0" prefWidth="48.0" text=" " AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="17.0" />
+      <JFXButton fx:id="returnButton" layoutX="25.0" layoutY="17.0" prefHeight="36.0" prefWidth="48.0" text=" " AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="40.0" />
       <LineChart fx:id="lineChart" layoutX="25.0" layoutY="239.0" prefHeight="400.0" prefWidth="680.0" title="Evolution du solde" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="240.0">
         <xAxis>
           <CategoryAxis fx:id="axeX" label="jour" side="BOTTOM" />

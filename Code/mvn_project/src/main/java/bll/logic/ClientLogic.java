@@ -282,13 +282,12 @@ public class ClientLogic extends ClientModel {
 						.getSharedbudgetByClient(getId());
 				
 				// Get the shared budgets
-				for (SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
-					IDALBudgetEntity budget = orm.getBudgetRepository()
-							.getBudget(sbm.getBudgetID());
-					DALBudgetMapper.toBo(budget);
-				}
+				for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
+				BudgetLogic b = DALBudgetMapper.toBo(budget);
+				b.setDataFromDB(orm);
 			}
-			
+			}
 			
 			// Debts
 			List<IDALDebtEntity> de = orm.getDebtRepository()
@@ -340,6 +339,7 @@ public class ClientLogic extends ClientModel {
 		bankAccounts.clear();
 		categories.clear();
 		budgets.clear();
+		debts.clear();
 		
 		setUsername(null);
 		setEmail(null);

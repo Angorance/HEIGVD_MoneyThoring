@@ -15,6 +15,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +23,7 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -32,16 +34,15 @@ import java.util.ResourceBundle;
 public class Controller_listDebt implements IController, Initializable {
 	
 	@FXML private BorderPane paneDebt;
-	@FXML private FlowPane paneDebtList; // list the debts
+	@FXML private VBox paneDebtList; // list the debts
 	@FXML private BorderPane paneClaim;
-	@FXML private FlowPane paneClaimList; // list the claims
+	@FXML private VBox paneClaimList; // list the claims
 	@FXML private JFXNodesList ndlAdd;
 	@FXML private AnchorPane paneForm;
 	
 	private HashMap<Integer, debtDisplayer> debtList;
 	/**
 	 * Display a debt's information
-	 * TODO mettre en forme
 	 * @author Bryan Curchod
 	 * @version 1.0
 	 */
@@ -50,53 +51,62 @@ public class Controller_listDebt implements IController, Initializable {
 		Label lblAmount = new Label();
 		Label lblExpirationDate = new Label();
 		Label lblNom = new Label();
+		Label lblDescription = new Label();
 		JFXButton btnValidation = new JFXButton("Valider"); // Button to confirm the payment
 		
 		DebtLogic debt;
 		boolean isClaim;
 		
-		/**
-		 * default constructor, once the tests are finished ==> delete and create a constructor with a debt
-		 */
 		debtDisplayer(DebtLogic d){
 			debt = d;
 			
-			isClaim = (debt != null && debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.isIncome());
+			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt!= null) {
+				isClaim = debt.isIncome();
+			}
+			else {
+				isClaim = !debt.isIncome();
+			}
+			
 			if(ClientLogic.getInstance().getId() == debt.getCreatorID()){
-				btnValidation.setOnAction(event -> debt.confirmPayment());
-				this.setOnMouseClicked(event -> callForm(debt, isClaim));
+				btnValidation.setOnAction(event -> {
+					debt.confirmPayment();
+					remove();
+				});
+				
+				this.setCursor(Cursor.HAND);
 			} else {
-				btnValidation.setDisable(true);
+				btnValidation.setVisible(false);
 			}
 			btnValidation.getStyleClass().add("NeutralButton");
-			
+			lblDescription.setStyle("-fx-text-alignment: left");
+			lblDescription.setWrapText(false);
+			lblDescription.setPrefHeight(100);
+			lblNom.setStyle("-fx-font-size: 15");
+			lblPerson.setStyle("-fx-font-size: 15");
 			lblAmount.setStyle("-fx-font-size: 24");
 			
 			GridPane top = new GridPane();
-			GridPane bottom = new GridPane();
 			
-			this.setPadding(new Insets(10));
+			this.setPadding(new Insets(15));
 			
 			top.getChildren().add(lblPerson);
 			top.getChildren().add(lblNom);
 			GridPane.setConstraints(lblNom,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
 			GridPane.setConstraints(lblPerson,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
 			this.getChildren().add(top);
+			this.getChildren().add(lblDescription);
 			this.getChildren().add(lblAmount);
-			bottom.getChildren().add(lblExpirationDate);
-			bottom.getChildren().add(btnValidation);
-			GridPane.setConstraints(lblExpirationDate,0,0,1,1,HPos.LEFT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
-			GridPane.setConstraints(btnValidation,1,0,1,1,HPos.RIGHT, VPos.CENTER,Priority.ALWAYS, Priority.NEVER);
-			this.getChildren().add(bottom);
+			this.getChildren().add(lblExpirationDate);
+			this.getChildren().add(btnValidation);
 			this.setSpacing(10);
-			this.setAlignment(Pos.CENTER_LEFT);
+			this.setAlignment(Pos.CENTER);
 			this.setFillWidth(true);
-			this.setMinWidth(80);
-			this.setMinHeight(80);
+			this.setMinHeight(170);
+			this.setPrefHeight(170);
 			
-			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			JFXDepthManager.setDepth(this, 1);
+			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			
 			redraw();
 			if(isClaim){
@@ -109,10 +119,16 @@ public class Controller_listDebt implements IController, Initializable {
 		
 		public void redraw(){
 			
-			lblExpirationDate.setText(debt.getExpirationDate().toString());
+			lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
 			lblAmount.setText(Double.toString(debt.getAmount()));
-			lblPerson.setText(debt.getContributor().getUsername());
+			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.getContributor() != null){
+				lblPerson.setText(debt.getContributor().getUsername());
+				
+			} else {
+				lblPerson.setText(debt.getCreator().getUsername());
+			}
 			lblNom.setText(debt.getName());
+			lblDescription.setText(debt.getDescription());
 		}
 		
 		public void remove(){
@@ -143,7 +159,7 @@ public class Controller_listDebt implements IController, Initializable {
 		if(debt != null) {
 			debtList.get(debt.getId()).remove();
 			debtList.remove(debt.getId());
-			//TODO debt.supp()
+			debt.supp();
 		}
 		
 	}

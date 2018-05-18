@@ -18,7 +18,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +48,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	@FXML private AnchorPane parameterPane;
 	
 	private Stage thisStage = null;
+	private Button btnDashboard;
+	private Controller_lateralMenu menuController;
 	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
 			"Catégories" };
 	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
@@ -64,8 +68,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		lblInfo.setText(ClientLogic.getInstance().toString());
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
-			gui.controller.Controller_lateralMenu controller_lateralMenu = new Controller_lateralMenu();
-			loader.setController(controller_lateralMenu);
+			menuController = new Controller_lateralMenu();
+			loader.setController(menuController);
 			box = loader.load();
 			drawer.setSidePane(box);
 
@@ -73,6 +77,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 			for (Node node : box.getChildren()) {
 				String at = node.getAccessibleText();
 				if(!at.equals("6")) {
+					if(at.equals("0")){
+						btnDashboard = (Button) node;
+					}
 					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 						try {
 							loadContent(Integer.valueOf(node.getAccessibleText()));
@@ -115,7 +122,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		image.setFitWidth(30);
 		image.setFitHeight(30);
 		disconnect_button.setGraphic(image);
-		
+		disconnect_button.setAlignment(Pos.CENTER);
+		disconnect_button.getStyleClass().add("RoundButton");
 		
 		disconnect_button.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -163,6 +171,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		menuController.setSelected(btnDashboard);
 	}
 	
 	/**
@@ -232,6 +241,13 @@ public class Controller_mainFrame implements Initializable, IWindow {
 			});
 			
 			btnRetour.setOnAction(event -> unloadParameter());
+			
+			ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+			image.setFitWidth(20);
+			image.setFitHeight(20);
+			btnDeleteAccount.setGraphic(image);
+			btnDeleteAccount.setText("");
+			btnDeleteAccount.setPrefSize(40, 40);
 			
 			txtMail.setText(ClientLogic.getInstance().getEmail());
 			txtUsername.setText(ClientLogic.getInstance().getUsername());

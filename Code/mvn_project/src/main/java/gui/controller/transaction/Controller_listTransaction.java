@@ -37,15 +37,16 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Controller_listTransaction implements Initializable, IController {
 	
 	@FXML private AnchorPane parent;
 	@FXML private AnchorPane paneform;
-	@FXML private ComboBox<BankAccountLogic> accountSelect;
-	@FXML private ComboBox<String> periodSelect;
-	@FXML private ComboBox<String> monthSelect;
+	@FXML private JFXComboBox<BankAccountLogic> accountSelect;
+	@FXML private JFXComboBox<String> periodSelect;
+	@FXML private JFXComboBox<String> timeSelect;
 	@FXML private Label lblTotalDepense;
 	@FXML private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
 	@FXML private Label lblTotalRevenu;
@@ -116,7 +117,7 @@ public class Controller_listTransaction implements Initializable, IController {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tr.getDate());
 			int year = cal.get(Calendar.YEAR);
-			monthSelect.getSelectionModel().select(String.valueOf(year));
+			timeSelect.getSelectionModel().select(String.valueOf(year));
 			
 			setData();
 		}
@@ -142,11 +143,6 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
 		
-		periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
-		
 		tr.supp();
 		
 		setData();
@@ -162,11 +158,6 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) updated;
 		
-		periodSelect.getSelectionModel().select("Annuel");
-		Date date = tr.getDate();
-		int year = date.toLocalDate().getYear();
-		monthSelect.getSelectionModel().select(year);
-		
 		setData();
 	}
 	
@@ -178,7 +169,7 @@ public class Controller_listTransaction implements Initializable, IController {
 		bal = accountSelect.getValue();
 		boolean selectedAccount = accountSelect.getSelectionModel().isEmpty();
 		boolean selectedPeriode = periodSelect.getSelectionModel().isEmpty();
-		boolean selectedTime = monthSelect.getSelectionModel().isEmpty();
+		boolean selectedTime = timeSelect.getSelectionModel().isEmpty();
 		
 		JFXTreeTableColumn<WrapperTransaction, String> dateIncome = new JFXTreeTableColumn<>("Date");
 		dateIncome.setCellValueFactory(
@@ -252,10 +243,10 @@ public class Controller_listTransaction implements Initializable, IController {
 			outgo.clear();
 			if (periodSelect.getValue().equals("Mensuel")) {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
-				int month = monthSelect.getSelectionModel().getSelectedIndex();
+				int month = timeSelect.getSelectionModel().getSelectedIndex();
 				add(year, month);
 			} else if (periodSelect.getValue().equals("Annuel")) {
-				int year = Integer.valueOf(monthSelect.getValue());
+				int year = Integer.valueOf(timeSelect.getValue());
 				for (int i = 0; i < 12; ++i) {
 					add(year, i);
 				}
@@ -298,11 +289,13 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void add(int year, int month) {
 		
-		for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
-			if (tr.isIncome()) {
-				income.add(new WrapperTransaction(tr));
-			} else {
-				outgo.add(new WrapperTransaction(tr));
+		if(bal.getTransactions().containsKey(year)) {
+			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+				if (tr.isIncome()) {
+					income.add(new WrapperTransaction(tr));
+				} else {
+					outgo.add(new WrapperTransaction(tr));
+				}
 			}
 		}
 	}
@@ -319,7 +312,7 @@ public class Controller_listTransaction implements Initializable, IController {
 				items3.addAll(String.valueOf((Integer) year));
 			}
 		}
-		monthSelect.setItems(items3);
+		timeSelect.setItems(items3);
 	}
 	
 	private void generateNodeList() {
@@ -348,15 +341,36 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void generateComboBoxItem() {
 		
+		BankAccountLogic defautlt = new BankAccountLogic();
 		ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
 		for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
 			items.add(bal);
+			if(bal.isDefault()){
+				defautlt = bal;
+			}
 		}
 		accountSelect.setItems(items);
+		
+		if(defautlt != null) {
+			accountSelect.getSelectionModel().select(defautlt);
+		}else if (!ClientLogic.getInstance().getBankAccounts().isEmpty()){
+			accountSelect.getSelectionModel().selectFirst();
+		}
 		
 		ObservableList<String> items2 = FXCollections.observableArrayList();
 		items2.addAll("Mensuel", "Annuel");
 		periodSelect.setItems(items2);
+		
+		periodSelect.getSelectionModel().select("Annuel");
+		
+		yearOrMonth();
+		
+		
+		if(defautlt != null && defautlt.getMostRecentTransaction() != null) {
+			timeSelect.getSelectionModel().select(String.valueOf(defautlt.getMostRecentTransaction().getDate().toLocalDate().getYear()));
+		}
+		
+		
 	}
 	
 	
@@ -375,7 +389,7 @@ public class Controller_listTransaction implements Initializable, IController {
 		unloadform();
 		generateNodeList();
 		generateComboBoxItem();
-		setTotal();
+		setData();
 		
 		JFXDepthManager.setDepth(transactionPane, 1);
 		
@@ -396,7 +410,7 @@ public class Controller_listTransaction implements Initializable, IController {
 			}
 		});
 		
-		monthSelect.setOnAction(new EventHandler<ActionEvent>() {
+		timeSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent event) {
 				

@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextFormatter;
 
 import java.net.URL;
 import java.sql.Date;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
  */
 public class Controller_formDebt implements Initializable, IForm {
 	
+	private static final int MAX_CHARS = 254;
 	@FXML private JFXButton btnCancel;
 	@FXML private JFXButton btnValider;
 	@FXML private JFXButton btnDelete;
@@ -61,7 +63,15 @@ public class Controller_formDebt implements Initializable, IForm {
 			dateLimite.setValue(LocalDate.parse(debt.getExpirationDate().toString()));
 			cbbOtherUser.setValue(debt.getContributor());
 			btnDelete.setVisible(true);
+			
+			if(debt.getCreatorID() != ClientLogic.getInstance().getId()){
+				btnValider.setDisable(true);
+				btnDelete.setDisable(true);
+			}
 		}
+		
+		txtDescription.setTextFormatter(new TextFormatter<String>(change ->
+				change.getControlNewText().length() <= MAX_CHARS ? change : null));
 		
 		cbbOtherUser.setItems(UserItem);
 		btnCancel.setOnAction(this::formCancel);
@@ -83,7 +93,7 @@ public class Controller_formDebt implements Initializable, IForm {
 			parent.createItem(debt);
 		} else {
 			debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
-			parent.modifyItem(parent);
+			parent.modifyItem(debt);
 		}
 	}
 	

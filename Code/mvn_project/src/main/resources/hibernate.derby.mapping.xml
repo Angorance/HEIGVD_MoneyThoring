@@ -137,7 +137,7 @@
             <column name="CLIENT_ID" sql-type="integer(10)"/>
         </property>
         <property name="clientId1">
-            <column name="CLIENT_ID1" sql-type="integer(10)" not-null="true"/>
+            <column name="CLIENT_ID1" sql-type="integer(10)" not-null="false"/>
         </property>
     </class>
     <class name="dal.entities.derby.IotransactionDeEntity" table="IOTRANSACTION" schema="MONEYTHORING">

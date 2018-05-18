@@ -27,8 +27,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Class controller for detail bank account. Displays bank account information and manages the editing and deletion of
+ * an account
+ */
 public class Controller_detailBankAccount implements Initializable, IController {
-	
 	
 	@FXML private Label name;
 	@FXML private Label nameBankAccount;
@@ -144,7 +147,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	/**
-	 * Do nothing
+	 * Do nothing, just unload the form
 	 *
 	 * @param result the bank account
 	 */
@@ -153,11 +156,23 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		unloadform();
 	}
 	
+	/**
+	 * Method to delete the bank account
+	 *
+	 * @param toDelete bank account to delete
+	 */
 	@Override public void deleteItem(Object toDelete) {
+		
 		cba.deleteItem(bal);
 	}
 	
+	/**
+	 * Method to update the bank account
+	 *
+	 * @param toUpdated bank account to update
+	 */
 	@Override public void modifyItem(Object toUpdated) {
+		
 		unloadform();
 		BankAccountLogic bal = (BankAccountLogic) toUpdated;
 		this.name.setText(bal.getName());
@@ -167,6 +182,10 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		chkDefaultAccount.setSelected(bal.isDefault());
 	}
 	
+	
+	/**
+	 * Method to set the data in the line chart
+	 */
 	private void setDataToChart() {
 		
 		lineChart.setTitle("Evolution du Solde");
@@ -222,9 +241,10 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		paneform.setMouseTransparent(true);
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
-		image.setFitWidth(48);
-		image.setFitHeight(36);
+		image.setFitWidth(30);
+		image.setFitHeight(30);
 		returnButton.setGraphic(image);
+		returnButton.getStyleClass().add("RoundButton");
 		
 		generateNodeList();
 		/*Set the name of the account*/
@@ -236,20 +256,8 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		/*Set the type of the account*/
 		typeBankAccount.setText(bal.getType());
 		
-		//if the list of transaction is not empty, we get the last transaction date
-		if (!bal.getTransactions().isEmpty()) {
-			/*int year = Calendar.getInstance().get(Calendar.YEAR);
-			if(bal.getTransactions().containsKey(year)) {
-				int cnt = 0;
-				while (!bal.getTransactions().get(year)[cnt].isEmpty()) {
-					cnt++;
-				}
-				int size =  bal.getTransactions().get(year)[cnt].size();
-				Date date = bal.getTransactions().get(year)[cnt].get(size -1).getDate();
-				dateLastTransaction.setText(date.toString());
-			}
-			dateLastTransaction.setText("-");*/
-		}
+		IOTransactionLogic tr = bal.getMostRecentTransaction();
+		dateLastTransaction.setText(tr == null ? "-" : tr.getDate().toString());
 		
 		/*Change the color if the amount is bigger or lesser than 0*/
 		if (bal.getAmount() >= 0) {

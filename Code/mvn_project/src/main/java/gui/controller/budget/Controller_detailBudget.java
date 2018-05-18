@@ -1,15 +1,12 @@
 package gui.controller.budget;
 
-import bll.logic.BudgetLogic;
-import bll.logic.CategoryLogic;
-import bll.logic.ClientLogic;
-import bll.logic.IOTransactionLogic;
+import bll.logic.*;
+import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.effects.JFXDepthManager;
 import gui.controller.IController;
-import gui.controller.dashboard.Controller_dashboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,9 +28,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import static gui.controller.budget.Controller_listBudget.totalAmountCategories;
+import static gui.controller.budget.Controller_listBudget.totalAmount;
 
 /**
  * @author Bryan Curchod
@@ -54,6 +53,9 @@ public class Controller_detailBudget implements Initializable, IController {
 	@FXML private GridPane paneBottom;
 	@FXML private PieChart pieChart;
 	@FXML private VBox transactionList;
+	@FXML private Label label_creator;
+	@FXML private Label startDate;
+	@FXML private Label endDate;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -71,10 +73,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		private Label lblPrix;
 		private GridPane paneDisplay;
 		
-		private IOTransactionLogic transaction;
+		private IOTransactionModel transaction;
 		private final String outgoColor = "#f2a7a8";
 		
-		transactionDisplayer(IOTransactionLogic t) {
+		transactionDisplayer(IOTransactionModel t) {
 			
 			transaction = t;
 			lblDate = new Label(transaction.getDate().toString());
@@ -92,14 +94,7 @@ public class Controller_detailBudget implements Initializable, IController {
 					Priority.ALWAYS);
 			paneDisplay
 					.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
-			
-			/*for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
-				if(cl.getId() == transaction.getCategoryID()) {
-					outgoColor = cl.getColor();
-					break;
-				}
-			}*/
-			
+					
 			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
 			
 			transactionList.getChildren().add(paneDisplay);
@@ -161,6 +156,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 		
+		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
+		image.setFitWidth(30);
+		image.setFitHeight(30);
+		btnRetour.setGraphic(image);
+		btnRetour.setText("");
+		btnRetour.getStyleClass().add("RoundButton");
 		btnRetour.setOnAction(event -> parent.modifyItem(budget));
 		
 		lblTitre.setText(budget.getName());
@@ -173,7 +174,14 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
 		progessBar.setProgress(pourcentage);
+		label_creator.setText(budget.getCreator().getUsername());
 		
+		if (ClientLogic.getInstance().getId() != budget.getCreator().getId()) {
+			btnEdit.setDisable(true);
+		}
+		
+		startDate.setText(budget.getStartingDate().toString());
+		endDate.setText(budget.getEndingDate().toString());
 		setDataPieChart();
 		setListTransaction();
 		
@@ -212,7 +220,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		lblTitre.setText(bl.getName());
 		lblPlafond.setText(String.valueOf(bl.getAmount()) + " CHF");
 		
-		outgo = totalAmountCategories(bl);
+		outgo = totalAmount(bl);
 		lblSolde.setText(Double.toString(budget.getAmount() + outgo) + " CHF");
 		
 		double pourcentage = Math.abs(outgo / budget.getAmount());
@@ -227,17 +235,46 @@ public class Controller_detailBudget implements Initializable, IController {
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
-			
-			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+		if(!budget.isShared()) {
+			if (!budget.getCategoriesBudget().isEmpty()) {
 				
-				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					LocalDate currentDate = tr.getDate().toLocalDate();
-					if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 						
-						transactionDisplayer td = new transactionDisplayer(tr);
+						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+							
+							LocalDate currentDate = tr.getDate().toLocalDate();
+							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+								
+								transactionDisplayer td = new transactionDisplayer(tr);
+							}
+						}
 					}
+				}
+			} else {
+				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+						for (int i = 0; i < 12; ++i) {
+							if (bal.getTransactions().containsKey(year)) {
+								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate().toLocalDate();
+									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+										
+										transactionDisplayer td = new transactionDisplayer(tr);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}else{
+			for(IOTransactionModel tr : IOTransactionLogic.getIOTransactionByBudget(budget.getId())){
+				LocalDate currentDate = tr.getDate().toLocalDate();
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+					
+					transactionDisplayer td = new transactionDisplayer(tr);
 				}
 			}
 		}
@@ -246,12 +283,24 @@ public class Controller_detailBudget implements Initializable, IController {
 	private void setDataPieChart() {
 		
 		pieChart.setTitle("Dépense par catégorie");
+
+		
+		if(!budget.isShared()) {
+			if(!budget.getCategoriesBudget().isEmpty()) {
+				setData(budget.getCategoriesBudget());
+			}else{
+				setData(ClientLogic.getInstance().getCategories());
+			}
+		}
+	}
+	
+	private void setData(List<CategoryLogic> categories){
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		for (CategoryLogic cl : budget.getCategoriesBudget()) {
+		for (CategoryLogic cl : categories) {
 			double outgo = 0;
 			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
 				
@@ -268,15 +317,12 @@ public class Controller_detailBudget implements Initializable, IController {
 				}
 				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
 			}
-			
 		}
-		
 		pieChartData.forEach(data -> data.nameProperty()
 				.bind(Bindings.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
 		
 		pieChart.setData(pieChartData);
 		pieChart.setLegendVisible(false);
-		
 	}
 	
 	private void unloadform() {

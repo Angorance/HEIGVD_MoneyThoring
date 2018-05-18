@@ -18,164 +18,112 @@ import java.util.List;
  * @version 1.2
  */
 public class SharedBudgetPgRepository implements ISharedBudgetRepository {
-	
-	private Session session;
-	private Transaction transaction;
-	
-	/**
-	 * Constructor of ClientPgRepository
-	 *
-	 * @param session current session used
-	 * @param transaction current transaction used into the same session
-	 */
-	public SharedBudgetPgRepository(Session session, Transaction transaction) {
-		
-		this.session = session;
-		this.transaction = transaction;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public IDALSharedbudgetEntity getSharedbudget(int client_id, int budget_id)
-			throws DALException {
-		
-		IDALSharedbudgetEntity sharedbudgetEntity = null;
-		
-		try {
-			sharedbudgetEntity = (SharedbudgetPgEntity) session
-					.createCriteria(SharedbudgetPgEntity.class).add(Restrictions
-							.and(Restrictions.eq("client_id", client_id),
-									Restrictions.eq("budget_id", budget_id)))
-					.uniqueResult();
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		
-		return sharedbudgetEntity;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<IDALSharedbudgetEntity> getSharedbudgets() throws DALException {
-		
-		List<IDALSharedbudgetEntity> budgets = null;
-		try {
-			budgets = session.createQuery("from SharedbudgetPgEntity").list();
-			
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		return budgets;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void update(IDALSharedbudgetEntity sharedBudget)
-			throws DALException {
-		
-		SharedbudgetPgEntity sharedBudgetPg = null;
-		if (sharedBudget.getClass() == SharedbudgetPgEntity.class) {
-			sharedBudgetPg = (SharedbudgetPgEntity) sharedBudget;
-		} else {
-			throw new DALException();
-		}
-		
-		try {
-			
-			
-			session.update(sharedBudgetPg);
-			
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addSharedbudget(IDALSharedbudgetEntity sharedBudget)
-			throws DALException {
-		
-		SharedbudgetPgEntity newClient = null;
-		if (sharedBudget.getClass() == SharedbudgetPgEntity.class) {
-			newClient = (SharedbudgetPgEntity) sharedBudget;
-		} else {
-			throw new DALException();
-		}
-		
-		try {
-			session.save(newClient);
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(IDALSharedbudgetEntity sharedBudget)
-			throws DALException {
-		
-		IDALSharedbudgetEntity budget = null;
-		try {
-			budget = (SharedbudgetPgEntity) session
-					.createCriteria(SharedbudgetPgEntity.class).add(Restrictions
-							.and(Restrictions.eq("client_id",
-									sharedBudget.getClientId()), Restrictions
-									.eq("budget_id",
-											sharedBudget.getBudgetId())))
-					.uniqueResult();
-			
-			session.delete(budget);
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<IDALSharedbudgetEntity> getSharedbudgetByClient(int client_id)
-			throws DALException {
-		
-		List<IDALSharedbudgetEntity> budgetsharedEntities = null;
-		try {
-			budgetsharedEntities = session.createQuery(
-					"from BudgetPgEntity where clientId = :clientid")
-					.setParameter("clientid", client_id).list();
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		return budgetsharedEntities;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<IDALSharedbudgetEntity> getSharedbudgetByBudget(int budget_id)
-			throws DALException {
-		
-		List<IDALSharedbudgetEntity> budgetsharedEntities = null;
-		try {
-			budgetsharedEntities = session.createQuery(
-					"from BudgetPgEntity where budgetId = :budgetid")
-					.setParameter("budgetid", budget_id).list();
-		} catch (Exception e) {
-			throw new DALException(e);
-		}
-		return budgetsharedEntities;
-	}
-	
+    private Session session;
+    private Transaction transaction;
+
+    /**
+     * Constructor of ClientPgRepository
+     * @param session current session used
+     * @param transaction current transaction used into the same session
+     */
+    public SharedBudgetPgRepository(Session session, Transaction transaction) {
+        this.session = session;
+        this.transaction = transaction;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IDALSharedbudgetEntity getSharedbudget(int client_id, int budget_id) throws DALException {
+        IDALSharedbudgetEntity sharedbudgetEntity = null;
+
+        try {
+            sharedbudgetEntity = (SharedbudgetPgEntity) session.createCriteria(SharedbudgetPgEntity.class)
+                    .add(Restrictions.and(Restrictions.eq("clientId", client_id),
+                            Restrictions.eq("budgetId",budget_id)))
+                    .uniqueResult();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+
+        return sharedbudgetEntity;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALSharedbudgetEntity> getSharedbudgets() throws DALException {
+        List<IDALSharedbudgetEntity> budgets = null;
+        try {
+            budgets = session.createQuery("from SharedbudgetPgEntity").list();
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return budgets;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(IDALSharedbudgetEntity sharedBudget) throws DALException {
+
+        SharedbudgetPgEntity sharedBudgetPg = null;
+        if (sharedBudget.getClass() == SharedbudgetPgEntity.class)
+            sharedBudgetPg = (SharedbudgetPgEntity) sharedBudget;
+        else
+            throw new DALException();
+
+        try {
+
+
+            session.update(sharedBudgetPg);
+
+
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSharedbudget(IDALSharedbudgetEntity sharedBudget) throws DALException {
+        SharedbudgetPgEntity newClient = null;
+        if (sharedBudget.getClass() == SharedbudgetPgEntity.class)
+            newClient = (SharedbudgetPgEntity) sharedBudget;
+        else
+            throw new DALException();
+
+        try {
+            session.save(newClient);
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(IDALSharedbudgetEntity sharedBudget) throws DALException {
+        IDALSharedbudgetEntity budget = null;
+        try {
+            budget = (SharedbudgetPgEntity) session.createCriteria(SharedbudgetPgEntity.class)
+                    .add(Restrictions.and(Restrictions.eq("clientId", sharedBudget.getClientId()),
+                            Restrictions.eq("budgetId",sharedBudget.getBudgetId())))
+                    .uniqueResult();
+
+            session.delete(budget);
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+    }
     
     @Override
     public void delete(int budget_id) throws DALException {
@@ -195,5 +143,33 @@ public class SharedBudgetPgRepository implements ISharedBudgetRepository {
         } catch (Exception e) {
             throw new DALException(e);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALSharedbudgetEntity> getSharedbudgetByClient(int client_id) throws DALException {
+        List<IDALSharedbudgetEntity> budgetsharedEntities = null;
+        try {
+            budgetsharedEntities = session.createQuery("from SharedbudgetPgEntity where clientId = :clientid").setParameter("clientid", client_id).list();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return budgetsharedEntities;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IDALSharedbudgetEntity> getSharedbudgetByBudget(int budget_id) throws DALException {
+        List<IDALSharedbudgetEntity> budgetsharedEntities = null;
+        try {
+            budgetsharedEntities = session.createQuery("from SharedbudgetPgEntity where budgetId = :budgetid").setParameter("budgetid",budget_id).list();
+        } catch (Exception e) {
+            throw new DALException(e);
+        }
+        return budgetsharedEntities;
     }
 }

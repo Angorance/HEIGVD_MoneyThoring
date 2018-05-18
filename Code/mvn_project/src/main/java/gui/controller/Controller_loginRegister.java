@@ -64,23 +64,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		/*Retrieving text input*/
 		String email = login_email.getText();
 		String password = login_password.getText();
-		boolean online = !offline_checkLogin.isSelected();
-		
-		// TODO lancer le connect dans un thread, faire apparaitre le paneSpinner en attendant, un fois le thread terminé on fait disparaire paneSpinner
-		/*// WHAT THE FUCK
-		AtomicBoolean status = new AtomicBoolean(false);
-		Thread connect = new Thread(() -> {status.set(connect(email, password));});
-		
-		paneSpinner.setVisible(true);
-		
-		try {
-			connect.start();
-			connect.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		paneSpinner.setVisible(false);
+
 		/*Retrieving the status of the login method*/
 		boolean status = connect(email, password, online);
 		
@@ -281,5 +265,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 			thisStage = (Stage) hplSendCode.getScene().getWindow();
 		}
 		thisStage.show();
+		confirmation_GridPane.setVisible(false);
+		login_GridPane.setVisible(true);
 	}
 }

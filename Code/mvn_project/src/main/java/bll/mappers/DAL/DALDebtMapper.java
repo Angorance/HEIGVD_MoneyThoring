@@ -2,10 +2,16 @@ package bll.mappers.DAL;
 
 import bll.logic.ClientLogic;
 import bll.logic.DebtLogic;
+import bll.model.ClientModel;
 import bll.model.DebtModel;
+import dal.dalexception.DALException;
 import dal.entities.derby.DebtDeEntity;
 import dal.entities.pgsql.DebtPgEntity;
+import dal.ientites.IDALClientEntity;
 import dal.ientites.IDALDebtEntity;
+import dal.irepositories.IClientRepository;
+import dal.orm.IORM;
+import dal.orm.MasterORM;
 
 import java.util.*;
 
@@ -116,6 +122,23 @@ public class DALDebtMapper {
 		object.setExpirationDate(entity.getExpirationdate());
 		object.setCreatorID(entity.getClientId());
 		object.setContributorID(entity.getClientId1());
+		
+		// Get the contributor
+		IORM orm = MasterORM.getInstance().getPgORM();
+		ClientModel contributor = null;
+		ClientModel creator = null;
+		
+		try {
+			IClientRepository repo = orm.getClientRepository();
+			contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+			creator = DALClientMapper.toClientModel(repo.getClient(entity.getClientId()));
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		object.setContributor(contributor);
+		object.setCreator(creator);
 		
 		return object;
 	}
