@@ -189,7 +189,8 @@
         </property>
     </class>
     <class name="dal.entities.derby.CategoriesbudgetDeEntity" table="CATEGORIESBUDGET" schema="MONEYTHORING">
-        <composite-id mapped="true" class="dal.entities.derby.CategoriesbudgetDeEntityPK">
+        <!--mapped="true"  class="dal.entities.derby.CategoriesbudgetDeEntityPK"-->
+        <composite-id >
             <key-property name="categoryId">
                 <column name="CATEGORY_ID" sql-type="integer(10)"/>
             </key-property>

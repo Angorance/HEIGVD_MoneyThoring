@@ -54,7 +54,10 @@ public class BudgetLogic extends BudgetModel {
 		
 		createBudget(orm);
 		updateCategoriesBudget(orm);
-		updateClientsBudget(orm);
+		
+		if (isShared()) {
+			updateClientsBudget(orm);
+		}
 	}
 	
 	/**
@@ -81,7 +84,10 @@ public class BudgetLogic extends BudgetModel {
 		
 		updateBudget(orm);
 		updateCategoriesBudget(orm);
-		updateClientsBudget(orm);
+		
+		if (isShared()) {
+			updateClientsBudget(orm);
+		}
 	}
 	
 	/**
@@ -227,13 +233,13 @@ public class BudgetLogic extends BudgetModel {
 			for(CategoryLogic category : categories) {
 				
 				CategoryBudgetModel cat = new CategoryBudgetModel(category.getId(), getId());
-				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDboPG(cat));
+				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDbo(cat));
 			}
 			
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -260,7 +266,7 @@ public class BudgetLogic extends BudgetModel {
 			orm.commit();
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	

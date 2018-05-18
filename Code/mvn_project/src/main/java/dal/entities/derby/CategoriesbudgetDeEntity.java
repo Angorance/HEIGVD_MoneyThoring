@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CATEGORIESBUDGET", schema = "MONEYTHORING", catalog = "")
+@Table(name = "CATEGORIESBUDGET", schema = "MONEYTHORING", catalog = "moneythoring")
 @IdClass(CategoriesbudgetDeEntityPK.class)
 public class CategoriesbudgetDeEntity implements IDALCategoriesbudgetEntity, Serializable {
     private int categoryId;

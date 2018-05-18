@@ -192,6 +192,7 @@ public class DerbyORM implements IORM {
 		
 		try {
 			transaction.commit();
+			sessionClose();
 		} catch (Exception e) {
 			throw new DALException(e);
 		}
