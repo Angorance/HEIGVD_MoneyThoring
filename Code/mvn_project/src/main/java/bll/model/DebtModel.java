@@ -14,7 +14,7 @@ public class DebtModel {
 	
 	private int id;
 	private int creatorID;
-	private int contributorID;
+	private Integer contributorID = null;
 	
 	private String name;
 	private String description;
@@ -106,7 +106,7 @@ public class DebtModel {
 	 *
 	 * @return
 	 */
-	public int getContributorID() {
+	public Integer getContributorID() {
 		
 		return contributorID;
 	}
@@ -187,7 +187,7 @@ public class DebtModel {
 	 *
 	 * @param contributorID
 	 */
-	public void setContributorID(int contributorID) {
+	public void setContributorID(Integer contributorID) {
 		
 		this.contributorID = contributorID;
 	}
