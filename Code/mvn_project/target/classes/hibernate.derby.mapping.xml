@@ -188,4 +188,14 @@
             <column name="IOTRANSACTION_ID" sql-type="integer(10)"/>
         </property>
     </class>
+    <class name="dal.entities.derby.CategoriesbudgetDeEntity" table="CATEGORIESBUDGET" schema="MONEYTHORING">
+        <composite-id mapped="true" class="dal.entities.derby.CategoriesbudgetDeEntityPK">
+            <key-property name="categoryId">
+                <column name="CATEGORY_ID" sql-type="integer(10)"/>
+            </key-property>
+            <key-property name="budgetId">
+                <column name="BUDGET_ID" sql-type="integer(10)"/>
+            </key-property>
+        </composite-id>
+    </class>
 </hibernate-mapping>

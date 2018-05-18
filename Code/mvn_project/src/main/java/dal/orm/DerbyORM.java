@@ -115,7 +115,7 @@ public class DerbyORM implements IORM {
 	@Override
 	public ICategoriesBudgetRepository getCategoriesBudgetRepository() {
 
-		categoriesBudgetReposisoty = new Categor(session, transaction);
+		categoriesBudgetReposisoty = new CategoryBudgetDeRepository(session, transaction);
 		return categoriesBudgetReposisoty;
 	}
 	

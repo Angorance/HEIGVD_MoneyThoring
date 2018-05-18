@@ -1,7 +1,7 @@
-package dal.repositories.Desql;
+package dal.repositories.derby;
 
 import dal.dalexception.DALException;
-import dal.entities.Desql.CategoriesbudgetDeEntity;
+import dal.entities.derby.CategoriesbudgetDeEntity;
 import dal.ientites.IDALCategoriesbudgetEntity;
 import dal.irepositories.ICategoriesBudgetRepository;
 import org.hibernate.Session;
@@ -38,9 +38,9 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public IDALCategoriesbudgetEntity getCategoriesBudget(int budget_id,
                                                           int category_id) throws DALException {
-
+    
         IDALCategoriesbudgetEntity categoriesbudgetEntity = null;
-
+    
         try {
             categoriesbudgetEntity = (CategoriesbudgetDeEntity) session
                     .createCriteria(CategoriesbudgetDeEntity.class)
@@ -51,7 +51,7 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
         } catch (Exception e) {
             throw new DALException(e);
         }
-
+    
         return categoriesbudgetEntity;
     }
 
@@ -61,12 +61,12 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public List<IDALCategoriesbudgetEntity> getCategoriesBudgets()
             throws DALException {
-
+    
         List<IDALCategoriesbudgetEntity> categoriesbudgetEntities = null;
         try {
             categoriesbudgetEntities = session
                     .createQuery("from CategoriesbudgetDeEntity ").list();
-
+        
         } catch (Exception e) {
             throw new DALException(e);
         }
@@ -79,7 +79,7 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public void update(IDALCategoriesbudgetEntity categoriesBudget)
             throws DALException {
-
+    
         CategoriesbudgetDeEntity categoriesbudgetDeEntity = null;
         if (categoriesBudget.getClass() == CategoriesbudgetDeEntity.class) {
             categoriesbudgetDeEntity
@@ -87,7 +87,19 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
         } else {
             throw new DALException();
         }
-
+    
+        try {
+            session.update(categoriesbudgetDeEntity);
+        } catch (Exception e) {
+            throw new DALException(e);
+        } categoriesbudgetDeEntity = null;
+        if (categoriesBudget.getClass() == CategoriesbudgetDeEntity.class) {
+            categoriesbudgetDeEntity
+                    = (CategoriesbudgetDeEntity) categoriesBudget;
+        } else {
+            throw new DALException();
+        }
+    
         try {
             session.update(categoriesbudgetDeEntity);
         } catch (Exception e) {
@@ -101,14 +113,14 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public void addCategoriesBudget(IDALCategoriesbudgetEntity categoriesBudget)
             throws DALException {
-
+    
         CategoriesbudgetDeEntity newCategoriesbudget = null;
         if (categoriesBudget.getClass() == CategoriesbudgetDeEntity.class) {
             newCategoriesbudget = (CategoriesbudgetDeEntity) categoriesBudget;
         } else {
             throw new DALException();
         }
-
+    
         try {
             session.save(newCategoriesbudget);
         } catch (Exception e) {
@@ -122,7 +134,7 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public void delete(IDALCategoriesbudgetEntity categoriesBudget)
             throws DALException {
-
+    
         IDALCategoriesbudgetEntity categoriesbudget = null;
         try {
             categoriesbudget = (CategoriesbudgetDeEntity) session
@@ -131,7 +143,7 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
                             categoriesBudget.getCategoryId()), Restrictions
                             .eq("budget_id", categoriesBudget.getBudgetId())))
                     .uniqueResult();
-
+        
             session.delete(categoriesbudget);
         } catch (Exception e) {
             throw new DALException(e);
@@ -140,18 +152,18 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
 
     @Override
     public void delete(int budget_id) throws DALException {
-
+    
         List<IDALCategoriesbudgetEntity> categoriesbudget = null;
         try {
-
+        
             categoriesbudget = session
                     .createCriteria(CategoriesbudgetDeEntity.class)
                     .add(Restrictions.eq("budgetId", budget_id)).list();
-
+        
             for (IDALCategoriesbudgetEntity cat : categoriesbudget) {
                 session.delete(cat);
             }
-
+        
         } catch (Exception e) {
             throw new DALException(e);
         }
@@ -163,7 +175,7 @@ public class CategoryBudgetDeRepository implements ICategoriesBudgetRepository {
     @Override
     public List<IDALCategoriesbudgetEntity> getCategoriesBudgetByBudget(
             int budget_id) throws DALException {
-
+    
         List<IDALCategoriesbudgetEntity> categroriesBudgets = null;
         try {
             categroriesBudgets = session.createQuery(

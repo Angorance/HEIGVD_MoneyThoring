@@ -1,6 +1,9 @@
 package dal.entities.derby;
 
+import dal.ientites.IDALCategoriesbudgetEntity;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
