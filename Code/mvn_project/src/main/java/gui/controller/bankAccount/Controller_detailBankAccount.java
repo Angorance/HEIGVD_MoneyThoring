@@ -25,11 +25,13 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Class controller for detail bank account. Displays bank account information and manages the editing and deletion of
+ * an account
+ */
 public class Controller_detailBankAccount implements Initializable, IController {
-	
 	
 	@FXML private Label name;
 	@FXML private Label nameBankAccount;
@@ -145,7 +147,7 @@ public class Controller_detailBankAccount implements Initializable, IController 
 	}
 	
 	/**
-	 * Do nothing
+	 * Do nothing, just unload the form
 	 *
 	 * @param result the bank account
 	 */
@@ -154,11 +156,21 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		unloadform();
 	}
 	
+	/**
+	 * Method to delete the bank account
+	 *
+	 * @param toDelete bank account to delete
+	 */
 	@Override public void deleteItem(Object toDelete) {
 		
 		cba.deleteItem(bal);
 	}
 	
+	/**
+	 * Method to update the bank account
+	 *
+	 * @param toUpdated bank account to update
+	 */
 	@Override public void modifyItem(Object toUpdated) {
 		
 		unloadform();
@@ -170,6 +182,10 @@ public class Controller_detailBankAccount implements Initializable, IController 
 		chkDefaultAccount.setSelected(bal.isDefault());
 	}
 	
+	
+	/**
+	 * Method to set the data in the line chart
+	 */
 	private void setDataToChart() {
 		
 		lineChart.setTitle("Evolution du Solde");

@@ -14,11 +14,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
-import org.apache.derby.iapi.util.StringUtil;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Class controller for form bank account. Manage the input of our form and create/update our bank account
+ */
 public class Controller_formBankAccount implements Initializable, IForm {
 	
 	@FXML private JFXTextField nameAccount;
@@ -32,6 +34,12 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	private IController cba;
 	BankAccountLogic bal;
 	
+	/**
+	 * Constructor of the controller
+	 *
+	 * @param cba reference of the controller
+	 * @param bal the bank account
+	 */
 	public Controller_formBankAccount(IController cba, BankAccountLogic bal) {
 		
 		this.cba = cba;
@@ -41,7 +49,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	/**
 	 * Return to the previous window
 	 *
-	 * @param event
+	 * @param event -
 	 */
 	@FXML @Override public void formCancel(ActionEvent event) {
 		
@@ -49,9 +57,9 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	}
 	
 	/**
-	 * TODO
+	 * Method to validate the creation or the update
 	 *
-	 * @param event
+	 * @param event -
 	 */
 	@FXML @Override public void formValidation(ActionEvent event) {
 		
@@ -123,6 +131,9 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	}
 	
 	
+	/**
+	 * Method to generate the item in all ComboBox
+	 */
 	private void generateComboBoxItem() {
 		
 		ObservableList<String> items = FXCollections.observableArrayList();
