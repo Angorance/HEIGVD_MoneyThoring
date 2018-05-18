@@ -45,6 +45,18 @@ public class ClientLogic extends ClientModel {
 		return online;
 	}
 	
+	public BudgetLogic getBudget(int budgetId) {
+		
+		for(BudgetLogic budget : budgets) {
+			
+			if(budget.getId() == budgetId) {
+				return budget;
+			}
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * TODO
 	 */

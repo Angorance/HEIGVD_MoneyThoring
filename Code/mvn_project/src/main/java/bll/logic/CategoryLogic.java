@@ -85,8 +85,7 @@ public class CategoryLogic extends CategoryModel {
 					orm.getCategoriesBudgetRepository().delete(budgetLink);
 					
 					// Update the budget
-					BudgetLogic budget = DALBudgetMapper.toBo(
-							orm.getBudgetRepository().getBudget(budgetLink.getBudgetId()));
+					BudgetLogic budget = ClientLogic.getInstance().getBudget(budgetLink.getBudgetId());
 					
 					budget.removeCategory(this);
 				}
