@@ -80,7 +80,7 @@ public class IOTransactionModel {
 	 *
 	 * @param orm ORM instance to use.
 	 */
-	protected void updateIOTransaction(IORM orm) {
+	public void updateIOTransaction(IORM orm) {
 		
 		try {
 			

@@ -1,9 +1,12 @@
 package bll.logic;
 
+import bll.mappers.DAL.DALIOTransactionMapper;
 import bll.model.CategoryModel;
 import dal.dalexception.DALException;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
+
+import java.util.ArrayList;
 
 /**
  * TODO
@@ -43,7 +46,24 @@ public class CategoryLogic extends CategoryModel {
 	    	
 	    	orm.beginTransaction();
 	    	
-	    	orm.getCategoryRepository().delete(getId());
+	    	// If the category to delete is used in transactions
+		    // change their category by the default one.
+	    	if(!ClientLogic.getInstance().isOnline()) {
+	    	 
+	    		// Get the transactions using this category
+			    ArrayList<IOTransactionLogic> transactions = IOTransactionLogic.getTransactionsByCategory().get(this);
+			    
+			    // Change the category be the default one
+			    for(IOTransactionLogic transaction : transactions) {
+			    	transaction.setCategory(getDefaultCategory());
+				
+				    // Update the transactions
+			    	transaction.updateIOTransaction(orm);
+			    }
+		    }
+		
+		    orm.getCategoryRepository().delete(getId());
+		    
 	    	orm.commit();
 	    	
 	    	IOTransactionLogic.updateTransactionsOnCategoryDeletion(this);
