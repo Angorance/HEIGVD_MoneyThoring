@@ -88,7 +88,7 @@ public class IOTransactionLogic extends IOTransactionModel
 		ArrayList<IOTransactionModel> list = new ArrayList<>();
 		
 		// TODO - Change when adding derby
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();

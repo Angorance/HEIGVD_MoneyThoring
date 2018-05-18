@@ -124,7 +124,7 @@ public class DALDebtMapper {
 		object.setContributorID(entity.getClientId1());
 		
 		// Get the contributor
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		ClientModel contributor = null;
 		ClientModel creator = null;
 		

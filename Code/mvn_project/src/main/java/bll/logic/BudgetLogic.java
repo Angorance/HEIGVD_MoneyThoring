@@ -148,7 +148,7 @@ public class BudgetLogic extends BudgetModel {
 	public ClientModel getCreator() {
 		
 		ClientModel creator = null;
-		IORM orm = MasterORM.getInstance().getPgORM();
+		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
 			orm.beginTransaction();
