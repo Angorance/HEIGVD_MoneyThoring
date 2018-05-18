@@ -254,9 +254,11 @@ public class IOTransactionLogic extends IOTransactionModel
 	public static void updateTransactionsOnCategoryDeletion(
 			CategoryLogic deleted) {
 		
-		for (IOTransactionLogic old : transactionsByCategory.get(deleted)) {
-			
-			old.setCategory(CategoryLogic.getDefaultCategory());
+		if (transactionsByCategory.containsKey(deleted)) {
+			for (IOTransactionLogic old : transactionsByCategory.get(deleted)) {
+				
+				old.setCategory(CategoryLogic.getDefaultCategory());
+			}
 		}
 		
 		transactionsByCategory.remove(deleted);
