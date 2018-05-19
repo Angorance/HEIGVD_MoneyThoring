@@ -24,8 +24,10 @@ import java.util.ResourceBundle;
 
 
 /**
+ * budget list controller
+ * manage the budget displayer list
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.3
  */
 public class Controller_listBudget implements IController, Initializable {
 	
@@ -36,6 +38,9 @@ public class Controller_listBudget implements IController, Initializable {
 	
 	HashMap<Integer, budgetDisplayer> displayerList;
 	
+	/**
+	 * Inner class to display a budget information
+	 */
 	private class budgetDisplayer extends AnchorPane implements Initializable {
 		
 		@FXML private AnchorPane budgetPane;
@@ -46,6 +51,10 @@ public class Controller_listBudget implements IController, Initializable {
 		private BudgetLogic budget;
 		double outgo;
 		
+		/**
+		 * construct a displayer
+		 * @param budget budget to display
+		 */
 		budgetDisplayer(BudgetLogic budget) {
 			
 			JFXDepthManager.setDepth(this, 1);
@@ -62,6 +71,10 @@ public class Controller_listBudget implements IController, Initializable {
 			
 		}
 		
+		/**
+		 * open the budget's detail view
+		 * @param outgo total budget's outgo
+		 */
 		private void openDetail(double outgo) {
 			
 			paneForm.setVisible(true);
@@ -77,6 +90,14 @@ public class Controller_listBudget implements IController, Initializable {
 			}
 		}
 		
+		/**
+		 * Called to initialize a controller after its root element has been completely processed.
+		 * set up the fields
+		 *
+		 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+		 * 		known.
+		 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+		 */
 		@Override public void initialize(URL location, ResourceBundle resources) {
 			
 			redraw();
@@ -86,6 +107,9 @@ public class Controller_listBudget implements IController, Initializable {
 			
 		}
 		
+		/**
+		 * update the fields information
+		 */
 		public void redraw() {
 			
 			outgo = totalAmount(budget);
@@ -100,7 +124,11 @@ public class Controller_listBudget implements IController, Initializable {
 		}
 	}
 	
-	
+	/**
+	 * compute the total outgo amount for a budget
+	 * @param budget budget that we want the total outgo
+	 * @return sum of the outgo
+	 */
 	public static double totalAmount(BudgetLogic budget) {
 		
 		double outgo = 0;
@@ -209,6 +237,9 @@ public class Controller_listBudget implements IController, Initializable {
 		}
 	}
 	
+	/**
+	 * clear the PaneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();
@@ -216,6 +247,10 @@ public class Controller_listBudget implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
+	/**
+	 * create and display a new displayer
+	 * @param b budget to use
+	 */
 	private void add(BudgetLogic b) {
 		
 		budgetDisplayer db = new budgetDisplayer(b);
@@ -223,7 +258,14 @@ public class Controller_listBudget implements IController, Initializable {
 		displayerList.put(b.getId(), db);
 	}
 	
-	
+	/**
+	 * Called to initialize a controller after its root element has been completely processed.
+	 * list every client's budget and set the button's events
+	 *
+	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		btnAdd.setOnAction(event -> callform(null));

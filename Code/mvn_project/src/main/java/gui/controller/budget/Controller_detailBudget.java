@@ -35,7 +35,10 @@ import java.util.ResourceBundle;
 import static gui.controller.budget.Controller_listBudget.totalAmount;
 
 /**
+ * Budget detail controller. Gather every transaction related to a supervised category between
+ * the budget dates, and handle them in order to display them efficiently
  * @author Bryan Curchod
+ * @author François Burgener
  * @version 1.0
  */
 public class Controller_detailBudget implements Initializable, IController {
@@ -66,6 +69,9 @@ public class Controller_detailBudget implements Initializable, IController {
 	
 	double outgo;
 	
+	/**
+	 * Transaction displayer, display a transaction information
+	 */
 	private class transactionDisplayer {
 		
 		private Label lblDate;
@@ -76,6 +82,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		private IOTransactionModel transaction;
 		private final String outgoColor = "#f2a7a8";
 		
+		/**
+		 * Display conveniently a transaction
+		 * @param t transaction to display
+		 */
 		transactionDisplayer(IOTransactionModel t) {
 			
 			transaction = t;
@@ -101,6 +111,12 @@ public class Controller_detailBudget implements Initializable, IController {
 		}
 	}
 	
+	/**
+	 * controlle constructor
+	 * @param p controller that called the detail view
+	 * @param b budget to display
+	 * @param outgo total outgo amount of the budget
+	 */
 	public Controller_detailBudget(IController p, BudgetLogic b, double outgo) {
 		
 		parent = p;
@@ -108,10 +124,21 @@ public class Controller_detailBudget implements Initializable, IController {
 		this.outgo = outgo;
 	}
 	
+	/**
+	 * Called to initialize a controller after its root element has been completely processed.
+	 * create the control button (edit/delete) and set datas in the transactions list and the PieChart
+	 *
+	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		scrollpane.setStyle("-fx-background-color: transparent");
-		// nodelist initialisation
+		paneForm.setVisible(false);
+		paneForm.setMouseTransparent(true);
+		
+		// control button management
 		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
 		btnEdit.getStyleClass().addAll("setting-button", "RoundButton", "GreenButton");
@@ -130,12 +157,7 @@ public class Controller_detailBudget implements Initializable, IController {
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(5d);
-		
 		JFXDepthManager.setDepth(nodeModifDelete, 1);
-		
-		
-		
-		
 		
 		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
 		image.setFitWidth(20);
@@ -151,10 +173,6 @@ public class Controller_detailBudget implements Initializable, IController {
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnDelete.setGraphic(image);
-		
-		
-		paneForm.setVisible(false);
-		paneForm.setMouseTransparent(true);
 		
 		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
 		image.setFitWidth(30);
@@ -187,6 +205,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 	}
 	
+	/**
+	 * call and open the budgetForm to edit the budget
+	 * @param b
+	 */
 	private void callForm(BudgetLogic b) {
 		
 		paneForm.setVisible(true);
@@ -203,16 +225,28 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 	}
 	
+	/**
+	 * clear the form
+	 * @param result not used
+	 */
 	@Override public void createItem(Object result) {
 		
 		unloadform();
 	}
 	
+	/**
+	 * request a deletion of the budget to the parent
+	 * @param toDelete object to delete
+	 */
 	@Override public void deleteItem(Object toDelete) {
 		
 		parent.deleteItem(toDelete);
 	}
 	
+	/**
+	 * update the budget's information
+	 * @param toUpdated updated object
+	 */
 	@Override public void modifyItem(Object toUpdated) {
 		
 		unloadform();
@@ -229,6 +263,9 @@ public class Controller_detailBudget implements Initializable, IController {
 		setListTransaction();
 	}
 	
+	/**
+	 * set up the transaction list
+	 */
 	private void setListTransaction() {
 		
 		transactionList.getChildren().clear();
@@ -280,6 +317,9 @@ public class Controller_detailBudget implements Initializable, IController {
 		}
 	}
 	
+	/**
+	 * set the PieChart datas
+	 */
 	private void setDataPieChart() {
 		
 		pieChart.setTitle("Dépense par catégorie");
@@ -294,6 +334,10 @@ public class Controller_detailBudget implements Initializable, IController {
 		}
 	}
 	
+	/**
+	 * generate the PieChart data for a given category
+	 * @param categories category to handle
+	 */
 	private void setData(List<CategoryLogic> categories){
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		
@@ -325,6 +369,9 @@ public class Controller_detailBudget implements Initializable, IController {
 		pieChart.setLegendVisible(false);
 	}
 	
+	/**
+	 * clear the PaneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();

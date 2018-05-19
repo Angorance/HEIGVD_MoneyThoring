@@ -314,6 +314,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 		if(!ClientLogic.getInstance().isOnline()){
 			/*recurrence.setDisable(true);
 			recurrence.setSelected(false);*/
+			checkSharedBudget.setDisable(true);
 		}
 	}
 }

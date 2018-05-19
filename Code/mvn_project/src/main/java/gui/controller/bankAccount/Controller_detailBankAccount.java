@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Class controller for detail bank account. Displays bank account information and manages the editing and deletion of
+ * Class controller for bank account detail. Displays bank account information and manages the editing and deletion of
  * an account
  */
 public class Controller_detailBankAccount implements Initializable, IController {

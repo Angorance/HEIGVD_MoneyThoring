@@ -85,16 +85,22 @@ public class Controller_formDebt implements Initializable, IForm {
 	}
 	
 	@Override public void formValidation(ActionEvent event) {
-		
-		if (debt == null) {
-			ClientModel uConcerned = cbbOtherUser.getValue();
-			debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), isIncome,
-					Date.valueOf(dateLimite.getValue()),uConcerned);
-			parent.createItem(debt);
-		} else {
-			debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
-			parent.modifyItem(debt);
+			if (debt == null) {
+				ClientModel uConcerned = cbbOtherUser.getValue();
+				debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Math.abs(Double.parseDouble(txtAmount.getText())), isIncome,
+						Date.valueOf(dateLimite.getValue()), uConcerned);
+				parent.createItem(debt);
+			} else {
+				debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
+				parent.modifyItem(debt);
 		}
+	}
+	
+	private boolean checkValidInput() {
+		// TODO
+		//if(txtAmount.getText() != ""
+		
+		return false;
 	}
 	
 	@Override public void formCancel(ActionEvent event) {

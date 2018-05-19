@@ -26,8 +26,11 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
+ * budget form controller
+ * Set up the fields in a modification scenario.
+ * Create/Edit a budget
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.3
  */
 public class Controller_formBudget implements IForm, Initializable {
 	
@@ -55,6 +58,10 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	private static final int DISPLAYER_HEIGHT = 15;
 	
+	/**
+	 * Inner class used to define a repetition.
+	 * Option disabled
+	 */
 	private class Periode {
 		
 		private String nom;
@@ -182,9 +189,9 @@ public class Controller_formBudget implements IForm, Initializable {
 	}
 	
 	/**
-	 * Validation of the form
+	 * Validation of the form (creation or edition)
 	 *
-	 * @param event
+	 * @param event called event property
 	 */
 	@Override public void formValidation(ActionEvent event) {
 		
@@ -231,6 +238,10 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 	}
 	
+	/**
+	 * check if the user's input are acceptable
+	 * @return true if conditions are fulfilled
+	 */
 	private boolean checkValidInput(){
 		String name = txtName.getText();
 		String amount = txtCeiling.getText();
@@ -272,6 +283,11 @@ public class Controller_formBudget implements IForm, Initializable {
 		return check;
 	}
 	
+	/**
+	 * check if a string can be parsed to a double
+	 * @param str string to check
+	 * @return true if the string can be parsed
+	 */
 	private boolean isDouble(String str){
 		try {
 			Double.parseDouble(str);
@@ -281,16 +297,29 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 	}
 	
+	/**
+	 * cancel the operation and return to the caller
+	 * @param event called event property
+	 */
 	@Override public void formCancel(ActionEvent event) {
 		
 		parent.createItem(null);
 	}
 	
+	/**
+	 * Called to initialize a controller after its root element has been completely processed.
+	 * set the form behavior
+	 *
+	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		LocalDate begin = beginDate.getValue();
 		LocalDate last = lastDate.getValue();
 		
+		// check if we have to fill the fields
 		if (budget != null) {
 			listCategorie.clear();
 			txtName.setText(budget.getName());
