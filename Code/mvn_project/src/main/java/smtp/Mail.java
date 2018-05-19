@@ -25,12 +25,12 @@ public class Mail {
 		String smtpServer = "mail.infomaniak.com";
 		String from = "noreply-moneythoring@angorance.ch";
 		String to = email;
-		String objet = "Activation code for your MoneyThoring account";
+		String objet = "Code d'activation pour votre compte MoneyThoring";
 		
-		String texte = "Welcome to MoneyThoring " + username + ", <br><br>"
-						+ "To use this app you need to activate your account with <br>"
-						+ "this code on your next connection : " + activationCode + "<br><br>"
-						+ "Thanks for joining us <br><br>"
+		String texte = "Bienvenue chez MoneyThoring " + username + ", <br><br>"
+						+ "Pour utiliser cette application vous devez activer votre compte avec <br>"
+						+ "ce code lors de votre prochaine connexion : " + activationCode + "<br><br>"
+						+ "Merci d'utiliser nos services <br><br>"
 						+ "MoneyThoring";
 		
 		// Connection to the smtp server
