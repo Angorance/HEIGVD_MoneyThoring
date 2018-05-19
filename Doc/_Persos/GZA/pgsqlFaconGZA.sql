@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS moneythoring.debt (
 -- Table moneythoring.SharedBudget
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS moneythoring.sharedBudget (
-  client_id INT NOT NULL REFERENCES moneythoring.client (id),
-  budget_id INT NOT NULL REFERENCES moneythoring.budget (id),
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  budget_id INT NOT NULL REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (client_id, budget_id)
 );
 
