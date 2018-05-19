@@ -91,6 +91,10 @@ public class Controller_dashboard implements IController, Initializable {
 			paneDisplay.getChildren().add(lblPrix);
 			paneDisplay.setPadding(new Insets(10));
 			
+			lblPrix.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(Color.valueOf(t.getCategory().getColor())));
+			lblCaption.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(Color.valueOf(t.getCategory().getColor())));
+			lblDate.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(Color.valueOf(t.getCategory().getColor())));
+			
 			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
 			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
