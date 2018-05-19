@@ -46,6 +46,7 @@ public abstract class Utility {
 	 * @param value double value to adjust
 	 * @param nbDecimal number of decimal
 	 * @return rounded
+	 *
 	 */
 	static public double truncateDouble(double value, int nbDecimal){
 		
@@ -54,6 +55,19 @@ public abstract class Utility {
 				.doubleValue();
 		
 		return truncatedDouble;
+	}
+	
+	/**
+	 * define the text color based on the background color property
+	 * @param color background color
+	 * @return white or black, depending on the brightness of the color, in HEX web format
+	 */
+	public static String textColorBasedOnGB(Color color) {
+		if (color.getBrightness() < 0.5){
+			return toRGBCode(Color.WHITE);
+		} else {
+			return toRGBCode(Color.BLACK);
+		}
 	}
 	
 }
