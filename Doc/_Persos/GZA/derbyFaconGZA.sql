@@ -20,7 +20,7 @@ CREATE TABLE moneythoring.client (
   id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 0, INCREMENT BY 1),
   username VARCHAR(50) UNIQUE NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
-  password VARCHAR(50) NOT NULL,
+  password VARCHAR(250) NOT NULL,
   isActivated BOOLEAN NOT NULL,
   activationKey VARCHAR(50),
   salt VARCHAR(50) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE moneythoring.category (
   name VARCHAR(50) NOT NULL,
   colour VARCHAR(50) NOT NULL,
   isDefault BOOLEAN NOT NULL DEFAULT FALSE,
-  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE,
 PRIMARY KEY (id)
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE moneythoring.budget (
   startingDate DATE NOT NULL,
   endingDate DATE NOT NULL,
   gap INT,
-  client_id INTEGER NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INTEGER NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE,
   PRIMARY KEY (id)
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE moneythoring.bankAccount (
   amount FLOAT NOT NULL,
   isDefault BOOLEAN NOT NULL,
   isVisible BOOLEAN NOT NULL,
-  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE,
   PRIMARY KEY (id)
 );
 
@@ -81,9 +81,9 @@ CREATE TABLE moneythoring.iOTransaction (
   amount FLOAT NOT NULL,
   currency VARCHAR(50) NOT NULL,
   isIncome BOOLEAN NOT NULL,
-  category_id INTEGER NOT NULL REFERENCES moneythoring.category (id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  bankAccount_id INTEGER NOT NULL REFERENCES moneythoring.bankAccount (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  budget_id INTEGER REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  category_id INTEGER NOT NULL REFERENCES moneythoring.category (id),
+  bankAccount_id INTEGER NOT NULL REFERENCES moneythoring.bankAccount (id),
+  budget_id INTEGER REFERENCES moneythoring.budget (id),
   PRIMARY KEY (id)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE moneythoring.recurrence (
   id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 0, INCREMENT BY 1),
   gap INT NOT NULL,
   nextDate DATE NOT NULL,
-  iOTransaction_id INT NOT NULL REFERENCES moneythoring.iOTransaction (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  iOTransaction_id INT NOT NULL REFERENCES moneythoring.iOTransaction (id) ON DELETE CASCADE,
   PRIMARY KEY (id)
 );
 
@@ -108,8 +108,8 @@ CREATE TABLE moneythoring.debt (
   amount FLOAT NOT NULL,
   isIncome BOOLEAN NOT NULL,
   expirationDate DATE NOT NULL,
-  client_id INTEGER NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  client_id1 INTEGER REFERENCES moneythoring.client (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  client_id INTEGER NOT NULL REFERENCES moneythoring.client (id),
+  client_id1 INTEGER REFERENCES moneythoring.client (id),
 PRIMARY KEY (id)
 );
 
@@ -117,8 +117,8 @@ PRIMARY KEY (id)
 -- Table moneythoring.SharedBudget
 -- -----------------------------------------------------
 CREATE TABLE moneythoring.sharedBudget (
-  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  budget_id INT NOT NULL REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id),
+  budget_id INT NOT NULL REFERENCES moneythoring.budget (id),
 PRIMARY KEY (client_id, budget_id)
 );
 
@@ -126,8 +126,8 @@ PRIMARY KEY (client_id, budget_id)
 -- Table moneythoring.CategoriesBudget
 -- -----------------------------------------------------
 CREATE TABLE moneythoring.categoriesBudget (
-  category_id INTEGER NOT NULL REFERENCES moneythoring.category (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  budget_id INTEGER NOT NULL REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  category_id INTEGER NOT NULL REFERENCES moneythoring.category (id),
+  budget_id INTEGER NOT NULL REFERENCES moneythoring.budget (id),
 PRIMARY KEY (Category_id, Budget_id)
 );
 

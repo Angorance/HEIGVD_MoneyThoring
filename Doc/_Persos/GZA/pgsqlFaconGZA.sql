@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS moneythoring.client (
   id SERIAL NOT NULL,
   username VARCHAR(50) UNIQUE NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
-  password VARCHAR(50) NOT NULL,
+  password VARCHAR(250) NOT NULL,
   isActivated BOOL NOT NULL,
   activationKey VARCHAR(50) NULL,
   salt VARCHAR(50) NOT NULL,
@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS moneythoring.debt (
 -- Table moneythoring.SharedBudget
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS moneythoring.sharedBudget (
-  client_id INT NOT NULL REFERENCES moneythoring.client (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  budget_id INT NOT NULL REFERENCES moneythoring.budget (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  client_id INT NOT NULL REFERENCES moneythoring.client (id),
+  budget_id INT NOT NULL REFERENCES moneythoring.budget (id),
   PRIMARY KEY (client_id, budget_id)
 );
 
