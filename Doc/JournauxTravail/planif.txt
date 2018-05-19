@@ -1,0 +1,49 @@
+S5 :
+- DAL
+- recherche d'une solution d'hébergement
+
+------------------------------------------------
+S6 :
+- DAL
+- recherche d'une solution d'hébergement
+
+------------------------------------------------
+S7 :
+- DAL
+- BLL
+
+------------------------------------------------
+S8 :
+- DAL
+- BLL
+
+------------------------------------------------
+S9 :
+- DAL
+- BLL
+
+------------------------------------------------
+S10:
+- DAL
+- BLL
+- code d'activation
+- premiere interaction entre BLL GUI et DAL
+
+------------------------------------------------
+S11:
+- DAL
+- mise en fonction des comptes bancaires
+- BLL
+
+------------------------------------------------
+S12:
+- DAL
+- deconnexion
+- envoi de mail
+- Derby
+- BLL
+
+------------------------------------------------
+S13:
+- DAL
+- Derby
