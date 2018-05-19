@@ -249,6 +249,7 @@ public class IOTransactionLogic extends IOTransactionModel
 		}
 		
 		updateIOTransaction(MasterORM.getInstance().getORM());
+		
 	}
 	
 	public static void updateTransactionsOnCategoryDeletion(

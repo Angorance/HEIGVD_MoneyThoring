@@ -89,6 +89,8 @@ public class IOTransactionModel {
 			IIotransactionRepository repo = orm.getIotransactionRepository();
 			repo.update(DALIOTransactionMapper.toDbo(this));
 			
+			orm.commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
