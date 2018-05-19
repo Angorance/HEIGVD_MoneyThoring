@@ -23,6 +23,7 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -56,6 +57,7 @@ public class Controller_listDebt implements IController, Initializable {
 		
 		DebtLogic debt;
 		boolean isClaim;
+		String minStyle = "-fx-background-color: #f0f0f0; -fx-background-radius: 10;";
 		
 		debtDisplayer(DebtLogic d){
 			debt = d;
@@ -77,7 +79,7 @@ public class Controller_listDebt implements IController, Initializable {
 			} else {
 				btnValidation.setVisible(false);
 			}
-			btnValidation.getStyleClass().add("NeutralButton");
+			btnValidation.getStyleClass().add("GreenButton");
 			lblDescription.setStyle("-fx-text-alignment: left");
 			lblDescription.setWrapText(false);
 			lblDescription.setPrefHeight(100);
@@ -104,7 +106,7 @@ public class Controller_listDebt implements IController, Initializable {
 			this.setMinHeight(170);
 			this.setPrefHeight(170);
 			
-			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
+			this.setStyle(minStyle);
 			JFXDepthManager.setDepth(this, 1);
 			this.setOnMouseClicked(event -> callForm(debt, isClaim));
 			
@@ -119,7 +121,16 @@ public class Controller_listDebt implements IController, Initializable {
 		
 		public void redraw(){
 			
-			lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
+			Date today = new Date(new java.util.Date().getTime());
+			if(debt.getExpirationDate().before(today)){
+				String rouge = "#f76767";
+				lblExpirationDate.setText("LIMITE DEPASSEE : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
+				lblExpirationDate.setStyle("-fx-text-fill: " + rouge);
+				this.setStyle(minStyle + " -fx-border-width: 3; -fx-border-radius: 10; -fx-border-color: " + rouge);
+			} else {
+				lblExpirationDate.setText("Limite : " + new SimpleDateFormat("dd.MM.yyyy").format(debt.getExpirationDate()));
+			}
+			
 			lblAmount.setText(Double.toString(debt.getAmount()));
 			if(debt.getCreatorID() == ClientLogic.getInstance().getId() && debt.getContributor() != null){
 				lblPerson.setText(debt.getContributor().getUsername());

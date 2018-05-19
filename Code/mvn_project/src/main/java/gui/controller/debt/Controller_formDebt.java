@@ -85,6 +85,7 @@ public class Controller_formDebt implements Initializable, IForm {
 	}
 	
 	@Override public void formValidation(ActionEvent event) {
+		if(checkValidInput()) {
 			if (debt == null) {
 				ClientModel uConcerned = cbbOtherUser.getValue();
 				debt = new DebtLogic(txtNom.getText(), txtDescription.getText(), Math.abs(Double.parseDouble(txtAmount.getText())), isIncome,
@@ -93,6 +94,7 @@ public class Controller_formDebt implements Initializable, IForm {
 			} else {
 				debt.update(txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtAmount.getText()), Date.valueOf(dateLimite.getValue()));
 				parent.modifyItem(debt);
+			}
 		}
 	}
 	
@@ -100,7 +102,35 @@ public class Controller_formDebt implements Initializable, IForm {
 		// TODO
 		//if(txtAmount.getText() != ""
 		
-		return false;
+		boolean allGood = true;
+		if (txtNom.getText().isEmpty()) {
+			txtNom.setStyle("-jfx-unfocus-color: red;");
+			allGood = false;
+		}
+		
+		if (dateLimite.getValue() == null) {
+			dateLimite.setStyle("-jfx-unfocus-color: red;");
+			allGood = false;
+		}
+		
+		if(txtAmount.getText().isEmpty() || !isDouble(txtAmount.getText())){
+			txtAmount.setStyle("-jfx-unfocus-color: red;");
+			allGood = false;
+			
+		}
+		
+		
+		return allGood;
+	}
+	
+	private boolean isDouble(String text) {
+		
+		try {
+			Double.valueOf(text);
+			return true;
+		}catch (NumberFormatException e){
+			return false;
+		}
 	}
 	
 	@Override public void formCancel(ActionEvent event) {
