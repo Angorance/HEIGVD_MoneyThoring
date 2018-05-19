@@ -50,7 +50,7 @@ public class Controller_mainFrame implements Initializable, IWindow {
 	private Stage thisStage = null;
 	private Button btnDashboard;
 	private Controller_lateralMenu menuController;
-	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
+	private static final String[] tabViewName = { "Tableau de bord", "Budgets", "Transactions", "Dettes", "Comptes Bancaires",
 			"Catégories" };
 	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
 			"/gui/view/transactionList.fxml", "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml",
