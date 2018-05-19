@@ -155,7 +155,7 @@
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXTextField fx:id="confirm_textField" alignment="CENTER" onInputMethodTextChanged="#resetConfirmErrorMessage" prefWidth="250.0" promptText="Code de confirmation" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="confirm_textField" alignment="CENTER" onInputMethodTextChanged="#resetErrorMessage" prefWidth="250.0" promptText="Code de confirmation" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Hyperlink fx:id="hplSendCode" text="Renvoie du code" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
             <JFXButton fx:id="btnConfirmRetour" text="Retour" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
          </children>

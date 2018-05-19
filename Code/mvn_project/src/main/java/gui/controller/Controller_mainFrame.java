@@ -135,6 +135,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		resetDisplay();
 	}
 	
+	/**
+	 * load the user information view
+	 */
 	private void loadParameter() {
 		
 		burgerBtn.setMouseTransparent(true);
@@ -151,6 +154,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 	}
 	
+	/**
+	 * unload the user information view
+	 */
 	private void unloadParameter(){
 		burgerBtn.setMouseTransparent(false);
 		parameterPane.getChildren().clear();
@@ -158,12 +164,18 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		parameterPane.setVisible(false);
 	}
 	
+	/**
+	 * disconnect the user and return to the login window
+	 */
 	private void disconnect() {
 		
 		windowManager.getInstance().displayConnectionFrame();
 		Authentication.disconnect();
 	}
 	
+	/**
+	 * reset the view to the dashboard
+	 */
 	public void resetDisplay(){
 		
 		try {
@@ -212,6 +224,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 	}
 	
+	/**
+	 * hide the main frame
+	 */
 	@Override public void hide() {
 		if(thisStage == null){
 			thisStage = (Stage)paneHeader.getScene().getWindow();
@@ -219,6 +234,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		thisStage.hide();
 	}
 	
+	/**
+	 * show the window and reset the display
+	 */
 	@Override public void show() {
 		if(thisStage == null){
 			thisStage = (Stage)paneHeader.getScene().getWindow();
@@ -227,6 +245,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		thisStage.show();
 	}
 	
+	/**
+	 * inner class to control the user information view
+	 */
 	private class ControllerParam implements Initializable {
 		@FXML JFXButton btnDeleteAccount;
 		@FXML JFXTextField txtMail;

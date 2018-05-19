@@ -2,6 +2,7 @@ package gui.controller.transaction;
 
 import bll.logic.*;
 import com.jfoenix.controls.*;
+import gui.Utility;
 import gui.controller.IController;
 import gui.controller.IForm;
 import javafx.collections.FXCollections;
@@ -69,7 +70,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 			String nameText = name.getText();
 			
 			/*transaction amount*/
-			double amountDouble = Math.abs(Double.parseDouble(amount.getText()));
+			double amountDouble = Math.abs(Utility.truncateDouble(Double.parseDouble(amount.getText()), 2));
 			amountDouble = isIncome ? amountDouble : amountDouble * (-1);
 			
 			/*bank account we will do the transaction*/

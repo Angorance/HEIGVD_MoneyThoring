@@ -20,7 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import gui.model.mainFrame;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import smtp.Mail;
 
 import java.io.IOException;
@@ -53,7 +52,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 	
 	
 	/**
-	 * Event on the button Login
+	 * Event on the Login button
+	 * try to log the user in
 	 *
 	 * @param actionEvent
 	 *
@@ -98,7 +98,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 	@FXML private Label register_message;
 	
 	/**
-	 * Event on the button register
+	 * Event on the register button
+	 * try to register a new user
 	 *
 	 * @param actionEvent
 	 */
@@ -153,6 +154,10 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		}
 	}
 	
+	/**
+	 * check the confirmation code provided by the user to
+	 * validate his registration
+	 */
 	@FXML public void confirmButton() {
 		
 		if (Authentication.checkActivationCode(confirm_textField.getText())) {
@@ -208,7 +213,7 @@ public class Controller_loginRegister implements Initializable, IWindow {
 				confirmButton();
 			}
 		});
-		confirm_textField.setOnMouseClicked(event -> resetConfirmErrorMessage());
+		confirm_textField.setOnMouseClicked(event -> resetErrorMessage());
 		btnConfirmRetour.setOnAction(event -> {
 			confirmation_GridPane.setVisible(false);
 			confirmation_GridPane.setMouseTransparent(true);
@@ -233,6 +238,9 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		});*/
 	}
 	
+	/**
+	 * clear the inputs fields
+	 */
 	private void clearFields() {
 		
 		login_password.setText("");
@@ -242,14 +250,22 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		register_password.setText("");
 		register_confirmPassword.setText("");
 		register_username.setText("");
+		resetErrorMessage();
 		
 	}
 	
-	@FXML public void resetConfirmErrorMessage() {
+	/**
+	 * hide the error messages
+	 */
+	@FXML public void resetErrorMessage() {
 		
+		register_message.setVisible(false);
 		confirm_incorrect.setVisible(false);
 	}
 	
+	/**
+	 * hide the window
+	 */
 	@Override public void hide() {
 		
 		if (thisStage == null) {
@@ -258,6 +274,9 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		thisStage.hide();
 	}
 	
+	/**
+	 * show the window after clearing the fields
+	 */
 	@Override public void show() {
 		
 		clearFields();

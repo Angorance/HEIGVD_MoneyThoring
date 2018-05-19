@@ -29,8 +29,9 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
+ * Lists the user's debts and claims
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.1
  */
 public class Controller_listDebt implements IController, Initializable {
 	
@@ -42,10 +43,11 @@ public class Controller_listDebt implements IController, Initializable {
 	@FXML private AnchorPane paneForm;
 	
 	private HashMap<Integer, debtDisplayer> debtList;
+	
 	/**
 	 * Display a debt's information
 	 * @author Bryan Curchod
-	 * @version 1.0
+	 * @version 1.3
 	 */
 	private class debtDisplayer extends VBox {
 		Label lblPerson = new Label(); // username of the debitor/creditor
@@ -119,6 +121,9 @@ public class Controller_listDebt implements IController, Initializable {
 			}
 		}
 		
+		/**
+		 * update de displayed information
+		 */
 		public void redraw(){
 			
 			Date today = new Date(new java.util.Date().getTime());
@@ -153,7 +158,10 @@ public class Controller_listDebt implements IController, Initializable {
 		
 	}
 	
-	
+	/**
+	 * create a displayer for an item returned from the form
+	 * @param result
+	 */
 	@Override public void createItem(Object result) {
 		unloadForm();
 		DebtLogic d = (DebtLogic) result;
@@ -164,6 +172,11 @@ public class Controller_listDebt implements IController, Initializable {
 		}
 	}
 	
+	
+	/**
+	 * delete a displayer and the item associated
+	 * @param toDelete object to delete
+	 */
 	@Override public void deleteItem(Object toDelete) {
 		DebtLogic debt = (DebtLogic) toDelete;
 		unloadForm();
@@ -175,6 +188,10 @@ public class Controller_listDebt implements IController, Initializable {
 		
 	}
 	
+	/**
+	 * update the infomation displayed
+	 * @param toUpdated
+	 */
 	@Override public void modifyItem(Object toUpdated) {
 		DebtLogic debt = (DebtLogic) toUpdated;
 		unloadForm();
@@ -183,12 +200,20 @@ public class Controller_listDebt implements IController, Initializable {
 		}
 	}
 	
+	/**
+	 * clear the paneForm
+	 */
 	private void unloadForm(){
 		paneForm.getChildren().clear();
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
 	}
 	
+	/**
+	 * call and load the debt form for creation/edition purpose
+	 * @param d debt to edit (creation if null)
+	 * @param isClaim define if the object is a claim for the creator (true) or a debt (false)
+	 */
 	private void callForm(DebtLogic d,boolean isClaim){
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formDebt.fxml"));
@@ -205,6 +230,15 @@ public class Controller_listDebt implements IController, Initializable {
 		
 	}
 	
+	
+	/**
+	 * Called to initialize a controller after its root element has been completely processed.
+	 * lists the user's debts
+	 *
+	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		JFXDepthManager.setDepth(paneDebt, 2);

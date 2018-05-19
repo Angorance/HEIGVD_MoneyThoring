@@ -7,6 +7,7 @@ import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.Utility;
 import gui.controller.category.Controller_listCategory;
 import gui.controller.transaction.Controller_formTransaction;
 import gui.controller.IController;
@@ -40,8 +41,10 @@ import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 /**
- * @author Bryan Curchod
- * @version 1.0
+ * Dashboard of the application. Gather the last transactions (in the current month)
+ * in the default account, generate a line chart and a pie chart
+ * @author Bryan Curchod, François Burgener
+ * @version 1.2
  */
 public class Controller_dashboard implements IController, Initializable {
 	
@@ -70,6 +73,10 @@ public class Controller_dashboard implements IController, Initializable {
 		private final String incomeColor = "#8ce589";
 		private final String outgoColor = "#f2a7a8";
 		
+		/**
+		 * Inner class used to display a transaction information
+		 * @param t
+		 */
 		transactionDisplayer(IOTransactionLogic t) {
 			
 			transaction = t;
@@ -95,12 +102,16 @@ public class Controller_dashboard implements IController, Initializable {
 			}*/
 			
 			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " +
-					Controller_listCategory.toRGBCode(Color.valueOf(t.getCategory().getColor())) + ";");
+					Utility.toRGBCode(Color.valueOf(t.getCategory().getColor())) + ";");
 			
 			Controller_dashboard.this.paneList.getChildren().add(paneDisplay);
 		}
 	}
 	
+	/**
+	 * Load the transaction form for creation purpose
+	 * @param isIncome true if the transaction is an income
+	 */
 	private void callForm(boolean isIncome) {
 		
 		/* we load the form fxml*/
@@ -125,6 +136,9 @@ public class Controller_dashboard implements IController, Initializable {
 		}
 	}
 	
+	/**
+	 * clear the paneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();
@@ -132,6 +146,10 @@ public class Controller_dashboard implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
+	/**
+	 * create a transactionDisplayer with the transaction returned from the form
+	 * @param result object returned from a form
+	 */
 	@Override public void createItem(Object result) {
 		
 		unloadform();
@@ -154,14 +172,26 @@ public class Controller_dashboard implements IController, Initializable {
 		}
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
-		// PAS UTILISE
-	}
+	/**
+	 * not used in this view
+	 * @param toDelete
+	 */
+	@Override public void deleteItem(Object toDelete) {}
 	
-	@Override public void modifyItem(Object toUpdated) {
-		// PAS UTILISE
-	}
+	/**
+	 * not used in this view
+	 * @param toUpdated
+	 */
+	@Override public void modifyItem(Object toUpdated) {}
 	
+	/**
+	 * Called to initialize a controller after its root element has been completely processed.
+	 * list the transaction in the current month and set the charts up
+	 *
+	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 */
 	@Override public void initialize(URL location, ResourceBundle resources) {
 		
 		paneForm.setVisible(false);
@@ -214,6 +244,9 @@ public class Controller_dashboard implements IController, Initializable {
 		
 	}
 	
+	/**
+	 * set up the line chart
+	 */
 	private void setDataLineChart() {
 		
 		chartLine.setTitle("Evolution du Solde");
@@ -260,6 +293,9 @@ public class Controller_dashboard implements IController, Initializable {
 		chartLine.setLegendVisible(false);
 	}
 	
+	/**
+	 * set up the pie chart
+	 */
 	private void setDataPieChart() {
 		chartPie.setTitle("Dépense par catégorie");
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -289,6 +325,9 @@ public class Controller_dashboard implements IController, Initializable {
 		
 	}
 	
+	/**
+	 * set up the node list (Creation buttons)
+	 */
 	private void initNodeListe() {
 		
 		btnAddTransaction = new JFXButton();

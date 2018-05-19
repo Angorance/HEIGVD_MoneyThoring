@@ -75,8 +75,8 @@ public class Controller_lateralMenu implements Initializable{
     }
 
     /**
-     * TODO
-     * @param btn
+     * change the style of the clicked button
+     * @param btn source of the event
      */
     public void setSelected(Button btn){
         if(selected != null) {

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import static gui.Utility.*;
 
 /**
  * Controller for the category list view
@@ -80,19 +81,6 @@ public class Controller_listCategory implements Initializable, IController {
             lblCategorie.setText(cat.getName());
             this.setStyle("-fx-background-color: " + toRGBCode(Color.valueOf(cat.getColor())) + "; -fx-background-radius: 10");
         }
-    }
-    
-    /**
-     * convert a Color object into a HEX string
-     * @param color Color that we want the HEX code
-     * @return HEX code (web format)
-     */
-    static public String toRGBCode( Color color )
-    {
-        return String.format( "#%02X%02X%02X",
-                (int)( color.getRed() * 255 ),
-                (int)( color.getGreen() * 255 ),
-                (int)( color.getBlue() * 255 ) );
     }
 
     /**
@@ -161,7 +149,14 @@ public class Controller_listCategory implements Initializable, IController {
         formPane.setMouseTransparent(true);
     }
     
-    
+    /**
+     * Called to initialize a controller after its root element has been completely processed.
+     * list all the user's category
+     *
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not
+     * 		known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // #5ACCF2

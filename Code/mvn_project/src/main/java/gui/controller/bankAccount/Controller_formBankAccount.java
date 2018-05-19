@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import gui.Utility;
 import gui.controller.IController;
 import gui.controller.IForm;
 import javafx.collections.FXCollections;
@@ -67,7 +68,7 @@ public class Controller_formBankAccount implements Initializable, IForm {
 			String name = nameAccount.getText();
 			String bankName = nameBankAccount.getText();
 			String type = (String) typeAccount.getValue();
-			Double amountDouble = Double.parseDouble(amount.getText());
+			Double amountDouble = Utility.truncateDouble(Double.parseDouble(amount.getText()), 2);
 			boolean isDefault = defaultAccount.isSelected();
 			if (bal == null) {
 				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault, 0);
@@ -105,29 +106,12 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		}
 		
 		/*Check if the amount is empty and it's not a double*/
-		if (amountDouble.isEmpty() || !isDouble(amountDouble)) {
+		if (amountDouble.isEmpty() || !Utility.isDouble(amountDouble)) {
 			amount.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
 		return check;
-	}
-	
-	/**
-	 * Check if a string is a double
-	 *
-	 * @param str string to check
-	 *
-	 * @return true if is a double otherwise false
-	 */
-	private boolean isDouble(String str) {
-		
-		try {
-			Double.parseDouble(str);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 	
 	

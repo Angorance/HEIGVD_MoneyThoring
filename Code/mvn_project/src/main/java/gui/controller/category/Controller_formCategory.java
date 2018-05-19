@@ -14,6 +14,12 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Form to create/edit/delete a category
+ *
+ * @author Bryan Curchod
+ * @version 1.4
+ */
 public class Controller_formCategory implements Initializable, IForm {
 
     @FXML private JFXColorPicker colorPicker;
@@ -24,8 +30,12 @@ public class Controller_formCategory implements Initializable, IForm {
 
     private IController parent = null;
     private CategoryLogic item = null;
-
-
+    
+    
+    /**
+     * Validation of the input. Call the edit or creation method
+     * @param event calling event information
+     */
     @Override
     public void formValidation(ActionEvent event) {
         if(item == null){
@@ -39,7 +49,11 @@ public class Controller_formCategory implements Initializable, IForm {
             parent.modifyItem(item);
         }
     }
-
+    
+    /**
+     * cancel the form
+     * @param event
+     */
     @Override
     public void formCancel(ActionEvent event) {
         parent.createItem(null);
@@ -49,7 +63,15 @@ public class Controller_formCategory implements Initializable, IForm {
      
     	parent.deleteItem(item);
     }
-
+    
+    /**
+     * Called to initialize a controller after its root element has been completely processed.
+     * set up the fields
+     *
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not
+     * 		known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnCancel.setOnAction(this::formCancel);
@@ -69,7 +91,12 @@ public class Controller_formCategory implements Initializable, IForm {
         	btnDelete.setVisible(false);
         }
     }
-
+    
+    /**
+     * constructor, define the parent controller and the category handled
+     * @param p parent controller
+     * @param cat category to handle
+     */
     Controller_formCategory(IController p, CategoryLogic cat){
         parent = p;
         item = cat;

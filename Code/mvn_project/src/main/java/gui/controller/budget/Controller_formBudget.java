@@ -5,6 +5,7 @@ import bll.logic.CategoryLogic;
 import bll.logic.ClientLogic;
 import bll.model.ClientModel;
 import com.jfoenix.controls.*;
+import gui.Utility;
 import gui.controller.IController;
 import gui.controller.IForm;
 import javafx.collections.FXCollections;
@@ -200,7 +201,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			
 			// we gather the user input
 			String name = txtName.getText();
-			double amount = Double.parseDouble(txtCeiling.getText());
+			double amount = Utility.truncateDouble(Double.parseDouble(txtCeiling.getText()), 2);
 			LocalDate begin;
 			LocalDate last;
 			boolean rec = chbIsRegular.isSelected();
@@ -253,7 +254,7 @@ public class Controller_formBudget implements IForm, Initializable {
 			txtName.setStyle("-jfx-unfocus-color: red;");
 		}
 		
-		if(amount.isEmpty() && !isDouble(amount)){
+		if(amount.isEmpty() && !Utility.isDouble(amount)){
 			check = false;
 			txtCeiling.setStyle("-jfx-unfocus-color: red;");
 			
@@ -281,20 +282,6 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		
 		return check;
-	}
-	
-	/**
-	 * check if a string can be parsed to a double
-	 * @param str string to check
-	 * @return true if the string can be parsed
-	 */
-	private boolean isDouble(String str){
-		try {
-			Double.parseDouble(str);
-			return true;
-		}catch (Exception e){
-			return false;
-		}
 	}
 	
 	/**
