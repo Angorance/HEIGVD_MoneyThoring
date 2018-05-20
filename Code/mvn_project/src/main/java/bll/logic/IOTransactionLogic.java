@@ -248,8 +248,14 @@ public class IOTransactionLogic extends IOTransactionModel
 			bank.updateTransaction(this, previous);
 		}
 		
-		updateIOTransaction(MasterORM.getInstance().getORM());
+		IORM orm = MasterORM.getInstance().getORM();
+		updateIOTransaction(orm);
 		
+		try {
+			orm.commit();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void updateTransactionsOnCategoryDeletion(
