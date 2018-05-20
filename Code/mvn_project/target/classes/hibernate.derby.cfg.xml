@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:derby:derbydb</property>
+    <property name="connection.url">jdbc:derby:derbydb;</property>
     <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
       <!--<property name="hbm2ddl.auto">update</property>-->
       <mapping class="dal.entities.derby.ClientDeEntity"/>
