@@ -1,7 +1,6 @@
 package gui.controller.budget;
 
 import bll.logic.*;
-import bll.model.ClientModel;
 import bll.model.IOTransactionModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
@@ -14,7 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,35 +24,57 @@ import java.util.ResourceBundle;
 
 
 /**
+ * budget list controller
+ * manage the budget displayer list
+ *
  * @author Bryan Curchod
- * @version 1.0
+ * @version 1.3
  */
 public class Controller_listBudget implements IController, Initializable {
 	
-	@FXML private VBox paneList;
-	@FXML private JFXButton btnAdd;
-	@FXML private AnchorPane paneForm;
-	@FXML private ScrollPane scrollPane;
+	@FXML
+	private VBox paneList;
+	@FXML
+	private JFXButton btnAdd;
+	@FXML
+	private AnchorPane paneForm;
+	@FXML
+	private ScrollPane scrollPane;
 	
 	HashMap<Integer, budgetDisplayer> displayerList;
 	
+	/**
+	 * Inner class to display a budget information
+	 */
 	private class budgetDisplayer extends AnchorPane implements Initializable {
 		
-		@FXML private AnchorPane budgetPane;
-		@FXML private Label lbltitre;
-		@FXML private Label lblcurrentExpense;
-		@FXML private Label lblmaxExpense;
-		@FXML private JFXProgressBar expenseProgress;
+		@FXML
+		private AnchorPane budgetPane;
+		@FXML
+		private Label lbltitre;
+		@FXML
+		private Label lblcurrentExpense;
+		@FXML
+		private Label lblmaxExpense;
+		@FXML
+		private JFXProgressBar expenseProgress;
 		private BudgetLogic budget;
 		double outgo;
 		
+		/**
+		 * construct a displayer
+		 *
+		 * @param budget budget to display
+		 */
 		budgetDisplayer(BudgetLogic budget) {
 			
 			JFXDepthManager.setDepth(this, 1);
 			this.budget = budget;
-			this.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10");
+			this.setStyle(
+					"-fx-background-color: #f0f0f0; -fx-background-radius: 10");
 			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDisplayer.fxml"));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/gui/view/budgetDisplayer.fxml"));
 			loader.setController(this);
 			try {
 				this.getChildren().add(loader.load());
@@ -62,12 +84,20 @@ public class Controller_listBudget implements IController, Initializable {
 			
 		}
 		
+		/**
+		 * open the budget's detail view
+		 *
+		 * @param outgo total budget's outgo
+		 */
 		private void openDetail(double outgo) {
 			
 			paneForm.setVisible(true);
 			paneForm.setMouseTransparent(false);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/budgetDetail.fxml"));
-			loader.setController(new Controller_detailBudget(Controller_listBudget.this, budget, outgo));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/gui/view/budgetDetail.fxml"));
+			loader.setController(
+					new Controller_detailBudget(Controller_listBudget.this,
+							budget, outgo));
 			
 			paneForm.getChildren().clear();
 			try {
@@ -77,7 +107,19 @@ public class Controller_listBudget implements IController, Initializable {
 			}
 		}
 		
-		@Override public void initialize(URL location, ResourceBundle resources) {
+		/**
+		 * Called to initialize a controller after its root element has been
+		 * completely processed.
+		 * set up the fields
+		 *
+		 * @param location The location used to resolve relative paths for the
+		 * 		root object, or null if the location is not
+		 * 		known.
+		 * @param resources The resources used to localize the root object, or
+		 * 		null if the root object was not localized.
+		 */
+		@Override
+		public void initialize(URL location, ResourceBundle resources) {
 			
 			redraw();
 			budgetPane.setMinHeight(130);
@@ -86,21 +128,31 @@ public class Controller_listBudget implements IController, Initializable {
 			
 		}
 		
+		/**
+		 * update the fields information
+		 */
 		public void redraw() {
 			
 			outgo = totalAmount(budget);
 			lbltitre.setText(budget.getName());
 			lbltitre.setStyle("-fx-font-size: 24");
-			lblcurrentExpense.setText(
-					"Dépenses actuelles :" + (outgo * (-1)) + " CHF"); // TODO calculer les dépenses totales du budget
-			lblmaxExpense.setText("Plafond : " + Double.toString(budget.getAmount()) + "CHF");
+			lblcurrentExpense.setText("Dépenses actuelles :" + (outgo * (-1))
+					+ " CHF"); // TODO calculer les dépenses totales du budget
+			lblmaxExpense.setText(
+					"Plafond : " + Double.toString(budget.getAmount()) + "CHF");
 			
 			double pourcentage = Math.abs(outgo / budget.getAmount());
 			expenseProgress.setProgress(pourcentage);
 		}
 	}
 	
-	
+	/**
+	 * compute the total outgo amount for a budget
+	 *
+	 * @param budget budget that we want the total outgo
+	 *
+	 * @return sum of the outgo
+	 */
 	public static double totalAmount(BudgetLogic budget) {
 		
 		double outgo = 0;
@@ -111,12 +163,15 @@ public class Controller_listBudget implements IController, Initializable {
 			if (!budget.getCategoriesBudget().isEmpty()) {
 				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+					if (IOTransactionLogic.getTransactionsByCategory()
+							.containsKey(cl)) {
 						
-						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+						for (IOTransactionLogic tr : IOTransactionLogic
+								.getTransactionsByCategory().get(cl)) {
 							
 							LocalDate currentDate = tr.getDate().toLocalDate();
-							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+							if (currentDate.isAfter(begin) && currentDate
+									.isBefore(end) && !tr.isIncome()) {
 								
 								outgo += tr.getAmount();
 							}
@@ -124,13 +179,20 @@ public class Controller_listBudget implements IController, Initializable {
 					}
 				}
 			} else {
-				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
-					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
-						for(int i = 0; i < 12; ++i) {
-							if(bal.getTransactions().containsKey(year)) {
-								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
-									LocalDate currentDate = tr.getDate().toLocalDate();
-									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+				for (BankAccountLogic bal : ClientLogic.getInstance()
+						.getBankAccounts()) {
+					for (Object year : IOTransactionLogic
+							.getYearsWithTransactions().toArray()) {
+						for (int i = 0; i < 12; ++i) {
+							if (bal.getTransactions().containsKey(year)) {
+								for (IOTransactionLogic tr : bal
+										.getTransactions()
+										.get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate()
+											.toLocalDate();
+									if (currentDate.isAfter(begin)
+											&& currentDate.isBefore(end) && !tr
+											.isIncome()) {
 										
 										outgo += tr.getAmount();
 									}
@@ -141,9 +203,11 @@ public class Controller_listBudget implements IController, Initializable {
 				}
 			}
 		} else {
-			for(IOTransactionModel tr : IOTransactionLogic.getIOTransactionByBudget(budget.getId())){
+			for (IOTransactionModel tr : IOTransactionLogic
+					.getIOTransactionByBudget(budget.getId())) {
 				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end)
+						&& !tr.isIncome()) {
 					
 					outgo += tr.getAmount();
 				}
@@ -160,7 +224,8 @@ public class Controller_listBudget implements IController, Initializable {
 		
 		paneForm.setVisible(true);
 		paneForm.setMouseTransparent(false);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formBudget.fxml"));
 		loader.setController(new Controller_formBudget(this, budget));
 		
 		paneForm.getChildren().clear();
@@ -176,7 +241,8 @@ public class Controller_listBudget implements IController, Initializable {
 	 *
 	 * @param toDelete
 	 */
-	@Override public void deleteItem(Object toDelete) {
+	@Override
+	public void deleteItem(Object toDelete) {
 		
 		unloadform();
 		if (toDelete != null) {
@@ -192,14 +258,16 @@ public class Controller_listBudget implements IController, Initializable {
 	 *
 	 * @param updated
 	 */
-	@Override public void modifyItem(Object updated) {
+	@Override
+	public void modifyItem(Object updated) {
 		
 		unloadform();
 		BudgetLogic b = (BudgetLogic) updated;
 		displayerList.get(b.getId()).redraw();
 	}
 	
-	@Override public void createItem(Object result) {
+	@Override
+	public void createItem(Object result) {
 		
 		unloadform();
 		
@@ -209,6 +277,9 @@ public class Controller_listBudget implements IController, Initializable {
 		}
 	}
 	
+	/**
+	 * clear the PaneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();
@@ -216,6 +287,11 @@ public class Controller_listBudget implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
+	/**
+	 * create and display a new displayer
+	 *
+	 * @param b budget to use
+	 */
 	private void add(BudgetLogic b) {
 		
 		budgetDisplayer db = new budgetDisplayer(b);
@@ -223,13 +299,25 @@ public class Controller_listBudget implements IController, Initializable {
 		displayerList.put(b.getId(), db);
 	}
 	
-	
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	/**
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
+	 * list every client's budget and set the button's events
+	 *
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		btnAdd.setOnAction(event -> callform(null));
 		btnAdd.setText("");
 		JFXDepthManager.setDepth(btnAdd, 1);
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		ImageView image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/add.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnAdd.setGraphic(image);

@@ -5,7 +5,8 @@ import dal.orm.IORM;
 import dal.orm.MasterORM;
 
 /**
- * TODO
+ * RecurrenceLogic class.
+ * Allows to manage recurrent transactions. Not implemented.
  *
  * @author Daniel Gonzalez Lopez
  * @version 1.0
@@ -16,6 +17,12 @@ public class RecurrenceLogic extends RecurrenceModel {
 	
 	public RecurrenceLogic() {}
 	
+	/**
+	 * Construct an instance and create the entry in the database.
+	 *
+	 * @param transaction
+	 * @param gap
+	 */
 	public RecurrenceLogic(IOTransactionLogic transaction, int gap) {
 		
 		setTransaction(transaction);
@@ -24,6 +31,11 @@ public class RecurrenceLogic extends RecurrenceModel {
 		createRecurrence(MasterORM.getInstance().getORM());
 	}
 	
+	/**
+	 * Set the transaction concerned by the recurrence.
+	 *
+	 * @param transaction
+	 */
 	public void setTransaction(IOTransactionLogic transaction) {
 		
 		this.transaction = transaction;
@@ -31,6 +43,9 @@ public class RecurrenceLogic extends RecurrenceModel {
 		transaction.setRecurrence(this);
 	}
 	
+	/**
+	 * Suppress the reccurence from the application and the database.
+	 */
 	public void supp() {
 		
 		try {

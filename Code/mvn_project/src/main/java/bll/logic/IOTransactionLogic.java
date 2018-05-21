@@ -1,10 +1,8 @@
 package bll.logic;
 
-import bll.model.ClientModel;
 import bll.model.IOTransactionModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALIotransactionEntity;
-import dal.irepositories.IBudgetRepository;
 import dal.irepositories.IIotransactionRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
@@ -17,11 +15,16 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * TODO
+ * IOTransactionLogic class.
+ * Implements the business logic of the IOTransactionModel.
+ * Implements methods to manage the links between transactions and other
+ * objects, as categories or the bank account.
+ * Before changing these attributes, the methods check their integrity
+ * to avoid data problems.
  *
  * @author Daniel Gonzalez Lopez
  * @author Héléna Line Reymond
- * @version 1.2
+ * @version 2.0
  */
 public class IOTransactionLogic extends IOTransactionModel
 		implements Comparable<IOTransactionLogic> {
@@ -39,19 +42,23 @@ public class IOTransactionLogic extends IOTransactionModel
 	private RecurrenceLogic recurrence;
 	private BudgetLogic sharedBudget;
 	
+	/**
+	 * Construct an instance and link it with the good bank account.
+	 */
 	public IOTransactionLogic() {
 		
 		transactions.add(this);
 	}
 	
 	/**
-	 * TODO
+	 * Construct an instance and link it with the good bank account, plus it
+	 * creates the entry in the database.
 	 *
 	 * @param amount
 	 * @param name
 	 * @param description
 	 * @param date
-	 * @param currency
+	 * @param currency (Not implemented, always CHF)
 	 * @param category
 	 * @param bankAccount
 	 */
@@ -70,6 +77,13 @@ public class IOTransactionLogic extends IOTransactionModel
 		transactions.add(this);
 	}
 	
+	/**
+	 * Get the transaction corresponding to the given ID.
+	 *
+	 * @param iotransactionId
+	 *
+	 * @return IOTransactionLogic instance or null if nothing found.
+	 */
 	public static IOTransactionLogic getIOTransactionByID(int iotransactionId) {
 		
 		for (IOTransactionLogic tl : transactions) {
@@ -82,12 +96,18 @@ public class IOTransactionLogic extends IOTransactionModel
 		return null;
 	}
 	
+	/**
+	 * Get the transactions for a given budget ID.
+	 *
+	 * @param budgetId
+	 *
+	 * @return ArrayList of transactions.
+	 */
 	public static ArrayList<IOTransactionModel> getIOTransactionByBudget(
 			int budgetId) {
 		
 		ArrayList<IOTransactionModel> list = new ArrayList<>();
 		
-		// TODO - Change when adding derby
 		IORM orm = MasterORM.getInstance().getORM();
 		
 		try {
@@ -114,11 +134,19 @@ public class IOTransactionLogic extends IOTransactionModel
 		return list;
 	}
 	
+	/**
+	 * Get the transactions by categories (hashmap).
+	 *
+	 * @return HashMap of the transactions by categories.
+	 */
 	public static HashMap<CategoryLogic, ArrayList<IOTransactionLogic>> getTransactionsByCategory() {
 		
 		return transactionsByCategory;
 	}
 	
+	/**
+	 * Add a transaction to the hashmap.
+	 */
 	private void addToHashMap() {
 		
 		if (transactionsByCategory.containsKey(this.category)) {
@@ -134,6 +162,12 @@ public class IOTransactionLogic extends IOTransactionModel
 		}
 	}
 	
+	/**
+	 * Set the date of the transaction.
+	 * Update the TreeSet containing all the transaction years.
+	 *
+	 * @param date New date of the transaction.
+	 */
 	@Override
 	public void setDate(Date date) {
 		
@@ -142,11 +176,21 @@ public class IOTransactionLogic extends IOTransactionModel
 		yearsWithTransactions.add(date.toLocalDate().getYear());
 	}
 	
+	/**
+	 * Get the TreeSet of the years with transactions.
+	 *
+	 * @return Set of years with transactions.
+	 */
 	public static Set<Integer> getYearsWithTransactions() {
 		
 		return yearsWithTransactions;
 	}
 	
+	/**
+	 * Set the category for the transaction.
+	 *
+	 * @param cl
+	 */
 	public void setCategory(CategoryLogic cl) {
 		
 		this.category = cl;
@@ -155,46 +199,87 @@ public class IOTransactionLogic extends IOTransactionModel
 		addToHashMap();
 	}
 	
+	/**
+	 * Get the category of the transaction.
+	 *
+	 * @return CategoryLogic instance.
+	 */
 	public CategoryLogic getCategory() {
 		
 		return category;
 	}
 	
+	/**
+	 * Update the category of the transaction with the new one.
+	 *
+	 * @param newCat
+	 */
 	private void updateCategory(CategoryLogic newCat) {
 		
 		transactionsByCategory.get(this.category).remove(this);
 		setCategory(newCat);
 	}
 	
+	/**
+	 * Set the bank account of the transaction.
+	 * Add the transaction as new transaction, updating the amount of the bank
+	 * account.
+	 *
+	 * @param bankAccount
+	 */
 	private void setBank(BankAccountLogic bankAccount) {
 		
 		this.bank = bankAccount;
 		bankAccount.addNewTransaction(this);
 	}
 	
+	/**
+	 * Set the bank account of the transaction.
+	 * Add the transaction as already existing transaction, so it don't update
+	 * the amount of the bank account.
+	 *
+	 * @param bankAccount
+	 */
 	public void setBankAccount(BankAccountLogic bankAccount) {
 		
 		this.bank = bankAccount;
 		bankAccount.addTransaction(this);
 	}
 	
+	/**
+	 * Update the bank account of the transaction.
+	 * It removes it from the previous bank (updating its amount) and add it to
+	 * the new bank (updating its amount too).
+	 *
+	 * @param newBank
+	 */
 	private void updateBank(BankAccountLogic newBank) {
 		
 		bank.removeTransaction(this);
 		setBank(newBank);
 	}
 	
+	/**
+	 * Set the recurrence for the transaction (not implemented).
+	 *
+	 * @param recurrence
+	 */
 	public void setRecurrence(RecurrenceLogic recurrence) {
 		
 		this.recurrence = recurrence;
 	}
 	
+	/**
+	 * Set the shared budget of the transaction.
+	 *
+	 * @param budget
+	 */
 	private void setBudget(BudgetLogic budget) {
 		
 		this.sharedBudget = budget;
 		
-		if(budget != null) {
-		
+		if (budget != null) {
+			
 			setBudgetID(budget.getId());
 		} else {
 			
@@ -203,6 +288,11 @@ public class IOTransactionLogic extends IOTransactionModel
 		
 	}
 	
+	/**
+	 * Get the shared budget concerned by the transaction.
+	 *
+	 * @return BudgetLogic instance.
+	 */
 	public BudgetLogic getBudget() {
 		
 		if (sharedBudget == null && getBudgetID() != null) {
@@ -220,7 +310,7 @@ public class IOTransactionLogic extends IOTransactionModel
 	}
 	
 	/**
-	 * TODO
+	 * Update the transaction, updating the entry in the database.
 	 */
 	public void update(double amount, String name, String description,
 			Date date, String currency, CategoryLogic category,
@@ -248,9 +338,25 @@ public class IOTransactionLogic extends IOTransactionModel
 			bank.updateTransaction(this, previous);
 		}
 		
-		updateIOTransaction(MasterORM.getInstance().getORM());
+		IORM orm = MasterORM.getInstance().getORM();
+		updateIOTransaction(orm);
+		
+		try {
+			orm.commit();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Update all transactions concerned by the deletion of a category.
+	 * The new category set is the default one.
+	 *
+	 * This method is used only by Derby (offline) because it was impossible to
+	 * make such a complexe trigger with this embedded database.
+	 *
+	 * @param deleted
+	 */
 	public static void updateTransactionsOnCategoryDeletion(
 			CategoryLogic deleted) {
 		
@@ -264,6 +370,9 @@ public class IOTransactionLogic extends IOTransactionModel
 		transactionsByCategory.remove(deleted);
 	}
 	
+	/**
+	 * Suppress the transaction from the app and the database.
+	 */
 	public void supp() {
 		
 		try {
@@ -289,16 +398,6 @@ public class IOTransactionLogic extends IOTransactionModel
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Deprecated(since = "1.2")
-	@Override
-	public String toString() {
-		
-		String s = getName() + " " + getAmount() + " " + getBankAccountID()
-				+ " " + getDate();
-		
-		return s;
 	}
 	
 	/**

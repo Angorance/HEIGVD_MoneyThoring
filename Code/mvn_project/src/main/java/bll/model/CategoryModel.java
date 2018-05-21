@@ -3,7 +3,6 @@ package bll.model;
 import bll.mappers.DAL.DALCategoryMapper;
 import dal.irepositories.ICategoryRepository;
 import dal.orm.IORM;
-import dal.orm.PgORM;
 
 /**
  * CategoryModel class.

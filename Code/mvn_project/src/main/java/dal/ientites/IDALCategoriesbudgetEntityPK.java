@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * @version 1.2
  */
 public interface IDALCategoriesbudgetEntityPK {
-
+	
 	/**
 	 * get the category id of the categories budget entity pk
 	 *
@@ -20,14 +20,14 @@ public interface IDALCategoriesbudgetEntityPK {
 	@Column(name = "category_id", nullable = false)
 	@Id
 	int getCategoryId();
-
+	
 	/**
 	 * set the  category id of the categories budget entity pk
 	 *
 	 * @param budget id of the category budget entity pk
 	 */
 	void setCategoryId(int categoryId);
-
+	
 	/**
 	 * get the budget id of the categories budget entity pk
 	 *
@@ -36,7 +36,7 @@ public interface IDALCategoriesbudgetEntityPK {
 	@Column(name = "budget_id", nullable = false)
 	@Id
 	int getBudgetId();
-
+	
 	/**
 	 * set the  budget id of the categories budget entity pk
 	 *

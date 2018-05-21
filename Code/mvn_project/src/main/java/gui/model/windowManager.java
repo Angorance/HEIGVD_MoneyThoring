@@ -1,9 +1,7 @@
 package gui.model;
 
 import bll.logic.Authentication;
-import gui.controller.Controller_loginRegister;
 import gui.controller.IWindow;
-import javafx.stage.Stage;
 
 /**
  * @version 1.0
@@ -36,19 +34,22 @@ public class windowManager {
 		this.mainFrame = mainFrame;
 	}
 	
-	public boolean hasMainframe(){
+	public boolean hasMainframe() {
+		
 		return mainFrame != null;
 	}
 	
-	public void displayMainFrame(){
-		if(mainFrame!= null && connectionFrame != null){
+	public void displayMainFrame() {
+		
+		if (mainFrame != null && connectionFrame != null) {
 			connectionFrame.hide();
 			mainFrame.show();
 		}
 	}
 	
-	public void displayConnectionFrame(){
-		if(mainFrame!= null && connectionFrame != null){
+	public void displayConnectionFrame() {
+		
+		if (mainFrame != null && connectionFrame != null) {
 			connectionFrame.show();
 			mainFrame.hide();
 			Authentication.disconnect();

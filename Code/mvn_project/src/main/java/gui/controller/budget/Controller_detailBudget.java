@@ -28,34 +28,54 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static gui.controller.budget.Controller_listBudget.totalAmount;
 
 /**
+ * Budget detail controller. Gather every transaction related to a supervised
+ * category between
+ * the budget dates, and handle them in order to display them efficiently
+ *
  * @author Bryan Curchod
+ * @author François Burgener
  * @version 1.0
  */
 public class Controller_detailBudget implements Initializable, IController {
 	
-	@FXML private Label lblTitre;
-	@FXML private Label lblSolde;
-	@FXML private Label lblPlafond;
-	@FXML private JFXProgressBar progessBar;
-	@FXML private JFXNodesList nodeModifDelete;
-	@FXML private AnchorPane graphPane;
-	@FXML private ScrollPane scrollpane;
-	@FXML private AnchorPane paneForm;
-	@FXML private JFXButton btnRetour;
-	@FXML private AnchorPane paneTop;
-	@FXML private GridPane paneBottom;
-	@FXML private PieChart pieChart;
-	@FXML private VBox transactionList;
-	@FXML private Label label_creator;
-	@FXML private Label startDate;
-	@FXML private Label endDate;
+	@FXML
+	private Label lblTitre;
+	@FXML
+	private Label lblSolde;
+	@FXML
+	private Label lblPlafond;
+	@FXML
+	private JFXProgressBar progessBar;
+	@FXML
+	private JFXNodesList nodeModifDelete;
+	@FXML
+	private AnchorPane graphPane;
+	@FXML
+	private ScrollPane scrollpane;
+	@FXML
+	private AnchorPane paneForm;
+	@FXML
+	private JFXButton btnRetour;
+	@FXML
+	private AnchorPane paneTop;
+	@FXML
+	private GridPane paneBottom;
+	@FXML
+	private PieChart pieChart;
+	@FXML
+	private VBox transactionList;
+	@FXML
+	private Label label_creator;
+	@FXML
+	private Label startDate;
+	@FXML
+	private Label endDate;
 	
 	JFXButton btnEdit;
 	JFXButton btnDelete;
@@ -66,6 +86,9 @@ public class Controller_detailBudget implements Initializable, IController {
 	
 	double outgo;
 	
+	/**
+	 * Transaction displayer, display a transaction information
+	 */
 	private class transactionDisplayer {
 		
 		private Label lblDate;
@@ -76,12 +99,18 @@ public class Controller_detailBudget implements Initializable, IController {
 		private IOTransactionModel transaction;
 		private final String outgoColor = "#f2a7a8";
 		
+		/**
+		 * Display conveniently a transaction
+		 *
+		 * @param t transaction to display
+		 */
 		transactionDisplayer(IOTransactionModel t) {
 			
 			transaction = t;
 			lblDate = new Label(transaction.getDate().toString());
 			lblCaption = new Label(transaction.getName());
-			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
+			lblPrix = new Label(
+					Double.toString(transaction.getAmount()) + " CHF");
 			paneDisplay = new GridPane();
 			
 			paneDisplay.getChildren().add(lblDate);
@@ -89,18 +118,28 @@ public class Controller_detailBudget implements Initializable, IController {
 			paneDisplay.getChildren().add(lblPrix);
 			
 			paneDisplay
-					.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
-			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,
-					Priority.ALWAYS);
-			paneDisplay
-					.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
-					
-			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
+					.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER,
+							Priority.SOMETIMES, Priority.ALWAYS);
+			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT,
+					VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
+			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT,
+					VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
+			
+			paneDisplay.setStyle(
+					"-fx-background-radius: 10px; -fx-background-color: "
+							+ outgoColor + ";");
 			
 			transactionList.getChildren().add(paneDisplay);
 		}
 	}
 	
+	/**
+	 * controlle constructor
+	 *
+	 * @param p controller that called the detail view
+	 * @param b budget to display
+	 * @param outgo total outgo amount of the budget
+	 */
 	public Controller_detailBudget(IController p, BudgetLogic b, double outgo) {
 		
 		parent = p;
@@ -108,55 +147,69 @@ public class Controller_detailBudget implements Initializable, IController {
 		this.outgo = outgo;
 	}
 	
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	/**
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
+	 * create the control button (edit/delete) and set datas in the transactions
+	 * list and the PieChart
+	 *
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		scrollpane.setStyle("-fx-background-color: transparent");
-		// nodelist initialisation
+		paneForm.setVisible(false);
+		paneForm.setMouseTransparent(true);
+		
+		// control button management
 		btnEdit = new JFXButton();
 		btnEdit.setButtonType(JFXButton.ButtonType.FLAT);
-		btnEdit.getStyleClass().addAll("setting-button", "RoundButton", "GreenButton");
+		btnEdit.getStyleClass()
+				.addAll("setting-button", "RoundButton", "GreenButton");
 		btnEdit.setOnAction(event -> callForm(budget));
 		
 		btnDelete = new JFXButton();
 		btnDelete.setButtonType(JFXButton.ButtonType.FLAT);
-		btnDelete.getStyleClass().addAll("setting-button", "RoundButton", "RedButton");
+		btnDelete.getStyleClass()
+				.addAll("setting-button", "RoundButton", "RedButton");
 		btnDelete.setOnAction(event -> deleteItem(budget));
 		
 		btnMenu = new JFXButton();
 		btnMenu.setButtonType(JFXButton.ButtonType.FLAT);
-		btnMenu.getStyleClass().addAll("setting-button", "RoundButton", "NeutralButton");
+		btnMenu.getStyleClass()
+				.addAll("setting-button", "RoundButton", "NeutralButton");
 		
 		nodeModifDelete.addAnimatedNode(btnMenu);
 		nodeModifDelete.addAnimatedNode(btnEdit);
 		nodeModifDelete.addAnimatedNode(btnDelete);
 		nodeModifDelete.setSpacing(5d);
-		
 		JFXDepthManager.setDepth(nodeModifDelete, 1);
 		
-		
-		
-		
-		
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/preference.png")));
+		ImageView image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/preference.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnMenu.setGraphic(image);
 		
-		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/edit.png")));
+		image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/edit.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnEdit.setGraphic(image);
 		
-		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+		image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/delete.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnDelete.setGraphic(image);
 		
-		
-		paneForm.setVisible(false);
-		paneForm.setMouseTransparent(true);
-		
-		image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/return.png")));
+		image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/return.png")));
 		image.setFitWidth(30);
 		image.setFitHeight(30);
 		btnRetour.setGraphic(image);
@@ -187,11 +240,17 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 	}
 	
+	/**
+	 * call and open the budgetForm to edit the budget
+	 *
+	 * @param b
+	 */
 	private void callForm(BudgetLogic b) {
 		
 		paneForm.setVisible(true);
 		paneForm.setMouseTransparent(false);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formBudget.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formBudget.fxml"));
 		loader.setController(new Controller_formBudget(this, b));
 		
 		paneForm.getChildren().clear();
@@ -203,17 +262,35 @@ public class Controller_detailBudget implements Initializable, IController {
 		
 	}
 	
-	@Override public void createItem(Object result) {
+	/**
+	 * clear the form
+	 *
+	 * @param result not used
+	 */
+	@Override
+	public void createItem(Object result) {
 		
 		unloadform();
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
+	/**
+	 * request a deletion of the budget to the parent
+	 *
+	 * @param toDelete object to delete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {
 		
 		parent.deleteItem(toDelete);
 	}
 	
-	@Override public void modifyItem(Object toUpdated) {
+	/**
+	 * update the budget's information
+	 *
+	 * @param toUpdated updated object
+	 */
+	@Override
+	public void modifyItem(Object toUpdated) {
 		
 		unloadform();
 		BudgetLogic bl = (BudgetLogic) toUpdated;
@@ -229,39 +306,54 @@ public class Controller_detailBudget implements Initializable, IController {
 		setListTransaction();
 	}
 	
+	/**
+	 * set up the transaction list
+	 */
 	private void setListTransaction() {
 		
 		transactionList.getChildren().clear();
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
-		if(!budget.isShared()) {
+		if (!budget.isShared()) {
 			if (!budget.getCategoriesBudget().isEmpty()) {
 				
 				for (CategoryLogic cl : budget.getCategoriesBudget()) {
 					
-					if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+					if (IOTransactionLogic.getTransactionsByCategory()
+							.containsKey(cl)) {
 						
-						for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+						for (IOTransactionLogic tr : IOTransactionLogic
+								.getTransactionsByCategory().get(cl)) {
 							
 							LocalDate currentDate = tr.getDate().toLocalDate();
-							if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+							if (currentDate.isAfter(begin) && currentDate
+									.isBefore(end) && !tr.isIncome()) {
 								
-								transactionDisplayer td = new transactionDisplayer(tr);
+								transactionDisplayer td
+										= new transactionDisplayer(tr);
 							}
 						}
 					}
 				}
 			} else {
-				for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
-					for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+				for (BankAccountLogic bal : ClientLogic.getInstance()
+						.getBankAccounts()) {
+					for (Object year : IOTransactionLogic
+							.getYearsWithTransactions().toArray()) {
 						for (int i = 0; i < 12; ++i) {
 							if (bal.getTransactions().containsKey(year)) {
-								for (IOTransactionLogic tr : bal.getTransactions().get((Integer) year)[i]) {
-									LocalDate currentDate = tr.getDate().toLocalDate();
-									if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+								for (IOTransactionLogic tr : bal
+										.getTransactions()
+										.get((Integer) year)[i]) {
+									LocalDate currentDate = tr.getDate()
+											.toLocalDate();
+									if (currentDate.isAfter(begin)
+											&& currentDate.isBefore(end) && !tr
+											.isIncome()) {
 										
-										transactionDisplayer td = new transactionDisplayer(tr);
+										transactionDisplayer td
+												= new transactionDisplayer(tr);
 									}
 								}
 							}
@@ -269,10 +361,12 @@ public class Controller_detailBudget implements Initializable, IController {
 					}
 				}
 			}
-		}else{
-			for(IOTransactionModel tr : IOTransactionLogic.getIOTransactionByBudget(budget.getId())){
+		} else {
+			for (IOTransactionModel tr : IOTransactionLogic
+					.getIOTransactionByBudget(budget.getId())) {
 				LocalDate currentDate = tr.getDate().toLocalDate();
-				if (currentDate.isAfter(begin) && currentDate.isBefore(end) && !tr.isIncome()) {
+				if (currentDate.isAfter(begin) && currentDate.isBefore(end)
+						&& !tr.isIncome()) {
 					
 					transactionDisplayer td = new transactionDisplayer(tr);
 				}
@@ -280,34 +374,47 @@ public class Controller_detailBudget implements Initializable, IController {
 		}
 	}
 	
+	/**
+	 * set the PieChart datas
+	 */
 	private void setDataPieChart() {
 		
 		pieChart.setTitle("Dépense par catégorie");
-
 		
-		if(!budget.isShared()) {
-			if(!budget.getCategoriesBudget().isEmpty()) {
+		
+		if (!budget.isShared()) {
+			if (!budget.getCategoriesBudget().isEmpty()) {
 				setData(budget.getCategoriesBudget());
-			}else{
+			} else {
 				setData(ClientLogic.getInstance().getCategories());
 			}
 		}
 	}
 	
-	private void setData(List<CategoryLogic> categories){
-		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+	/**
+	 * generate the PieChart data for a given category
+	 *
+	 * @param categories category to handle
+	 */
+	private void setData(List<CategoryLogic> categories) {
+		
+		ObservableList<PieChart.Data> pieChartData = FXCollections
+				.observableArrayList();
 		
 		LocalDate begin = budget.getStartingDate().toLocalDate().minusDays(1);
 		LocalDate end = budget.getEndingDate().toLocalDate().plusDays(1);
 		
 		for (CategoryLogic cl : categories) {
 			double outgo = 0;
-			if (IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
+			if (IOTransactionLogic.getTransactionsByCategory()
+					.containsKey(cl)) {
 				
-				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+				for (IOTransactionLogic tr : IOTransactionLogic
+						.getTransactionsByCategory().get(cl)) {
 					
 					LocalDate currentDate = tr.getDate().toLocalDate();
-					if (currentDate.isAfter(begin) && currentDate.isBefore(end)) {
+					if (currentDate.isAfter(begin) && currentDate
+							.isBefore(end)) {
 						
 						if (!tr.isIncome()) {
 							
@@ -318,13 +425,16 @@ public class Controller_detailBudget implements Initializable, IController {
 				pieChartData.add(new PieChart.Data(cl.getName(), outgo));
 			}
 		}
-		pieChartData.forEach(data -> data.nameProperty()
-				.bind(Bindings.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
+		pieChartData.forEach(data -> data.nameProperty().bind(Bindings
+				.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
 		
 		pieChart.setData(pieChartData);
 		pieChart.setLegendVisible(false);
 	}
 	
+	/**
+	 * clear the PaneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();

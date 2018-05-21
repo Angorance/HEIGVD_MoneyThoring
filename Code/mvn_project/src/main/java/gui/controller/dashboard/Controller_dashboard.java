@@ -6,10 +6,10 @@ import bll.logic.ClientLogic;
 import bll.logic.IOTransactionLogic;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
-import com.jfoenix.effects.JFXDepthManager;
-import gui.controller.category.Controller_listCategory;
-import gui.controller.transaction.Controller_formTransaction;
+import gui.Utility;
 import gui.controller.IController;
+import gui.controller.transaction.Controller_formTransaction;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +30,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.beans.binding.Bindings;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -40,18 +39,29 @@ import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 /**
- * @author Bryan Curchod
- * @version 1.0
+ * Dashboard of the application. Gather the last transactions (in the current
+ * month)
+ * in the default account, generate a line chart and a pie chart
+ *
+ * @author Bryan Curchod, François Burgener
+ * @version 1.2
  */
 public class Controller_dashboard implements IController, Initializable {
 	
-	@FXML private AnchorPane paneGraphe1;
-	@FXML private AnchorPane paneGraph2;
-	@FXML private VBox paneList;
-	@FXML private JFXNodesList nodeAjout;
-	@FXML private AnchorPane paneForm;
-	@FXML private PieChart chartPie;
-	@FXML private LineChart<?, ?> chartLine;
+	@FXML
+	private AnchorPane paneGraphe1;
+	@FXML
+	private AnchorPane paneGraph2;
+	@FXML
+	private VBox paneList;
+	@FXML
+	private JFXNodesList nodeAjout;
+	@FXML
+	private AnchorPane paneForm;
+	@FXML
+	private PieChart chartPie;
+	@FXML
+	private LineChart<?, ?> chartLine;
 	
 	private JFXButton btnAddTransaction = new JFXButton("+");
 	private JFXButton btnOutgo = new JFXButton("D");
@@ -70,13 +80,19 @@ public class Controller_dashboard implements IController, Initializable {
 		private final String incomeColor = "#8ce589";
 		private final String outgoColor = "#f2a7a8";
 		
+		/**
+		 * Inner class used to display a transaction information
+		 *
+		 * @param t
+		 */
 		transactionDisplayer(IOTransactionLogic t) {
 			
 			transaction = t;
 			double width = paneList.getWidth() / 3;
 			lblDate = new Label(transaction.getDate().toString());
 			lblCaption = new Label(transaction.getName());
-			lblPrix = new Label(Double.toString(transaction.getAmount()) + " CHF");
+			lblPrix = new Label(
+					Double.toString(transaction.getAmount()) + " CHF");
 			paneDisplay = new GridPane();
 			
 			paneDisplay.getChildren().add(lblDate);
@@ -84,9 +100,20 @@ public class Controller_dashboard implements IController, Initializable {
 			paneDisplay.getChildren().add(lblPrix);
 			paneDisplay.setPadding(new Insets(10));
 			
-			paneDisplay.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
-			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
-			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.SOMETIMES,Priority.ALWAYS);
+			lblPrix.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(
+					Color.valueOf(t.getCategory().getColor())));
+			lblCaption.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(
+					Color.valueOf(t.getCategory().getColor())));
+			lblDate.setStyle(" -fx-text-fill: " + Utility.textColorBasedOnGB(
+					Color.valueOf(t.getCategory().getColor())));
+			
+			paneDisplay
+					.setConstraints(lblDate, 0, 0, 1, 1, HPos.LEFT, VPos.CENTER,
+							Priority.SOMETIMES, Priority.ALWAYS);
+			paneDisplay.setConstraints(lblCaption, 1, 0, 1, 1, HPos.LEFT,
+					VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
+			paneDisplay.setConstraints(lblPrix, 2, 0, 1, 1, HPos.RIGHT,
+					VPos.CENTER, Priority.SOMETIMES, Priority.ALWAYS);
 			
 			/*if (transaction.isIncome()) {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + incomeColor + ";");
@@ -94,20 +121,29 @@ public class Controller_dashboard implements IController, Initializable {
 				paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " + outgoColor + ";");
 			}*/
 			
-			paneDisplay.setStyle("-fx-background-radius: 10px; -fx-background-color: " +
-					Controller_listCategory.toRGBCode(Color.valueOf(t.getCategory().getColor())) + ";");
+			paneDisplay.setStyle(
+					"-fx-background-radius: 10px; -fx-background-color: "
+							+ Utility.toRGBCode(
+							Color.valueOf(t.getCategory().getColor())) + ";");
 			
 			Controller_dashboard.this.paneList.getChildren().add(paneDisplay);
 		}
 	}
 	
+	/**
+	 * Load the transaction form for creation purpose
+	 *
+	 * @param isIncome true if the transaction is an income
+	 */
 	private void callForm(boolean isIncome) {
 		
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formTransaction.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome, null);
+		Controller_formTransaction controller = new Controller_formTransaction(
+				this, isIncome, null);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(controller);
@@ -125,6 +161,9 @@ public class Controller_dashboard implements IController, Initializable {
 		}
 	}
 	
+	/**
+	 * clear the paneForm
+	 */
 	private void unloadform() {
 		
 		paneForm.getChildren().clear();
@@ -132,7 +171,13 @@ public class Controller_dashboard implements IController, Initializable {
 		paneForm.setVisible(false);
 	}
 	
-	@Override public void createItem(Object result) {
+	/**
+	 * create a transactionDisplayer with the transaction returned from the form
+	 *
+	 * @param result object returned from a form
+	 */
+	@Override
+	public void createItem(Object result) {
 		
 		unloadform();
 		if (result != null) {
@@ -145,7 +190,8 @@ public class Controller_dashboard implements IController, Initializable {
 			int trYear = cal.get(Calendar.YEAR);
 			int trMonth = cal.get(Calendar.MONTH);
 			
-			if((year == trYear) && (month == trMonth) && tr.getBankAccountID() == bal.getId()) {
+			if ((year == trYear) && (month == trMonth)
+					&& tr.getBankAccountID() == bal.getId()) {
 				transactionDisplayer trDisplayer = new transactionDisplayer(tr);
 				setDataLineChart();
 				setDataPieChart();
@@ -154,15 +200,35 @@ public class Controller_dashboard implements IController, Initializable {
 		}
 	}
 	
-	@Override public void deleteItem(Object toDelete) {
-		// PAS UTILISE
-	}
+	/**
+	 * not used in this view
+	 *
+	 * @param toDelete
+	 */
+	@Override
+	public void deleteItem(Object toDelete) {}
 	
-	@Override public void modifyItem(Object toUpdated) {
-		// PAS UTILISE
-	}
+	/**
+	 * not used in this view
+	 *
+	 * @param toUpdated
+	 */
+	@Override
+	public void modifyItem(Object toUpdated) {}
 	
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	/**
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
+	 * list the transaction in the current month and set the charts up
+	 *
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
+	 * 		known.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		paneForm.setVisible(false);
 		paneForm.setMouseTransparent(true);
@@ -178,20 +244,23 @@ public class Controller_dashboard implements IController, Initializable {
 		
 		btnOutgo.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
+				
 				callForm(false);
 			}
 		});
 		
 		btnIncome.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callForm(true);
 			}
 		});
 		
-		if(bal != null) {
+		if (bal != null) {
 			setDataLineChart();
 			
 			setDataPieChart();
@@ -200,8 +269,9 @@ public class Controller_dashboard implements IController, Initializable {
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
 			
-			if(bal.getTransactions().containsKey(year)) {
-				for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+			if (bal.getTransactions().containsKey(year)) {
+				for (IOTransactionLogic tr : bal.getTransactions()
+						.get(year)[month]) {
 					
 					transactionDisplayer trD = new transactionDisplayer(tr);
 				}
@@ -214,6 +284,9 @@ public class Controller_dashboard implements IController, Initializable {
 		
 	}
 	
+	/**
+	 * set up the line chart
+	 */
 	private void setDataLineChart() {
 		
 		chartLine.setTitle("Evolution du Solde");
@@ -230,20 +303,23 @@ public class Controller_dashboard implements IController, Initializable {
 		
 		
 		// Create a calendar object and set year and month
-		Calendar mycal = new GregorianCalendar(currentYear, currentMonth, currentDay);
+		Calendar mycal = new GregorianCalendar(currentYear, currentMonth,
+				currentDay);
 		
 		// Get the number of days in that month
 		int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
 		if (!bal.getTransactions().isEmpty()) {
-			for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+			for (IOTransactionLogic transaction : bal.getTransactions()
+					.get(currentYear)[currentMonth]) {
 				solde -= transaction.getAmount();
 			}
 		}
 		
 		for (int i = 0; i < currentDay; ++i) {
 			if (!bal.getTransactions().isEmpty()) {
-				for (IOTransactionLogic transaction : bal.getTransactions().get(currentYear)[currentMonth]) {
+				for (IOTransactionLogic transaction : bal.getTransactions()
+						.get(currentYear)[currentMonth]) {
 					java.sql.Date dat = transaction.getDate();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(dat);
@@ -253,21 +329,29 @@ public class Controller_dashboard implements IController, Initializable {
 				}
 			}
 			
-			series.getData().add(new XYChart.Data(String.valueOf(i + 1), solde));
+			series.getData()
+					.add(new XYChart.Data(String.valueOf(i + 1), solde));
 		}
 		
 		chartLine.getData().addAll(series);
 		chartLine.setLegendVisible(false);
 	}
 	
+	/**
+	 * set up the pie chart
+	 */
 	private void setDataPieChart() {
-		chartPie.setTitle("Dépense par catégorie");
-		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		
-		for(CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
+		chartPie.setTitle("Dépense par catégorie");
+		ObservableList<PieChart.Data> pieChartData = FXCollections
+				.observableArrayList();
+		
+		for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
 			int outgo = 0;
-			if(IOTransactionLogic.getTransactionsByCategory().containsKey(cl)) {
-				for (IOTransactionLogic tr : IOTransactionLogic.getTransactionsByCategory().get(cl)) {
+			if (IOTransactionLogic.getTransactionsByCategory()
+					.containsKey(cl)) {
+				for (IOTransactionLogic tr : IOTransactionLogic
+						.getTransactionsByCategory().get(cl)) {
 					if (!tr.isIncome()) {
 						outgo += tr.getAmount() * (-1);
 					}
@@ -276,24 +360,23 @@ public class Controller_dashboard implements IController, Initializable {
 			}
 		}
 		
-		pieChartData.forEach(data ->
-				data.nameProperty().bind(
-						Bindings.concat(
-								data.getName(), " ", data.pieValueProperty(), " CHF"
-						)
-				)
-		);
+		pieChartData.forEach(data -> data.nameProperty().bind(Bindings
+				.concat(data.getName(), " ", data.pieValueProperty(), " CHF")));
 		
 		chartPie.setData(pieChartData);
 		chartPie.setLegendVisible(false);
 		
 	}
 	
+	/**
+	 * set up the node list (Creation buttons)
+	 */
 	private void initNodeListe() {
 		
 		btnAddTransaction = new JFXButton();
 		btnAddTransaction.setButtonType(JFXButton.ButtonType.RAISED);
-		btnAddTransaction.getStyleClass().addAll("RoundButton", "NeutralButton");
+		btnAddTransaction.getStyleClass()
+				.addAll("RoundButton", "NeutralButton");
 		btnOutgo = new JFXButton("D");
 		btnOutgo.setButtonType(JFXButton.ButtonType.RAISED);
 		btnOutgo.getStyleClass().addAll("RoundButton", "RedButton");
@@ -307,7 +390,8 @@ public class Controller_dashboard implements IController, Initializable {
 		nodeAjout.setSpacing(5d);
 		nodeAjout.setRotate(180);
 		
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		ImageView image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/add.png")));
 		image.setFitWidth(20);
 		image.setFitHeight(20);
 		btnAddTransaction.setGraphic(image);

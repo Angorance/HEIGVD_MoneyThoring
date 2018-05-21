@@ -1,7 +1,8 @@
 package smtp;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
@@ -15,23 +16,24 @@ public class Mail {
 	/**
 	 * Send the activation code to the new client.
 	 *
-	 * @param username          Username of the new client.
-	 * @param email             Email of the new client.
-	 * @param activationCode    Activation code of the new client.
+	 * @param username Username of the new client.
+	 * @param email Email of the new client.
+	 * @param activationCode Activation code of the new client.
 	 */
-	public static void sendMail(String username, String email, String activationCode) {
+	public static void sendMail(String username, String email,
+			String activationCode) {
 		
 		// Parameters of the email
 		String smtpServer = "mail.infomaniak.com";
 		String from = "noreply-moneythoring@angorance.ch";
 		String to = email;
-		String objet = "Activation code for your MoneyThoring account";
+		String objet = "Code d'activation pour votre compte MoneyThoring";
 		
-		String texte = "Welcome to MoneyThoring " + username + ", <br><br>"
-						+ "To use this app you need to activate your account with <br>"
-						+ "this code on your next connection : " + activationCode + "<br><br>"
-						+ "Thanks for joining us <br><br>"
-						+ "MoneyThoring";
+		String texte = "Bienvenue chez MoneyThoring " + username + ", <br><br>"
+				+ "Pour utiliser cette application vous devez activer votre compte avec <br>"
+				+ "ce code lors de votre prochaine connexion : "
+				+ activationCode + "<br><br>"
+				+ "Merci d'utiliser nos services <br><br>" + "MoneyThoring";
 		
 		// Connection to the smtp server
 		Authenticator auth = new SMTPAuthenticator();
@@ -49,7 +51,8 @@ public class Mail {
 			
 			// Fill the message
 			msg.setFrom(new InternetAddress(from));
-			msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to, false));
+			msg.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to, false));
 			msg.setSubject(objet);
 			msg.setText(texte);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

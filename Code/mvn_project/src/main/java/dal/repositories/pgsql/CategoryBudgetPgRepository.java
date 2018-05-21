@@ -127,9 +127,10 @@ public class CategoryBudgetPgRepository implements ICategoriesBudgetRepository {
 		try {
 			categoriesbudget = (CategoriesbudgetPgEntity) session
 					.createCriteria(CategoriesbudgetPgEntity.class)
-					.add(Restrictions.and(Restrictions.eq("categoryId",
-							categoriesBudget.getCategoryId()), Restrictions
-							.eq("budgetId", categoriesBudget.getBudgetId())))
+					.add(Restrictions.and(Restrictions
+									.eq("categoryId", categoriesBudget.getCategoryId()),
+							Restrictions.eq("budgetId",
+									categoriesBudget.getBudgetId())))
 					.uniqueResult();
 			
 			session.delete(categoriesbudget);

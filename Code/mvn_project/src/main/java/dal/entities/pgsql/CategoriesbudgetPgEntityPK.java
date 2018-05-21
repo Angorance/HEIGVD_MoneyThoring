@@ -12,7 +12,8 @@ import java.util.Objects;
  * @version 1.2
  * @see IDALCategoriesbudgetEntityPK
  */
-public class CategoriesbudgetPgEntityPK implements Serializable, IDALCategoriesbudgetEntityPK {
+public class CategoriesbudgetPgEntityPK
+		implements Serializable, IDALCategoriesbudgetEntityPK {
 	
 	private int categoryId;
 	private int budgetId;

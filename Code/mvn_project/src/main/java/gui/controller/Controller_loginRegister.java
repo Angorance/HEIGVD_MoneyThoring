@@ -6,66 +6,82 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
+import gui.model.mainFrame;
 import gui.model.windowManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import gui.model.mainFrame;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import smtp.Mail;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static bll.logic.Authentication.*;
+import static bll.logic.Authentication.checkRegistration;
+import static bll.logic.Authentication.connect;
 
 /**
  * Controller of the view loginRegister
  */
 public class Controller_loginRegister implements Initializable, IWindow {
 	
-	@FXML private TextField login_email;
-	@FXML private PasswordField login_password;
-	@FXML private Label login_incorrect;
-	@FXML private AnchorPane paneSpinner;
-	@FXML private Label confirm_incorrect;
-	@FXML private JFXButton confirm_Button;
-	@FXML private JFXTextField confirm_textField;
-	@FXML private GridPane login_GridPane;
-	@FXML private GridPane confirmation_GridPane;
-	@FXML private GridPane register_GridPane;
-	@FXML private JFXButton btnConfirmRetour;
-	@FXML private Hyperlink hplSendCode;
-	@FXML private JFXCheckBox offline_checkLogin;
-	@FXML private JFXCheckBox offline_checkRegister;
+	@FXML
+	private TextField login_email;
+	@FXML
+	private PasswordField login_password;
+	@FXML
+	private Label login_incorrect;
+	@FXML
+	private AnchorPane paneSpinner;
+	@FXML
+	private Label confirm_incorrect;
+	@FXML
+	private JFXButton confirm_Button;
+	@FXML
+	private JFXTextField confirm_textField;
+	@FXML
+	private GridPane login_GridPane;
+	@FXML
+	private GridPane confirmation_GridPane;
+	@FXML
+	private GridPane register_GridPane;
+	@FXML
+	private JFXButton btnConfirmRetour;
+	@FXML
+	private Hyperlink hplSendCode;
+	@FXML
+	private JFXCheckBox offline_checkLogin;
+	@FXML
+	private JFXCheckBox offline_checkRegister;
 	
 	private Stage thisStage;
 	
 	
 	/**
-	 * Event on the button Login
+	 * Event on the Login button
+	 * try to log the user in
 	 *
 	 * @param actionEvent
 	 *
 	 * @throws IOException
 	 */
-	@FXML public void clickLoginButton(ActionEvent actionEvent) {
+	@FXML
+	public void clickLoginButton(ActionEvent actionEvent) {
 		
 		/*Retrieving text input*/
 		String email = login_email.getText();
 		String password = login_password.getText();
 		boolean online = !offline_checkLogin.isSelected();
-
+		
 		/*Retrieving the status of the login method*/
 		boolean status = connect(email, password, online);
 		
@@ -91,18 +107,25 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		}
 	}
 	
-	@FXML private TextField register_username;
-	@FXML private TextField register_email;
-	@FXML private PasswordField register_password;
-	@FXML private PasswordField register_confirmPassword;
-	@FXML private Label register_message;
+	@FXML
+	private TextField register_username;
+	@FXML
+	private TextField register_email;
+	@FXML
+	private PasswordField register_password;
+	@FXML
+	private PasswordField register_confirmPassword;
+	@FXML
+	private Label register_message;
 	
 	/**
-	 * Event on the button register
+	 * Event on the register button
+	 * try to register a new user
 	 *
 	 * @param actionEvent
 	 */
-	@FXML public void clickRegisterButton(ActionEvent actionEvent) {
+	@FXML
+	public void clickRegisterButton(ActionEvent actionEvent) {
 		
 		/*Retrieving text input*/
 		String username = register_username.getText();
@@ -118,7 +141,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		
 		//Check if passord, email and username is correct
 		boolean check = true;
-		boolean[] checkRegistration = checkRegistration(username, email, password, confirmPassword, online);
+		boolean[] checkRegistration = checkRegistration(username, email,
+				password, confirmPassword, online);
 		
 		/*Verify if username is already used*/
 		if (!checkRegistration[0]) {
@@ -153,13 +177,19 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		}
 	}
 	
-	@FXML public void confirmButton() {
+	/**
+	 * check the confirmation code provided by the user to
+	 * validate his registration
+	 */
+	@FXML
+	public void confirmButton() {
 		
 		if (Authentication.checkActivationCode(confirm_textField.getText())) {
 			loadMainFrame();
 		} else {
 			confirm_incorrect.setText("Code invalide\nVeuillez réessayer");
-			confirm_incorrect.setStyle("-fx-text-fill: red;-fx-border-color: red;-fx-border-width: 2px");
+			confirm_incorrect.setStyle(
+					"-fx-text-fill: red;-fx-border-color: red;-fx-border-width: 2px");
 			confirm_incorrect.setVisible(true);
 		}
 	}
@@ -178,7 +208,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		wm.displayMainFrame();
 	}
 	
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		paneSpinner.setVisible(false);
 		paneSpinner.setMouseTransparent(true);
@@ -195,7 +226,8 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		
 		confirm_Button.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				confirmButton();
 			}
@@ -203,12 +235,13 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		
 		confirm_textField.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				confirmButton();
 			}
 		});
-		confirm_textField.setOnMouseClicked(event -> resetConfirmErrorMessage());
+		confirm_textField.setOnMouseClicked(event -> resetErrorMessage());
 		btnConfirmRetour.setOnAction(event -> {
 			confirmation_GridPane.setVisible(false);
 			confirmation_GridPane.setMouseTransparent(true);
@@ -217,11 +250,13 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		});
 		
 		hplSendCode.setOnMouseClicked(event -> {
-			Mail.sendMail(ClientLogic.getInstance().getUsername(), ClientLogic.getInstance().getEmail(),
+			Mail.sendMail(ClientLogic.getInstance().getUsername(),
+					ClientLogic.getInstance().getEmail(),
 					ClientLogic.getInstance().getKey());
 			confirm_incorrect.setVisible(true);
 			confirm_incorrect.setText("Le code a été ré-envoyé");
-			confirm_incorrect.setStyle("-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
+			confirm_incorrect.setStyle(
+					"-fx-text-fill: green;-fx-border-color: green;-fx-border-width: 2px");
 		});
 		
 		//		thisStage = (Stage)hplSendCode.getScene().getWindow();
@@ -233,6 +268,9 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		});*/
 	}
 	
+	/**
+	 * clear the inputs fields
+	 */
 	private void clearFields() {
 		
 		login_password.setText("");
@@ -242,15 +280,25 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		register_password.setText("");
 		register_confirmPassword.setText("");
 		register_username.setText("");
+		resetErrorMessage();
 		
 	}
 	
-	@FXML public void resetConfirmErrorMessage() {
+	/**
+	 * hide the error messages
+	 */
+	@FXML
+	public void resetErrorMessage() {
 		
+		register_message.setVisible(false);
 		confirm_incorrect.setVisible(false);
 	}
 	
-	@Override public void hide() {
+	/**
+	 * hide the window
+	 */
+	@Override
+	public void hide() {
 		
 		if (thisStage == null) {
 			thisStage = (Stage) hplSendCode.getScene().getWindow();
@@ -258,7 +306,11 @@ public class Controller_loginRegister implements Initializable, IWindow {
 		thisStage.hide();
 	}
 	
-	@Override public void show() {
+	/**
+	 * show the window after clearing the fields
+	 */
+	@Override
+	public void show() {
 		
 		clearFields();
 		

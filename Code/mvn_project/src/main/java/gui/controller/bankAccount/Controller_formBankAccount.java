@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import gui.Utility;
 import gui.controller.IController;
 import gui.controller.IForm;
 import javafx.collections.FXCollections;
@@ -19,17 +20,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Class controller for form bank account. Manage the input of our form and create/update our bank account
+ * Class controller for form bank account. Manage the input of our form and
+ * create/update our bank account
  */
 public class Controller_formBankAccount implements Initializable, IForm {
 	
-	@FXML private JFXTextField nameAccount;
-	@FXML private JFXTextField nameBankAccount;
-	@FXML private JFXTextField amount;
-	@FXML private JFXComboBox<String> typeAccount;
-	@FXML private JFXButton returnButton;
-	@FXML private JFXButton accepteButton;
-	@FXML private JFXCheckBox defaultAccount;
+	@FXML
+	private JFXTextField nameAccount;
+	@FXML
+	private JFXTextField nameBankAccount;
+	@FXML
+	private JFXTextField amount;
+	@FXML
+	private JFXComboBox<String> typeAccount;
+	@FXML
+	private JFXButton returnButton;
+	@FXML
+	private JFXButton accepteButton;
+	@FXML
+	private JFXCheckBox defaultAccount;
 	
 	private IController cba;
 	BankAccountLogic bal;
@@ -51,7 +60,9 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 *
 	 * @param event -
 	 */
-	@FXML @Override public void formCancel(ActionEvent event) {
+	@FXML
+	@Override
+	public void formCancel(ActionEvent event) {
 		
 		cba.createItem(null);
 	}
@@ -61,16 +72,20 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	 *
 	 * @param event -
 	 */
-	@FXML @Override public void formValidation(ActionEvent event) {
+	@FXML
+	@Override
+	public void formValidation(ActionEvent event) {
 		
 		if (checkValidInput()) {
 			String name = nameAccount.getText();
 			String bankName = nameBankAccount.getText();
 			String type = (String) typeAccount.getValue();
-			Double amountDouble = Double.parseDouble(amount.getText());
+			Double amountDouble = Utility
+					.truncateDouble(Double.parseDouble(amount.getText()), 2);
 			boolean isDefault = defaultAccount.isSelected();
 			if (bal == null) {
-				BankAccountLogic ba = new BankAccountLogic(name, bankName, type, amountDouble, isDefault, 0);
+				BankAccountLogic ba = new BankAccountLogic(name, bankName, type,
+						amountDouble, isDefault, 0);
 				cba.createItem(ba);
 			} else {
 				bal.update(name, bankName, type, amountDouble, isDefault);
@@ -105,29 +120,12 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		}
 		
 		/*Check if the amount is empty and it's not a double*/
-		if (amountDouble.isEmpty() || !isDouble(amountDouble)) {
+		if (amountDouble.isEmpty() || !Utility.isDouble(amountDouble)) {
 			amount.setStyle("-jfx-unfocus-color: red;-fx-text-fill: red;");
 			check = false;
 		}
 		
 		return check;
-	}
-	
-	/**
-	 * Check if a string is a double
-	 *
-	 * @param str string to check
-	 *
-	 * @return true if is a double otherwise false
-	 */
-	private boolean isDouble(String str) {
-		
-		try {
-			Double.parseDouble(str);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 	
 	
@@ -143,13 +141,17 @@ public class Controller_formBankAccount implements Initializable, IForm {
 	}
 	
 	/**
-	 * Called to initialize a controller after its root element has been completely processed.
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
 	 *
-	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
 	 * 		known.
-	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		generateComboBoxItem();
 		
@@ -164,7 +166,8 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				formValidation(event);
 			}
@@ -172,7 +175,8 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		returnButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				formCancel(event);
 			}
@@ -180,7 +184,8 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		nameAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				nameAccount.setStyle("-jfx-unfocus-color: black;");
 			}
@@ -188,7 +193,8 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		nameBankAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				nameBankAccount.setStyle("-jfx-unfocus-color: black;");
 			}
@@ -196,9 +202,11 @@ public class Controller_formBankAccount implements Initializable, IForm {
 		
 		amount.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
-				amount.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+				amount.setStyle(
+						"-jfx-unfocus-color: black;-fx-text-fill: black;");
 			}
 		});
 		

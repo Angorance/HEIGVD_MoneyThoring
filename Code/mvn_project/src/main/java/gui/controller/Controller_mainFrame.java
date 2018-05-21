@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -25,8 +26,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,30 +35,41 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Implements the behavior of the main frame. Basically, it simply changes the view when we select
+ * Implements the behavior of the main frame. Basically, it simply changes the
+ * view when we select
  */
 public class Controller_mainFrame implements Initializable, IWindow {
 	
-	@FXML private Label header_mainFrame;
-	@FXML private AnchorPane mainContent;
-	@FXML private AnchorPane paneHeader;
-	@FXML private JFXHamburger burgerBtn;
-	@FXML private JFXDrawer drawer;
-	@FXML private Label lblInfo;
-	@FXML private JFXButton disconnect_button;
-	@FXML private AnchorPane parameterPane;
+	@FXML
+	private Label header_mainFrame;
+	@FXML
+	private AnchorPane mainContent;
+	@FXML
+	private AnchorPane paneHeader;
+	@FXML
+	private JFXHamburger burgerBtn;
+	@FXML
+	private JFXDrawer drawer;
+	@FXML
+	private Label lblInfo;
+	@FXML
+	private JFXButton disconnect_button;
+	@FXML
+	private AnchorPane parameterPane;
 	
 	private Stage thisStage = null;
 	private Button btnDashboard;
 	private Controller_lateralMenu menuController;
-	private static final String[] tabViewName = { "Dashboard", "Budget", "Transaction", "Dettes", "Compte Bancaire",
-			"Catégories" };
-	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml", "/gui/view/budgetList.fxml",
-			"/gui/view/transactionList.fxml", "/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml",
+	private static final String[] tabViewName = { "Tableau de bord", "Budgets",
+			"Transactions", "Dettes", "Comptes Bancaires", "Catégories" };
+	private static final String[] tabViewFile = { "/gui/view/dashboard.fxml",
+			"/gui/view/budgetList.fxml", "/gui/view/transactionList.fxml",
+			"/gui/view/debtList.fxml", "/gui/view/bankAccount.fxml",
 			"/gui/view/categoryList.fxml", "/gui/view/userParam.fxml" };
 	
 	
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		drawer.setMouseTransparent(true);
 		drawer.setVisible(true);
@@ -67,22 +79,24 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		JFXDepthManager.setDepth(paneHeader, 3);
 		lblInfo.setText(ClientLogic.getInstance().toString());
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/lateralMenu.fxml"));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/gui/view/lateralMenu.fxml"));
 			menuController = new Controller_lateralMenu();
 			loader.setController(menuController);
 			box = loader.load();
 			drawer.setSidePane(box);
-
+			
 			// setting the lateral menu's button behavior
 			for (Node node : box.getChildren()) {
 				String at = node.getAccessibleText();
-				if(!at.equals("6")) {
-					if(at.equals("0")){
+				if (!at.equals("6")) {
+					if (at.equals("0")) {
 						btnDashboard = (Button) node;
 					}
 					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 						try {
-							loadContent(Integer.valueOf(node.getAccessibleText()));
+							loadContent(
+									Integer.valueOf(node.getAccessibleText()));
 							drawer.close();
 						} catch (IOException e1) {
 							e1.printStackTrace();
@@ -90,17 +104,19 @@ public class Controller_mainFrame implements Initializable, IWindow {
 					});
 				} else {
 					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-							drawer.close();
-							loadParameter();
-							
+						drawer.close();
+						loadParameter();
+						
 					});
 				}
 			}
 			
 			//HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(burgerBtn);
 			//transition.setRate(-1);
-			drawer.setOnDrawerClosing(event -> {drawer.setMouseTransparent(true);});
-			drawer.setOnDrawerOpening(event -> drawer.setMouseTransparent(false));
+			drawer.setOnDrawerClosing(
+					event -> {drawer.setMouseTransparent(true);});
+			drawer.setOnDrawerOpening(
+					event -> drawer.setMouseTransparent(false));
 			burgerBtn.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
 				//transition.setRate(transition.getRate() * -1);
 				//transition.play();
@@ -118,7 +134,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 			System.exit(-1);
 		}
 		
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/logout.png")));
+		ImageView image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/logout.png")));
 		image.setFitWidth(30);
 		image.setFitHeight(30);
 		disconnect_button.setGraphic(image);
@@ -127,7 +144,9 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 		disconnect_button.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
+				
 				disconnect();
 			}
 		});
@@ -135,13 +154,17 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		resetDisplay();
 	}
 	
+	/**
+	 * load the user information view
+	 */
 	private void loadParameter() {
 		
 		burgerBtn.setMouseTransparent(true);
 		parameterPane.setVisible(true);
 		parameterPane.setMouseTransparent(false);
 		parameterPane.getChildren().clear();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(tabViewFile[6]));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource(tabViewFile[6]));
 		loader.setController(new ControllerParam());
 		try {
 			parameterPane.getChildren().add(loader.load());
@@ -151,20 +174,30 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 	}
 	
-	private void unloadParameter(){
+	/**
+	 * unload the user information view
+	 */
+	private void unloadParameter() {
+		
 		burgerBtn.setMouseTransparent(false);
 		parameterPane.getChildren().clear();
 		parameterPane.setMouseTransparent(true);
 		parameterPane.setVisible(false);
 	}
 	
+	/**
+	 * disconnect the user and return to the login window
+	 */
 	private void disconnect() {
 		
 		windowManager.getInstance().displayConnectionFrame();
 		Authentication.disconnect();
 	}
 	
-	public void resetDisplay(){
+	/**
+	 * reset the view to the dashboard
+	 */
+	public void resetDisplay() {
 		
 		try {
 			loadContent(0);
@@ -185,7 +218,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 		header_mainFrame.setText(tabViewName[id]);
 		mainContent.getChildren().clear();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(tabViewFile[id]));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource(tabViewFile[id]));
 		switch (id) {
 			case 0: // Dashboard
 				loader.setController(new Controller_dashboard());
@@ -212,28 +246,48 @@ public class Controller_mainFrame implements Initializable, IWindow {
 		
 	}
 	
-	@Override public void hide() {
-		if(thisStage == null){
-			thisStage = (Stage)paneHeader.getScene().getWindow();
+	/**
+	 * hide the main frame
+	 */
+	@Override
+	public void hide() {
+		
+		if (thisStage == null) {
+			thisStage = (Stage) paneHeader.getScene().getWindow();
 		}
 		thisStage.hide();
 	}
 	
-	@Override public void show() {
-		if(thisStage == null){
-			thisStage = (Stage)paneHeader.getScene().getWindow();
+	/**
+	 * show the window and reset the display
+	 */
+	@Override
+	public void show() {
+		
+		if (thisStage == null) {
+			thisStage = (Stage) paneHeader.getScene().getWindow();
 		}
 		resetDisplay();
 		thisStage.show();
 	}
 	
+	/**
+	 * inner class to control the user information view
+	 */
 	private class ControllerParam implements Initializable {
-		@FXML JFXButton btnDeleteAccount;
-		@FXML JFXTextField txtMail;
-		@FXML JFXTextField txtUsername;
-		@FXML JFXButton btnRetour;
 		
-		@Override public void initialize(URL location, ResourceBundle resources) {
+		@FXML
+		JFXButton btnDeleteAccount;
+		@FXML
+		JFXTextField txtMail;
+		@FXML
+		JFXTextField txtUsername;
+		@FXML
+		JFXButton btnRetour;
+		
+		@Override
+		public void initialize(URL location, ResourceBundle resources) {
+			
 			btnDeleteAccount.setOnAction(event -> {
 				unloadParameter();
 				ClientLogic.getInstance().supp();
@@ -242,7 +296,8 @@ public class Controller_mainFrame implements Initializable, IWindow {
 			
 			btnRetour.setOnAction(event -> unloadParameter());
 			
-			ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/delete.png")));
+			ImageView image = new ImageView(new Image(
+					getClass().getResourceAsStream("/gui/Image/delete.png")));
 			image.setFitWidth(20);
 			image.setFitHeight(20);
 			btnDeleteAccount.setGraphic(image);

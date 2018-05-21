@@ -7,13 +7,15 @@ import dal.orm.IORM;
 import java.sql.Date;
 
 /**
- * TODO
+ * BudgetModel class.
+ * Allows the mapping between the DAL entities and the Business Logic.
+ * Only implements the constructors, the getters and the setters.
  *
  * @author Daniel Gonzalez Lopez
  * @version 1.0
  */
 public class BudgetModel {
-
+	
 	private int id;
 	private int clientID;
 	private int gap;
@@ -31,7 +33,19 @@ public class BudgetModel {
 	
 	protected BudgetModel() {}
 	
-	protected BudgetModel(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate, Date endingDate, int gap) {
+	/**
+	 * Construct an instance with the given parameters.
+	 *
+	 * @param name
+	 * @param amount
+	 * @param isShared
+	 * @param isRecurrent
+	 * @param startingDate
+	 * @param endingDate
+	 * @param gap
+	 */
+	protected BudgetModel(String name, double amount, boolean isShared,
+			boolean isRecurrent, Date startingDate, Date endingDate, int gap) {
 		
 		setName(name);
 		setAmount(amount);
@@ -44,7 +58,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * Create a category entry for the user into the database.
+	 * Create a budget entry for the user into the database.
 	 *
 	 * @param orm ORM instance to use.
 	 */
@@ -65,7 +79,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * Update category entry with new data.
+	 * Update budget entry with new data.
 	 *
 	 * @param orm ORM instance to use.
 	 */
@@ -86,9 +100,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get ID of the budget.
 	 *
-	 * @return
+	 * @return ID of the budget.
 	 */
 	public int getId() {
 		
@@ -96,9 +110,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get client ID of the budget.
 	 *
-	 * @return
+	 * @return Client ID.
 	 */
 	public int getClientID() {
 		
@@ -106,9 +120,10 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the gap of the budget.
+	 * (For reccurent budgets. Not implemented)
 	 *
-	 * @return
+	 * @return Gap of the budget.
 	 */
 	public int getGap() {
 		
@@ -116,9 +131,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the amount of the budget.
 	 *
-	 * @return
+	 * @return Amount of the budget.
 	 */
 	public double getAmount() {
 		
@@ -126,9 +141,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the name of the budget.
 	 *
-	 * @return
+	 * @return Name of the budget.
 	 */
 	public String getName() {
 		
@@ -136,9 +151,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get if the budget is shared or not.
 	 *
-	 * @return
+	 * @return True if shared budget, false otherwise.
 	 */
 	public boolean isShared() {
 		
@@ -146,9 +161,10 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get if the budget is recurrent or not.
+	 * (Not implemented)
 	 *
-	 * @return
+	 * @return True if it's recurrent, false otherwise.
 	 */
 	public boolean isRecurrent() {
 		
@@ -156,9 +172,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the starting date of the budget.
 	 *
-	 * @return
+	 * @return Starting date.
 	 */
 	public Date getStartingDate() {
 		
@@ -166,9 +182,9 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the ending date of the budget.
 	 *
-	 * @return
+	 * @return Ending date.
 	 */
 	public Date getEndingDate() {
 		
@@ -177,7 +193,7 @@ public class BudgetModel {
 	
 	
 	/**
-	 * TODO
+	 * Set the ID of the budget.
 	 *
 	 * @param id
 	 */
@@ -187,7 +203,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * The the client ID of the budget.
 	 *
 	 * @param clientID
 	 */
@@ -197,7 +213,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Srt the gap of the budget.
 	 *
 	 * @param gap
 	 */
@@ -207,7 +223,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the amount of the budget.
 	 *
 	 * @param amount
 	 */
@@ -217,7 +233,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the name of the budget.
 	 *
 	 * @param name
 	 */
@@ -227,7 +243,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set whether the budget is shared or not.
 	 *
 	 * @param shared
 	 */
@@ -237,7 +253,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set whether it's a recurrent budget or not.
 	 *
 	 * @param recurrent
 	 */
@@ -247,7 +263,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the starting date.
 	 *
 	 * @param startingDate
 	 */
@@ -257,7 +273,7 @@ public class BudgetModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the ending date.
 	 *
 	 * @param endingDate
 	 */

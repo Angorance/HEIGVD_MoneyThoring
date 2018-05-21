@@ -22,7 +22,7 @@ import java.util.List;
  * to avoid data problems.
  *
  * @author Daniel Gonzalez Lopez
- * @version 1.5
+ * @version 2.0
  */
 public class ClientLogic extends ClientModel {
 	
@@ -35,21 +35,56 @@ public class ClientLogic extends ClientModel {
 	
 	private ClientLogic() {}
 	
+	/**
+	 * Inner class to guarantee unique ClientLogic instance (Singleton).
+	 */
+	private static class Instance {
+		
+		static ClientLogic instance = new ClientLogic();
+	}
+	
+	/**
+	 * Get the unique instance of the ClientLogic.
+	 *
+	 * @return ClientLogic instance.
+	 */
+	public static ClientLogic getInstance() {
+		
+		return Instance.instance;
+	}
+	
+	/**
+	 * Set whether the app is to be used on online mode or offline mode.
+	 *
+	 * @param online
+	 */
 	public void setOnline(boolean online) {
 		
 		this.online = online;
 	}
 	
+	/**
+	 * Get the online flag.
+	 *
+	 * @return True if we're using the app online mode, false otherwise.
+	 */
 	public boolean isOnline() {
 		
 		return online;
 	}
 	
+	/**
+	 * Get the budget with the given ID.
+	 *
+	 * @param budgetId
+	 *
+	 * @return BudgetLogic instance.
+	 */
 	public BudgetLogic getBudget(int budgetId) {
 		
-		for(BudgetLogic budget : budgets) {
+		for (BudgetLogic budget : budgets) {
 			
-			if(budget.getId() == budgetId) {
+			if (budget.getId() == budgetId) {
 				return budget;
 			}
 		}
@@ -58,26 +93,8 @@ public class ClientLogic extends ClientModel {
 	}
 	
 	/**
-	 * TODO
-	 */
-	public static class Instance {
-		
-		static ClientLogic instance = new ClientLogic();
-	}
-	
-	/**
-	 * TODO
-	 *
-	 * @return
-	 */
-	public static ClientLogic getInstance() {
-		
-		return Instance.instance;
-	}
-	
-	
-	/**
-	 * TODO
+	 * Set the client after the registration is validated.
+	 * Create the entry in the database.
 	 *
 	 * @param email
 	 * @param username
@@ -128,16 +145,31 @@ public class ClientLogic extends ClientModel {
 		return visibles;
 	}
 	
+	/**
+	 * Get the list of categories of the client.
+	 *
+	 * @return ArrayList of categories.
+	 */
 	public List<CategoryLogic> getCategories() {
 		
 		return categories;
 	}
 	
+	/**
+	 * Get the list of budgets of the client.
+	 *
+	 * @return ArrayList of budgets.
+	 */
 	public List<BudgetLogic> getBudgets() {
 		
 		return budgets;
 	}
 	
+	/**
+	 * Get all the users from the database as ClientModel.
+	 *
+	 * @return List of ClientModel.
+	 */
 	public List<ClientModel> getAllUsers() {
 		
 		IORM orm = MasterORM.getInstance().getORM();
@@ -156,6 +188,11 @@ public class ClientLogic extends ClientModel {
 		return null;
 	}
 	
+	/**
+	 * Get the debts of the client.
+	 *
+	 * @return ArrayList of debts.
+	 */
 	public ArrayList<DebtLogic> getDebts() {
 		
 		return debts;
@@ -175,7 +212,7 @@ public class ClientLogic extends ClientModel {
 	}
 	
 	/**
-	 * TODO
+	 * Add a category to the list.
 	 *
 	 * @param ca
 	 */
@@ -185,6 +222,11 @@ public class ClientLogic extends ClientModel {
 		ca.setClientId(getId());
 	}
 	
+	/**
+	 * Remove a category from the list.
+	 *
+	 * @param ca
+	 */
 	public void removeCategory(CategoryLogic ca) {
 		
 		categories.remove(ca);
@@ -253,7 +295,9 @@ public class ClientLogic extends ClientModel {
 		}
 	}
 	
-	
+	/**
+	 * Recover all the data concerning the user from the database.
+	 */
 	protected void setDataFromDB() {
 		
 		try {
@@ -294,11 +338,12 @@ public class ClientLogic extends ClientModel {
 						.getSharedbudgetByClient(getId());
 				
 				// Get the shared budgets
-				for(SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
-				IDALBudgetEntity budget = orm.getBudgetRepository().getBudget(sbm.getBudgetID());
-				BudgetLogic b = DALBudgetMapper.toBo(budget);
-				b.setDataFromDB(orm);
-			}
+				for (SharedBudgetModel sbm : DALSharedBudgetMapper.toBos(sb)) {
+					IDALBudgetEntity budget = orm.getBudgetRepository()
+							.getBudget(sbm.getBudgetID());
+					BudgetLogic b = DALBudgetMapper.toBo(budget);
+					b.setDataFromDB(orm);
+				}
 			}
 			
 			// Debts
@@ -319,19 +364,6 @@ public class ClientLogic extends ClientModel {
 		}
 	}
 	
-	@Override
-	public String toString() {
-		
-		String client = "";
-		
-		client += "Username: " + getUsername() + "\n";
-		client += "Email: " + getEmail() + "\n";
-		client += "Hash: " + getPassword() + "\n";
-		client += "Salt: " + getSalt();
-		
-		return client;
-	}
-	
 	/**
 	 * Update the client into the database.
 	 */
@@ -342,6 +374,11 @@ public class ClientLogic extends ClientModel {
 		updateUser(MasterORM.getInstance().getORM());
 	}
 	
+	/**
+	 * Wipe all data present in the instances of the current session when
+	 * disconnecting the user. That way, a new user can connect without seeing
+	 * the previous users's information.
+	 */
 	public void wipe() {
 		
 		for (BankAccountLogic ba : bankAccounts) {

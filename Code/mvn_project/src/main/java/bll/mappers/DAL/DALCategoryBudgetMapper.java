@@ -6,7 +6,8 @@ import dal.entities.derby.CategoriesbudgetDeEntity;
 import dal.entities.pgsql.CategoriesbudgetPgEntity;
 import dal.ientites.IDALCategoriesbudgetEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a CategoryBudgetModel to an IDALCategoriesbudgetEntity
@@ -19,7 +20,8 @@ public class DALCategoryBudgetMapper {
 	/**
 	 * CategoryBudgetModel -> PostgreSQL entity
 	 */
-	public static IDALCategoriesbudgetEntity toDboPG(CategoryBudgetModel model) {
+	public static IDALCategoriesbudgetEntity toDboPG(
+			CategoryBudgetModel model) {
 		
 		if (model == null) {
 			return null;
@@ -37,7 +39,8 @@ public class DALCategoryBudgetMapper {
 	/**
 	 * CategoryBudgetModel -> Derby entity
 	 */
-	public static IDALCategoriesbudgetEntity toDboDe(CategoryBudgetModel model) {
+	public static IDALCategoriesbudgetEntity toDboDe(
+			CategoryBudgetModel model) {
 		
 		if (model == null) {
 			return null;
@@ -86,12 +89,14 @@ public class DALCategoryBudgetMapper {
 	/**
 	 * Entities -> CategoriesBudgetModel
 	 */
-	public static List<CategoryBudgetModel> toBos(List<IDALCategoriesbudgetEntity> entities) {
+	public static List<CategoryBudgetModel> toBos(
+			List<IDALCategoriesbudgetEntity> entities) {
 		
 		// Create the list of entries
-		List<CategoryBudgetModel> objects = new ArrayList<CategoryBudgetModel>();
+		List<CategoryBudgetModel> objects
+				= new ArrayList<CategoryBudgetModel>();
 		
-		for(IDALCategoriesbudgetEntity entity : entities){
+		for (IDALCategoriesbudgetEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		
@@ -101,12 +106,14 @@ public class DALCategoryBudgetMapper {
 	/**
 	 * CategoriesBudgetModel -> PostgreSQL Entities
 	 */
-	public static List<IDALCategoriesbudgetEntity> toDbosPG(List<CategoryBudgetModel> models) {
+	public static List<IDALCategoriesbudgetEntity> toDbosPG(
+			List<CategoryBudgetModel> models) {
 		
 		// Create the list of entities
-		List<IDALCategoriesbudgetEntity> entities = new ArrayList<IDALCategoriesbudgetEntity>();
+		List<IDALCategoriesbudgetEntity> entities
+				= new ArrayList<IDALCategoriesbudgetEntity>();
 		
-		for(CategoryBudgetModel model : models){
+		for (CategoryBudgetModel model : models) {
 			entities.add(toDboPG(model));
 		}
 		

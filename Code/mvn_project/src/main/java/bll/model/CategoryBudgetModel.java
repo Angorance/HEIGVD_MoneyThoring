@@ -5,6 +5,10 @@ import dal.irepositories.ICategoriesBudgetRepository;
 import dal.orm.IORM;
 
 /**
+ * CategoryBudgetModel class.
+ * Allows the mapping between the DAL entities and the Business Logic.
+ * Only implements the constructors, the getters and the setters.
+ *
  * @author Héléna Line Reymond
  * @version 1.0
  */

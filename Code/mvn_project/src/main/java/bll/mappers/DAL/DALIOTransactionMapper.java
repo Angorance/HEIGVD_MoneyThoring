@@ -9,7 +9,8 @@ import dal.entities.derby.IotransactionDeEntity;
 import dal.entities.pgsql.IotransactionPgEntity;
 import dal.ientites.IDALIotransactionEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a IOTransactionModel to an IDALIOTransactionEntity

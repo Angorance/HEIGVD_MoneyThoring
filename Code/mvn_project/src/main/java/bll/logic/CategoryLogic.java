@@ -1,8 +1,5 @@
 package bll.logic;
 
-import bll.mappers.DAL.DALBudgetMapper;
-import bll.mappers.DAL.DALCategoryBudgetMapper;
-import bll.model.CategoryBudgetModel;
 import bll.model.CategoryModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoriesbudgetEntity;
@@ -13,18 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * CategoryLogic class.
+ * Implements the business logic of the CategoryModel.
+ * Implements methods to create, change and delete categories.
+ * Before changing these attributes, the methods check their integrity
+ * to avoid data problems.
  *
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @author Héléna Line Reymond
+ * @version 2.0
  */
 public class CategoryLogic extends CategoryModel {
 	
+	/**
+	 * Construct an instance and link it to the user instance.
+	 */
 	public CategoryLogic() {
 		
 		ClientLogic.getInstance().addCategory(this);
 	}
 	
+	/**
+	 * Construct an instance, link it to the user instance and create the entry
+	 * in the database.
+	 *
+	 * @param name
+	 * @param color
+	 * @param isDefault (Only used for database created categories)
+	 */
 	public CategoryLogic(String name, String color, boolean isDefault) {
 		
 		super(name, color, isDefault);
@@ -35,7 +48,7 @@ public class CategoryLogic extends CategoryModel {
 	}
 	
 	/**
-	 * TODO
+	 * Update the category and its entry in the database.
 	 */
 	public void update(String name, String color) {
 		
@@ -45,6 +58,10 @@ public class CategoryLogic extends CategoryModel {
 		updateCategory(MasterORM.getInstance().getORM());
 	}
 	
+	/**
+	 * Delete a category from the database and kill all links it has in the
+	 * application (user, budgets, ...)
+	 */
 	public void supp() {
 		
 		try {
@@ -73,7 +90,8 @@ public class CategoryLogic extends CategoryModel {
 			}
 			
 			// Get the budgets using this category
-			List<IDALCategoriesbudgetEntity> budgetLinks = orm.getCategoriesBudgetRepository()
+			List<IDALCategoriesbudgetEntity> budgetLinks = orm
+					.getCategoriesBudgetRepository()
 					.getCategoriesBudgetByCategory(getId());
 			
 			if (budgetLinks != null) {
@@ -85,7 +103,8 @@ public class CategoryLogic extends CategoryModel {
 					orm.getCategoriesBudgetRepository().delete(budgetLink);
 					
 					// Update the budget
-					BudgetLogic budget = ClientLogic.getInstance().getBudget(budgetLink.getBudgetId());
+					BudgetLogic budget = ClientLogic.getInstance()
+							.getBudget(budgetLink.getBudgetId());
 					
 					budget.removeCategory(this);
 				}
@@ -103,6 +122,13 @@ public class CategoryLogic extends CategoryModel {
 		}
 	}
 	
+	/**
+	 * Get the category of the given ID.
+	 *
+	 * @param categoryID
+	 *
+	 * @return CategoryLogic instance of the corresponding ID.
+	 */
 	public static CategoryLogic getByID(int categoryID) {
 		
 		for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
@@ -114,6 +140,11 @@ public class CategoryLogic extends CategoryModel {
 		return null;
 	}
 	
+	/**
+	 * Get the default category.
+	 *
+	 * @return CategoryLogic instance of the default category.
+	 */
 	public static CategoryLogic getDefaultCategory() {
 		
 		for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
@@ -125,6 +156,11 @@ public class CategoryLogic extends CategoryModel {
 		return null;
 	}
 	
+	/**
+	 * Get the representation of the category (its name)
+	 *
+	 * @return String representing the name.
+	 */
 	@Override
 	public String toString() {
 		
