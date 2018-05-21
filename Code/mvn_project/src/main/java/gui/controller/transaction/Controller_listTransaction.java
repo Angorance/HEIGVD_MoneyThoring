@@ -22,7 +22,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -36,30 +35,42 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Calendar;
+import java.util.ResourceBundle;
 
 public class Controller_listTransaction implements Initializable, IController {
 	
-	@FXML private AnchorPane parent;
-	@FXML private AnchorPane paneform;
-	@FXML private JFXComboBox<BankAccountLogic> accountSelect;
-	@FXML private JFXComboBox<String> periodSelect;
-	@FXML private JFXComboBox<String> timeSelect;
-	@FXML private Label lblTotalDepense;
-	@FXML private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
-	@FXML private Label lblTotalRevenu;
-	@FXML private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
-	@FXML private JFXNodesList nodeList;
-	@FXML private GridPane transactionPane;
+	@FXML
+	private AnchorPane parent;
+	@FXML
+	private AnchorPane paneform;
+	@FXML
+	private JFXComboBox<BankAccountLogic> accountSelect;
+	@FXML
+	private JFXComboBox<String> periodSelect;
+	@FXML
+	private JFXComboBox<String> timeSelect;
+	@FXML
+	private Label lblTotalDepense;
+	@FXML
+	private JFXTreeTableView<WrapperTransaction> outGoTreeTableView;
+	@FXML
+	private Label lblTotalRevenu;
+	@FXML
+	private JFXTreeTableView<WrapperTransaction> incomeTreeTableView;
+	@FXML
+	private JFXNodesList nodeList;
+	@FXML
+	private GridPane transactionPane;
 	
 	private JFXButton transactionButton;
 	private JFXButton outGoButton;
 	private JFXButton incomeButton;
 	
-	private ObservableList<WrapperTransaction> income = FXCollections.observableArrayList();
-	private ObservableList<WrapperTransaction> outgo = FXCollections.observableArrayList();
+	private ObservableList<WrapperTransaction> income = FXCollections
+			.observableArrayList();
+	private ObservableList<WrapperTransaction> outgo = FXCollections
+			.observableArrayList();
 	
 	private BankAccountLogic bal;
 	
@@ -72,10 +83,12 @@ public class Controller_listTransaction implements Initializable, IController {
 	public void callform(boolean isIncome, IOTransactionLogic tr) {
 		
 		/* we load the form fxml*/
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/view/formTransaction.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				getClass().getResource("/gui/view/formTransaction.fxml"));
 		
 		/*Create a instance of the controller of bank account form*/
-		Controller_formTransaction controller = new Controller_formTransaction(this, isIncome, tr);
+		Controller_formTransaction controller = new Controller_formTransaction(
+				this, isIncome, tr);
 		
 		/*Sets the controller associated with the root object*/
 		loader.setController(controller);
@@ -98,13 +111,15 @@ public class Controller_listTransaction implements Initializable, IController {
 	 *
 	 * @param result the transaction to insert in the TreeTableView
 	 */
-	@Override public void createItem(Object result) {
+	@Override
+	public void createItem(Object result) {
 		
 		unloadform();
 		
 		if (result != null) {
 			IOTransactionLogic tr = (IOTransactionLogic) result;
-			for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+			for (BankAccountLogic bal : ClientLogic.getInstance()
+					.getBankAccounts()) {
 				if (bal.getId() == tr.getBankAccountID()) {
 					accountSelect.getSelectionModel().select(bal);
 					break;
@@ -138,7 +153,8 @@ public class Controller_listTransaction implements Initializable, IController {
 	 *
 	 * @param toDelete transaction to delete
 	 */
-	@Override public void deleteItem(Object toDelete) {
+	@Override
+	public void deleteItem(Object toDelete) {
 		
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) toDelete;
@@ -154,7 +170,9 @@ public class Controller_listTransaction implements Initializable, IController {
 	 *
 	 * @param updated
 	 */
-	@Override public void modifyItem(Object updated) {
+	@Override
+	public void modifyItem(Object updated) {
+		
 		unloadform();
 		IOTransactionLogic tr = (IOTransactionLogic) updated;
 		
@@ -171,66 +189,78 @@ public class Controller_listTransaction implements Initializable, IController {
 		boolean selectedPeriode = periodSelect.getSelectionModel().isEmpty();
 		boolean selectedTime = timeSelect.getSelectionModel().isEmpty();
 		
-		JFXTreeTableColumn<WrapperTransaction, String> dateIncome = new JFXTreeTableColumn<>("Date");
+		JFXTreeTableColumn<WrapperTransaction, String> dateIncome
+				= new JFXTreeTableColumn<>("Date");
 		dateIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().date;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> nameIncome = new JFXTreeTableColumn<>("nom");
+		JFXTreeTableColumn<WrapperTransaction, String> nameIncome
+				= new JFXTreeTableColumn<>("nom");
 		nameIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().name;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> amountIncome = new JFXTreeTableColumn<>("montant");
+		JFXTreeTableColumn<WrapperTransaction, String> amountIncome
+				= new JFXTreeTableColumn<>("montant");
 		amountIncome.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().amount;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo = new JFXTreeTableColumn<>("Date");
+		JFXTreeTableColumn<WrapperTransaction, String> dateOutgo
+				= new JFXTreeTableColumn<>("Date");
 		dateOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().date;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo = new JFXTreeTableColumn<>("nom");
+		JFXTreeTableColumn<WrapperTransaction, String> nameOutgo
+				= new JFXTreeTableColumn<>("nom");
 		nameOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().name;
 					}
 				});
 		
-		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo = new JFXTreeTableColumn<>("montant");
+		JFXTreeTableColumn<WrapperTransaction, String> amoutOutgo
+				= new JFXTreeTableColumn<>("montant");
 		amoutOutgo.setCellValueFactory(
 				new Callback<TreeTableColumn.CellDataFeatures<WrapperTransaction, String>, ObservableValue<String>>() {
 					
-					@Override public ObservableValue<String> call(
+					@Override
+					public ObservableValue<String> call(
 							TreeTableColumn.CellDataFeatures<WrapperTransaction, String> param) {
 						
 						return param.getValue().getValue().amount;
@@ -253,14 +283,18 @@ public class Controller_listTransaction implements Initializable, IController {
 			}
 			
 			
-			TreeItem<WrapperTransaction> root = new RecursiveTreeItem<WrapperTransaction>(income,
+			TreeItem<WrapperTransaction> root
+					= new RecursiveTreeItem<WrapperTransaction>(income,
 					RecursiveTreeObject::getChildren);
-			incomeTreeTableView.getColumns().setAll(dateIncome, nameIncome, amountIncome);
+			incomeTreeTableView.getColumns()
+					.setAll(dateIncome, nameIncome, amountIncome);
 			incomeTreeTableView.setRoot(root);
 			incomeTreeTableView.setShowRoot(false);
 			
-			root = new RecursiveTreeItem<WrapperTransaction>(outgo, RecursiveTreeObject::getChildren);
-			outGoTreeTableView.getColumns().setAll(dateOutgo, nameOutgo, amoutOutgo);
+			root = new RecursiveTreeItem<WrapperTransaction>(outgo,
+					RecursiveTreeObject::getChildren);
+			outGoTreeTableView.getColumns()
+					.setAll(dateOutgo, nameOutgo, amoutOutgo);
 			outGoTreeTableView.setRoot(root);
 			outGoTreeTableView.setShowRoot(false);
 		}
@@ -289,8 +323,9 @@ public class Controller_listTransaction implements Initializable, IController {
 	
 	private void add(int year, int month) {
 		
-		if(bal.getTransactions().containsKey(year)) {
-			for (IOTransactionLogic tr : bal.getTransactions().get(year)[month]) {
+		if (bal.getTransactions().containsKey(year)) {
+			for (IOTransactionLogic tr : bal.getTransactions()
+					.get(year)[month]) {
 				if (tr.isIncome()) {
 					income.add(new WrapperTransaction(tr));
 				} else {
@@ -305,10 +340,12 @@ public class Controller_listTransaction implements Initializable, IController {
 		ObservableList<String> items3 = FXCollections.observableArrayList();
 		items3.clear();
 		if (periodSelect.getValue().equals("Mensuel")) {
-			items3.addAll("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre",
-					"Octobre", "Novembre", "Décembre");
+			items3.addAll("Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+					"Juillet", "Aout", "Septembre", "Octobre", "Novembre",
+					"Décembre");
 		} else if (periodSelect.getValue().equals("Annuel")) {
-			for (Object year : IOTransactionLogic.getYearsWithTransactions().toArray()) {
+			for (Object year : IOTransactionLogic.getYearsWithTransactions()
+					.toArray()) {
 				items3.addAll(String.valueOf((Integer) year));
 			}
 		}
@@ -319,7 +356,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		transactionButton = new JFXButton();
 		transactionButton.setButtonType(JFXButton.ButtonType.RAISED);
-		transactionButton.getStyleClass().addAll("RoundButton", "NeutralButton");
+		transactionButton.getStyleClass()
+				.addAll("RoundButton", "NeutralButton");
 		outGoButton = new JFXButton("D");
 		outGoButton.setButtonType(JFXButton.ButtonType.RAISED);
 		outGoButton.getStyleClass().addAll("RoundButton", "RedButton");
@@ -333,7 +371,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		nodeList.setSpacing(5d);
 		nodeList.setRotate(180);
 		
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/gui/Image/add.png")));
+		ImageView image = new ImageView(new Image(
+				getClass().getResourceAsStream("/gui/Image/add.png")));
 		image.setFitHeight(20);
 		image.setFitWidth(20);
 		transactionButton.setGraphic(image);
@@ -342,18 +381,20 @@ public class Controller_listTransaction implements Initializable, IController {
 	private void generateComboBoxItem() {
 		
 		BankAccountLogic defautlt = new BankAccountLogic();
-		ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
-		for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+		ObservableList<BankAccountLogic> items = FXCollections
+				.observableArrayList();
+		for (BankAccountLogic bal : ClientLogic.getInstance()
+				.getBankAccounts()) {
 			items.add(bal);
-			if(bal.isDefault()){
+			if (bal.isDefault()) {
 				defautlt = bal;
 			}
 		}
 		accountSelect.setItems(items);
 		
-		if(defautlt != null) {
+		if (defautlt != null) {
 			accountSelect.getSelectionModel().select(defautlt);
-		}else if (!ClientLogic.getInstance().getBankAccounts().isEmpty()){
+		} else if (!ClientLogic.getInstance().getBankAccounts().isEmpty()) {
 			accountSelect.getSelectionModel().selectFirst();
 		}
 		
@@ -366,10 +407,11 @@ public class Controller_listTransaction implements Initializable, IController {
 		yearOrMonth();
 		
 		
-		if(defautlt != null && defautlt.getMostRecentTransaction() != null) {
-			timeSelect.getSelectionModel().select(String.valueOf(defautlt.getMostRecentTransaction().getDate().toLocalDate().getYear()));
+		if (defautlt != null && defautlt.getMostRecentTransaction() != null) {
+			timeSelect.getSelectionModel().select(String.valueOf(
+					defautlt.getMostRecentTransaction().getDate().toLocalDate()
+							.getYear()));
 		}
-		
 		
 	}
 	
@@ -384,7 +426,8 @@ public class Controller_listTransaction implements Initializable, IController {
 	 * @param resources The resources used to localize the root object, or
 	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		unloadform();
 		generateNodeList();
@@ -395,7 +438,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		accountSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				setData();
 			}
@@ -403,7 +447,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		periodSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				yearOrMonth();
 				setData();
@@ -412,7 +457,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		timeSelect.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				setData();
 			}
@@ -420,7 +466,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		outGoButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callform(false, null);
 			}
@@ -428,7 +475,8 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		incomeButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				callform(true, null);
 			}
@@ -436,13 +484,16 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		incomeTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (event.getClickCount() == 2) {
-						int t = incomeTreeTableView.getSelectionModel().getFocusedIndex();
+						int t = incomeTreeTableView.getSelectionModel()
+								.getFocusedIndex();
 						if (t >= 0) {
-							IOTransactionLogic tr = incomeTreeTableView.getTreeItem(t).getValue().getTransaction();
+							IOTransactionLogic tr = incomeTreeTableView
+									.getTreeItem(t).getValue().getTransaction();
 							callform(true, tr);
 						}
 					}
@@ -453,13 +504,16 @@ public class Controller_listTransaction implements Initializable, IController {
 		
 		outGoTreeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				if (event.getButton().equals(MouseButton.PRIMARY)) {
 					if (event.getClickCount() == 2) {
-						int t = outGoTreeTableView.getSelectionModel().getFocusedIndex();
+						int t = outGoTreeTableView.getSelectionModel()
+								.getFocusedIndex();
 						if (t >= 0) {
-							IOTransactionLogic tr = outGoTreeTableView.getTreeItem(t).getValue().getTransaction();
+							IOTransactionLogic tr = outGoTreeTableView
+									.getTreeItem(t).getValue().getTransaction();
 							callform(false, tr);
 						}
 					}

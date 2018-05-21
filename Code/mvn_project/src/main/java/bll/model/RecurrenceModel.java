@@ -7,7 +7,11 @@ import dal.orm.IORM;
 import java.sql.Date;
 
 /**
- * TODO
+ * RecurrenceModel class.
+ * Allows the mapping between the DAL entities and the Business Logic.
+ * Only implements the constructors, the getters and the setters.
+ *
+ * Functionality not implemented.
  *
  * @author Daniel Gonzalez Lopez
  * @version 1.0
@@ -66,7 +70,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the ID.
 	 *
 	 * @return
 	 */
@@ -76,7 +80,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the transaction ID.
 	 *
 	 * @return
 	 */
@@ -86,7 +90,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the gap.
 	 *
 	 * @return
 	 */
@@ -96,7 +100,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the next date.
 	 *
 	 * @return
 	 */
@@ -107,7 +111,7 @@ public class RecurrenceModel {
 	
 	
 	/**
-	 * TODO
+	 * Set the ID.
 	 *
 	 * @param id
 	 */
@@ -117,7 +121,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the transaction ID.
 	 *
 	 * @param transactionID
 	 */
@@ -127,7 +131,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the gap.
 	 *
 	 * @param gap
 	 */
@@ -137,7 +141,7 @@ public class RecurrenceModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the next date.
 	 *
 	 * @param nextDate
 	 */

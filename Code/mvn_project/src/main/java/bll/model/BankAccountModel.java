@@ -3,7 +3,6 @@ package bll.model;
 import bll.mappers.DAL.DALBankaccountMapper;
 import dal.irepositories.IBankaccountRepository;
 import dal.orm.IORM;
-import dal.orm.PgORM;
 
 /**
  * BankAccountModel class.

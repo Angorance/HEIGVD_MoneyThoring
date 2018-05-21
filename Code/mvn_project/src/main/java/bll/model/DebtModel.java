@@ -7,8 +7,12 @@ import dal.orm.IORM;
 import java.sql.Date;
 
 /**
+ * DebtModel class.
+ * Allows the mapping between the DAL entities and the Business Logic.
+ * Only implements the constructors, the getters and the setters.
+ *
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @version 1.2
  */
 public class DebtModel {
 	
@@ -28,6 +32,15 @@ public class DebtModel {
 	
 	protected DebtModel() {}
 	
+	/**
+	 * Construct an instance.
+	 *
+	 * @param name
+	 * @param description
+	 * @param amount
+	 * @param isIncome
+	 * @param expirationDate
+	 */
 	protected DebtModel(String name, String description, double amount,
 			boolean isIncome, Date expirationDate) {
 		
@@ -40,7 +53,7 @@ public class DebtModel {
 	
 	
 	/**
-	 * Create a transaction entry for the user into the database.
+	 * Create a debt entry for the user into the database.
 	 *
 	 * @param orm ORM instance to use.
 	 */
@@ -61,7 +74,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * Update transaction entry with new data.
+	 * Update debt entry with new data.
 	 *
 	 * @param orm ORM instance to use.
 	 */
@@ -82,7 +95,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get ID of the debt.
 	 *
 	 * @return
 	 */
@@ -92,7 +105,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get creator ID of the debt.
 	 *
 	 * @return
 	 */
@@ -102,7 +115,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get contributor ID of the debt.
 	 *
 	 * @return
 	 */
@@ -112,7 +125,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the name of the debt.
 	 *
 	 * @return
 	 */
@@ -122,7 +135,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the description of the debt.
 	 *
 	 * @return
 	 */
@@ -132,7 +145,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the amount of the debt.
 	 *
 	 * @return
 	 */
@@ -142,9 +155,9 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get whether it's an income or not.
 	 *
-	 * @return
+	 * @return True if it's an income, false otherwise.
 	 */
 	public boolean isIncome() {
 		
@@ -152,7 +165,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Get the expiration date.
 	 *
 	 * @return
 	 */
@@ -163,7 +176,7 @@ public class DebtModel {
 	
 	
 	/**
-	 * TODO
+	 * Set the ID.
 	 *
 	 * @param id
 	 */
@@ -173,7 +186,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the creator ID.
 	 *
 	 * @param creatorID
 	 */
@@ -183,7 +196,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the contributor ID.
 	 *
 	 * @param contributorID
 	 */
@@ -193,7 +206,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the name.
 	 *
 	 * @param name
 	 */
@@ -203,7 +216,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the description.
 	 *
 	 * @param description
 	 */
@@ -213,7 +226,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the amount.
 	 *
 	 * @param amount
 	 */
@@ -223,7 +236,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set whether it's an income or not.
 	 *
 	 * @param income
 	 */
@@ -233,7 +246,7 @@ public class DebtModel {
 	}
 	
 	/**
-	 * TODO
+	 * Set the expiration date.
 	 *
 	 * @param expirationDate
 	 */

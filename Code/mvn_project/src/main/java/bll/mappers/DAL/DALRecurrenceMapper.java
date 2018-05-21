@@ -8,7 +8,8 @@ import dal.entities.derby.RecurrenceDeEntity;
 import dal.entities.pgsql.RecurrencePgEntity;
 import dal.ientites.IDALRecurrenceEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a RecurrenceModel to an IDALRecurrenceEntity
@@ -62,6 +63,7 @@ public class DALRecurrenceMapper {
 	 * TODO
 	 *
 	 * @param model
+	 *
 	 * @return
 	 */
 	public static IDALRecurrenceEntity toDbo(RecurrenceModel model) {
@@ -76,12 +78,13 @@ public class DALRecurrenceMapper {
 	/**
 	 * CategoriesModel -> Derby Entities
 	 */
-	public static List<IDALRecurrenceEntity> toDbos(List<RecurrenceModel> models) {
+	public static List<IDALRecurrenceEntity> toDbos(
+			List<RecurrenceModel> models) {
 		
 		// Create the list of entities
 		List<IDALRecurrenceEntity> entities = new ArrayList<>();
 		
-		for(RecurrenceModel model : models){
+		for (RecurrenceModel model : models) {
 			entities.add(toDbo(model));
 		}
 		
@@ -103,7 +106,8 @@ public class DALRecurrenceMapper {
 		object.setId(entity.getId());
 		object.setGap(entity.getGap());
 		object.setNextDate(entity.getNextdate());
-		object.setTransaction(IOTransactionLogic.getIOTransactionByID(entity.getIotransactionId()));
+		object.setTransaction(IOTransactionLogic
+				.getIOTransactionByID(entity.getIotransactionId()));
 		
 		return object;
 	}
@@ -111,12 +115,13 @@ public class DALRecurrenceMapper {
 	/**
 	 * Entities -> RecurrencesLogic
 	 */
-	public static List<RecurrenceLogic> toBos(List<IDALRecurrenceEntity> entities) {
+	public static List<RecurrenceLogic> toBos(
+			List<IDALRecurrenceEntity> entities) {
 		
 		// Create the list of recurrences
 		List<RecurrenceLogic> objects = new ArrayList<RecurrenceLogic>();
 		
-		for(IDALRecurrenceEntity entity : entities){
+		for (IDALRecurrenceEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		

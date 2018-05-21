@@ -24,33 +24,51 @@ import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * budget form controller
  * Set up the fields in a modification scenario.
  * Create/Edit a budget
+ *
  * @author Bryan Curchod
  * @version 1.3
  */
 public class Controller_formBudget implements IForm, Initializable {
 	
-	@FXML private JFXTextField txtName;
-	@FXML private JFXTextField txtCeiling;
-	@FXML private JFXComboBox<CategoryLogic> cmbCategorySelect;
-	@FXML private JFXCheckBox chbIsRegular;
-	@FXML private JFXComboBox<Periode> cmbPeriode;
-	@FXML private JFXComboBox<ClientModel> cbbUser;
-	@FXML private FlowPane paneCategoryList;
-	@FXML private FlowPane paneUserList;
-	@FXML private JFXButton btnCancel;
-	@FXML private JFXButton btnValidation;
-	@FXML private JFXButton btnDelete;
-	@FXML private Label label_beginDate;
-	@FXML private Label label_endDate;
-	@FXML private JFXDatePicker beginDate;
-	@FXML private JFXDatePicker lastDate;
-	@FXML private JFXCheckBox checkShare;
+	@FXML
+	private JFXTextField txtName;
+	@FXML
+	private JFXTextField txtCeiling;
+	@FXML
+	private JFXComboBox<CategoryLogic> cmbCategorySelect;
+	@FXML
+	private JFXCheckBox chbIsRegular;
+	@FXML
+	private JFXComboBox<Periode> cmbPeriode;
+	@FXML
+	private JFXComboBox<ClientModel> cbbUser;
+	@FXML
+	private FlowPane paneCategoryList;
+	@FXML
+	private FlowPane paneUserList;
+	@FXML
+	private JFXButton btnCancel;
+	@FXML
+	private JFXButton btnValidation;
+	@FXML
+	private JFXButton btnDelete;
+	@FXML
+	private Label label_beginDate;
+	@FXML
+	private Label label_endDate;
+	@FXML
+	private JFXDatePicker beginDate;
+	@FXML
+	private JFXDatePicker lastDate;
+	@FXML
+	private JFXCheckBox checkShare;
 	
 	private BudgetLogic budget;
 	private IController parent;
@@ -74,7 +92,8 @@ public class Controller_formBudget implements IForm, Initializable {
 			periode = p;
 		}
 		
-		@Override public String toString() {
+		@Override
+		public String toString() {
 			
 			return nom;
 		}
@@ -99,7 +118,8 @@ public class Controller_formBudget implements IForm, Initializable {
 		JFXButton btnDelete = new JFXButton("X");
 		
 		/**
-		 * set the label and the style of the HBox according to a CategoryLogic Object
+		 * set the label and the style of the HBox according to a CategoryLogic
+		 * Object
 		 *
 		 * @param c CategoryObject to display
 		 */
@@ -142,7 +162,8 @@ public class Controller_formBudget implements IForm, Initializable {
 		 */
 		public String toRGBCode(Color color) {
 			
-			return String.format("#%02X%02X%02X", (int) (color.getRed() * 255), (int) (color.getGreen() * 255),
+			return String.format("#%02X%02X%02X", (int) (color.getRed() * 255),
+					(int) (color.getGreen() * 255),
 					(int) (color.getBlue() * 255));
 		}
 	}
@@ -169,7 +190,8 @@ public class Controller_formBudget implements IForm, Initializable {
 			// styling
 			this.getChildren().addAll(lblUsername, btnRemove);
 			this.setPadding(new Insets(5));
-			this.setStyle("-fx-background-color: #e2e2e2; -fx-background-radius: 20");
+			this.setStyle(
+					"-fx-background-color: #e2e2e2; -fx-background-radius: 20");
 			this.setAlignment(Pos.CENTER);
 			setMargin(btnRemove, new Insets(0, 0, 0, 15));
 			
@@ -194,14 +216,17 @@ public class Controller_formBudget implements IForm, Initializable {
 	 *
 	 * @param event called event property
 	 */
-	@Override public void formValidation(ActionEvent event) {
+	@Override
+	public void formValidation(ActionEvent event) {
 		
 		
-		if(checkValidInput()) {
+		if (checkValidInput()) {
 			
 			// we gather the user input
 			String name = txtName.getText();
-			double amount = Utility.truncateDouble(Double.parseDouble(txtCeiling.getText()), 2);
+			double amount = Utility
+					.truncateDouble(Double.parseDouble(txtCeiling.getText()),
+							2);
 			LocalDate begin;
 			LocalDate last;
 			boolean rec = chbIsRegular.isSelected();
@@ -216,7 +241,8 @@ public class Controller_formBudget implements IForm, Initializable {
 			int gap = 0;
 			if (chbIsRegular.isSelected()) {
 				begin = LocalDate.now();
-				last = LocalDate.now().plusDays(cmbPeriode.getValue().getPeriode());
+				last = LocalDate.now()
+						.plusDays(cmbPeriode.getValue().getPeriode());
 				gap = cmbPeriode.getValue().getPeriode();
 				
 			} else {
@@ -227,12 +253,17 @@ public class Controller_formBudget implements IForm, Initializable {
 			//
 			if (budget == null) {
 				
-				budget = new BudgetLogic(name, amount, shared, rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last), gap, listCategorie, listUser);
+				budget = new BudgetLogic(name, amount, shared, rec,
+						java.sql.Date.valueOf(begin),
+						java.sql.Date.valueOf(last), gap, listCategorie,
+						listUser);
 				parent.createItem(budget);
 			} else {
 				
-				budget.update(name, amount, shared, rec, java.sql.Date.valueOf(begin), java.sql.Date.valueOf(last), gap,
-						listCategorie, listUser);
+				budget.update(name, amount, shared, rec,
+						java.sql.Date.valueOf(begin),
+						java.sql.Date.valueOf(last), gap, listCategorie,
+						listUser);
 				parent.modifyItem(budget);
 			}
 		}
@@ -241,42 +272,45 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * check if the user's input are acceptable
+	 *
 	 * @return true if conditions are fulfilled
 	 */
-	private boolean checkValidInput(){
+	private boolean checkValidInput() {
+		
 		String name = txtName.getText();
 		String amount = txtCeiling.getText();
 		LocalDate begin = beginDate.getValue();
 		LocalDate last = lastDate.getValue();
 		boolean check = true;
-		if(name.isEmpty()){
+		if (name.isEmpty()) {
 			check = false;
 			txtName.setStyle("-jfx-unfocus-color: red;");
 		}
 		
-		if(amount.isEmpty() && !Utility.isDouble(amount)){
+		if (amount.isEmpty() && !Utility.isDouble(amount)) {
 			check = false;
 			txtCeiling.setStyle("-jfx-unfocus-color: red;");
 			
 		}
 		
-		if(begin == null){
+		if (begin == null) {
 			check = false;
 			beginDate.setStyle("-jfx-default-color: red;");
 		}
 		
-		if(last == null){
+		if (last == null) {
 			check = false;
 			lastDate.setStyle("-jfx-default-color: red;");
 		}
 		
-		if(( begin != null && begin.equals(last))|| ( last != null && last.isBefore(begin))){
+		if ((begin != null && begin.equals(last)) || (last != null && last
+				.isBefore(begin))) {
 			check = false;
 			beginDate.setStyle("-jfx-default-color: red;");
 			lastDate.setStyle("-jfx-default-color: red;");
 		}
 		
-		if(checkShare.isSelected() && listUser.isEmpty()){
+		if (checkShare.isSelected() && listUser.isEmpty()) {
 			check = false;
 			paneUserList.setStyle("-fx-border-color: red");
 		}
@@ -286,22 +320,28 @@ public class Controller_formBudget implements IForm, Initializable {
 	
 	/**
 	 * cancel the operation and return to the caller
+	 *
 	 * @param event called event property
 	 */
-	@Override public void formCancel(ActionEvent event) {
+	@Override
+	public void formCancel(ActionEvent event) {
 		
 		parent.createItem(null);
 	}
 	
 	/**
-	 * Called to initialize a controller after its root element has been completely processed.
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
 	 * set the form behavior
 	 *
-	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
 	 * 		known.
-	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		LocalDate begin = beginDate.getValue();
 		LocalDate last = lastDate.getValue();
@@ -337,9 +377,9 @@ public class Controller_formBudget implements IForm, Initializable {
 		}
 		
 		
-		
 		// gather every client except the current user for the combo box
-		ObservableList<ClientModel> UserItem = FXCollections.observableArrayList();
+		ObservableList<ClientModel> UserItem = FXCollections
+				.observableArrayList();
 		for (ClientModel u : ClientLogic.getInstance().getAllUsers()) {
 			if (u.getId() != ClientLogic.getInstance().getId()) {
 				UserItem.add(u);
@@ -358,14 +398,16 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 		
 		// set the available category in the comboBox
-		ObservableList<CategoryLogic> CatItems = FXCollections.observableArrayList();
+		ObservableList<CategoryLogic> CatItems = FXCollections
+				.observableArrayList();
 		CatItems.addAll(ClientLogic.getInstance().getCategories());
 		
 		cmbCategorySelect.setItems(CatItems);
 		cmbCategorySelect.setOnAction(event -> {
 			CategoryLogic selected = cmbCategorySelect.getValue();
 			if (selected != null && !listCategorie.contains(selected)) {
-				paneCategoryList.getChildren().add(new CategoryDisplayer(selected));
+				paneCategoryList.getChildren()
+						.add(new CategoryDisplayer(selected));
 				listCategorie.add(selected);
 			}
 		});
@@ -401,14 +443,18 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 		txtName.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
+				
 				txtName.setStyle("-jfx-unfocus-color: black;");
 			}
 		});
 		
 		txtCeiling.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
+				
 				txtCeiling.setStyle("-jfx-unfocus-color: black;");
 			}
 		});
@@ -416,7 +462,8 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 		beginDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				beginDate.setStyle("-jfx-default-color: green;");
 			}
@@ -424,14 +471,15 @@ public class Controller_formBudget implements IForm, Initializable {
 		
 		lastDate.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				lastDate.setStyle("-jfx-default-color: green;");
 			}
 		});
 		
 		// disable the shared budget in offline mode
-		if(!ClientLogic.getInstance().isOnline()){
+		if (!ClientLogic.getInstance().isOnline()) {
 			checkShare.setDisable(true);
 			checkShare.setSelected(false);
 			cbbUser.setDisable(true);

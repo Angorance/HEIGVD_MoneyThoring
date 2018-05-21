@@ -5,7 +5,8 @@ import dal.irepositories.*;
 
 /**
  * IORM interface.
- * the interface who use all repositories, handle the session andtransaction into each repositories
+ * the interface who use all repositories, handle the session andtransaction
+ * into each repositories
  *
  * @author Guillaume Zaretti
  * @version 1.2

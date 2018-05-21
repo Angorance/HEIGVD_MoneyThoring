@@ -5,6 +5,8 @@ package gui.controller;
  * @authors Bryan Curchod
  */
 public interface IWindow {
+	
 	void hide();
+	
 	void show();
 }

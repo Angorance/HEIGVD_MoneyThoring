@@ -5,6 +5,7 @@ import dal.ientites.IDALClientEntity;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -14,10 +15,10 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.codec.binary.Base64;
-
 /**
- * TODO
+ * Class Authentication
+ * Implements methods for checking credentials on databases.
+ * Implements method to hash passwords and generate salt.
  *
  * @author Daniel Gonzalez Lopez
  * @version 2.0
@@ -176,6 +177,11 @@ public class Authentication {
 		return isCorrect;
 	}
 	
+	/**
+	 * Generate random salt for more secure password hashing.
+	 *
+	 * @return String value of the salt generated.
+	 */
 	private static String saltGenerator() {
 		
 		byte[] salt = new byte[16];
@@ -188,6 +194,17 @@ public class Authentication {
 		return salty;
 	}
 	
+	/**
+	 * Hash the password using the given salt.
+	 *
+	 * @param password Password to hash.
+	 * @param salt Salt given.
+	 *
+	 * @return Hashed password.
+	 *
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String hash(String password, String salt)
 			throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		
@@ -199,6 +216,16 @@ public class Authentication {
 		return hashed;
 	}
 	
+	/**
+	 * Hash the password with a new generated salt.
+	 *
+	 * @param password Password to hash.
+	 *
+	 * @return Hashed password.
+	 *
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String hash(String password)
 			throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		
@@ -207,6 +234,9 @@ public class Authentication {
 		return hash(password, salt);
 	}
 	
+	/**
+	 * Disconnect the user.
+	 */
 	public static void disconnect() {
 		
 		ClientLogic.getInstance().wipe();

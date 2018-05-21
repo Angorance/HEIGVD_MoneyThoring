@@ -14,9 +14,10 @@ public class HibernateUtil {
 	
 	private static SessionFactory pgSessionFactory = null;
 	private static SessionFactory derbySessionFactory = null;
-
+	
 	/**
 	 * build a new pg session factory
+	 *
 	 * @return sessionFactory
 	 */
 	private static SessionFactory buildPGSessionFactory() {
@@ -28,9 +29,10 @@ public class HibernateUtil {
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
-
+	
 	/**
 	 * build a new derbyy session factory
+	 *
 	 * @return sessionFactory
 	 */
 	private static SessionFactory buildDeSessionFactory() {
@@ -42,9 +44,10 @@ public class HibernateUtil {
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
-
+	
 	/**
 	 * get a singelton postgres SessionFactory
+	 *
 	 * @return SessionFactory
 	 */
 	public static SessionFactory getPGSessionFactory() {
@@ -54,9 +57,10 @@ public class HibernateUtil {
 		}
 		return pgSessionFactory;
 	}
-
+	
 	/**
 	 * get a singelton derby SessionFactory
+	 *
 	 * @return SessionFactory
 	 */
 	public static SessionFactory getDeSessionFactory() {

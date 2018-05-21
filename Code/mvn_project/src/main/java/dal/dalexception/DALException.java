@@ -1,12 +1,14 @@
 package dal.dalexception;
 
 /**
- * Thrown to indicate that the dal problem.<p>
+ * Thrown to indicate that the dal has a problem.
+ * DALException handling dal exception.
+ *
  * @author Guillaume zaretti
  * @version 1.2
- * DALException handling dal exception
  */
 public class DALException extends Exception {
+	
 	/**
 	 * Constructs an DALException with no detail message.
 	 */
@@ -14,7 +16,7 @@ public class DALException extends Exception {
 		
 		super();
 	}
-
+	
 	/**
 	 * Constructs an DALException with the specified
 	 * detail message.
@@ -25,7 +27,7 @@ public class DALException extends Exception {
 		
 		super(message);
 	}
-
+	
 	/**
 	 * Constructs a new DALException with the specified detail message and
 	 * cause.
@@ -34,18 +36,18 @@ public class DALException extends Exception {
 	 * <i>not</i> automatically incorporated in this exception's detail
 	 * message.
 	 *
-	 * @param  message the detail message (which is saved for later retrieval
-	 *         by the {@link Throwable#getMessage()} method).
-	 * @param  cause the cause (which is saved for later retrieval by the
-	 *         {@link Throwable#getCause()} method).  (A <tt>null</tt> value
-	 *         is permitted, and indicates that the cause is nonexistent or
-	 *         unknown.)
+	 * @param message the detail message (which is saved for later retrieval
+	 * 		by the {@link Throwable#getMessage()} method).
+	 * @param cause the cause (which is saved for later retrieval by the
+	 * 		{@link Throwable#getCause()} method).  (A <tt>null</tt> value
+	 * 		is permitted, and indicates that the cause is nonexistent or
+	 * 		unknown.)
 	 */
 	public DALException(String message, Throwable cause) {
 		
 		super(message, cause);
 	}
-
+	
 	/**
 	 * Constructs a new DALException with the specified cause and a detail
 	 * message of <tt>(cause==null ? null : cause.toString())</tt> (which
@@ -54,11 +56,12 @@ public class DALException extends Exception {
 	 * wrappers for other throwables (for example, {@link
 	 * java.security.PrivilegedActionException}).
 	 *
-	 * @param  cause the cause (which is saved for later retrieval by the
-	 *         {@link Throwable#getCause()} method).  (A <tt>null</tt> value is
-	 *         permitted, and indicates that the cause is nonexistent or
-	 *         unknown.)
-	 * @since  1.5
+	 * @param cause the cause (which is saved for later retrieval by the
+	 * 		{@link Throwable#getCause()} method).  (A <tt>null</tt> value is
+	 * 		permitted, and indicates that the cause is nonexistent or
+	 * 		unknown.)
+	 *
+	 * @since 1.5
 	 */
 	public DALException(Throwable cause) {
 		

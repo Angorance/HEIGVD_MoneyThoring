@@ -26,7 +26,8 @@ public class ClientModel {
 	private boolean isActivated;
 	
 	
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		
 		return username;
 	}
@@ -50,10 +51,10 @@ public class ClientModel {
 			orm.commit();
 			
 		} catch (Exception e) {
+			
+			// FIXME - When there's an exception, GUI shows success message...
 			e.printStackTrace();
 		}
-		
-		// TODO - Si exception, la création de l'user a foiré !!!
 	}
 	
 	/**

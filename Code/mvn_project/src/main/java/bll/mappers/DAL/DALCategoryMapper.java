@@ -7,7 +7,8 @@ import dal.entities.derby.CategoryDeEntity;
 import dal.entities.pgsql.CategoryPgEntity;
 import dal.ientites.IDALCategoryEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a CategoryModel to an IDALCategoryEntity
@@ -63,6 +64,7 @@ public class DALCategoryMapper {
 	 * TODO
 	 *
 	 * @param model
+	 *
 	 * @return
 	 */
 	public static IDALCategoryEntity toDbo(CategoryModel model) {
@@ -82,7 +84,7 @@ public class DALCategoryMapper {
 		// Create the list of entities
 		List<IDALCategoryEntity> entities = new ArrayList<IDALCategoryEntity>();
 		
-		for(CategoryModel model : models){
+		for (CategoryModel model : models) {
 			entities.add(toDbo(model));
 		}
 		
@@ -118,7 +120,7 @@ public class DALCategoryMapper {
 		// Create the list of categories
 		List<CategoryLogic> objects = new ArrayList<CategoryLogic>();
 		
-		for(IDALCategoryEntity entity : entities){
+		for (IDALCategoryEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		

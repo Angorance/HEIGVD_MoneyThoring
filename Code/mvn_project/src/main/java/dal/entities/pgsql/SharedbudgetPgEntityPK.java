@@ -12,7 +12,8 @@ import java.util.Objects;
  * @version 1.2
  * @see IDALSharedbudgetEntityPK
  */
-public class SharedbudgetPgEntityPK implements Serializable, IDALSharedbudgetEntityPK {
+public class SharedbudgetPgEntityPK
+		implements Serializable, IDALSharedbudgetEntityPK {
 	
 	private int clientId;
 	private int budgetId;

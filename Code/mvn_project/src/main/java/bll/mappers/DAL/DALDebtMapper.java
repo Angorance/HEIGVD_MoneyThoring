@@ -7,13 +7,13 @@ import bll.model.DebtModel;
 import dal.dalexception.DALException;
 import dal.entities.derby.DebtDeEntity;
 import dal.entities.pgsql.DebtPgEntity;
-import dal.ientites.IDALClientEntity;
 import dal.ientites.IDALDebtEntity;
 import dal.irepositories.IClientRepository;
 import dal.orm.IORM;
 import dal.orm.MasterORM;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a DebtModel to an IDALDebtEntity
@@ -67,7 +67,8 @@ public class DALDebtMapper {
 		derbyEntity.setIsincome(model.isIncome());
 		derbyEntity.setExpirationdate(model.getExpirationDate());
 		derbyEntity.setClientId(model.getCreatorID());             //TODO - INT?
-		derbyEntity.setClientId1(model.getContributorID());        //TODO - INTEGER??
+		derbyEntity.setClientId1(
+				model.getContributorID());        //TODO - INTEGER??
 		
 		return derbyEntity;
 	}
@@ -76,6 +77,7 @@ public class DALDebtMapper {
 	 * TODO
 	 *
 	 * @param model
+	 *
 	 * @return
 	 */
 	public static IDALDebtEntity toDbo(DebtModel model) {
@@ -95,7 +97,7 @@ public class DALDebtMapper {
 		// Create the list of entities
 		List<IDALDebtEntity> entities = new ArrayList<>();
 		
-		for(DebtModel model : models){
+		for (DebtModel model : models) {
 			entities.add(toDbo(model));
 		}
 		
@@ -132,10 +134,12 @@ public class DALDebtMapper {
 			IClientRepository repo = orm.getClientRepository();
 			
 			if (entity.getClientId1() != null) {
-				contributor = DALClientMapper.toClientModel(repo.getClient(entity.getClientId1()));
+				contributor = DALClientMapper
+						.toClientModel(repo.getClient(entity.getClientId1()));
 			}
 			
-			creator = DALClientMapper.toClientModel(repo.getClient(entity.getClientId()));
+			creator = DALClientMapper
+					.toClientModel(repo.getClient(entity.getClientId()));
 			
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -155,7 +159,7 @@ public class DALDebtMapper {
 		// Create the list of debts
 		List<DebtLogic> objects = new ArrayList<DebtLogic>();
 		
-		for(IDALDebtEntity entity : entities){
+		for (IDALDebtEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		

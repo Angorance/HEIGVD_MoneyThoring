@@ -3,22 +3,35 @@ package bll.logic;
 import bll.mappers.DAL.DALCategoryBudgetMapper;
 import bll.mappers.DAL.DALClientMapper;
 import bll.mappers.DAL.DALSharedBudgetMapper;
-import bll.model.*;
+import bll.model.BudgetModel;
+import bll.model.CategoryBudgetModel;
+import bll.model.ClientModel;
+import bll.model.SharedBudgetModel;
 import dal.dalexception.DALException;
 import dal.ientites.IDALCategoriesbudgetEntity;
 import dal.ientites.IDALClientEntity;
 import dal.ientites.IDALSharedbudgetEntity;
-import dal.irepositories.*;
-import dal.orm.*;
+import dal.irepositories.IBudgetRepository;
+import dal.irepositories.ICategoriesBudgetRepository;
+import dal.irepositories.ISharedBudgetRepository;
+import dal.orm.IORM;
+import dal.orm.MasterORM;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * TODO
+ * BudgetLogic class.
+ * Implements the business logic of the BudgetModel and the SharedBudgetModel.
+ * Implements methods to create, change and delete budgets and some
+ * methods concerning categories and / or linked users.
+ * Before changing these attributes, the methods check their integrity
+ * to avoid data problems.
  *
  * @author Daniel Gonzalez Lopez
- * @version 1.0
+ * @author Héléna Line Reymond
+ * @version 2.0
  */
 public class BudgetLogic extends BudgetModel {
 	
@@ -28,34 +41,56 @@ public class BudgetLogic extends BudgetModel {
 	// Clients of the shared budget
 	private ArrayList<ClientModel> clients = new ArrayList<>();
 	
+	/**
+	 * Construct an instance and link the budget to the user instance.
+	 */
 	public BudgetLogic() {
 		
 		ClientLogic.getInstance().addBudget(this);
 	}
 	
-	@Override
-	public String toString(){
-		return this.getName();
-	}
-	
-	public BudgetLogic(String name, double amount, boolean isShared, boolean isRecurrent, Date startingDate,
-			Date endingDate, int gap, ArrayList<CategoryLogic> categoryList, ArrayList<ClientModel> clientList) {
+	/**
+	 * Construct an instance of budget. Link it to the user instance and create
+	 * the entry in the database.
+	 *
+	 * @param name
+	 * @param amount
+	 * @param isShared Whether the budget is shared or not
+	 * @param isRecurrent (Not implemented, always false)
+	 * @param startingDate
+	 * @param endingDate
+	 * @param gap (for recurrence, not used for now)
+	 * @param categoryList
+	 * @param clientList
+	 */
+	public BudgetLogic(String name, double amount, boolean isShared,
+			boolean isRecurrent, Date startingDate, Date endingDate, int gap,
+			ArrayList<CategoryLogic> categoryList,
+			ArrayList<ClientModel> clientList) {
 		
-		super(name, amount, isShared, isRecurrent, startingDate, endingDate, gap);
+		super(name, amount, isShared, isRecurrent, startingDate, endingDate,
+				gap);
+		
 		setCategoriesBudget(categoryList);
 		
-		if(isShared()) {
+		if (isShared()) {
 			setClientsBudget(clientList);
 		}
 		
 		ClientLogic.getInstance().addBudget(this);
 		
+		// Get the instance of the ORM
 		IORM orm = MasterORM.getInstance().getORM();
 		
+		// Create the budget in the database
 		createBudget(orm);
+		
+		// Update the categories <-> budget list table in the database.
 		updateCategoriesBudget(orm);
 		
 		if (isShared()) {
+			
+			// Update the users <-> budget list table in database.
 			updateClientsBudget(orm);
 		}
 	}
@@ -63,9 +98,10 @@ public class BudgetLogic extends BudgetModel {
 	/**
 	 * Update the budget.
 	 */
-	public void update(String name, double amount, boolean isShared, boolean isRecurrent,
-			Date startingDate, Date endingDate, int gap, ArrayList<CategoryLogic> categoryList
-			, ArrayList<ClientModel> clientList) {
+	public void update(String name, double amount, boolean isShared,
+			boolean isRecurrent, Date startingDate, Date endingDate, int gap,
+			ArrayList<CategoryLogic> categoryList,
+			ArrayList<ClientModel> clientList) {
 		
 		setName(name);
 		setAmount(amount);
@@ -76,23 +112,29 @@ public class BudgetLogic extends BudgetModel {
 		setGap(gap);
 		setCategoriesBudget(categoryList);
 		
-		if(isShared()) {
+		if (isShared()) {
 			setClientsBudget(clientList);
 		}
 		
 		IORM orm = MasterORM.getInstance().getORM();
 		
+		// Update the budget in the database
 		updateBudget(orm);
+		
+		// Update the categories <-> budget list table in the database.
 		updateCategoriesBudget(orm);
 		
 		if (isShared()) {
+			
+			// Update the users <-> budget list table in database.
 			updateClientsBudget(orm);
 		}
 	}
 	
 	/**
 	 * Remove the budget from the database only if the budget isn't shared.
-	 * Otherwise change the creator or remove the link between the client and the budget.
+	 * Otherwise change the creator or remove the link between the client and
+	 * the budget.
 	 */
 	public void supp() {
 		
@@ -106,28 +148,30 @@ public class BudgetLogic extends BudgetModel {
 			// Delete the budget if it isn't shared
 			// Or
 			// It is shared, but there is only the creator working on it
-			if(!isShared() || (isShared() && getClientID() == ClientLogic.getInstance().getId() && clients.isEmpty())) {
+			if (!isShared() || (isShared() && getClientID() == ClientLogic
+					.getInstance().getId() && clients.isEmpty())) {
 				repo.delete(getId());
-			}
-			else {
+			} else {
 				
 				ISharedBudgetRepository repoS = orm.getSharedBudgetRepository();
 				
 				// If the client is the creator
 				// Change the creator
-				if(getClientID() == ClientLogic.getInstance().getId()) {
+				if (getClientID() == ClientLogic.getInstance().getId()) {
 					
 					ClientModel newCreator = clients.get(0);
 					setClientID(newCreator.getId());
 					
 					// Remove the link between the new creator and the budget
-					IDALSharedbudgetEntity sb = repoS.getSharedbudget(newCreator.getId(), getId());
+					IDALSharedbudgetEntity sb = repoS
+							.getSharedbudget(newCreator.getId(), getId());
 					repoS.delete(sb);
-				}
-				else {
+				} else {
 					
 					// Remove the link between the client and the budget
-					IDALSharedbudgetEntity sb = repoS.getSharedbudget(ClientLogic.getInstance().getId(), getId());
+					IDALSharedbudgetEntity sb = repoS
+							.getSharedbudget(ClientLogic.getInstance().getId(),
+									getId());
 					clients.remove(ClientLogic.getInstance());
 					repoS.delete(sb);
 				}
@@ -149,7 +193,7 @@ public class BudgetLogic extends BudgetModel {
 	/**
 	 * Get the creator of the budget.
 	 *
-	 * @return  creator of the budget.
+	 * @return creator of the budget.
 	 */
 	public ClientModel getCreator() {
 		
@@ -159,7 +203,8 @@ public class BudgetLogic extends BudgetModel {
 		try {
 			orm.beginTransaction();
 			
-			IDALClientEntity creatorEntity = orm.getClientRepository().getClient(getClientID());
+			IDALClientEntity creatorEntity = orm.getClientRepository()
+					.getClient(getClientID());
 			creator = DALClientMapper.toClientModel(creatorEntity);
 			
 		} catch (DALException e) {
@@ -168,6 +213,7 @@ public class BudgetLogic extends BudgetModel {
 		
 		return creator;
 	}
+	
 	/**
 	 * Get the categories of the budget.
 	 *
@@ -197,7 +243,7 @@ public class BudgetLogic extends BudgetModel {
 		
 		categories.clear();
 		
-		for(CategoryLogic cat : categoryList) {
+		for (CategoryLogic cat : categoryList) {
 			categories.add(cat);
 		}
 	}
@@ -211,7 +257,7 @@ public class BudgetLogic extends BudgetModel {
 		
 		clients.clear();
 		
-		for(ClientModel client : clientList) {
+		for (ClientModel client : clientList) {
 			clients.add(client);
 		}
 	}
@@ -222,6 +268,7 @@ public class BudgetLogic extends BudgetModel {
 	 * @param category category to remove.
 	 */
 	public void removeCategory(CategoryLogic category) {
+		
 		categories.remove(category);
 	}
 	
@@ -233,15 +280,17 @@ public class BudgetLogic extends BudgetModel {
 		try {
 			orm.beginTransaction();
 			
-			ICategoriesBudgetRepository repo = orm.getCategoriesBudgetRepository();
+			ICategoriesBudgetRepository repo = orm
+					.getCategoriesBudgetRepository();
 			
 			// Delete CategoriesBudget for the id of the budget
 			repo.delete(getId());
 			
 			// Add the new CategoriesBudget list
-			for(CategoryLogic category : categories) {
+			for (CategoryLogic category : categories) {
 				
-				CategoryBudgetModel cat = new CategoryBudgetModel(category.getId(), getId());
+				CategoryBudgetModel cat = new CategoryBudgetModel(
+						category.getId(), getId());
 				repo.addCategoriesBudget(DALCategoryBudgetMapper.toDbo(cat));
 			}
 			
@@ -266,9 +315,10 @@ public class BudgetLogic extends BudgetModel {
 			repo.delete(getId());
 			
 			// Add the new SharedBudget list
-			for(ClientModel client : clients) {
+			for (ClientModel client : clients) {
 				
-				SharedBudgetModel cl = new SharedBudgetModel(client.getId(), getId());
+				SharedBudgetModel cl = new SharedBudgetModel(client.getId(),
+						getId());
 				repo.addSharedbudget(DALSharedBudgetMapper.toDboPG(cl));
 			}
 			
@@ -283,11 +333,12 @@ public class BudgetLogic extends BudgetModel {
 	 * Update the categories and the clients of the budget from the DB.
 	 */
 	protected void setDataFromDB(IORM orm) {
-
+		
 		try {
 			
 			// Get the categories of the budget
-			List<IDALCategoriesbudgetEntity> cb = orm.getCategoriesBudgetRepository()
+			List<IDALCategoriesbudgetEntity> cb = orm
+					.getCategoriesBudgetRepository()
 					.getCategoriesBudgetByBudget(getId());
 			
 			for (CategoryBudgetModel b : DALCategoryBudgetMapper.toBos(cb)) {
@@ -295,11 +346,15 @@ public class BudgetLogic extends BudgetModel {
 			}
 			
 			// Get the clients of the shared budget
-			if(isShared()) {
-				List<IDALSharedbudgetEntity> sb = orm.getSharedBudgetRepository().getSharedbudgetByBudget(getId());
+			if (isShared()) {
+				List<IDALSharedbudgetEntity> sb = orm
+						.getSharedBudgetRepository()
+						.getSharedbudgetByBudget(getId());
 				
 				for (SharedBudgetModel s : DALSharedBudgetMapper.toBos(sb)) {
-					ClientModel c = DALClientMapper.toClientModel(orm.getClientRepository().getClient(s.getClientID()));
+					ClientModel c = DALClientMapper.toClientModel(
+							orm.getClientRepository()
+									.getClient(s.getClientID()));
 					clients.add(c);
 				}
 			}
@@ -307,5 +362,16 @@ public class BudgetLogic extends BudgetModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Get a representation of the budget (its name)
+	 *
+	 * @return String representing the budget.
+	 */
+	@Override
+	public String toString() {
+		
+		return this.getName();
 	}
 }

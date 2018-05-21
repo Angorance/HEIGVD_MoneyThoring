@@ -11,7 +11,8 @@ import org.hibernate.cfg.Configuration;
 
 /**
  * DerbyORM classe.
- * the classe who use all repositories, handle the session andtransaction into each repositories
+ * the classe who use all repositories, handle the session andtransaction into
+ * each repositories
  *
  * @author Guillaume Zaretti
  * @version 1.2
@@ -114,8 +115,9 @@ public class DerbyORM implements IORM {
 	 */
 	@Override
 	public ICategoriesBudgetRepository getCategoriesBudgetRepository() {
-
-		categoriesBudgetReposisoty = new CategoryBudgetDeRepository(session, transaction);
+		
+		categoriesBudgetReposisoty = new CategoryBudgetDeRepository(session,
+				transaction);
 		return categoriesBudgetReposisoty;
 	}
 	

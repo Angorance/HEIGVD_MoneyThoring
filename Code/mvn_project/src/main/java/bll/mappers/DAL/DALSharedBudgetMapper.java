@@ -4,7 +4,8 @@ import bll.model.SharedBudgetModel;
 import dal.entities.pgsql.SharedbudgetPgEntity;
 import dal.ientites.IDALSharedbudgetEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class used to map a SharedBudgetModel to an IDALSharedbudgetEntity
@@ -53,12 +54,13 @@ public class DALSharedBudgetMapper {
 	/**
 	 * Entities -> SharedBudgetsModel
 	 */
-	public static List<SharedBudgetModel> toBos(List<IDALSharedbudgetEntity> entities) {
+	public static List<SharedBudgetModel> toBos(
+			List<IDALSharedbudgetEntity> entities) {
 		
 		// Create the list of entries
 		List<SharedBudgetModel> objects = new ArrayList<SharedBudgetModel>();
 		
-		for(IDALSharedbudgetEntity entity : entities){
+		for (IDALSharedbudgetEntity entity : entities) {
 			objects.add(toBo(entity));
 		}
 		
@@ -68,12 +70,14 @@ public class DALSharedBudgetMapper {
 	/**
 	 * SharedBudgetsModel -> PostgreSQL Entities
 	 */
-	public static List<IDALSharedbudgetEntity> toDbosPG(List<SharedBudgetModel> models) {
+	public static List<IDALSharedbudgetEntity> toDbosPG(
+			List<SharedBudgetModel> models) {
 		
 		// Create the list of entities
-		List<IDALSharedbudgetEntity> entities = new ArrayList<IDALSharedbudgetEntity>();
+		List<IDALSharedbudgetEntity> entities
+				= new ArrayList<IDALSharedbudgetEntity>();
 		
-		for(SharedBudgetModel model : models){
+		for (SharedBudgetModel model : models) {
 			entities.add(toDboPG(model));
 		}
 		

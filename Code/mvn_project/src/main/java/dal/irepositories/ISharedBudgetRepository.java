@@ -90,10 +90,12 @@ public interface ISharedBudgetRepository {
 	public List<IDALSharedbudgetEntity> getSharedbudgetByBudget(int budget_id)
 			throws DALException;
 	
-    /**
-     * delete all SharedBudget
-     * @param budget_id  ID of the budget.
-     * @throws DALException
-     */
-    public void delete(int budget_id) throws DALException;
+	/**
+	 * delete all SharedBudget
+	 *
+	 * @param budget_id ID of the budget.
+	 *
+	 * @throws DALException
+	 */
+	public void delete(int budget_id) throws DALException;
 }

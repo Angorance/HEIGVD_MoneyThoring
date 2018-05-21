@@ -11,37 +11,44 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class Controller_formTransaction implements Initializable, IForm {
 	
-	@FXML private JFXTextField name;
-	@FXML private JFXTextField amount;
+	@FXML
+	private JFXTextField name;
+	@FXML
+	private JFXTextField amount;
 	//@FXML private JFXComboBox<String> time;
 	//@FXML private JFXCheckBox recurrence;
-	@FXML private JFXComboBox<BankAccountLogic> bankAccount;
-	@FXML private JFXComboBox<CategoryLogic> category;
-	@FXML private JFXButton returnButton;
-	@FXML private JFXButton accepteButton;
-	@FXML private JFXButton deleteButton;
-	@FXML private JFXDatePicker datePicker;
-	@FXML private JFXCheckBox checkSharedBudget;
-	@FXML private JFXComboBox<BudgetLogic> cbxBudgets;
+	@FXML
+	private JFXComboBox<BankAccountLogic> bankAccount;
+	@FXML
+	private JFXComboBox<CategoryLogic> category;
+	@FXML
+	private JFXButton returnButton;
+	@FXML
+	private JFXButton accepteButton;
+	@FXML
+	private JFXButton deleteButton;
+	@FXML
+	private JFXDatePicker datePicker;
+	@FXML
+	private JFXCheckBox checkSharedBudget;
+	@FXML
+	private JFXComboBox<BudgetLogic> cbxBudgets;
 	
 	private IController controller;
 	private boolean isIncome;
 	private IOTransactionLogic tr;
 	private BudgetLogic bl;
 	
-	public Controller_formTransaction(IController controller, boolean isIncome, IOTransactionLogic tr) {
+	public Controller_formTransaction(IController controller, boolean isIncome,
+			IOTransactionLogic tr) {
 		
 		this.controller = controller;
 		this.isIncome = isIncome;
@@ -53,7 +60,9 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 *
 	 * @param event
 	 */
-	@FXML @Override public void formCancel(ActionEvent event) {
+	@FXML
+	@Override
+	public void formCancel(ActionEvent event) {
 		
 		controller.createItem(null);
 	}
@@ -63,14 +72,17 @@ public class Controller_formTransaction implements Initializable, IForm {
 	 *
 	 * @param event
 	 */
-	@FXML @Override public void formValidation(ActionEvent event) {
+	@FXML
+	@Override
+	public void formValidation(ActionEvent event) {
 		
 		if (checkValidInput()) {
 			/*name of transaction*/
 			String nameText = name.getText();
 			
 			/*transaction amount*/
-			double amountDouble = Math.abs(Utility.truncateDouble(Double.parseDouble(amount.getText()), 2));
+			double amountDouble = Math.abs(Utility
+					.truncateDouble(Double.parseDouble(amount.getText()), 2));
 			amountDouble = isIncome ? amountDouble : amountDouble * (-1);
 			
 			/*bank account we will do the transaction*/
@@ -83,18 +95,21 @@ public class Controller_formTransaction implements Initializable, IForm {
 				String recurrenceText = time.getValue();
 			}*/
 			
-			java.sql.Date sqlDate = java.sql.Date.valueOf(datePicker.getValue());
+			java.sql.Date sqlDate = java.sql.Date
+					.valueOf(datePicker.getValue());
 			if (checkSharedBudget.isSelected()) {
 				bl = cbxBudgets.getSelectionModel().getSelectedItem();
 			}
 			
 			if (tr == null) {
-				IOTransactionLogic transaction = new IOTransactionLogic(amountDouble, nameText, "toto", sqlDate, "CHF",
-						cl, bal, bl);
+				IOTransactionLogic transaction = new IOTransactionLogic(
+						amountDouble, nameText, "", sqlDate, "CHF", cl, bal,
+						bl);
 				
 				controller.createItem(transaction);
 			} else {
-				tr.update(amountDouble, nameText, "toto", sqlDate, "CHF", cl, bal, bl);
+				tr.update(amountDouble, nameText, "", sqlDate, "CHF", cl,
+						bal, bl);
 				controller.modifyItem(tr);
 			}
 		}
@@ -137,15 +152,17 @@ public class Controller_formTransaction implements Initializable, IForm {
 			check = false;
 		}
 		
-		if (!checkSharedBudget.isSelected() && (datePicker.getValue() == null || datePicker.getValue()
-				.isAfter(LocalDate.now()))) {
+		if (!checkSharedBudget.isSelected() && (datePicker.getValue() == null
+				|| datePicker.getValue().isAfter(LocalDate.now()))) {
 			datePicker.setStyle("-jfx-default-color: red;");
 			check = false;
 		}
 		
 		BudgetLogic budgetLogic = cbxBudgets.getValue();
-		if (checkSharedBudget.isSelected() && (datePicker.getValue().isAfter(budgetLogic.getEndingDate().toLocalDate())
-				|| datePicker.getValue().isBefore(budgetLogic.getStartingDate().toLocalDate()))) {
+		if (checkSharedBudget.isSelected() && (datePicker.getValue()
+				.isAfter(budgetLogic.getEndingDate().toLocalDate())
+				|| datePicker.getValue()
+				.isBefore(budgetLogic.getStartingDate().toLocalDate()))) {
 			datePicker.setStyle("-jfx-default-color: red;");
 			check = false;
 			
@@ -173,8 +190,10 @@ public class Controller_formTransaction implements Initializable, IForm {
 	
 	private void generateComboBox() {
 		
-		ObservableList<BankAccountLogic> items = FXCollections.observableArrayList();
-		for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+		ObservableList<BankAccountLogic> items = FXCollections
+				.observableArrayList();
+		for (BankAccountLogic bal : ClientLogic.getInstance()
+				.getBankAccounts()) {
 			if (bal.isDefault()) {
 				items.add(0, bal);
 			} else {
@@ -184,7 +203,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		bankAccount.setItems(items);
 		bankAccount.getSelectionModel().selectFirst();
 		
-		ObservableList<CategoryLogic> items2 = FXCollections.observableArrayList();
+		ObservableList<CategoryLogic> items2 = FXCollections
+				.observableArrayList();
 		for (CategoryLogic cl : ClientLogic.getInstance().getCategories()) {
 			items2.add(cl);
 		}
@@ -196,7 +216,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		time.setItems(items3);
 		time.getSelectionModel().selectFirst();*/
 		
-		ObservableList<BudgetLogic> items3 = FXCollections.observableArrayList();
+		ObservableList<BudgetLogic> items3 = FXCollections
+				.observableArrayList();
 		for (BudgetLogic bl : ClientLogic.getInstance().getBudgets()) {
 			if (bl.isShared()) {
 				items3.add(bl);
@@ -208,13 +229,17 @@ public class Controller_formTransaction implements Initializable, IForm {
 	}
 	
 	/**
-	 * Called to initialize a controller after its root element has been completely processed.
+	 * Called to initialize a controller after its root element has been
+	 * completely processed.
 	 *
-	 * @param location The location used to resolve relative paths for the root object, or null if the location is not
+	 * @param location The location used to resolve relative paths for the
+	 * 		root object, or null if the location is not
 	 * 		known.
-	 * @param resources The resources used to localize the root object, or null if the root object was not localized.
+	 * @param resources The resources used to localize the root object, or
+	 * 		null if the root object was not localized.
 	 */
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 		
 		generateComboBox();
@@ -226,7 +251,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 			
 			name.setText(tr.getName());
 			amount.setText(String.valueOf(tr.getAmount()));
-			for (BankAccountLogic bal : ClientLogic.getInstance().getBankAccounts()) {
+			for (BankAccountLogic bal : ClientLogic.getInstance()
+					.getBankAccounts()) {
 				if (bal.getId() == tr.getBankAccountID()) {
 					bankAccount.getSelectionModel().select(bal);
 					break;
@@ -241,7 +267,7 @@ public class Controller_formTransaction implements Initializable, IForm {
 			}
 			
 			datePicker.setValue(tr.getDate().toLocalDate());
-			if(tr.getBudget() != null) {
+			if (tr.getBudget() != null) {
 				checkSharedBudget.setSelected(tr.getBudget().isShared());
 				cbxBudgets.getSelectionModel().select(tr.getBudget());
 			}
@@ -250,7 +276,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		accepteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				formValidation(event);
 			}
@@ -258,7 +285,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				delete();
 			}
@@ -266,7 +294,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		returnButton.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				formCancel(event);
 			}
@@ -282,7 +311,8 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		name.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				name.setStyle("-jfx-unfocus-color: black;");
 			}
@@ -290,15 +320,18 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		amount.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
-				amount.setStyle("-jfx-unfocus-color: black;-fx-text-fill: black;");
+				amount.setStyle(
+						"-jfx-unfocus-color: black;-fx-text-fill: black;");
 			}
 		});
 		
 		datePicker.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
-			@Override public void handle(MouseEvent event) {
+			@Override
+			public void handle(MouseEvent event) {
 				
 				datePicker.setStyle("-jfx-default-color: green;");
 			}
@@ -306,13 +339,14 @@ public class Controller_formTransaction implements Initializable, IForm {
 		
 		checkSharedBudget.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@Override public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 				
 				cbxBudgets.setVisible(checkSharedBudget.isSelected());
 			}
 		});
 		
-		if(!ClientLogic.getInstance().isOnline()){
+		if (!ClientLogic.getInstance().isOnline()) {
 			/*recurrence.setDisable(true);
 			recurrence.setSelected(false);*/
 			checkSharedBudget.setDisable(true);
