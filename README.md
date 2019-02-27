@@ -26,11 +26,19 @@ MoneyThoring propose un design poussé pour que l’information soit la plus cla
 * Accès à une vue globale de chaque compte bancaire
 * Gestion de budgets personnels et partagés
 
-## Mockups
-
-
 ## Technologies utilisées
 
 * Java 9 / JavaFX
 * Hibernate
 * PostgreSQL
+
+## Mockups
+
+<img src="/Doc/Mockups/capture_1.png">
+<img src="/Doc/Mockups/capture_8.png">
+<img src="/Doc/Mockups/capture_2.png">
+<img src="/Doc/Mockups/capture_4.png">
+<img src="/Doc/Mockups/capture_5.png">
+<img src="/Doc/Mockups/capture_7.png">
+<img src="/Doc/Mockups/capture_6.png">
+<img src="/Doc/Mockups/capture_3.png">
