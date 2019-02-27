@@ -16,8 +16,21 @@ MoneyThoring propose un design poussé pour que l’information soit la plus cla
 * **Guillaume Zaretti** - *Data Access Layer* - [GZeed](https://github.com/GZeed)
 * **Héléna Reymond** - *Business Logic / Database / Data Access Layer* - [LNAline](https://github.com/LNAline)
 
+## Fonctionnalités
+
+* Création d'un compte avec activation par email
+* Création de comptes bancaires
+* Création de catégories de transactions
+* Création de transactions
+* Création de dettes et créances
+* Accès à une vue globale de chaque compte bancaire
+* Gestion de budgets personnels et partagés
+
 ## Mockups
 
-## Architecture
 
 ## Technologies utilisées
+
+* Java 9 / JavaFX
+* Hibernate
+* PostgreSQL
